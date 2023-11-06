@@ -49,11 +49,13 @@ function CreateGraph() {
 
         const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
         const angle = Math.atan2(y2 - y1, x2 - x1);
+        const centerX = (x1 + x2) / 2;
+        const centerY = (y1 + y2) / 2;
 
         weight.style.width = length + "px";
         weight.style.transform = `rotate(${angle}rad)`;
-        weight.style.left = x1 + "px";
-        weight.style.top = y1 + "px";
+        weight.style.left = centerX - (length / 2) + "px";
+        weight.style.top = centerY - 1 + "px";
         document.getElementById("container").appendChild(weight)
         subsubarray.push(0)
         numberweight += 1
