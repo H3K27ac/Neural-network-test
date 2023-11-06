@@ -1,0 +1,19 @@
+body {
+  font-size: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.input {
+  height: 30px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 2px;
+  outline: none;
+}
+
+.container {
+  height: 500px;
+  width: 800px;
+  background-color: black;
+}
