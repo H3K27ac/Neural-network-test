@@ -29,6 +29,7 @@ function UpdateColor() {
       let neuronvalue = neurons[i][j]
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + i + "," + j)
+      document.getElementById("layers").innerHTML = "L"
       neuron.style.backgroundColor = Color2(neuronvalue)
       neuron.style.borderColor = Color(biasvalue)
       for (let k=0; k<structure[i+1]; k++) {
@@ -46,7 +47,7 @@ function Randomize() {
       neurons[i][j] = Math.random();
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i+1]; k++) {
-        weight[i+1][j][k] = Math.random
+        weight[i+1][j][k] = Math.random() * 2 - 1;
       }
     }
   }
