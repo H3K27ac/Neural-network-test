@@ -35,7 +35,7 @@ function UpdateColor() {
       neuron.style.borderColor = Color(biasvalue)
       for (let k=0; k<structure[i+1]; k++) {
         let weightvalue = weights[i+1][j][k]
-        let weight = documen.getElementById("weight " + (i+1) + "," + j + "," + k)
+        let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue)
       }
     }
