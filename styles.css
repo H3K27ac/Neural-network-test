@@ -5,8 +5,8 @@ body {
 }
 
 .input {
-  height: 30px;
-  width: 100px;
+  height: 25px;
+  width: 120px;
   border: 1px solid black;
   border-radius: 2px;
   outline: none;
@@ -19,5 +19,5 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px;
+  margin: 20px auto;
 }
