@@ -40,8 +40,8 @@ body {
 }
 
 .weight {
-  position: absolute;
-  border: 1px solid white;
+  border: 0px solid white;
+  background-color: white;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
