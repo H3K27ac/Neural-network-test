@@ -55,7 +55,7 @@ function CreateGraph() {
         weight.style.width = length + "px";
         weight.style.transform = `rotate(${angle}rad)`;
         weight.style.left = centerX - (length / 2) + "px";
-        weight.style.top = centerY + "px";
+        weight.style.top = centerY - 200 + "px";
         document.getElementById("container").appendChild(weight)
         subsubarray.push(0)
         numberweight += 1
