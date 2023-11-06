@@ -34,7 +34,7 @@ function UpdateColor() {
       neuron.style.backgroundColor = Color2(neuronvalue)
       neuron.style.borderColor = Color(biasvalue)
       for (let k=0; k<structure[i+1]; k++) {
-        let weightvalue = weight[i+1][j][k]
+        let weightvalue = weights[i+1][j][k]
         let weight = documen.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue)
       }
@@ -48,7 +48,7 @@ function Randomize() {
       neurons[i][j] = Math.random();
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i+1]; k++) {
-        weight[i+1][j][k] = Math.random() * 2 - 1;
+        weights[i+1][j][k] = Math.random() * 2 - 1;
       }
     }
   }
@@ -59,6 +59,7 @@ function CreateGraph() {
   let input = document.getElementById("structure").value
   structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
+  structure.push(0)
   DeleteGraph()
   for (let i=0; i<layers; i++) {
     let subarray = [];
