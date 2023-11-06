@@ -9,14 +9,18 @@ function CreateGraph() {
   layers = structure.length
   for (let i=0; i<layers; i++) {
     let subarray = [];
+    neurons.append(subarray)
+    let column = document.createElement("div")
+    column.className = "column"
+    column.id = "column " + i
+    document.getElementById("container").appendChild(column)
     for (let j=0; j<structure[i]; j++) {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
-      document.getElementById("container").appendChild(neuron)
+      column.appendChild(neuron)
       subarray.append(0)
     }
-    array.append(subarray);
   }
   document.getElementById("layers").innerHTML = layers
 }
