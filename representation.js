@@ -39,6 +39,11 @@ function CreateGraph() {
         let weight = document.createElement("div")
         weight.className = "weight"
         weight.id = "weight " + i + "," + j + "," + k
+        let neuron1 = document.getElementById("neuron " + (i-1) + "," + j)
+        let neuron2 = document.getElementById("neuron " + i + "," + k)
+        weight.style.width = (neuron2.offsetLeft - neuron1.offsetLeft - neuron1.offsetWidth) + 'px';
+        weight.style.left = (neuron1.offsetLeft + neuron1.offsetWidth) + 'px';
+        weight.style.top = (neuron1.offsetTop + neuron1.offsetHeight / 2) + 'px';
         document.getElementById("container").appendChild(weight)
         subsubarray.push(0)
       }
