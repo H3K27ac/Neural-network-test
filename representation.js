@@ -42,9 +42,18 @@ function CreateGraph() {
         weight.id = "weight " + i + "," + j + "," + k
         let neuron1 = document.getElementById("neuron " + (i-1) + "," + j)
         let neuron2 = document.getElementById("neuron " + i + "," + k)
-        weight.style.width = (neuron2.offsetLeft - neuron1.offsetLeft - neuron1.offsetWidth) + 'px';
-        weight.style.left = (neuron1.offsetLeft + neuron1.offsetWidth) + 'px';
-        weight.style.top = (neuron1.offsetTop + neuron1.offsetHeight / 2) + 'px';
+        const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
+        const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
+        const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+        const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
+
+        const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+
+        weight.style.width = length + "px";
+        weight.style.transform = `rotate(${angle}rad)`;
+        weight.style.left = x1 + "px";
+        weight.style.top = y1 + "px";
         document.getElementById("container").appendChild(weight)
         subsubarray.push(0)
         numberweight += 1
