@@ -10,7 +10,10 @@ function CreateGraph() {
   for (let i=0; i<layers; i++) {
     let subarray = [];
     for (let j=0; j<structure[i]; j++) {
-      CreateNeurons(i,j)
+      let neuron = document.createElement("div")
+      neuron.className = "neuron"
+      neuron.id = "neuron " + i + "," + j
+      document.getElementById("container").appendChild(neuron)
       subarray.append(0)
     }
     array.append(subarray);
@@ -18,9 +21,4 @@ function CreateGraph() {
   document.getElementById("layers").innerHTML = layers
 }
 
-function CreateNeurons(i,j) {
-  let neuron = document.createElement("div")
-  neuron.className = "neuron"
-  neuron.id = "neuron " + i + "," + j
-  document.getElementById("container").appendChild(neuron)
-}
+
