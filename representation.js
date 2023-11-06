@@ -1,6 +1,7 @@
 let weights = [];
 let neurons = [];
 let biases = [];
+let structure = [];
 let layers;
 
 function DeleteGraph() {
@@ -56,7 +57,7 @@ function Randomize() {
 function CreateGraph() {
   let numberweight = 0
   let input = document.getElementById("structure").value
-  let structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   DeleteGraph()
   for (let i=0; i<layers; i++) {
