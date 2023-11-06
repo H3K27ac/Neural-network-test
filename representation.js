@@ -5,9 +5,22 @@ let layers;
 
 function CreateGraph() {
   let input = document.getElementById("structure").value
-  let array = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
-  layers = array.length
+  let structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  layers = structure.length
+  for (i=0,i<layers,i++) {
+    let subarray = [];
+    for (j=0,j<structure[i],j++) {
+      CreateNeurons(i,j)
+      subarray.append(0)
+    }
+    array.append(subarray);
+  }
   document.getElementById("layers").innerHTML = layers
 }
 
-
+function CreateNeurons(i,j) {
+  let neuron = document.createElement("div")
+  neuron.className = "neuron"
+  neuron.id = "neuron " + i + "," + j
+  document.getElementById("container").appendChild(neuron)
+}
