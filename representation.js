@@ -80,7 +80,7 @@ function CreateGraph() {
   }
 
   for (let i=1; i<layers; i++) {
-    let subarray = [];
+    let subarray = [0];
     for (let j=0; j<structure[i-1]; j++) {
       let subsubarray = [];
       for (let k=0; k<structure[i]; k++) {
@@ -109,7 +109,6 @@ function CreateGraph() {
       }
       subarray.push(subsubarray)
     }
-    subarray.push(0)
     weights.push(subarray)
   }
   
