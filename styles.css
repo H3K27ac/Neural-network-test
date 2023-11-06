@@ -13,6 +13,7 @@ body {
 }
 
 .container {
+  position: relative;
   height: 500px;
   width: 800px;
   background-color: black;
@@ -40,6 +41,7 @@ body {
 }
 
 .weight {
+  position: absolute;
   border: 0px solid white;
   background-color: white;
   top: 50%;
