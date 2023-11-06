@@ -11,6 +11,7 @@ function DeleteGraph() {
 }
 
 function CreateGraph() {
+  let numberweight = 0
   let input = document.getElementById("structure").value
   let structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
@@ -46,13 +47,14 @@ function CreateGraph() {
         weight.style.top = (neuron1.offsetTop + neuron1.offsetHeight / 2) + 'px';
         document.getElementById("container").appendChild(weight)
         subsubarray.push(0)
+        numberweight += 1
       }
       subarray.push(subsubarray)
     }
     weights.push(subarray)
   }
   
-  document.getElementById("layers").innerHTML = layers
+  document.getElementById("layers").innerHTML = numberweight + "," + layers
 }
 
 
