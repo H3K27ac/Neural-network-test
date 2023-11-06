@@ -3,10 +3,18 @@ let neurons = [];
 let biases = [];
 let layers;
 
+function DeleteGraph() {
+  let graph = document.getElementById("container");
+  while (graph.hasChildNodes()) {
+      graph.removeChild(graph.firstChild);
+  }
+}
+
 function CreateGraph() {
   let input = document.getElementById("structure").value
   let structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
+  DeleteGraph()
   for (let i=0; i<layers; i++) {
     let subarray = [];
     let column = document.createElement("div")
