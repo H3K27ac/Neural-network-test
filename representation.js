@@ -1,6 +1,6 @@
-let weights = [];
+let weights = [0];
 let neurons = [];
-let biases = [];
+let biases = [0];
 let structure = [];
 let layers;
 
@@ -30,13 +30,14 @@ function UpdateColor() {
       let neuronvalue = neurons[i][j]
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + i + "," + j)
-      document.getElementById("layers").innerHTML = "L"
       neuron.style.backgroundColor = Color2(neuronvalue)
       neuron.style.borderColor = Color(biasvalue)
       for (let k=0; k<structure[i+1]; k++) {
+        document.getElementById("layers").innerHTML = "L"
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue)
+        document.getElementById("layers").innerHTML = "LL"
       }
     }
   }
@@ -48,6 +49,7 @@ function Randomize() {
       neurons[i][j] = Math.random();
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i+1]; k++) {
+        document.getElementById("layers").innerHTML = "L"
         weights[i+1][j][k] = Math.random() * 2 - 1;
       }
     }
@@ -75,12 +77,11 @@ function CreateGraph() {
     }
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
-    subarray.push(0)
     biases.push(subarray)
   }
 
   for (let i=1; i<layers; i++) {
-    let subarray = [0];
+    let subarray = [];
     for (let j=0; j<structure[i-1]; j++) {
       let subsubarray = [];
       for (let k=0; k<structure[i]; k++) {
