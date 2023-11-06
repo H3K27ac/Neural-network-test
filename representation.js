@@ -20,7 +20,6 @@ function CreateGraph() {
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
-    document.getElementById("layers").innerHTML = "L"
     for (let j=0; j<structure[i]; j++) {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
@@ -31,6 +30,23 @@ function CreateGraph() {
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
   }
+
+  for (let i=1; i<layers; i++) {
+    let subarray = [];
+    for (let j=0; j<structure[i-1]; j++) {
+      let subsubarray = [];
+      for (let k=0; k<structure[i]; k++) {
+        let weight = document.createElement("div")
+        weight.className = "weight"
+        weight.id = "weight " + i + "," + j + "," + k
+        document.getElementById("container").appendChild(weight)
+        subsubarray.push(0)
+      }
+      subarray.push(subsubarray)
+    }
+    weights.push(subarray)
+  }
+  
   document.getElementById("layers").innerHTML = layers
 }
 
