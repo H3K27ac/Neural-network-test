@@ -8,7 +8,7 @@ function CreateGraph() {
   let structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   for (let i=0; i<layers; i++) {
-  //  let subarray = [];
+    let subarray = [];
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
@@ -18,10 +18,10 @@ function CreateGraph() {
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
       column.appendChild(neuron)
-   //   subarray.append(0)
+      subarray.push(0)
     }
     document.getElementById("container").appendChild(column)
-   // neurons.append(subarray)
+    neurons.push(subarray)
   }
   document.getElementById("layers").innerHTML = layers
 }
