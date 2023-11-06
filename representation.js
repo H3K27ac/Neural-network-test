@@ -10,6 +10,40 @@ function DeleteGraph() {
   }
 }
 
+function Color(value) {
+  if (value == 0) return `rgb(255, 255, 255)`;
+  let red = value > 0 ? 255 : Math.round(255 * (1 + value));
+  let green = Math.round(255 * (1 - Math.abs(value)));
+  let blue = value > 0 ? Math.round(255 * (1 - value)) : 255;
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
+function Color2(value) {
+  let brightness = Math.round(255 * value);
+  return `rgb(${brightness}, ${brightness}, ${brightness})`;
+}
+
+function UpdateColor {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i]; j++) {
+      let neuronvalue = neurons[i][j]
+      let biasvalue = biases[i+1][j]
+      let neuron = document.getElementById("neuron " + i + "," + j)
+      neuron.style.backgroundColor = Color2(neuronvalue)
+      neuron.style.borderColor = Color(biasvalue)
+    }
+  }
+  for (let i=1; i<layers; i++) {
+    for (let j=0; j<structure[i-1]; j++) {
+      for (let k=0; k<structure[i]; k++) {
+        let weightvalue = weight[i][j][k]
+        let weight = documen.getElementById("weight " + i + "," + j + "," + k)
+        weight.style.backgroundColor = Color(weightvalue)
+      }
+    }
+  }
+}
+
 function CreateGraph() {
   let numberweight = 0
   let input = document.getElementById("structure").value
@@ -30,6 +64,8 @@ function CreateGraph() {
     }
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
+    subarray.push(0)
+    biases.push(subarray)
   }
 
   for (let i=1; i<layers; i++) {
@@ -62,6 +98,7 @@ function CreateGraph() {
       }
       subarray.push(subsubarray)
     }
+    subarray.push(0)
     weights.push(subarray)
   }
   
