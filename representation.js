@@ -23,7 +23,7 @@ function Color2(value) {
   return `rgb(${brightness}, ${brightness}, ${brightness})`;
 }
 
-function UpdateColor {
+function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
       let neuronvalue = neurons[i][j]
@@ -31,14 +31,22 @@ function UpdateColor {
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       neuron.style.borderColor = Color(biasvalue)
+      for (let k=0; k<structure[i+1]; k++) {
+        let weightvalue = weight[i+1][j][k]
+        let weight = documen.getElementById("weight " + (i+1) + "," + j + "," + k)
+        weight.style.backgroundColor = Color(weightvalue)
+      }
     }
   }
-  for (let i=1; i<layers; i++) {
-    for (let j=0; j<structure[i-1]; j++) {
-      for (let k=0; k<structure[i]; k++) {
-        let weightvalue = weight[i][j][k]
-        let weight = documen.getElementById("weight " + i + "," + j + "," + k)
-        weight.style.backgroundColor = Color(weightvalue)
+}
+
+function Randomize() {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i]; j++) {
+      neurons[i][j] = Math.random();
+      biases[i+1][j] = Math.random() * 2 - 1;
+      for (let k=0; k<structure[i+1]; k++) {
+        weight[i+1][j][k] = Math.random
       }
     }
   }
