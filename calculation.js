@@ -7,7 +7,7 @@ function Activation(input) {
   document.getElementById("layers").innerHTML = activation
   switch (activation) {
     case "Sigmoid":
-      return 1 / (1 + (Math.E ** (-1 * input)))
+      return 1 / (1 + Math.exp(-1 * input))
     case "ReLU": 
       return Math.max(0,input)
     case "Leaky ReLU":
