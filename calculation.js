@@ -49,6 +49,7 @@ function BiasCost(i,j) {
 }
 
 function Backprop() {
+  RandomizeInput()
   FeedForward()
   SetTarget()
   for (let i=0; i<layers; i++) {
