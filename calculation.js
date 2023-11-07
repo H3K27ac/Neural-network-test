@@ -60,9 +60,9 @@ function FeedForward() {
         sum += weights[i+1][j][k] * neurons[i][k]
       }
       sum += biases[i+1][j]
-      document.getElementById("layers").innerHTML = "broken2"
       neurons[i+1][j] = Activation(sum)
     }
+    document.getElementById("layers").innerHTML = "broken2"
   }
   document.getElementById("layers").innerHTML = "broken3"
   UpdateColor()
