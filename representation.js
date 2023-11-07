@@ -158,33 +158,36 @@ function CreateGraph() {
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
+    let batchsubarray = [];
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
     for (let j=0; j<structure[i]; j++) {
+      let subsubarray = [];
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
       column.appendChild(neuron)
       subarray.push(0)
+      if (batchnorm != "none") {
+        for (let k=0; k<batchsize; k++) {
+          subsubarray.push(0)
+        }
+        batchsubarray.push(subsubarray)
+      }
     }
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
     neurons2.push(subarray)
     if (batchnorm != "none") {
+      batch.push(batchsubarray)
       batchbeta.push(0)
       batchgamma.push(0)
       batchmean.push(0)
       batchvar.push(0)
     } 
   }
-
-  // Batch normalisation
-  if (batchnorm != "none") {
-    for (let i=0; i<batchsize; i++) {
-      batch.push(neurons)
-    }
-  }
+  
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
