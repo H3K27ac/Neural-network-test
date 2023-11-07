@@ -51,9 +51,9 @@ function UpdateColor() {
 
 function Randomize() {
   for (let i=0; i<layers; i++) {
- //   for (let j=0; j<structure[i]; j++) {
- //     neurons[i][j] = Math.random();
- //   }
+    for (let j=0; j<structure[i]; j++) {
+      neurons[i][j] = Math.random();
+    }
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i]; k++) {
