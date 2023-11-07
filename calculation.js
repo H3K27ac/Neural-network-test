@@ -58,8 +58,6 @@ function BiasCost(i,j) {
 }
 
 function Backprop() {
-  traincount += 1
-  document.getElementById("trainingcount").innerHTML = traincount
   RandomizeInput()
   FeedForward()
   SetTarget()
@@ -74,6 +72,8 @@ function Backprop() {
     }
   }
   UpdateColor()
+  traincount += 1
+  document.getElementById("trainingcount").innerHTML = traincount
 }
 
 function ToggleTraining() {
@@ -83,7 +83,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    training = setInterval(Backprop, 100);
+    training = setInterval(Backprop, 200);
   }
 }
 
