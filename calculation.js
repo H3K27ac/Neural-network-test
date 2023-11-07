@@ -14,8 +14,8 @@ function CalculateNeuron(i,j) {
 }
 
 function ForwardPass() {
-  for (i=0; i<layers; i++) {
-    for (j=0; j<structure[i+1]; j++) {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i+1]; j++) {
       document.getElementById("layers").innerHTML = "even more broken"
       neurons[i+1][j] = CalculateNeuron(i+1,j)
     }
