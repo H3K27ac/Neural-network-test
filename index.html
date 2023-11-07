@@ -9,10 +9,12 @@
   </head>
   <body>
     <input type="text" class="input" id="structure">
+    <input type="number" class="input" id="learnrate">
     <button onClick="CreateGraph()">Create</button>
-    <button onClick="ForwardPass()">Run</button>
+    <button onClick="FeedForward()">Run</button>
     <button onClick="UpdateColor()">Update</button>
     <button onClick="Randomize()">Random</button>
+    <button onClick="BackProp()">Train</button>
     <span id="layers">0</span>
     <br>
     <div class="container" id="container"></div>
