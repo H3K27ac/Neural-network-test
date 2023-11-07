@@ -99,9 +99,9 @@ function Randomize() {
   }
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      biases[i+1][j] = Math.random() * 2 - 1;
+      biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
       for (let k=0; k<structure[i]; k++) {
-        weights[i+1][j][k] = Math.random() * 2 - 1;
+        weights[i+1][j][k] = (Math.random() * 2 - 1) * weightrange;
       }
     }
   }
