@@ -24,7 +24,7 @@ function FeedForward() {
 
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
-    targets[i] = 1
+    targets[i] = 0.5
   }
 }
 
@@ -66,4 +66,8 @@ function Backprop() {
   }
   UpdateColor()
 }
-
+function Train100() {
+  for (let i=0; i<100; i++) {
+    BackProp()
+  }
+}
