@@ -59,6 +59,7 @@ function FeedForward() {
         sum += weights[i+1][j][k] * neurons[i][k]
       }
       sum += biases[i+1][j]
+      neurons2[i+1][j] = sum
       neurons[i+1][j] = Activation(sum)
     }
   }
