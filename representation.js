@@ -87,13 +87,20 @@ function Randomize() {
 
 function CreateGraph() {
   DeleteGraph()
-  let input = document.getElementById("structure").value
-  structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  let structureinput = document.getElementById("structure").value
+  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   structure.push(0)
 
   learnrate = document.getElementById("learnrate").value
 
+  for (let i=0; i<structure[0]; i++) {
+    let input = document.createElement("input")
+    input.className = "input"
+    input.id = "input " + i
+    document.appendChild(input)
+  }
+  
   for (let i=0; i<structure[layers-1]; i++) {
     targets.push(0)
   }
