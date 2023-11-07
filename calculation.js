@@ -24,7 +24,7 @@ function FeedForward() {
 
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
-    targets[i] = neurons[0][0]
+    targets[i] = Math.Round(neurons[0][1]) + Math.Round(neurons[0][0])
   }
 }
 
