@@ -60,21 +60,21 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         sum = 0
         for (let k=0; k<structure[i]; k++) {
-          sum += weights[i+1][j][k] * batch[i][k][n]
+          sum += weights[i+1][j][k] * neurons[i][k][n]
         }
         sum += biases[i+1][j]
         neurons2[i+1][j] = sum
-        neurons[i+1][j][n] = Activation(sum)
+        batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
       batchmeantemp[i+1][j] = batchsum / batchsize
       batchsum = 0
       for (let n=0; n<batchsize; n++) {
-        batchsum += (neurons[i+1][j][n] - batchmeantemp[i+1][j]) ** 2
+        batchsum += (batch[i+1][j][n] - batchmeantemp[i+1][j]) ** 2
       }
       batchvartemp[i+1][j] = Math.sqrt(batchsum / batchsize)
       for (let n=0; n<batchsize; n++) {
-        batch[i+2][j][n] = batchgamma[i+1] * ((neurons[i+1][j][n] - batchmeantemp[i+1][j]) / batchvartemp[i+1][j]) + batchbeta[i+1]
+        neurons[i+1][j][n] = batchgamma[i+1] * ((batch[i+1][j][n] - batchmeantemp[i+1][j]) / batchvartemp[i+1][j]) + batchbeta[i+1]
       }
      }
     }
