@@ -62,7 +62,7 @@ function BatchForwardPass() {
           sum += weights[i+1][j][k] * neurons[i][k][n]
         }
         sum += biases[i+1][j]
-        neurons2[i+1][j] = sum
+        neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
@@ -109,6 +109,13 @@ function FeedForward() {
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
     targets[i] = 1
+  }
+}
+function BatchSetTarget() {
+  for (let i=0; i<structure[layers-1]; i++) {
+    for (let n=0; n<batchsize; n++) {
+      targets[i][n] = 1
+    }
   }
 }
 
@@ -216,6 +223,8 @@ function BatchBackprop() {
       for (let n=0; n<batchsize; n++) {
         biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
+        batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
+        batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
         for (let k=0; k<structure[i]; k++) {
           // Elastic net regularisation
           let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
