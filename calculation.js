@@ -72,12 +72,12 @@ function SetTarget() {
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
+    document.getElementById("layers").innerHTML = 2 * (targets[j] - neurons[i][j])
     return 2 * (targets[j] - neurons[i][j])
   }
   let sum = 0;
   for (let k=0; k<structure[i+1]; k++) {
     sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
-    document.getElementById("layers").innerHTML = sum
   }
   return sum
 }
