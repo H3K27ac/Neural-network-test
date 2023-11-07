@@ -5,6 +5,7 @@ let biases = [0];
 let structure = [];
 let targets = [];
 let layers;
+let learnrate;
 
 function DeleteGraph() {
   weights = [0];
@@ -14,6 +15,7 @@ function DeleteGraph() {
   structure = [];
   targets = [];
   layers = 0;
+  learnrate = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -73,6 +75,8 @@ function CreateGraph() {
   structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   structure.push(0)
+
+  learnrate = document.getElementById("learnrate").value
 
   for (let i=0; i<structure[layers-1]; i++) {
     targets.push(0)
