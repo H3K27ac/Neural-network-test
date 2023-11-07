@@ -22,6 +22,16 @@ body {
   margin: 15px;
 }
 
+.button {
+    font-size: 15px;
+    color: black;
+    background-color: lightgray;
+    padding: 5px;
+    border: 1px solid black;
+    height: 40px;
+    width: 120px;
+}
+
 .container {
   position: relative;
   height: 500px;
