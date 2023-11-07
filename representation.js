@@ -6,6 +6,7 @@ let structure = [];
 let targets = [];
 let layers;
 let learnrate;
+let regstrength;
 
 function DeleteGraph() {
   clearInterval(training);
@@ -19,6 +20,7 @@ function DeleteGraph() {
   targets = [];
   layers = 0;
   learnrate = 0;
+  regstrength = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -100,6 +102,7 @@ function CreateGraph() {
   structure.push(0)
 
   learnrate = document.getElementById("learnrate").value
+  regstrength = document.getElementById("regstrength").value
 
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
