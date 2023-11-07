@@ -12,6 +12,8 @@ let batchbeta = [0];
 let batchgamma = [0];
 let batchmean = [0];
 let batchvar = [0];
+let batchmovingmean = [0];
+let batchmovingvar = [0];
 let batchsize;
 let batchnorm = "none";
 
@@ -177,15 +179,20 @@ function CreateGraph() {
       }
     }
     document.getElementById("container").appendChild(column)
-    neurons.push(subarray)
-    neurons2.push(subarray)
     if (batchnorm != "none") {
       batch.push(batchsubarray)
+      neurons.push(batchsubarray)
+      neurons2.push(batchsubarray)
       batchbeta.push(0)
       batchgamma.push(0)
-      batchmean.push(0)
-      batchvar.push(0)
-    } 
+      batchmean.push(subarray)
+      batchvar.push(subarray)
+      batchmovingmean.push(0)
+      batchmovingvar.push(0)
+    } else {
+      neurons.push(subarray)
+      neurons2.push(subarray)
+    }
   }
   
   
