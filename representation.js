@@ -2,6 +2,7 @@ let weights = [0];
 let neurons = [];
 let biases = [0];
 let structure = [];
+let targets = [];
 let layers;
 
 function DeleteGraph() {
@@ -9,7 +10,8 @@ function DeleteGraph() {
   neurons = [];
   biases = [0];
   structure = [];
-  layers;
+  targets = [];
+  layers = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -50,10 +52,10 @@ function UpdateColor() {
 }
 
 function Randomize() {
+  for (let j=0; j<structure[0]; j++) {
+      neurons[0][j] = Math.random();
+  }
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i]; j++) {
-      neurons[i][j] = Math.random();
-    }
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i]; k++) {
@@ -69,6 +71,10 @@ function CreateGraph() {
   structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   structure.push(0)
+
+  for (let i=0; i<structure[layers-1]; i++) {
+    targets.push(0)
+  }
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
