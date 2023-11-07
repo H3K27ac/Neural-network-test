@@ -24,7 +24,7 @@ function FeedForward() {
 
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
-    targets[i] = 0.5
+    targets[i] = neurons[0][0]
   }
 }
 
