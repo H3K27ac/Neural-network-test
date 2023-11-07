@@ -82,6 +82,7 @@ function ToggleTraining() {
   if (training) {
     document.getElementById("training").innerHTML = "Start training"
     clearInterval(training);
+    training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
     training = setInterval(Backprop, 100);
