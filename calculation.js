@@ -4,6 +4,7 @@ let activation = "Sigmoid";
 let gradient = 0.05;
 
 function Activation(input) {
+  document.getElementById("layers").innerHTML = "broken"
   switch (activation) {
     case "Sigmoid":
       return 1 / (1 + (Math.E ** (-1 * input)))
@@ -64,9 +65,11 @@ function FeedForward() {
         sum += weights[i+1][j][k] * neurons[i][k]
       }
       sum += biases[i+1][j]
+      document.getElementById("layers").innerHTML = "broken2"
       neurons[i+1][j] = Activation(sum)
     }
   }
+  document.getElementById("layers").innerHTML = "broken3"
   UpdateColor()
 }
 
