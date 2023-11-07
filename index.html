@@ -18,13 +18,43 @@
       <option value="Leaky ReLU">
     </datalist>
     <br>
-    <span>Learning rate:</span>
-    <input type="number" class="input" id="learnrate">
-    <br>
-    <span>L1 regularisation strength:</span>
-    <input type="number" class="input" id="L1strength">
-    <span>L2 regularisation strength:</span>
-    <input type="number" class="input" id="L2strength">
+    <table class="InputTable">
+      <tr>
+        <td><span>Learning rate</span></td>
+        <td><input type="number" class="tableinput" id="learnrate"></td>
+      </tr>
+      <tr>
+        <td><span>Weight boundary</span></td>
+        <td><input type="number" class="tableinput" id="weightmin" placeholder="-1"></td>
+        <td><input type="number" class="tableinput" id="weightmax" placeholder="1"></td>
+      </tr>
+      <tr>
+        <td><span>Bias boundary</span></td>
+        <td><input type="number" class="tableinput" id="biasmin" placeholder="-1"></td>
+        <td><input type="number" class="tableinput" id="biasmax" placeholder="1"></td>
+      </tr>
+      <tr>
+        <td><span>Regularisation strength</span></td>
+        <td><input type="number" class="tableinput" id="L1strength" placeholder="L1 (Lasso)"></td>
+        <td><input type="number" class="tableinput" id="L2strength" placeholder="L2 (Ridge)"></td>
+      </tr>
+      <!--
+      <tr>
+        <td><span>Learning rate</span></td>
+        <td style="border-right: 0px"><span style="font-size: 10px">Implicit: </span></td>
+        <td style="border-left: 0px"><input type="checkbox" id="ImplicitInput" onchange="ChangeMethod()"></td>
+        <td style="border-right: 0px"><span style="font-size: 10px">Adaptive: </span></td>
+        <td style="border-left: 0px"><input type="checkbox" id="AdaptiveInput" onchange="ChangeMethod()"></td>
+      </tr>
+      <tr>
+        <td><span>Initial Values</span></td>
+        <td style="border-right: 0px"><span style="font-size: 10px">x0: </span></td>
+        <td style="border-left: 0px"><input type="number" id="x0" class="Input"></td>
+        <td style="border-right: 0px"><span style="font-size: 10px">y0: </span></td>
+        <td style="border-left: 0px"><input type="number" id="y0" class="Input"></td>
+      </tr>
+      -->
+    </table>
     <br>
     <div id="inputfield"></div>
     <br>
