@@ -6,8 +6,8 @@ let structure = [];
 let targets = [];
 let layers;
 let learnrate;
-let L1strength;
-let L2strength;
+let l1strength;
+let l2strength;
 
 function DeleteGraph() {
   clearInterval(training);
@@ -21,8 +21,8 @@ function DeleteGraph() {
   targets = [];
   layers = 0;
   learnrate = 0;
-  L1strength = 0;
-  L2strength = 0;
+  l1strength = 0;
+  l2strength = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -96,6 +96,10 @@ function Randomize() {
   }
 }
 
+function ChooseFunction(name) {
+  activation = name
+}
+
 function CreateGraph() {
   DeleteGraph()
   let structureinput = document.getElementById("structure").value
@@ -104,8 +108,8 @@ function CreateGraph() {
   structure.push(0)
 
   learnrate = document.getElementById("learnrate").value
-  L1strength = document.getElementById("L1strength").value
-  L2strength = document.getElementById("L2strength").value
+  l1strength = document.getElementById("L1strength").value
+  l2strength = document.getElementById("L2strength").value
 
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
