@@ -1,4 +1,5 @@
 let training;
+let traincount;
 
 
 function Activation(input) {
@@ -74,15 +75,16 @@ function Backprop() {
     }
   }
   UpdateColor()
+  traincount += 1
 }
 
 function ToggleTraining() {
   if (training) {
-    clearInterval(training);
     document.getElementById("training").innerHTML = "Start training"
+    clearInterval(training);
   } else {
-    training = setInterval(Backprop, 100);
     document.getElementById("training").innerHTML = "Stop training"
+    training = setInterval(Backprop, 100);
   }
 }
 
