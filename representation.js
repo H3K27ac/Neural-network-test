@@ -8,9 +8,12 @@ let layers;
 let learnrate;
 
 function DeleteGraph() {
+  clearInterval(training);
+  training = undefined;
+  trainingcount = 0;
   weights = [0];
   neurons = [];
-  neurons2 = []
+  neurons2 = [];
   biases = [0];
   structure = [];
   targets = [];
@@ -19,6 +22,10 @@ function DeleteGraph() {
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
+  }
+  let field = document.getElementById("inputfield");
+  while (field.hasChildNodes()) {
+      field.removeChild(field.firstChild);
   }
 }
 
