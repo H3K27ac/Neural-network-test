@@ -7,7 +7,7 @@ function DerivativeActivation(input) {
   return Activation(input) * (1 - Activation(input))
 }
 
-function MaunalFF() {
+function ManualFF() {
   for (let i=0; i<structure[0]; i++) {
     neurons[0][i] = document.getElementById("input " + i).value
   }
