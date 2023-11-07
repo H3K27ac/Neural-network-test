@@ -19,3 +19,14 @@ function ForwardPass() {
   UpdateColor()
 }
 
+function NeuronCost(i,j) {
+  if (i == layers-1) {
+    return 2* (targets[j] - neurons[i][j])
+  }
+  let sum = 0;
+  for (k=0; k<structure[i+1]; k++) {
+    sum += weights[i+1] 
+  }
+}
+
+
