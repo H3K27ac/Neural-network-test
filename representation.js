@@ -44,7 +44,6 @@ function UpdateColor() {
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue)
-        document.getElementById("layers").innerHTML = "LL"
       }
     }
   }
@@ -59,18 +58,17 @@ function Randomize() {
       biases[i+1][j] = Math.random() * 2 - 1;
       for (let k=0; k<structure[i]; k++) {
         weights[i+1][j][k] = Math.random() * 2 - 1;
-        document.getElementById("layers").innerHTML = "LL"
       }
     }
   }
 }
 
 function CreateGraph() {
+  DeleteGraph()
   let input = document.getElementById("structure").value
   structure = input.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   structure.push(0)
-  DeleteGraph()
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
@@ -94,7 +92,6 @@ function CreateGraph() {
     for (let j=0; j<structure[i+1]; j++) {
       let subsubarray = [];
       subarray2.push(0)
-      document.getElementById("layers").innerHTML = "L"
       for (let k=0; k<structure[i]; k++) {
         let weight = document.createElement("div")
         weight.className = "weight"
