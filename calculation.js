@@ -78,7 +78,7 @@ function NeuronCost(i,j) {
   } else {
     let sum = 0;
     for (let k=0; k<structure[i+1]; k++) {
-      sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
+      sum += weights[i+1][j][k] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
     }
     return sum
   }
