@@ -55,6 +55,7 @@ function ManualFF() {
 }
 
 function FeedForward() {
+  ClearNeurons()
   let sum;
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
