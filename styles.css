@@ -5,11 +5,21 @@ body {
 }
 
 .input {
+  height: 20px;
+  width: 60px;
+  border: 1px solid black;
+  border-radius: 1px;
+  outline: none;
+  margin: 10px;
+}
+
+.maininput {
   height: 25px;
   width: 120px;
   border: 1px solid black;
   border-radius: 2px;
   outline: none;
+  margin: 15px;
 }
 
 .container {
