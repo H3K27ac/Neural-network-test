@@ -7,6 +7,7 @@ function Activation(input) {
   document.getElementById("layers").innerHTML = activation
   switch (activation) {
     case "Sigmoid":
+      document.getElementById("layers").innerHTML = activation + "not working"
       return 1 / (1 + Math.exp(-1 * input))
     case "ReLU": 
       return Math.max(0,input)
