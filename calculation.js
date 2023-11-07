@@ -61,8 +61,10 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
+  document.getElementById("trainingcount").innerHTML = "broke 3"
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
+      document.getElementById("trainingcount").innerHTML = "extremely broken"
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       document.getElementById("trainingcount").innerHTML = "broke 2"
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
