@@ -73,7 +73,7 @@ function BatchForwardPass() {
       }
       batchvar[i+1][j] = Math.sqrt(batchsum / batchsize)
       for (let n=0; n<batchsize; n++) {
-        neurons[i+1][j][n] = batchgamma[i+1] * ((batch[i+1][j][n] - batchmean[i+1][j]) / batchvar[i+1][j]) + batchbeta[i+1]
+        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / batchvar[i+1][j]) + batchbeta[i+1][j]
       }
       if (batchcount == 0) {
         batchmeanmoving[i+1][j] = batchmean[i+1][j]
@@ -129,6 +129,49 @@ function WeightCost(i,j,k) {
 
 function BiasCost(i,j) {
   return DerivativeActivation(neurons2[i][j]) * NeuronCost(i,j)
+}
+
+function BatchNeuronCost(i,j,n) {
+}
+
+function BatchNormCost(i,j,n) {
+  return batchgamma[i][j] * BatchNeuronCost(i,j,n)
+}
+
+function BatchGammaCost(i,j) {
+  let sum = 0;
+  for (let n=0; n<batchsize; n++) {
+    sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) * BatchNeuronCost(i,j,n)
+  }
+  return sum
+}
+
+function BatchBetaCost(i,j) {
+  let sum = 0;
+  for (let n=0; n<batchsize; n++) {
+    sum += BatchNeuronCost(i,j,n)
+  }
+  return sum
+}
+
+function BatchVarCost(i,j) {
+  let sum = 0;
+  for (let n=0; n<batchsize; n++) {
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * (batchvar[i][j] ** 2 + batchepsilon[i][j]) ** -3/2)
+  }
+  return sum
+}
+
+function BatchMeanCost(i,j) {
+  let sum = 0;
+  for (let n=0; n<batchsize; n++) {
+    sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
+  }
+  return sum
+}
+
+function BatchCost(i,j,n) {
+  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / m) + (BatchMeanCost(i,j) / batchsize)
 }
 
 function Backprop() {
