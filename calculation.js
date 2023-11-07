@@ -29,11 +29,11 @@ function FeedForward() {
       neurons[i+1][j] = Activation(sum)
     }
   }
+  UpdateColor()
 }
 
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
-    document.getElementById("trainingcount").innerHTML = "target broken"
     targets[i] = (neurons[0][1] + neurons[0][0]) / 2
   }
 }
@@ -44,7 +44,6 @@ function NeuronCost(i,j) {
   }
   let sum = 0;
   for (let k=0; k<structure[i+1]; k++) {
-    document.getElementById("trainingcount").innerHTML = "very broken"
     sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
   }
   return sum
@@ -62,15 +61,11 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
-  document.getElementById("trainingcount").innerHTML = "broke 3"
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      document.getElementById("trainingcount").innerHTML = "extremely broken"
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
-      document.getElementById("trainingcount").innerHTML = "broke 2"
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
       for (let k=0; k<structure[i]; k++) {
-        document.getElementById("trainingcount").innerHTML = "broke"
         weights[i+1][j][k] -= learnrate * WeightCost(i+1,j,k)
         weights[i+1][j][k] = Math.min(1, Math.max(-1, weights[i+1][j][k]))
       }
@@ -88,7 +83,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    training = setInterval(Backprop, 200);
+    training = setInterval(Backprop, 100);
   }
 }
 
