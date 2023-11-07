@@ -11,7 +11,7 @@ function ForwardPass() {
       for (let k=0; k<structure[i]; k++) {
         sum += weights[i+1][j][k] * neurons[i][k]
       }
-      sum += biases[i+1]
+      sum += biases[i+1][j]
       document.getElementById("layers").innerHTML = "broken"
       neurons[i+1][j] = Activation(sum)
     }
