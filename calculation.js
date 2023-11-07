@@ -49,6 +49,26 @@ function ManualFF() {
   FeedForward()
 }
 
+function BatchForwardPass() {
+  let batchmeantemp;
+  let batchvartemp;
+  let sum;
+  for (let i=0; i<layers; i++) {
+    for (let n=0; n<batchsize; n++) {
+      for (let j=0; j<structure[i+1]; j++) {
+        sum = 0
+        for (let k=0; k<structure[i]; k++) {
+          sum += weights[i+1][j][k] * batch[i][k][n]
+        }
+        sum += biases[i+1][j]
+        neurons2[i+1][j] = sum
+        batch[i+1][j][n] = Activation(sum)
+      }
+    }
+  }
+  UpdateColor()
+}
+
 function FeedForward() {
   ClearNeurons()
   let sum;
