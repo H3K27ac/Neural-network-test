@@ -1,3 +1,5 @@
+let training;
+
 
 function Activation(input) {
   return 1 / (1 + (Math.E ** (-1 * input)))
@@ -73,6 +75,17 @@ function Backprop() {
   }
   UpdateColor()
 }
+
+function ToggleTraining() {
+  if (training) {
+    clearInterval(training);
+    document.getElementById("training").innerHTML = "Start training"
+  } else {
+    training = setInterval(Backprop, 100);
+    document.getElementById("training").innerHTML = "Stop training"
+  }
+}
+
 function Train100() {
   for (let i=0; i<100; i++) {
     Backprop()
