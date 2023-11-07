@@ -63,8 +63,10 @@ function Backprop() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
+      document.getElementById("trainingcount").innerHTML = "broke 2"
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
       for (let k=0; k<structure[i]; k++) {
+        document.getElementById("trainingcount").innerHTML = "broke"
         weights[i+1][j][k] -= learnrate * WeightCost(i+1,j,k)
         weights[i+1][j][k] = Math.min(1, Math.max(-1, weights[i+1][j][k]))
       }
