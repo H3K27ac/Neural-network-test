@@ -1,5 +1,6 @@
 let weights = [0];
 let neurons = [];
+let neurons2 = [];
 let biases = [0];
 let structure = [];
 let targets = [];
@@ -8,6 +9,7 @@ let layers;
 function DeleteGraph() {
   weights = [0];
   neurons = [];
+  neurons2 = []
   biases = [0];
   structure = [];
   targets = [];
@@ -90,6 +92,7 @@ function CreateGraph() {
     }
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
+    neurons2.push(subarray)
   }
 
   for (let i=0; i<layers; i++) {
