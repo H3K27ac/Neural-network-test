@@ -52,7 +52,7 @@ function ManualFF() {
 // INCOMPLETE!!!!!
 function BatchForwardPass() {
   let sum;
-  let batchsum
+  let batchsum;
   for (let i=0; i<layers; i++) {
     batchsum = 0;
     for (let j=0; j<structure[i+1]; j++) {
@@ -75,6 +75,7 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / batchvar[i+1][j]) + batchbeta[i+1][j]
       }
+      // Exponential moving average
       if (batchcount == 0) {
         batchmeanmoving[i+1][j] = batchmean[i+1][j]
         batchvarmoving[i+1][j] = batchvar[i+1][j]
@@ -131,13 +132,28 @@ function BiasCost(i,j) {
   return DerivativeActivation(neurons2[i][j]) * NeuronCost(i,j)
 }
 
-function BatchNeuronCost(i,j,n) {
-}
 
+
+function BatchWeightCost(i,j,k,n) {
+  return neurons[i-1][k] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
+}
+function BatchBiasCost(i,j,n) {
+  return DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
+}
+function BatchNeuronCost(i,j,n) {
+  if (i == layers-1) {
+    return 2 * (neurons[i][j][n] - targets[j][n])
+  } else {
+    let sum = 0;
+    for (let k=0; k<structure[i+1]; k++) {
+      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
+    }
+    return sum
+  }
+}
 function BatchNormCost(i,j,n) {
   return batchgamma[i][j] * BatchNeuronCost(i,j,n)
 }
-
 function BatchGammaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
@@ -145,7 +161,6 @@ function BatchGammaCost(i,j) {
   }
   return sum
 }
-
 function BatchBetaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
@@ -153,7 +168,6 @@ function BatchBetaCost(i,j) {
   }
   return sum
 }
-
 function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
@@ -161,7 +175,6 @@ function BatchVarCost(i,j) {
   }
   return sum
 }
-
 function BatchMeanCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
@@ -169,7 +182,6 @@ function BatchMeanCost(i,j) {
   }
   return sum
 }
-
 function BatchCost(i,j,n) {
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / m) + (BatchMeanCost(i,j) / batchsize)
 }
@@ -187,6 +199,29 @@ function Backprop() {
         let error = WeightCost(i+1,j,k) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
         weights[i+1][j][k] -= learnrate * error
         weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k]))
+      }
+    }
+  }
+  UpdateColor()
+  traincount += 1
+  document.getElementById("trainingcount").innerHTML = traincount
+}
+
+function BatchBackprop() {
+  BatchRandomizeInput()
+  BatchFeedForward()
+  BatchSetTarget()
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i+1]; j++) {
+      for (let n=0; n<batchsize; n++) {
+        biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
+        biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
+        for (let k=0; k<structure[i]; k++) {
+          // Elastic net regularisation
+          let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
+          weights[i+1][j][k] -= learnrate * error
+          weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k]))
+        }
       }
     }
   }
