@@ -41,6 +41,7 @@ function UpdateColor() {
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue)
         document.getElementById("layers").innerHTML = "LL"
+      }
     }
   }
 }
