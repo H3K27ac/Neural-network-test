@@ -4,7 +4,7 @@ let activation = "Sigmoid";
 let gradient = 0.05;
 
 function Activation(input) {
-  document.getElementById("layers").innerHTML = "broken"
+  document.getElementById("layers").innerHTML = activation
   switch (activation) {
     case "Sigmoid":
       return 1 / (1 + (Math.E ** (-1 * input)))
