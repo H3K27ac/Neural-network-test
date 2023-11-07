@@ -12,6 +12,7 @@ let batchbeta = [0];
 let batchgamma = [0];
 let batchmean = [0];
 let batchvar = [0];
+let batchepsilon = [0];
 let batchmeanmoving = [0];
 let batchvarmoving = [0];
 let batchsize;
@@ -48,6 +49,7 @@ function DeleteGraph() {
   batchgamma = [0];
   batchmean = [0];
   batchvar = [0];
+  batchepsilon = [0];
   batchmeanmoving = [0];
   batchvarmoving = [0];
   batchsize = 0;
@@ -187,8 +189,9 @@ function CreateGraph() {
       batch.push(batchsubarray)
       neurons.push(batchsubarray)
       neurons2.push(batchsubarray)
-      batchbeta.push(0)
-      batchgamma.push(0)
+      batchbeta.push(subarray)
+      batchgamma.push(subarray)
+      batchepsilon.push(subarray)
       batchmean.push(subarray)
       batchvar.push(subarray)
       batchmeanmoving.push(subarray)
