@@ -10,7 +10,7 @@ let learnrate;
 function DeleteGraph() {
   clearInterval(training);
   training = undefined;
-  trainingcount = 0;
+  traincount = 0;
   weights = [0];
   neurons = [];
   neurons2 = [];
