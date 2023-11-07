@@ -107,7 +107,7 @@ function Backprop() {
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
-  document.getElementById("layers").innerHTML = neurons[layers-1][0]
+  document.getElementById("layers").innerHTML = weights[layers-1][0][0]
 }
 
 function ToggleTraining() {
