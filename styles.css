@@ -23,30 +23,31 @@ body {
 }
 
 .tableinput {
-    width: 50px;
-    height: 20px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 0px;
-    padding: 0px;
-    margin: 1px;
+  width: 100px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0px;
+  padding: 0px;
+  margin: 1px;
 }
 
 .InputTable {
-    border-spacing: 10px;
-    background-color: lightblue;
-    border: 1px solid black;
-    margin: 10px auto;
+  border-spacing: 2px;
+  background-color: lightblue;
+  border: 1px solid black;
+  margin: 5px auto;
+  align-items: center;
 }
 
 .button {
-    font-size: 15px;
-    color: black;
-    background-color: lightgray;
-    padding: 5px;
-    border: 1px solid black;
-    height: 40px;
-    width: 120px;
+  font-size: 15px;
+  color: black;
+  background-color: lightgray;
+  padding: 5px;
+  border: 1px solid black;
+  height: 40px;
+  width: 120px;
 }
 
 .container {
