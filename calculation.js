@@ -7,10 +7,14 @@ function DerivativeActivation(input) {
   return Activation(input) * (1 - Activation(input))
 }
 
-function FeedForward() {
+function MaunalFF() {
   for (let i=0; i<structure[0]; i++) {
     neurons[0][i] = document.getElementById("input " + i).value
   }
+  FeedForward()
+}
+
+function FeedForward() {
   let sum;
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
