@@ -2,19 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="representation.js"></script>
     <script type="text/javascript" src="calculation.js"></script>
   </head>
   <body>
+    <span>Structure</span>
     <input type="text" class="input" id="structure">
+    <span>Learn rate</span>
     <input type="number" class="input" id="learnrate">
-    <button onClick="CreateGraph()">Create</button>
-    <button onClick="FeedForward()">Run</button>
-    <button onClick="UpdateColor()">Update</button>
-    <button onClick="Randomize()">Random</button>
-    <button onClick="Backprop()">Train</button>
+    <br>
+    <button onClick="CreateGraph()" class="button">Create</button>
+    <button onClick="FeedForward()" class="button">Run</button>
+    <button onClick="UpdateColor()" class="button">Update</button>
+    <button onClick="Randomize()" class="button">Random</button>
+    <button onClick="Backprop()" class="button">Train</button>
+    <button onClick="Train100()" class="button">Batch train</button>
     <span id="layers">0</span>
     <br>
     <div class="container" id="container"></div>
