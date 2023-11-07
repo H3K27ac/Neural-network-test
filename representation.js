@@ -1,6 +1,6 @@
 let weights = [0];
 let neurons = [];
-let neurons2 = [];
+let neurons2 = [0];
 let biases = [0];
 let structure = [];
 let targets = [];
