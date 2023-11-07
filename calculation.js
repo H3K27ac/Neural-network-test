@@ -1,7 +1,7 @@
 
-function Activation(input) {
-  return 1 / (1 + (Math.E ** (-1 * input)))
-}
+//function Activation(input) {
+//  return 1 / (1 + (Math.E ** (-1 * input)))
+//}
 
 function ForwardPass() {
   for (let i=0; i<layers; i++) {
@@ -13,7 +13,7 @@ function ForwardPass() {
       }
       sum += biases[i+1]
       document.getElementById("layers").innerHTML = "broken"
-      neurons[i+1][j] = Activation(sum)
+      neurons[i+1][j] = 1 / (1 + (Math.E ** (-1 * sum)))
     }
   }
   UpdateColor()
