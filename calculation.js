@@ -1,6 +1,6 @@
 
 function Activation(input) {
-  return 1 / (1 + (Math.e ** (-1 * input)))
+  return 1 / (1 + (Math.E ** (-1 * input)))
 }
 
 function ForwardPass() {
