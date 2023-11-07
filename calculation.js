@@ -23,6 +23,7 @@ function Activation(input) {
 function DerivativeActivation(input) {
   switch (activation) {
     case "Sigmoid":
+      document.getElementById("layers").innerHTML = Activation(input) * (1 - Activation(input))
       return Activation(input) * (1 - Activation(input))
     case "ReLU": 
       if (input > 0) {
@@ -72,14 +73,14 @@ function SetTarget() {
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
-    document.getElementById("layers").innerHTML = 2 * (targets[j] - neurons[i][j])
     return 2 * (targets[j] - neurons[i][j])
+  } else {
+    let sum = 0;
+    for (let k=0; k<structure[i+1]; k++) {
+      sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
+    }
+    return sum
   }
-  let sum = 0;
-  for (let k=0; k<structure[i+1]; k++) {
-    sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
-  }
-  return sum
 }
 
 function WeightCost(i,j,k) {
