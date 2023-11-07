@@ -98,7 +98,7 @@ function CreateGraph() {
     let input = document.createElement("input")
     input.className = "input"
     input.id = "input " + i
-    document.appendChild(input)
+    document.getElementById("inputfield").appendChild(input)
   }
   
   for (let i=0; i<structure[layers-1]; i++) {
