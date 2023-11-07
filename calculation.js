@@ -4,10 +4,8 @@ let activation = "Sigmoid";
 let gradient = 0.05;
 
 function Activation(input) {
-  document.getElementById("layers").innerHTML = activation
   switch (activation) {
     case "Sigmoid":
-      document.getElementById("layers").innerHTML = activation + "not working"
       return 1 / (1 + Math.exp(-1 * input))
     case "ReLU": 
       return Math.max(0,input)
@@ -62,9 +60,7 @@ function FeedForward() {
       sum += biases[i+1][j]
       neurons[i+1][j] = Activation(sum)
     }
-    document.getElementById("layers").innerHTML = "broken2"
   }
-  document.getElementById("layers").innerHTML = "broken3"
   UpdateColor()
 }
 
@@ -111,6 +107,7 @@ function Backprop() {
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
+  document.getElementById("layers").innerHTML = neuron[layers-1][0]
 }
 
 function ToggleTraining() {
