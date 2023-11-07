@@ -5,11 +5,23 @@ let biases = [0];
 let structure = [];
 let targets = [];
 let layers;
+
+// Batch normalisation variables
+let batch = [];
+let batchbeta = [0];
+let batchgamma = [0];
+let batchmean = [0];
+let batchvar = [0];
+let batchsize;
+let batchnorm = "none";
+
+// Input variables
 let learnrate;
 let l1strength;
 let l2strength;
 let weightrange;
 let biasrange;
+
 
 
 function DeleteGraph() {
@@ -28,6 +40,13 @@ function DeleteGraph() {
   l2strength = 0;
   weightrange = 0;
   biasrange = 0;
+  batch = [];
+  batchbeta = [0];
+  batchgamma = [0];
+  batchmean = [0];
+  batchvar = [0];
+  batchsize;
+  batchnorm = "none";
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -152,8 +171,21 @@ function CreateGraph() {
     document.getElementById("container").appendChild(column)
     neurons.push(subarray)
     neurons2.push(subarray)
+    if (batchnorm != "none") {
+      batchbeta.push(0)
+      batchgamma.push(0)
+      batchmean.push(0)
+      batchvar.push(0)
+    } 
   }
 
+  // Batch normalisation
+  if (batchnorm != "none") {
+    for (let i=0; i<batchsize; i++) {
+      batch.push(neurons)
+    }
+  }
+  
   for (let i=0; i<layers; i++) {
     let subarray = [];
     let subarray2 = [];
