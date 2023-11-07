@@ -44,7 +44,6 @@ function NeuronCost(i,j) {
   }
   let sum = 0;
   for (let k=0; k<structure[i+1]; k++) {
-    document.getElementById("layers").innerHTML = "broken but better"
     sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
   }
   return sum
@@ -64,11 +63,9 @@ function Backprop() {
   SetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      document.getElementById("layers").innerHTML = "broken"
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
       for (let k=0; k<structure[i]; k++) {
-        document.getElementById("layers").innerHTML = "best broken"
         weights[i+1][j][k] -= learnrate * WeightCost(i+1,j,k)
         weights[i+1][j][k] = Math.min(1, Math.max(-1, weights[i+1][j][k]))
       }
