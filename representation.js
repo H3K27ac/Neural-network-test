@@ -119,6 +119,15 @@ function RandomizeInput() {
   }
 }
 
+function BatchRandomizeInput() {
+  ClearNeurons()
+  for (let j=0; j<structure[0]; j++) {
+    for (let n=0; n<batchsize; n++) {
+      neurons[0][j][n] = Math.random();
+    }
+  }
+}
+
 function Randomize() {
   ClearNeurons()
   for (let j=0; j<structure[0]; j++) {
