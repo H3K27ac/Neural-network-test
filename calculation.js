@@ -50,8 +50,8 @@ function ManualFF() {
 }
 // INCOMPLETE!!!!!
 function BatchForwardPass() {
-  let batchmeantemp;
-  let batchvartemp;
+  let batchmeantemp = [];
+  let batchvartemp = [];
   let sum;
   let batchsum
   for (let i=0; i<layers; i++) {
@@ -64,18 +64,20 @@ function BatchForwardPass() {
         }
         sum += biases[i+1][j]
         neurons2[i+1][j] = sum
-        batch[i+1][j][n] = Activation(sum)
+        neurons[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
+      }
+      batchmeantemp[i+1][j] = batchsum / batchsize
+      batchsum = 0
+      for (let n=0; n<batchsize; n++) {
+        batchsum += (neurons[i+1][j][n] - batchmeantemp[i+1][j]) ** 2
+      }
+      batchvartemp[i+1][j] = Math.sqrt(batchsum / batchsize)
+      for (let n=0; n<batchsize; n++) {
+        batch[i+2][j][n] = batchgamma[i+1] * ((neurons[i+1][j][n] - batchmeantemp[i+1][j]) / batchvartemp[i+1][j]) + batchbeta[i+1]
       }
      }
     }
-    // batches
-    batchmeantemp = batchsum / batchsize
-    batchsum = 0
-    for (let n=0; n<batchsize; n++) {
-      batchsum += 
-    }
-    batchvartemp = Math.sqrt(
   }
   UpdateColor()
 }
