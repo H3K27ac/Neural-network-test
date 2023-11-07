@@ -76,6 +76,7 @@ function Backprop() {
   }
   UpdateColor()
   traincount += 1
+  document.getElementById("trainingcount").innerHTML = traincount
 }
 
 function ToggleTraining() {
