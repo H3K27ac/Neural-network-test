@@ -7,7 +7,7 @@ function DerivativeActivation(input) {
   return Activation(input) * (1 - Activation(input))
 }
 
-function ForwardPass() {
+function FeedForward() {
   let sum;
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
@@ -28,7 +28,7 @@ function NeuronCost(i,j) {
     return 2* (targets[j] - neurons[i][j])
   }
   let sum = 0;
-  for (k=0; k<structure[i+1]; k++) {
+  for (let k=0; k<structure[i+1]; k++) {
     sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
   }
   return sum
@@ -43,5 +43,14 @@ function BiasCost(i,j) {
 }
 
 function Backprop() {
+  FeedForward()
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i+1]; j++) {
+      biases[i+1][j] -= learnrate * BiasCost(i+1,j)
+      for (let k=0; k<structure[i]; k++) {
+        weights[i+1][j][k] -= learnrate * WeightCost(i+1,j,k)
+      }
+    }
+  }
 }
 
