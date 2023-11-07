@@ -66,7 +66,8 @@ function Backprop() {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
       for (let k=0; k<structure[i]; k++) {
-        weights[i+1][j][k] -= learnrate * WeightCost(i+1,j,k)
+        // L1 regularisation
+        weights[i+1][j][k] -= learnrate * (WeightCost(i+1,j,k) + (regstrength * Math.sign(weights[i+1][j][k]))
         weights[i+1][j][k] = Math.min(1, Math.max(-1, weights[i+1][j][k]))
       }
     }
