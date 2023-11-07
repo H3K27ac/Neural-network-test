@@ -8,6 +8,9 @@ function DerivativeActivation(input) {
 }
 
 function FeedForward() {
+  for (let i=0; i<structure[0]; i++) {
+    neurons[0][i] = document.getElementById("input " + i).value
+  }
   let sum;
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
