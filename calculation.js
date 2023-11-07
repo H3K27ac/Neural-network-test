@@ -29,7 +29,6 @@ function FeedForward() {
       neurons[i+1][j] = Activation(sum)
     }
   }
-  UpdateColor()
 }
 
 function SetTarget() {
