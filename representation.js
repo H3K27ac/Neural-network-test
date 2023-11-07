@@ -39,6 +39,7 @@ function UpdateColor() {
         document.getElementById("layers").innerHTML = "L"
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
+        document.getElementById("layers").innerHTML = "L.5"
         weight.style.backgroundColor = Color(weightvalue)
         document.getElementById("layers").innerHTML = "LL"
       }
@@ -56,6 +57,7 @@ function Randomize() {
       for (let k=0; k<structure[i]; k++) {
         document.getElementById("layers").innerHTML = "L"
         weights[i+1][j][k] = Math.random() * 2 - 1;
+        document.getElementById("layers").innerHTML = "LL"
       }
     }
   }
