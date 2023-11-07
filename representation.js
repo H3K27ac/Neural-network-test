@@ -110,6 +110,7 @@ function CreateGraph() {
   learnrate = document.getElementById("learnrate").value
   l1strength = document.getElementById("L1strength").value
   l2strength = document.getElementById("L2strength").value
+  activation = document.getElementById("activation").value
 
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
