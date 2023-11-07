@@ -3,6 +3,7 @@ let traincount;
 let activation = "Sigmoid";
 let gradient = 0.05;
 
+
 function Activation(input) {
   switch (activation) {
     case "Sigmoid":
@@ -74,6 +75,14 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         neurons[i+1][j][n] = batchgamma[i+1] * ((batch[i+1][j][n] - batchmean[i+1][j]) / batchvar[i+1][j]) + batchbeta[i+1]
       }
+      if (batchcount == 0) {
+        batchmeanmoving[i+1][j] = batchmean[i+1][j]
+        batchvarmoving[i+1][j] = batchvar[i+1][j]
+      } else {
+        batchmeanmoving[i+1][j] = ((1 - (1/batchcount)) * batchmeanmoving[i+1][j]) + ((1 / batchcount) * batchmean[i+1][j]) 
+        batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
+      }
+      batchcount += 1
     }
   }
   UpdateColor()
