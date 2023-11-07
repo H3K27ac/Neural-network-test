@@ -1,6 +1,7 @@
 let training;
 let traincount;
-let activation;
+let activation = "Sigmoid";
+let gradient = 0.05;
 
 function Activation(input) {
   switch (activation) {
@@ -9,6 +10,13 @@ function Activation(input) {
       break;
     case "ReLU": 
       return Math.max(0,input)
+      break;
+    case "Leaky ReLU":
+      if (input > 0) {
+        return input
+      } else {
+        return gradient * input
+      }
       break;
     default:
       break;
@@ -25,6 +33,13 @@ function DerivativeActivation(input) {
         return 1
       } else {
         return 0 // Derivative is undefined at 0
+      }
+      break;
+      case "Leaky ReLU":
+      if (input > 0) {
+        return 1
+      } else {
+        return gradient
       }
       break;
     default:
@@ -88,8 +103,8 @@ function Backprop() {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(1, Math.max(-1, biases[i+1][j]))
       for (let k=0; k<structure[i]; k++) {
-        // L1 regularisation
-        weights[i+1][j][k] -= learnrate * (WeightCost(i+1,j,k) + (L1strength * Math.sign(weights[i+1][j][k])) + (L2strength * (weights[i+1][j][k] ** 2)))
+        // Elastic net regularisation
+        weights[i+1][j][k] -= learnrate * (WeightCost(i+1,j,k) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2)))
         weights[i+1][j][k] = Math.min(1, Math.max(-1, weights[i+1][j][k]))
       }
     }
