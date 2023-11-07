@@ -159,6 +159,12 @@ function CreateGraph() {
   biasrange = document.getElementById("biasrange").value
   l1strength = document.getElementById("L1strength").value
   l2strength = document.getElementById("L2strength").value
+
+  batchsize = document.getElementById("batchsize").value
+
+  if (document.getElementById("batch").value == true) {
+    batchnorm = "after"
+  }
   
   activation = String(document.getElementById("activation").value).trim()
 
