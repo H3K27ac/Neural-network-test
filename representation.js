@@ -89,6 +89,7 @@ function CreateGraph() {
     for (let j=0; j<structure[i+1]; j++) {
       let subsubarray = [];
       subarray2.push(0)
+      document.getElementById("layers").innerHTML = "L"
       for (let k=0; k<structure[i]; k++) {
         let weight = document.createElement("div")
         weight.className = "weight"
@@ -114,6 +115,7 @@ function CreateGraph() {
       }
       subarray.push(subsubarray)
     }
+    document.getElementById("layers").innerHTML = "LL"
     weights.push(subarray)
     biases.push(subarray2)
   }
