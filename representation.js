@@ -12,9 +12,10 @@ let batchbeta = [0];
 let batchgamma = [0];
 let batchmean = [0];
 let batchvar = [0];
-let batchmovingmean = [0];
-let batchmovingvar = [0];
+let batchmeanmoving = [0];
+let batchvarmoving = [0];
 let batchsize;
+let batchcount;
 let batchnorm = "none";
 
 // Input variables
@@ -47,7 +48,10 @@ function DeleteGraph() {
   batchgamma = [0];
   batchmean = [0];
   batchvar = [0];
-  batchsize;
+  batchmeanmoving = [0];
+  batchvarmoving = [0];
+  batchsize = 0;
+  batchcount = 0;
   batchnorm = "none";
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
@@ -187,8 +191,8 @@ function CreateGraph() {
       batchgamma.push(0)
       batchmean.push(subarray)
       batchvar.push(subarray)
-      batchmovingmean.push(0)
-      batchmovingvar.push(0)
+      batchmeanmoving.push(subarray)
+      batchvarmoving.push(subarray)
     } else {
       neurons.push(subarray)
       neurons2.push(subarray)
