@@ -43,6 +43,7 @@ function NeuronCost(i,j) {
   }
   let sum = 0;
   for (let k=0; k<structure[i+1]; k++) {
+    document.getElementById("trainingcount").innerHTML = "very broken"
     sum += weights[i+1] * DerivativeActivation(neurons2[i+1][j]) * NeuronCost(i+1,j)
   }
   return sum
