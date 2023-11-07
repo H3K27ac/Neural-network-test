@@ -1,13 +1,35 @@
 let training;
 let traincount;
-
+let activation;
 
 function Activation(input) {
-  return 1 / (1 + (Math.E ** (-1 * input)))
+  switch (activation) {
+    case "Sigmoid":
+      return 1 / (1 + (Math.E ** (-1 * input)))
+      break;
+    case "ReLU": 
+      return Math.max(0,input)
+      break;
+    default:
+      break;
+  }
 }
 
 function DerivativeActivation(input) {
-  return Activation(input) * (1 - Activation(input))
+  switch (activation) {
+    case "Sigmoid":
+      return Activation(input) * (1 - Activation(input))
+      break;
+    case "ReLU": 
+      if (input > 0) {
+        return 1
+      } else {
+        return 0 // Derivative is undefined at 0
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 function ManualFF() {
