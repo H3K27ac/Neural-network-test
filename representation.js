@@ -8,6 +8,9 @@ let layers;
 let learnrate;
 let l1strength;
 let l2strength;
+let weightrange;
+let biasrange;
+
 
 function DeleteGraph() {
   clearInterval(training);
@@ -23,6 +26,8 @@ function DeleteGraph() {
   learnrate = 0;
   l1strength = 0;
   l2strength = 0;
+  weightrange = 0;
+  biasrange = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -33,11 +38,17 @@ function DeleteGraph() {
   }
 }
 
-function Color(value) {
-  if (value == 0) return `rgb(255, 255, 255)`;
-  let red = value > 0 ? 255 : Math.round(255 * (1 + value));
-  let green = Math.round(255 * (1 - Math.abs(value)));
-  let blue = value > 0 ? Math.round(255 * (1 - value)) : 255;
+function Color(value,type) {
+  let valuerange;
+  if (value == 0) return `rgb(255, 255, 255)`
+  if (type == "weight") {
+    valuerange = weightrange
+  } else {
+    valuerange = biasrange
+  }
+  let red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
+  let green = Math.round(255 * (1 - Math.abs(value / valuerange)));
+  let blue = value > 0 ? Math.round(255 * (1 - (value / valuerange))) : 255;
   return `rgb(${red}, ${green}, ${blue})`;
 }
 
@@ -56,11 +67,11 @@ function UpdateColor() {
     for (let j=0; j<structure[i+1]; j++) { 
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
-      neuron.style.borderColor = Color(biasvalue)
+      neuron.style.borderColor = Color(biasvalue,"bias")
       for (let k=0; k<structure[i]; k++) {
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
-        weight.style.backgroundColor = Color(weightvalue)
+        weight.style.backgroundColor = Color(weightvalue,"weight")
       }
     }
   }
@@ -108,8 +119,11 @@ function CreateGraph() {
   structure.push(0)
 
   learnrate = document.getElementById("learnrate").value
+  weightrange = document.getElementById("weightrange").value
+  biasrange = document.getElementById("biasrange").value
   l1strength = document.getElementById("L1strength").value
   l2strength = document.getElementById("L2strength").value
+  
   activation = String(document.getElementById("activation").value).trim()
 
   for (let i=0; i<structure[0]; i++) {
