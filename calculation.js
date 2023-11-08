@@ -54,8 +54,8 @@ function BatchForwardPass() {
   let sum;
   let batchsum;
   for (let i=0; i<layers; i++) {
-    batchsum = 0;
     for (let j=0; j<structure[i+1]; j++) {
+      batchsum = 0;
       for (let n=0; n<batchsize; n++) {
         sum = 0
         for (let k=0; k<structure[i]; k++) {
