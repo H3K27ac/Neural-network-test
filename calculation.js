@@ -69,6 +69,7 @@ function BatchForwardPass() {
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
+      Testing()
       batchmean[i+1][j] = batchsum / batchsize
       if (i==0 && j==0) {
         document.getElementById("training").innerHTML = batchsize + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
@@ -76,6 +77,7 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
+      Testing()
       document.getElementById("layers").innerHTML = "beforevar"
       batchvar[i+1][j] = batchsum2 / batchsize
       for (let n=0; n<batchsize; n++) {
