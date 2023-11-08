@@ -82,6 +82,7 @@ function BatchForwardPass() {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
       }
+      Testing()
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
       if (batchcount == 0) {
