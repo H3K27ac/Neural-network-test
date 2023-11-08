@@ -176,7 +176,15 @@ function CreateGraph() {
   }
   
   for (let i=0; i<structure[layers-1]; i++) {
-    targets.push(0)
+    if (batchnorm !== "none") {
+      let subarray = [];
+      for (let n=0; n<batchsize; n++) {
+        subarray.push(0)
+      }
+      targets.push(subarray)
+    } else {
+      targets.push(0)
+    }
   }
   
   for (let i=0; i<layers; i++) {
