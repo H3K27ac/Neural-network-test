@@ -25,7 +25,6 @@ function Activation(input) {
 function DerivativeActivation(input) {
   switch (activation) {
     case "Sigmoid":
-      document.getElementById("layers").innerHTML = batch[0][0][0] + "," + neurons2[0][0][0] + "," + batchmean[1][0]
       return Activation(input) * (1 - Activation(input))
     case "ReLU": 
       if (input > 0) {
@@ -119,7 +118,6 @@ function FeedForward() {
 function Testing() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      batchmean[i+1][j] += 1
       let text = document.createElement("span")
       text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "(" + (i+1) + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
@@ -130,7 +128,6 @@ function Testing() {
 function Testing2() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      neurons2[i][j] += 0.1
       let text = document.createElement("span")
       text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
