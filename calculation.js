@@ -67,7 +67,7 @@ function BatchForwardPass() {
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
         if (i==0 && j==0 && n==batchsize-1) {
-        document.getElementById("training").innerHTML = sum + "," + batchsize + "," + batchsum
+        document.getElementById("training").innerHTML = batchsum + "," + batchsize + "," + batchsum / batchsize
         }
       }
       batchmean[i+1][j] = batchsum / batchsize
