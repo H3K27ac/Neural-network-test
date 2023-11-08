@@ -186,44 +186,64 @@ function CreateGraph() {
   }
   
   for (let i=0; i<layers; i++) {
-    let subarray = [];
+    let betasubarray = [];
+    let gammasubarray = [];
+    let meansubarray = [];
+    let varsubarray = [];
+    let movingmeansubarray = [];
+    let movingvarsubarray = [];
     let batchsubarray = [];
+    let neuronssubarray = [];
+    let neurons2subarray = [];
+    let batchneuronssubarray = [];
+    let batchneurons2subarray = [];
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
     for (let j=0; j<structure[i]; j++) {
-      let subsubarray = [];
+      let batchsubsubarray = [];
+      let neuronssubsubarray = [];
+      let neurons2subsubarray = [];
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
       column.appendChild(neuron)
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
-          subsubarray.push(0)
+          batchsubsubarray.push(0)
+          neuronssubsubarray.push(0)
+          neurons2subsubarray.push(0)
         }
-        batchsubarray.push(subsubarray)
+        batchsubarray.push(batchsubsubarray)
+        batchneuronssubarray.push(neuronssubsubarray)
+        batchneurons2subarray.push(neurons2subsubarray)
       } else {
-        subarray.push(0)
+        neuronssubarray.push(0)
+        neurons2subarray.push(0)
       }
     }
     document.getElementById("container").appendChild(column)
-      
     if (batchnorm != "none") {
       for (let j=0; j<structure[i+1]; j++) {
-        subarray.push(0)
+        betasubarray.push(0)
+        gammasubarray.push(0)
+        meansubarray.push(0)
+        varsubarray.push(0)
+        movingmeansubarray.push(0)
+        movingvarsubarray.push(0)
       }
-      batchbeta.push(subarray)
-      batchgamma.push(subarray)
-      batchmean.push(subarray)
-      batchvar.push(subarray)
-      batchmeanmoving.push(subarray)
-      batchvarmoving.push(subarray)
+      batchbeta.push(betasubarray)
+      batchgamma.push(gammasubarray)
+      batchmean.push(meansubarray)
+      batchvar.push(varsubarray)
+      batchmeanmoving.push(movingmeansubarray)
+      batchvarmoving.push(movingvarsubarray)
       batch.push(batchsubarray)
-      neurons.push(batchsubarray)
-      neurons2.push(batchsubarray)
+      neurons.push(batchneuronssubarray)
+      neurons2.push(batchneurons2subarray)
     } else {
-      neurons.push(subarray)
-      neurons2.push(subarray)
+      neurons.push(neuronssubarray)
+      neurons2.push(neurons2subarray)
     }
   }
   
