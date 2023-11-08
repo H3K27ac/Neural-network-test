@@ -2,7 +2,7 @@ let training;
 let traincount;
 let activation = "Sigmoid";
 let gradient = 0.05;
-let epsilon = 0.00001;
+let epsilon = 1;
 
 
 function Activation(input) {
