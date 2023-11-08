@@ -68,15 +68,15 @@ function BatchForwardPass() {
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
-      if (i==0 && j==0) {
-        document.getElementById("training").innerHTML = batchsum + "," + batchsize + "," + batchsum / batchsize + "," + batchmean[1][0]
-        }
       batchsum = 0
       for (let n=0; n<batchsize; n++) {
         batchsum += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
       document.getElementById("layers").innerHTML = "beforevar"
       batchvar[i+1][j] = batchsum / batchsize
+      if (i==0 && j==0) {
+        document.getElementById("training").innerHTML = batchsize + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
+        }
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
