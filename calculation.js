@@ -155,47 +155,47 @@ function BatchNeuronCost(i,j,n) {
   if (i == layers-1) {
     return 2 * (neurons[i][j][n] - targets[j][n])
   } else {
-    let sum1 = 0;
+    let sum = 0;
     for (let k=0; k<structure[i+1]; k++) {
       document.getElementById("layers").innerHTML = "neuroncost"
-      sum1 += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
+      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
     }
-    return sum1
+    return sum
   }
 }
 function BatchNormCost(i,j,n) {
   return batchgamma[i][j] * BatchNeuronCost(i,j,n)
 }
 function BatchGammaCost(i,j) {
-  let sum2 = 0;
+  let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "gammacost"
-    sum2 += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) * BatchNeuronCost(i,j,n)
+    sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) * BatchNeuronCost(i,j,n)
   }
-  return sum2
+  return sum
 }
 function BatchBetaCost(i,j) {
-  let sum3 = 0;
+  let sum = 0;
   for (let n=0; n<batchsize; n++) {
-    sum3 += BatchNeuronCost(i,j,n)
+    sum += BatchNeuronCost(i,j,n)
   }
-  return sum3
+  return sum
 }
 function BatchVarCost(i,j) {
-  let sum4 = 0;
+  let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum4 += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + batchepsilon[i][j],-3/2))
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + batchepsilon[i][j],-3/2))
   }
-  return sum4
+  return sum
 }
 function BatchMeanCost(i,j) {
-  let sum5 = 0;
+  let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "meancost"
-    sum5 += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
+    sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
-  return sum5
+  return sum
 }
 function BatchCost(i,j,n) {
   document.getElementById("layers").innerHTML = "batchcost"
