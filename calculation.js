@@ -65,9 +65,7 @@ function BatchForwardPass() {
         neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
-        if (n==3) {
         document.getElementById("training").innerHTML = sum 
-        }
       }
       batchmean[i+1][j] = batchsum / batchsize
       batchsum = 0
@@ -78,7 +76,7 @@ function BatchForwardPass() {
       batchvar[i+1][j] = batchsum / batchsize
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
-        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + Math.pow(1,-5) + batchbeta[i+1][j]
+        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + Math.pow(10,-5) + batchbeta[i+1][j]
       }
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
@@ -172,7 +170,7 @@ function BatchGammaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "gammacost"
-    sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] + Math.pow(1,-5)) * BatchNeuronCost(i,j,n)
+    sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] + Math.pow(10,-5)) * BatchNeuronCost(i,j,n)
   }
   return sum
 }
@@ -187,7 +185,7 @@ function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + Math.pow(1,-5),-3/2)) // Add batch epsilon
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + Math.pow(10,-5),-3/2)) // Add batch epsilon
   }
   return sum
 }
@@ -195,13 +193,13 @@ function BatchMeanCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "meancost"
-    sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + Math.pow(1,-5)) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
+    sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + Math.pow(10,-5)) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
   return sum
 }
 function BatchCost(i,j,n) {
   document.getElementById("layers").innerHTML = "batchcost"
-  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + Math.pow(1,-5)) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
+  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + Math.pow(10,-5)) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
 
 function Backprop() {
