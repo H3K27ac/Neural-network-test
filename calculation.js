@@ -127,6 +127,17 @@ function Testing() {
   }
 }
 
+function Testing2() {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i]; j++) {
+      neurons2[i][j] += 0.1
+      let text = document.createElement("span")
+      text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")"
+      document.getElementById("inputfield").appendChild(text)
+    }
+  }
+}
+
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
     targets[i] = 1
