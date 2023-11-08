@@ -185,7 +185,7 @@ function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j],-3/2)) // Add batch epsilon
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + batchepsilon[i][j],-3/2)) // Add batch epsilon
   }
   return sum
 }
@@ -199,7 +199,7 @@ function BatchMeanCost(i,j) {
 }
 function BatchCost(i,j,n) {
   document.getElementById("layers").innerHTML = "batchcost"
-  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / m) + (BatchMeanCost(i,j) / batchsize)
+  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + batchepsilon[i][j]) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
 
 function Backprop() {
