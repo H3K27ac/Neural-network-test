@@ -153,6 +153,7 @@ function BatchNeuronCost(i,j,n) {
   } else {
     let sum = 0;
     for (let k=0; k<structure[i+1]; k++) {
+      document.getElementById("layers").innerHTML = "neuroncost"
       sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
     }
     return sum
@@ -164,6 +165,7 @@ function BatchNormCost(i,j,n) {
 function BatchGammaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
+    document.getElementById("layers").innerHTML = "gammacost"
     sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) * BatchNeuronCost(i,j,n)
   }
   return sum
@@ -178,6 +180,7 @@ function BatchBetaCost(i,j) {
 function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
+    document.getElementById("layers").innerHTML = "varcost"
     sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * (batchvar[i][j] ** 2 + batchepsilon[i][j]) ** -3/2)
   }
   return sum
@@ -185,11 +188,13 @@ function BatchVarCost(i,j) {
 function BatchMeanCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
+    document.getElementById("layers").innerHTML = "meancost"
     sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
   return sum
 }
 function BatchCost(i,j,n) {
+  document.getElementById("layers").innerHTML = "batchcost"
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] ** 2 + batchepsilon[i][j]) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / m) + (BatchMeanCost(i,j) / batchsize)
 }
 
@@ -216,11 +221,13 @@ function Backprop() {
 
 function BatchBackprop() {
   BatchRandomizeInput()
+  document.getElementById("layers").innerHTML = "forward"
   BatchFeedForward()
   BatchSetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       for (let n=0; n<batchsize; n++) {
+        document.getElementById("layers").innerHTML = "very broken"
         biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
         batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
