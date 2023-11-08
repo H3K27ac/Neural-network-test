@@ -49,7 +49,7 @@ function ManualFF() {
   }
   FeedForward()
 }
-// INCOMPLETE!!!!!
+
 function BatchForwardPass() {
   let sum;
   let batchsum;
