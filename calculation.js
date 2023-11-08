@@ -63,15 +63,15 @@ function BatchForwardPass() {
         for (let k=0; k<structure[i]; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][n]
         }
+         if (i==1 && j==0) {
+        document.getElementById("training").innerHTML = sum + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
+        }
         sum += biases[i+1][j]
         neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
-      if (i==1 && j==0) {
-        document.getElementById("training").innerHTML = batchsum + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
-        }
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
