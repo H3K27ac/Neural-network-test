@@ -54,7 +54,7 @@ function BatchForwardPass() {
   let sum;
   let batchsum;
   let batchsum2;
-  for (let i=0; i<layers-1; i++) {
+  for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       batchsum = 0;
       batchsum2 = 0;
@@ -68,7 +68,6 @@ function BatchForwardPass() {
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
-      Testing()
       batchmean[i+1][j] = batchsum / batchsize
       if (i==1 && j==0) {
         document.getElementById("training").innerHTML = batchsum + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
