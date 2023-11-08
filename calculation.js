@@ -225,7 +225,7 @@ function Backprop() {
 
 function BatchBackprop() {
   BatchRandomizeInput()
-  document.getElementById("layers").innerHTML = "forward"
+  document.getElementById("layers").innerHTML = batchnorm
   BatchForwardPass()
   BatchSetTarget()
   for (let i=0; i<layers; i++) {
