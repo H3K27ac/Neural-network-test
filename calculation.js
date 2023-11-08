@@ -68,19 +68,19 @@ function BatchForwardPass() {
         }
         sum += biases[i+1][j]
         neurons2[i+1][j][n] = sum
-        batch[i][j][n] = Activation(sum)
+        batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
       for (let n=0; n<batchsize; n++) {
-        batchsum2 += (batch[i][j][n] - batchmean[i+1][j]) ** 2
+        batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
       document.getElementById("layers").innerHTML = "beforevar"
       batchvar[i+1][j] = batchsum2 / batchsize
       Testing()
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
-        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
+        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + 1)) + batchbeta[i+1][j]
       }
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
