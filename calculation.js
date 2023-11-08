@@ -185,7 +185,7 @@ function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + batchepsilon[i][j],-3/2))
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j],-3/2)) // Add batch epsilon
   }
   return sum
 }
