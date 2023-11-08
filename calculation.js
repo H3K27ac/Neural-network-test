@@ -114,6 +114,16 @@ function FeedForward() {
   UpdateColor()
 }
 
+function Testing() {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i+1]; j++) {
+      let text = document.createElement("span")
+      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "(" + i+1 + "," + j + ")"
+      document.getElementById("inputfield").appendChild(text)
+    }
+  }
+}
+
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
     targets[i] = 1
