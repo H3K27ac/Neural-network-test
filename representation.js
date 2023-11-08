@@ -12,7 +12,6 @@ let batchbeta = [0];
 let batchgamma = [0];
 let batchmean = [0];
 let batchvar = [0];
-let batchepsilon = [0];
 let batchmeanmoving = [0];
 let batchvarmoving = [0];
 let batchsize;
@@ -49,7 +48,6 @@ function DeleteGraph() {
   batchgamma = [0];
   batchmean = [0];
   batchvar = [0];
-  batchepsilon = [0];
   batchmeanmoving = [0];
   batchvarmoving = [0];
   batchsize = 0;
@@ -199,26 +197,30 @@ function CreateGraph() {
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
       column.appendChild(neuron)
-      subarray.push(0)
       if (batchnorm != "none") {
-        for (let k=0; k<batchsize; k++) {
+        for (let n=0; n<batchsize; n++) {
           subsubarray.push(0)
         }
         batchsubarray.push(subsubarray)
+      } else {
+        subarray.push(0)
       }
     }
     document.getElementById("container").appendChild(column)
+      
     if (batchnorm != "none") {
-      batch.push(batchsubarray)
-      neurons.push(batchsubarray)
-      neurons2.push(batchsubarray)
+      for (let j=0; j<structure[i+1]; j++) {
+        subarray.push(0)
+      }
       batchbeta.push(subarray)
       batchgamma.push(subarray)
-      batchepsilon.push(subarray)
       batchmean.push(subarray)
       batchvar.push(subarray)
       batchmeanmoving.push(subarray)
       batchvarmoving.push(subarray)
+      batch.push(batchsubarray)
+      neurons.push(batchsubarray)
+      neurons2.push(batchsubarray)
     } else {
       neurons.push(subarray)
       neurons2.push(subarray)
