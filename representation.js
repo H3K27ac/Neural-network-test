@@ -162,7 +162,7 @@ function CreateGraph() {
 
   batchsize = document.getElementById("batchsize").value
 
-  if (document.getElementById("batch").value == true) {
+  if (document.getElementById("batch").checked == true) {
     batchnorm = "after"
   }
   
