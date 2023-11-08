@@ -24,7 +24,7 @@ function Activation(input) {
 function DerivativeActivation(input) {
   switch (activation) {
     case "Sigmoid":
-      document.getElementById("layers").innerHTML = Activation(input) * (1 - Activation(input))
+      document.getElementById("layers").innerHTML = input
       return Activation(input) * (1 - Activation(input))
     case "ReLU": 
       if (input > 0) {
