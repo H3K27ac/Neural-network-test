@@ -54,11 +54,13 @@ function ManualFF() {
 function BatchForwardPass() {
   let sum;
   let batchsum;
+  let batchsum2;
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       batchsum = 0;
+      batchsum2 = 0;
       for (let n=0; n<batchsize; n++) {
-        sum = 0
+        sum = 0;
         for (let k=0; k<structure[i]; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][n]
         }
@@ -68,12 +70,11 @@ function BatchForwardPass() {
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
-      batchsum = 0
       for (let n=0; n<batchsize; n++) {
-        batchsum += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
+        batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
       document.getElementById("layers").innerHTML = "beforevar"
-      batchvar[i+1][j] = batchsum / batchsize
+      batchvar[i+1][j] = batchsum2 / batchsize
       if (i==0 && j==0) {
         document.getElementById("training").innerHTML = batchsize + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
         }
