@@ -226,7 +226,7 @@ function Backprop() {
 function BatchBackprop() {
   BatchRandomizeInput()
   document.getElementById("layers").innerHTML = "forward"
-  BatchFeedForward()
+  BatchForwardPass()
   BatchSetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
