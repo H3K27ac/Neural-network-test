@@ -233,11 +233,13 @@ function BatchCost(i,j,n) {
 function Backprop() {
   RandomizeInput()
   FeedForward()
+  Testing2()
   SetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
+      Testing2()
       for (let k=0; k<structure[i]; k++) {
         // Elastic net regularisation
         let error = WeightCost(i+1,j,k) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
