@@ -118,7 +118,7 @@ function Testing() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       let text = document.createElement("span")
-      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "(" + i+1 + "," + j + ")"
+      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "(" + (i+1) + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
     }
   }
@@ -241,6 +241,7 @@ function BatchBackprop() {
   BatchRandomizeInput()
   document.getElementById("layers").innerHTML = batchnorm
   BatchForwardPass()
+  Testing()
   BatchSetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
