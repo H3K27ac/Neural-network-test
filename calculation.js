@@ -70,8 +70,8 @@ function BatchForwardPass() {
       }
       Testing()
       batchmean[i+1][j] = batchsum / batchsize
-      if (i==0 && j==0) {
-        document.getElementById("training").innerHTML = batchsize + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
+      if (i==1 && j==0) {
+        document.getElementById("training").innerHTML = batchsum + "," + batchsum / batchsize + "," + batchmean[1][0] + "," + batchvar[1][0]
         }
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
