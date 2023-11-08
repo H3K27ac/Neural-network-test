@@ -2,7 +2,7 @@ let training;
 let traincount;
 let activation = "Sigmoid";
 let gradient = 0.05;
-let epsilon = 1;
+let epsilon = 0.00001;
 
 
 function Activation(input) {
@@ -75,9 +75,9 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
-      Testing()
       document.getElementById("layers").innerHTML = "beforevar"
       batchvar[i+1][j] = batchsum2 / batchsize
+      Testing()
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
