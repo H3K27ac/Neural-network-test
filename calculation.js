@@ -66,7 +66,7 @@ function BatchForwardPass() {
         neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
-        if (i==0 && j==0 && n==0) {
+        if (i==0 && j==0 && n==1) {
         document.getElementById("training").innerHTML = sum + "," + batchsize + "," + batchsum
         }
       }
