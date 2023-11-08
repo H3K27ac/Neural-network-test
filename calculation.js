@@ -80,7 +80,7 @@ function BatchForwardPass() {
       Testing()
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
-        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + 1)) + batchbeta[i+1][j]
+        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
       }
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
@@ -118,7 +118,7 @@ function Testing() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       let text = document.createElement("span")
-      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "(" + (i+1) + "," + j + ")"
+      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "," + batchbeta[i+1][j] + "(" + (i+1) + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
     }
   }
