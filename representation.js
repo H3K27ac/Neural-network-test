@@ -200,6 +200,13 @@ function Randomize() {
   }
 }
 
+function Typeset() {
+  let object = document.getElementsByClassName("typeset")
+  for (let i=0; i<object.length; i++) {
+    MathJax.typeset([object[i]])
+  }
+}
+
 function ChooseFunction(name) {
   activation = name
 }
