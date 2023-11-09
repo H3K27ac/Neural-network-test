@@ -82,6 +82,7 @@ body {
 }
 
 .neurontext {
+  display: inline-block;
   font-size: 10px;
   color: white;
   margin: 1px;
