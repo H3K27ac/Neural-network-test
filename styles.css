@@ -86,8 +86,8 @@ body {
   background-color: black;
   border: 1px solid white;
   font-size: 0px;
-  height: 8px;
-  margin: 0px;
+  height: 10px;
+  margin: 0px auto;
 }
 
 .neurontext {
