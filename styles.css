@@ -84,15 +84,15 @@ body {
 .neuroncontainer {
   display: inline-block;
   background-color: black;
-  border: 1px solid white;
-  margin: 1px;
+  border: 0.5px solid white;
+  font-size: 0px;
+  margin: 0px;
 }
 
 .neurontext {
   display: inline-block;
   font-size: 10px;
   color: white;
-  margin: 1px;
 }
 
 .weight {
