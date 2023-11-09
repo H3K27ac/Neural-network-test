@@ -86,9 +86,10 @@ body {
   align-items: center;
   background-color: black;
   border: 1px solid white;
+  border-radius: 2px;
   font-size: 0px;
   height: 12px;
-  width: 20px;
+  width: 25px;
   margin-top: 20px;
   z-index: 3;
 }
@@ -97,7 +98,7 @@ body {
   display: inline-block;
   font-size: 10px;
   color: white;
-  bottom-margin: 30px;
+  bottom-margin: 50px;
 }
 
 .weight {
