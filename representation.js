@@ -255,6 +255,7 @@ function CreateGraph() {
         betatext.id = "betatext " + i + "," + j
         betatext.innerHTML = "$$ \\beta $$"
         neuron.appendChild(betatext)
+        MathJax.typeset([betatext])
         let neurontext = document.createElement("span")
         neurontext.className = "neurontext"
         neurontext.innerHTML = ","
@@ -264,6 +265,7 @@ function CreateGraph() {
         gammatext.id = "gammatext " + i + "," + j
         gammatext.innerHTML = "$$ \\gamma $$"
         neuron.appendChild(gammatext)
+        MathJax.typeset([gammatext])
       }
       column.appendChild(neuron)
       if (batchnorm != "none") {
