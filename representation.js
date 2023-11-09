@@ -120,7 +120,7 @@ function UpdateColor() {
       neuron.style.backgroundColor = Color2(neuronvalue2)
       let neuronvalue = document.getElementById("neuronvalue " + i + "," + j)
       neuronvalue.innerHTML = neuronvalue2.toFixed(2)
-      if (neuronvalue2 => 0.5) {
+      if (neuronvalue2 > 0.5) {
         neuronvalue.color = black
       } else {
         neuronvalue.color = white
