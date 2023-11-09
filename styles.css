@@ -28,11 +28,12 @@ body {
   background-color: white;
   border: 1px solid black;
   border-radius: 0px;
-  padding: 0px;
-  margin: 2px;
+  padding: 2px;
+  margin: 0px;
 }
 
 .InputTable {
+  border-collapse: collapse;
   border-spacing: 2px;
   background-color: lightblue;
   border: 1px solid black;
@@ -76,7 +77,12 @@ body {
   border-radius: 50%;
   background-color: white;
   margin: 10px;
+  align-items: center;
   z-index: 2;
+}
+
+.neurontext {
+  font-size: 10px;
 }
 
 .weight {
