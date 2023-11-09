@@ -88,7 +88,8 @@ function BatchForwardPass() {
       batchvar[i+1][j] = batchsum2 / batchsize
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
-        neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
+        batchnormed[i+1][j][n] = (batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)
+        neurons[i+1][j][n] = batchgamma[i+1][j] * batchnormed[i+1][j][n] + batchbeta[i+1][j]
       }
       let text4 = document.createElement("span")
       text4.innerHTML = "AFTER:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
@@ -207,7 +208,7 @@ function BatchGammaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "gammacost"
-    sum += (batch[i][j][n] - batchmean[i][j]) / Math.sqrt(batchvar[i][j] + epsilon) * BatchNeuronCost(i,j,n)
+    sum += batchnormed[i][j][n] * BatchNeuronCost(i,j,n)
   }
   return sum
 }
