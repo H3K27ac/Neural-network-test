@@ -129,7 +129,7 @@ function Testing3() {
     for (let j=0; j<structure[i]; j++) {
       for (let n=0; n<batchsize; n++) {
         let text = document.createElement("span")
-        text.innerHTML = batch[i][j][n] + "," + neurons[i][j][n] + "," + neurons2[i][j][n] + "(" + i + "," + j + "," + n ")"
+        text.innerHTML = batch[i][j][0] + "," + neurons[i][j][0] + "," + neurons2[i][j][0] + "(" + i + "," + j + "," + n ")"
         document.getElementById("inputfield").appendChild(text)
       }
     }
