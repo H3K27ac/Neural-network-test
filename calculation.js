@@ -82,7 +82,6 @@ function BatchForwardPass() {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
       }
-      Testing()
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
       if (batchcount == 0) {
@@ -132,6 +131,7 @@ function Testing3() {
         let text = document.createElement("span")
         text.innerHTML = batch[i+1][j][n] + "," + neurons[i+1][j][n] + "," + neurons2[i+1][j][n] + "(" + (i+1) + "," + j + "," + n ")"
         document.getElementById("inputfield").appendChild(text)
+      }
     }
   }
 }
