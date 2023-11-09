@@ -93,10 +93,11 @@ function Color2(value) {
 function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
+      let neuronvalue;
       if (batchnorm != "none") {
-        let neuronvalue = neurons[i][j][batchsize-1]
+        neuronvalue = neurons[i][j][batchsize-1]
       } else {
-        let neuronvalue = neurons[i][j]
+        neuronvalue = neurons[i][j]
       }
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
