@@ -121,9 +121,9 @@ function UpdateColor() {
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
       neuronvaluetext.innerHTML = neuronvalue.toFixed(2)
       if (neuronvalue > 0.5) {
-        neuronvaluetext.color = `rgb(0,0,0)`
+        neuronvaluetext.style.color = `rgb(0,0,0)`
       } else {
-        neuronvaluetext.color = `rgb(255,255,255)`
+        neuronvaluetext.style.color = `rgb(255,255,255)`
       }
       if (batchnorm != "none" && i>0) {
         betavalue = batchbeta[i][j]
