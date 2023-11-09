@@ -93,7 +93,11 @@ function Color2(value) {
 function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      let neuronvalue = neurons[i][j]
+      if (batchnorm != "none") {
+        let neuronvalue = neurons[i][j][batchsize-1]
+      } else {
+        let neuronvalue = neurons[i][j]
+      }
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
     }
@@ -148,6 +152,10 @@ function Randomize() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
+      if (batchnorm != "none") {
+        batchgamma[i+1][j] = (Math.random() * 2 - 1);
+        batchbeta[i+1][j] = (Math.random() * 2 - 1);
+      }
       for (let k=0; k<structure[i]; k++) {
         weights[i+1][j][k] = (Math.random() * 2 - 1) * weightrange;
       }
