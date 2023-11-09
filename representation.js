@@ -242,20 +242,22 @@ function CreateGraph() {
     }
     document.getElementById("container").appendChild(column)
     if (batchnorm != "none") {
-      for (let j=0; j<structure[i+1]; j++) {
-        betasubarray.push(0)
-        gammasubarray.push(0)
-        meansubarray.push(0)
-        varsubarray.push(0)
-        movingmeansubarray.push(0)
-        movingvarsubarray.push(0)
-      }
-      batchbeta.push(betasubarray)
-      batchgamma.push(gammasubarray)
-      batchmean.push(meansubarray)
-      batchvar.push(varsubarray)
-      batchmeanmoving.push(movingmeansubarray)
-      batchvarmoving.push(movingvarsubarray)
+      if (i < layers-1) {
+        for (let j=0; j<structure[i+1]; j++) {
+          betasubarray.push(0)
+          gammasubarray.push(0)
+          meansubarray.push(0)
+          varsubarray.push(0)
+          movingmeansubarray.push(0)
+          movingvarsubarray.push(0)
+        }
+        batchbeta.push(betasubarray)
+        batchgamma.push(gammasubarray)
+        batchmean.push(meansubarray)
+        batchvar.push(varsubarray)
+        batchmeanmoving.push(movingmeansubarray)
+        batchvarmoving.push(movingvarsubarray)
+      } 
       batch.push(batchsubarray)
       batchnormed.push(batchnormedsubarray)
       neurons.push(batchneuronssubarray)
