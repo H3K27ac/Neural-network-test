@@ -212,6 +212,8 @@ function CreateGraph() {
 
   if (document.getElementById("batch").checked == true) {
     batchnorm = "after"
+  } else {
+    batchnorm = "none"
   }
   
   activation = String(document.getElementById("activation").value).trim()
