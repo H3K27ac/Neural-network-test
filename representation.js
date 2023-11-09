@@ -131,6 +131,10 @@ function UpdateColor() {
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
+      if (batchnorm != "none") {
+        let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
+        neuroncontainer.style.borderColor = Color(biasvalue,"bias")
+      }
       for (let k=0; k<structure[i]; k++) {
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
@@ -264,6 +268,7 @@ function CreateGraph() {
       if (batchnorm != "none" && i>0) {
         let neuroncontainer = document.createElement("div")
         neuroncontainer.className = "neuroncontainer"
+        neuroncontainer.id = "neuroncontainer " + i + "," + j
         let betatext = document.createElement("span")
         betatext.className = "neurontext"
         betatext.id = "betatext " + i + "," + j
