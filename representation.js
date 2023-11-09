@@ -247,9 +247,8 @@ function CreateGraph() {
     }
   }
   let text2 = document.createElement("span")
-  document.getElementById("training").innerHTML = JSON.stringify([1,[0,1]])
-  text2.innerHTML = JSON.stringify(neurons)
   document.getElementById("training").innerHTML = "2"
+  text2.innerHTML = JSON.stringify(batch) + JSON.stringify(neurons) + JSON.stringify(neurons2)
   document.getElementById("inputfield").appendChild(text2) 
   
   for (let i=0; i<layers; i++) {
