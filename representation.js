@@ -251,7 +251,7 @@ function CreateGraph() {
     }
   }
   
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers-1; i++) {
     let subarray = [];
     let subarray2 = [];
     for (let j=0; j<structure[i+1]; j++) {
