@@ -195,9 +195,9 @@ function BatchNeuronCost(i,j,n) {
       document.getElementById("layers").innerHTML = "neuroncost"
       sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
     }
-    let text15 = document.createElement("span")
-      text15.innerHTML = "NeuronCost:  " + sum
-      document.getElementById("inputfield").appendChild(text15)
+  //  let text15 = document.createElement("span")
+  //    text15.innerHTML = "NeuronCost:  " + sum
+  //    document.getElementById("inputfield").appendChild(text15)
     return sum
   }
 }
