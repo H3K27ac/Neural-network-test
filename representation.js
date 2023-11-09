@@ -106,10 +106,15 @@ function UpdateColor() {
   }
 }
 
-function ClearNeurons() {
+function ClearNeurons(batch) {
   for (let i=1; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      neurons[i][j] = 0
+      if (batch == true) {
+        for (let n=0; n<batchsize; n++) {
+          neurons[i][j][n] = 0
+      } else {
+        neurons[i][j] = 0
+      }
     }
   }
 }
