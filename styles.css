@@ -98,7 +98,7 @@ body {
   display: inline-block;
   font-size: 10px;
   color: white;
-  bottom-margin: 50px;
+  margin: 1px auto;
 }
 
 .weight {
