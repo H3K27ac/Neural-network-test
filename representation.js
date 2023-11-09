@@ -113,8 +113,8 @@ function UpdateColor() {
         gammavalue = batchgamma[i][j]
         let betatext = document.getElementById("betatext " + i + "," + j)
         let gammatext = document.getElementById("gammatext " + i + "," + j)
-        betatext.style.color = Color(betatext,"batchbeta")
-        gammatext.style.color = Color(gammatext,"batchgamma")
+        betatext.style.color = Color(betavalue,"batchbeta")
+        gammatext.style.color = Color(gammavalue,"batchgamma")
       } 
     }
     for (let j=0; j<structure[i+1]; j++) { 
