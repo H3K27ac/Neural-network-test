@@ -73,9 +73,6 @@ function BatchForwardPass() {
         neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
-        let text6 = document.createElement("span")
-      text6.innerHTML = "SUM:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) +  ",    " + sum +  ",    " + batchsum
-      document.getElementById("inputfield").appendChild(text6)
       }
       batchmean[i+1][j] = batchsum / batchsize
       let text3 = document.createElement("span")
@@ -104,6 +101,9 @@ function BatchForwardPass() {
         batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
       }
       batchcount += 1
+      let text6 = document.createElement("span")
+      text6.innerHTML = "After exp:  " +  JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
+      document.getElementById("inputfield").appendChild(text6)
     }
   }
   UpdateColor()
