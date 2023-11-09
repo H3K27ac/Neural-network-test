@@ -81,6 +81,7 @@ function BatchForwardPass() {
         document.getElementById("layers").innerHTML = "neurons"
         batchnormed[i+1][j][n] = (batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)
         neurons[i+1][j][n] = batchgamma[i+1][j] * batchnormed[i+1][j][n] + batchbeta[i+1][j]
+        neurons[i+1][j][n] = Math.min(1, Math.max(0, neurons[i+1][j][n]))
       }
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
@@ -113,6 +114,7 @@ function FeedForward() {
       sum += biases[i+1][j]
       neurons2[i+1][j] = sum
       neurons[i+1][j] = Activation(sum)
+      neurons[i+1][j] = Math.min(1, Math.max(0, neurons[i+1][j]))
     }
   }
   UpdateColor()
@@ -268,6 +270,8 @@ function BatchBackprop() {
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
         batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
         batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
+        batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j]))
+        batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j]))
         for (let k=0; k<structure[i]; k++) {
           // Elastic net regularisation
           let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
