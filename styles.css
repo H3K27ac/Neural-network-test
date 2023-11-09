@@ -32,6 +32,10 @@ body {
   margin: 5px;
 }
 
+.inputheading {
+  font-size: 10px;
+}
+
 .InputTable {
   border-collapse: collapse;
   border-spacing: 2px;
