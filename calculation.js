@@ -99,7 +99,7 @@ function BatchForwardPass() {
       }
       batchcount += 1
       let text6 = document.createElement("span")
-      text6.innerHTML = "After exp:  " +  JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
+      text6.innerHTML = "After exp:  " +  JSON.stringify(batchnormed) + ",    " + JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
       document.getElementById("inputfield").appendChild(text6)
     }
   }
