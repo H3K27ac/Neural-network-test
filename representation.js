@@ -147,9 +147,9 @@ function RandomizeInput() {
 
 function Randomize() {
   ClearNeurons()
-  for (let j=0; j<structure[0]; j++) {
-      neurons[0][j] = Math.random();
-  }
+//  for (let j=0; j<structure[0]; j++) {
+   //   neurons[0][j] = Math.random();
+//  }
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
