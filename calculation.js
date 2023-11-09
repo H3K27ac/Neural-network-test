@@ -52,7 +52,7 @@ function ManualFF() {
 
 function BatchForwardPass() {
   let text5 = document.createElement("span")
-      text5.innerHTML = "DEBUG:  " + JSON.stringify(weights) + ",    " + JSON.stringify(biases)
+      text5.innerHTML = "DEBUG:  " + JSON.stringify(weights) + ",    " + JSON.stringify(biases) + ",    " + JSON.stringify(structure)
       document.getElementById("inputfield").appendChild(text5)
   let sum;
   let batchsum;
