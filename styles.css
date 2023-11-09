@@ -83,6 +83,7 @@ body {
 
 .neuroncontainer {
   display: inline-block;
+  align-items: center;
   background-color: black;
   border: 1px solid white;
   font-size: 0px;
@@ -96,7 +97,6 @@ body {
   display: inline-block;
   font-size: 10px;
   color: white;
-  margin-bottom: 10px;
 }
 
 .weight {
