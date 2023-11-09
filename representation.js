@@ -25,6 +25,10 @@ let l2strength;
 let weightrange;
 let biasrange;
 
+// Visuals
+let showneurons = "all";
+let showbiases = true;
+let showweights = true;
 
 
 function DeleteGraph() {
@@ -246,10 +250,6 @@ function CreateGraph() {
       neurons2.push(neurons2subarray)
     }
   }
-  let text2 = document.createElement("span")
-  document.getElementById("training").innerHTML = "2"
-  text2.innerHTML = JSON.stringify(batch) + JSON.stringify(neurons) + JSON.stringify(neurons2)
-  document.getElementById("inputfield").appendChild(text2) 
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
