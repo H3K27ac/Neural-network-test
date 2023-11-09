@@ -108,16 +108,23 @@ function Color2(value) {
 function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      let neuronvalue;
+      let neuronvalue2;
       let gammavalue;
       let betavalue;
       if (batchnorm != "none") {
-        neuronvalue = neurons[i][j][0] // To be improved
+        neuronvalue2 = neurons[i][j][0] // To be improved
       } else {
-        neuronvalue = neurons[i][j]
+        neuronvalue2 = neurons[i][j]
       }
       let neuron = document.getElementById("neuron " + i + "," + j)
-      neuron.style.backgroundColor = Color2(neuronvalue)
+      neuron.style.backgroundColor = Color2(neuronvalue2)
+      let neuronvalue = document.getElementById("neuronvalue " + i + "," + j)
+      neuronvalue.innerHTML = neuronvalue2.toFixed(2)
+      if (neuronvalue2 => 0.5) {
+        neuronvalue.color = black
+      } else {
+        neuronvalue.color = white
+      }
       if (batchnorm != "none" && i>0) {
         betavalue = batchbeta[i][j]
         gammavalue = batchgamma[i][j]
@@ -265,6 +272,10 @@ function CreateGraph() {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
+      let neuronvalue = document.createElement("span")
+      neuronvalue.className = "neuronvalue"
+      neuronvalue.id = "neuronvalue " + i + "," + j
+      neuron.appendChild(neuronvalue)
       if (batchnorm != "none" && i>0) {
         let neuroncontainer = document.createElement("div")
         neuroncontainer.className = "neuroncontainer"
