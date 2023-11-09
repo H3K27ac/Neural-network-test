@@ -136,6 +136,16 @@ function Testing3() {
   }
 }
 
+function Testing4(arr) {
+  return "[" + arr.map(item => {
+    if (Array.isArray(item)) {
+      return Testing4(item);
+    } else {
+      return item;
+    }
+  }).join(",") + "]";
+}
+
 function Testing2() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
