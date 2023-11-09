@@ -100,6 +100,9 @@ function BatchForwardPass() {
         batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
       }
       batchcount += 1
+      let text6 = document.createElement("span")
+      text6.innerHTML = "AFTER EXP:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
+      document.getElementById("inputfield").appendChild(text6)
     }
   }
   UpdateColor()
