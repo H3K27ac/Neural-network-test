@@ -247,8 +247,8 @@ function CreateGraph() {
     }
   }
   let text2 = document.createElement("span")
-  document.getElementById("training").innerHTML = Testing4([1,[2,1]])
-  text2.innerHTML = Testing4(neurons)
+  document.getElementById("training").innerHTML = JSON.stringify([1,[0,1]])
+  text2.innerHTML = JSON.stringify(neurons)
   document.getElementById("training").innerHTML = "2"
   document.getElementById("inputfield").appendChild(text2) 
   
