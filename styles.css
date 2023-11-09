@@ -34,11 +34,17 @@ body {
 
 .InputTable {
   border-collapse: collapse;
-  border-spacing: 10px;
+  border-spacing: 2px;
   background-color: lightblue;
   border: 1px solid black;
   margin: 10px auto;
   align-items: center;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
 }
 
 .button {
