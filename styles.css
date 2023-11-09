@@ -87,7 +87,8 @@ body {
   border: 1px solid white;
   font-size: 0px;
   height: 10px;
-  margin: 0px auto;
+  margin-top: 30px;
+  z-index: 3;
 }
 
 .neurontext {
