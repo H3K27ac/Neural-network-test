@@ -108,22 +108,22 @@ function Color2(value) {
 function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      let neuronvalue2;
+      let neuronvalue;
       let gammavalue;
       let betavalue;
       if (batchnorm != "none") {
-        neuronvalue2 = neurons[i][j][0] // To be improved
+        neuronvalue = neurons[i][j][0] // To be improved
       } else {
-        neuronvalue2 = neurons[i][j]
+        neuronvalue = neurons[i][j]
       }
       let neuron = document.getElementById("neuron " + i + "," + j)
-      neuron.style.backgroundColor = Color2(neuronvalue2)
-      let neuronvalue = document.getElementById("neuronvalue " + i + "," + j)
-      neuronvalue.innerHTML = neuronvalue2.toFixed(2)
-      if (neuronvalue2 > 0.5) {
-        neuronvalue.color = black
+      neuron.style.backgroundColor = Color2(neuronvalue)
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
+      neuronvaluetext.innerHTML = neuronvalue.toFixed(2)
+      if (neuronvalue > 0.5) {
+        neuronvaluetext.color = `rgb(0,0,0)`
       } else {
-        neuronvalue.color = white
+        neuronvaluetext.color = `rgb(255,255,255)`
       }
       if (batchnorm != "none" && i>0) {
         betavalue = batchbeta[i][j]
