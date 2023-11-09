@@ -247,7 +247,9 @@ function CreateGraph() {
     }
   }
   let text2 = document.createElement("span")
+  document.getElementById("training").innerHTML = "1"
   text2.innerHTML = Testing4(neurons)
+  document.getElementById("training").innerHTML = "2"
   document.getElementById("inputfield").appendChild(text2) 
   
   for (let i=0; i<layers; i++) {
