@@ -112,6 +112,7 @@ function ClearNeurons(batchmode = false) {
       if (batchmode == true) {
         for (let n=0; n<batchsize; n++) {
           neurons[i][j][n] = 0
+        }
       } else {
         neurons[i][j] = 0
       }
