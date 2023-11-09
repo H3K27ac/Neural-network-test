@@ -246,7 +246,7 @@ function CreateGraph() {
       neurons2.push(neurons2subarray)
     }
   }
-  Testing3()
+  document.getElementById("training").innerHTML = neurons
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
