@@ -51,9 +51,6 @@ function ManualFF() {
 }
 
 function BatchForwardPass() {
-  let text5 = document.createElement("span")
-      text5.innerHTML = "DEBUG:  " + JSON.stringify(weights) + ",    " + JSON.stringify(biases) + ",    " + JSON.stringify(structure)
-      document.getElementById("inputfield").appendChild(text5)
   let sum;
   let batchsum;
   let batchsum2;
@@ -85,9 +82,6 @@ function BatchForwardPass() {
         batchnormed[i+1][j][n] = (batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)
         neurons[i+1][j][n] = batchgamma[i+1][j] * batchnormed[i+1][j][n] + batchbeta[i+1][j]
       }
-      let text4 = document.createElement("span")
-      text4.innerHTML = "AFTER:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
-      document.getElementById("inputfield").appendChild(text4)
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
       if (batchcount == 0) {
@@ -98,12 +92,14 @@ function BatchForwardPass() {
         batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
       }
       batchcount += 1
-      let text6 = document.createElement("span")
-      text6.innerHTML = "After exp:  " +  JSON.stringify(batchnormed) + ",    " + JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
-      document.getElementById("inputfield").appendChild(text6)
     }
   }
 }
+
+// FOR DEBUG
+//let text6 = document.createElement("span")
+//      text6.innerHTML = "After exp:  " +  JSON.stringify(batchnormed) + ",    " + JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
+//      document.getElementById("inputfield").appendChild(text6)
 
 function FeedForward() {
   ClearNeurons()
@@ -270,10 +266,8 @@ function BatchBackprop() {
       for (let n=0; n<batchsize; n++) {
         biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
-        document.getElementById("training").innerHTML = "bias done"
         batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
         batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
-        document.getElementById("training").innerHTML = "gamma, beta done"
         for (let k=0; k<structure[i]; k++) {
           // Elastic net regularisation
           let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
@@ -296,7 +290,11 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    training = setInterval(Backprop, 100);
+    if (batchnorm != "none" {
+      training = setInterval(BatchBackprop, 1000);
+    } else {
+      training = setInterval(Backprop, 100);
+    }
   }
 }
 
