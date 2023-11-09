@@ -150,16 +150,16 @@ function Testing2() {
 
 function SetTarget() {
   for (let i=0; i<structure[layers-1]; i++) {
-    targets[i] = 1
-  }
-}
-function BatchSetTarget() {
-  for (let i=0; i<structure[layers-1]; i++) {
-    for (let n=0; n<batchsize; n++) {
-      targets[i][n] = 1
+    if (batchnorm != "none") {
+      for (let n=0; n<batchsize; n++) {
+        targets[i][n] = 1
+      }
+    } else {
+      targets[i] = 1
     }
   }
 }
+
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
@@ -223,7 +223,7 @@ function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) // Add batch epsilon
+    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
   }
   return sum
 }
@@ -265,8 +265,7 @@ function BatchBackprop() {
   BatchRandomizeInput()
   document.getElementById("layers").innerHTML = batchnorm
   BatchForwardPass()
-  Testing()
-  BatchSetTarget()
+  SetTarget()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       for (let n=0; n<batchsize; n++) {
