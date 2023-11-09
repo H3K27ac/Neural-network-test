@@ -64,6 +64,9 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         sum = 0;
         for (let k=0; k<structure[i]; k++) {
+          let text6 = document.createElement("span")
+      text6.innerHTML = "BEFORE SUM:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
+      document.getElementById("inputfield").appendChild(text6)
           sum += weights[i+1][j][k] * neurons[i][k][n]
           if (i==1 && j==0) {
         document.getElementById("training").innerHTML = sum + "," + weights[i+1][j][k] + "," + neurons[i][k][n] + "," + batchvar[1][0]
@@ -100,9 +103,6 @@ function BatchForwardPass() {
         batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
       }
       batchcount += 1
-      let text6 = document.createElement("span")
-      text6.innerHTML = "AFTER EXP:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
-      document.getElementById("inputfield").appendChild(text6)
     }
   }
   UpdateColor()
