@@ -6,7 +6,7 @@ body {
 
 .input {
   height: 20px;
-  width: 60px;
+  width: 100px;
   border: 1px solid black;
   border-radius: 1px;
   outline: none;
@@ -23,7 +23,7 @@ body {
 }
 
 .tableinput {
-  width: 100px;
+  width: 50px;
   height: 30px;
   background-color: white;
   border: 1px solid black;
@@ -34,10 +34,10 @@ body {
 
 .InputTable {
   border-collapse: collapse;
-  border-spacing: 2px;
+  border-spacing: 10px;
   background-color: lightblue;
   border: 1px solid black;
-  margin: 5px auto;
+  margin: 10px auto;
   align-items: center;
 }
 
