@@ -75,9 +75,6 @@ function BatchForwardPass() {
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
-      let text3 = document.createElement("span")
-      text3.innerHTML = "BEFORE:  " + JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
-      document.getElementById("inputfield").appendChild(text3)
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
@@ -187,6 +184,9 @@ function BatchWeightCost(i,j,k,n) {
   return neurons[i-1][k] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
 }
 function BatchBiasCost(i,j,n) {
+  let text3 = document.createElement("span")
+      text3.innerHTML = "Cost:  " + BatchNeuronCost(i,j)
+      document.getElementById("inputfield").appendChild(text3)
   return DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
 }
 function BatchNeuronCost(i,j,n) {
