@@ -260,22 +260,25 @@ function CreateGraph() {
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
       if (batchnorm != "none" && i>0) {
+        let neuroncontainer = document.createElement("div")
+        neuroncontainer.className = "neuroncontainer"
         let betatext = document.createElement("span")
         betatext.className = "neurontext"
         betatext.id = "betatext " + i + "," + j
         betatext.innerHTML = "$$ \\beta $$"
-        neuron.appendChild(betatext)
+        neuroncontainer.appendChild(betatext)
         MathJax.typeset([betatext])
         let neurontext = document.createElement("span")
         neurontext.className = "neurontext"
         neurontext.innerHTML = ","
-        neuron.appendChild(neurontext)
+        neuroncontainer.appendChild(neurontext)
         let gammatext = document.createElement("span")
         gammatext.className = "neurontext"
         gammatext.id = "gammatext " + i + "," + j
         gammatext.innerHTML = "$$ \\gamma $$"
-        neuron.appendChild(gammatext)
+        neuroncontainer.appendChild(gammatext)
         MathJax.typeset([gammatext])
+        neuron.appendChild(neuroncontainer)
       }
       column.appendChild(neuron)
       if (batchnorm != "none") {
