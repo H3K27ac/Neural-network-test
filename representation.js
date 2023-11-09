@@ -8,6 +8,7 @@ let layers;
 
 // Batch normalisation variables
 let batch = [];
+let batchnormed = [];
 let batchbeta = [0];
 let batchgamma = [0];
 let batchmean = [0];
@@ -30,6 +31,8 @@ let showneurons = "all";
 let showbiases = true;
 let showweights = true;
 
+// Sub-layers in order: neurons2 (activation) batch (norm) batchnormed (shift) neurons
+
 
 function DeleteGraph() {
   clearInterval(training);
@@ -48,6 +51,7 @@ function DeleteGraph() {
   weightrange = 0;
   biasrange = 0;
   batch = [];
+  batchnormed = [];
   batchbeta = [0];
   batchgamma = [0];
   batchmean = [0];
@@ -203,6 +207,7 @@ function CreateGraph() {
     let movingmeansubarray = [];
     let movingvarsubarray = [];
     let batchsubarray = [];
+    let batchnormedsubarray = [];
     let neuronssubarray = [];
     let neurons2subarray = [];
     let batchneuronssubarray = [];
@@ -212,6 +217,7 @@ function CreateGraph() {
     column.id = "column " + i
     for (let j=0; j<structure[i]; j++) {
       let batchsubsubarray = [];
+      let batchnormedsubsubarray = [];
       let neuronssubsubarray = [];
       let neurons2subsubarray = [];
       let neuron = document.createElement("div")
@@ -221,10 +227,12 @@ function CreateGraph() {
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
           batchsubsubarray.push(0)
+          batchnormedsubsubarray.push(0)
           neuronssubsubarray.push(0)
           neurons2subsubarray.push(0)
         }
         batchsubarray.push(batchsubsubarray)
+        batchnormedsubarray.push(batchnormedsubsubarray)
         batchneuronssubarray.push(neuronssubsubarray)
         batchneurons2subarray.push(neurons2subsubarray)
       } else {
@@ -249,6 +257,7 @@ function CreateGraph() {
       batchmeanmoving.push(movingmeansubarray)
       batchvarmoving.push(movingvarsubarray)
       batch.push(batchsubarray)
+      batchnormed.push(batchnormedsubarray)
       neurons.push(batchneuronssubarray)
       neurons2.push(batchneurons2subarray)
     } else {
