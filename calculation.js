@@ -73,7 +73,7 @@ function BatchForwardPass() {
       }
       batchmean[i+1][j] = batchsum / batchsize
       let text3 = document.createElement("span")
-      text3.innerHTML = JSON.stringify(batch) + "," + JSON.stringify(neurons) + "," + JSON.stringify(neurons2) 
+      text3.innerHTML = "BEFORE:  " + JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
       document.getElementById("inputfield").appendChild(text3)
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
@@ -84,6 +84,9 @@ function BatchForwardPass() {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
       }
+      let text4 = document.createElement("span")
+      text4.innerHTML = "AFTER:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
+      document.getElementById("inputfield").appendChild(text4)
       document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
       if (batchcount == 0) {
