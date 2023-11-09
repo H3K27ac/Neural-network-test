@@ -103,7 +103,6 @@ function BatchForwardPass() {
       document.getElementById("inputfield").appendChild(text6)
     }
   }
-  UpdateColor()
 }
 
 function FeedForward() {
