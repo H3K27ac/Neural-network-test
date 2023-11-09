@@ -136,14 +136,9 @@ function Testing3() {
   }
 }
 
+
 function Testing4(arr) {
-  return "[" + arr.map(item => {
-    if (Array.isArray(item)) {
-      return Testing4(item);
-    } else {
-      return item;
-    }
-  }).join(",") + "]";
+  return "[" + JSON.stringify(arr) + "]";
 }
 
 function Testing2() {
