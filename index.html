@@ -27,12 +27,20 @@
         <td colspan="2"><input type="number" class="tableinput" id="learnrate"></td>
       </tr>
       <tr>
-        <td><span>Ranges</span></td>
-        <td><input type="number" class="tableinput" id="weightrange" placeholder="Weight (1)"></td>
-        <td><input type="number" class="tableinput" id="biasrange" placeholder="Bias (1)"></td>
+        <td rowspan="2"><span>Ranges</span></td>
+        <td><span id="typeset" class="inputheading">$$ Weight range [-x,x] $$</span></td>
+        <td><span id="typeset" class="inputheading">$$ Bias range [-x,x] $$</span></td>
       </tr>
       <tr>
-        <td><span>Regularisation strength</span></td>
+        <td><input type="number" class="tableinput" id="weightrange" placeholder="1"></td>
+        <td><input type="number" class="tableinput" id="biasrange" placeholder="1"></td>
+      </tr>
+      <tr>
+        <td rowspan="2"><span>Regularisation</span></td>
+        <td><span id="typeset" class="inputheading">$$ L1/Lasso Regularisation strength \\lambda_1 $$</span></td>
+        <td><span id="typeset" class="inputheading">$$ L2/Ridge Regularisation strength \\lambda_2 $$</span></td>
+      </tr>
+      <tr>
         <td><input type="number" class="tableinput" id="L1strength" placeholder="L1 (Lasso)"></td>
         <td><input type="number" class="tableinput" id="L2strength" placeholder="L2 (Ridge)"></td>
       </tr>
