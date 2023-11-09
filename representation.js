@@ -69,6 +69,9 @@ function DeleteGraph() {
 
 function Color(value,type) {
   let valuerange;
+  let red;
+  let green;
+  let blue;
   if (value == 0) return `rgb(255, 255, 255)`
   switch (type) {
     case "weight":
@@ -84,11 +87,18 @@ function Color(value,type) {
       valuerange = batchgammarange
       break;
   }
-  let red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
-  let green = Math.round(255 * (1 - Math.abs(value / valuerange)));
-  let blue = value > 0 ? Math.round(255 * (1 - (value / valuerange))) : 255;
+  if (type == "batchgamma") {
+    red = value > 1 ? 255 : Math.round(255 * (1 + ((value - 1 / valuerange) / (valuerange - 1 / valuerange))));
+    green = Math.round(255 * (1 - Math.abs((value - 1 / valuerange) / (valuerange - 1 / valuerange))));
+    blue = value > 1 ? Math.round(255 * (1 - ((value - 1 / valuerange) / (valuerange - 1 / valuerange)))) : 255;
+  } else {
+    red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
+    green = Math.round(255 * (1 - Math.abs(value / valuerange)));
+    blue = value > 0 ? Math.round(255 * (1 - (value / valuerange))) : 255;
+  }
   return `rgb(${red}, ${green}, ${blue})`;
 }
+
 
 function Color2(value) {
   let brightness = Math.round(255 * value);
@@ -169,7 +179,7 @@ function Randomize() {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
       if (batchnorm != "none") {
-        batchgamma[i+1][j] = (Math.random() * 2 - 1);
+        batchgamma[i+1][j] = Math.pow(batchgammarange,(Math.random() * 2 - 1));
         batchbeta[i+1][j] = (Math.random() * 2 - 1);
       }
       for (let k=0; k<structure[i]; k++) {
@@ -289,7 +299,7 @@ function CreateGraph() {
       if (i < layers-1) {
         for (let j=0; j<structure[i+1]; j++) {
           betasubarray.push(0)
-          gammasubarray.push(0)
+          gammasubarray.push(1)
           meansubarray.push(0)
           varsubarray.push(0)
           movingmeansubarray.push(0)
