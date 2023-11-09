@@ -72,7 +72,6 @@ function Color(value,type) {
   let red;
   let green;
   let blue;
-  if (value == 0) return `rgb(255, 255, 255)`
   switch (type) {
     case "weight":
       valuerange = weightrange
@@ -88,17 +87,18 @@ function Color(value,type) {
       break;
   }
   if (type == "batchgamma") {
-    red = value > 1 ? 255 : Math.round(255 * (1 + ((value - 1 / valuerange) / (valuerange - 1 / valuerange))));
-    green = Math.round(255 * (1 - Math.abs((value - 1 / valuerange) / (valuerange - 1 / valuerange))));
-    blue = value > 1 ? Math.round(255 * (1 - ((value - 1 / valuerange) / (valuerange - 1 / valuerange)))) : 255;
+    if (value == 1) return `rgb(255, 255, 255)`
+    red = (Math.log(value) / Math.log(valuerange)) > 0 ? 255 : Math.round(255 * (1 + (Math.log(value) / Math.log(valuerange))));
+    green = Math.round(255 * (1 - Math.abs(Math.log(value) / Math.log(valuerange))));
+    blue = (Math.log(value) / Math.log(valuerange)) > 0 ? Math.round(255 * (1 - (Math.log(value) / Math.log(valuerange)))) : 255;
   } else {
+    if (value == 0) return `rgb(255, 255, 255)`
     red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
     green = Math.round(255 * (1 - Math.abs(value / valuerange)));
     blue = value > 0 ? Math.round(255 * (1 - (value / valuerange))) : 255;
   }
   return `rgb(${red}, ${green}, ${blue})`;
 }
-
 
 function Color2(value) {
   let brightness = Math.round(255 * value);
