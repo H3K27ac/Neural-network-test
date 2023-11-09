@@ -184,9 +184,6 @@ function BatchWeightCost(i,j,k,n) {
   return neurons[i-1][k] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
 }
 function BatchBiasCost(i,j,n) {
-  let text3 = document.createElement("span")
-      text3.innerHTML = "Cost:  " + BatchNeuronCost(i,j)
-      document.getElementById("inputfield").appendChild(text3)
   return DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
 }
 function BatchNeuronCost(i,j,n) {
@@ -236,6 +233,9 @@ function BatchMeanCost(i,j) {
   return sum
 }
 function BatchCost(i,j,n) {
+  let text3 = document.createElement("span")
+      text3.innerHTML = "Cost:  " + BatchVarCost(i,j) + "," + BatchNormCost(i,j,n) + "," + BatchMeanCost(i,j)
+      document.getElementById("inputfield").appendChild(text3)
   document.getElementById("layers").innerHTML = "batchcost"
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
