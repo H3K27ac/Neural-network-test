@@ -112,7 +112,7 @@ function UpdateColor() {
       let gammavalue;
       let betavalue;
       if (batchnorm != "none") {
-        neuronvalue = neurons[i][j][batchsize-1]
+        neuronvalue = neurons[i][j][0] // To be improved
       } else {
         neuronvalue = neurons[i][j]
       }
