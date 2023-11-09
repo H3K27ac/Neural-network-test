@@ -84,9 +84,9 @@ body {
 .neuroncontainer {
   display: inline-block;
   background-color: black;
-  border: 0.5px solid white;
+  border: 1px solid white;
   font-size: 0px;
-  height: auto;
+  height: 8px;
   margin: 0px;
 }
 
