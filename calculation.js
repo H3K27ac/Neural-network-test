@@ -181,7 +181,7 @@ function BiasCost(i,j) {
 
 
 function BatchWeightCost(i,j,k,n) {
-  return neurons[i-1][k] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
+  return neurons[i-1][k][n] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
 }
 function BatchBiasCost(i,j,n) {
   return DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j)
