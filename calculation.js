@@ -72,12 +72,12 @@ function BatchForwardPass() {
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
+      Testing3()
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
       document.getElementById("layers").innerHTML = "beforevar"
       batchvar[i+1][j] = batchsum2 / batchsize
-      Testing()
       for (let n=0; n<batchsize; n++) {
         document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j][n] = batchgamma[i+1][j] * ((batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)) + batchbeta[i+1][j]
@@ -121,6 +121,17 @@ function Testing() {
       let text = document.createElement("span")
       text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "," + batchbeta[i+1][j] + "(" + (i+1) + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
+    }
+  }
+}
+
+function Testing3() {
+  for (let i=0; i<layers; i++) {
+    for (let j=0; j<structure[i+1]; j++) {
+      for (let n=0; n<batchsize; n++) {
+        let text = document.createElement("span")
+        text.innerHTML = batch[i+1][j][n] + "," + neurons[i+1][j][n] + "," + neurons2[i+1][j][n] + "(" + (i+1) + "," + j + "," + n ")"
+        document.getElementById("inputfield").appendChild(text)
     }
   }
 }
