@@ -89,7 +89,7 @@ body {
   font-size: 0px;
   height: 12px;
   width: 20px;
-  margin-top: 25px;
+  margin-top: 20px;
   z-index: 3;
 }
 
@@ -97,7 +97,7 @@ body {
   display: inline-block;
   font-size: 10px;
   color: white;
-  bottom-margin: 10px
+  bottom-margin: 30px;
 }
 
 .weight {
