@@ -64,9 +64,6 @@ function BatchForwardPass() {
       for (let n=0; n<batchsize; n++) {
         sum = 0;
         for (let k=0; k<structure[i]; k++) {
-          let text6 = document.createElement("span")
-      text6.innerHTML = "BEFORE SUM:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) 
-      document.getElementById("inputfield").appendChild(text6)
           sum += weights[i+1][j][k] * neurons[i][k][n]
           if (i==1 && j==0) {
         document.getElementById("training").innerHTML = sum + "," + weights[i+1][j][k] + "," + neurons[i][k][n] + "," + batchvar[1][0]
@@ -76,6 +73,9 @@ function BatchForwardPass() {
         neurons2[i+1][j][n] = sum
         batch[i+1][j][n] = Activation(sum)
         batchsum += Activation(sum)
+        let text6 = document.createElement("span")
+      text6.innerHTML = "SUM:  " +  JSON.stringify(batch) + ",    " + JSON.stringify(neurons) + ",    " + JSON.stringify(neurons2) +  ",    " + sum +  ",    " + batchsum
+      document.getElementById("inputfield").appendChild(text6)
       }
       batchmean[i+1][j] = batchsum / batchsize
       let text3 = document.createElement("span")
