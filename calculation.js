@@ -126,10 +126,10 @@ function Testing() {
 
 function Testing3() {
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    for (let j=0; j<structure[i]; j++) {
       for (let n=0; n<batchsize; n++) {
         let text = document.createElement("span")
-        text.innerHTML = batch[i+1][j][n] + "," + neurons[i+1][j][n] + "," + neurons2[i+1][j][n] + "(" + (i+1) + "," + j + "," + n ")"
+        text.innerHTML = batch[i][j][n] + "," + neurons[i][j][n] + "," + neurons2[i][j][n] + "(" + i + "," + j + "," + n ")"
         document.getElementById("inputfield").appendChild(text)
       }
     }
