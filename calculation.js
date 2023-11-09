@@ -45,7 +45,11 @@ function DerivativeActivation(input) {
 
 function ManualFF() {
   for (let i=0; i<structure[0]; i++) {
-    neurons[0][i] = document.getElementById("input " + i).value
+    if (batchnorm != "none") {
+      neurons[0][i][0] = document.getElementById("input " + i).value
+    } else {
+      neurons[0][i] = document.getElementById("input " + i).value
+    }
   }
   FeedForward()
 }
@@ -109,12 +113,21 @@ function FeedForward() {
     for (let j=0; j<structure[i+1]; j++) {
       sum = 0
       for (let k=0; k<structure[i]; k++) {
-        sum += weights[i+1][j][k] * neurons[i][k]
+        if (batchnorm != "none") {
+          sum += weights[i+1][j][k] * neurons[i][k][0]
+        } else {
+          sum += weights[i+1][j][k] * neurons[i][k]
+        }
       }
       sum += biases[i+1][j]
-      neurons2[i+1][j] = sum
-      neurons[i+1][j] = Activation(sum)
-      neurons[i+1][j] = Math.min(1, Math.max(0, neurons[i+1][j]))
+      if (batchnorm != "none") {
+        batch[i+1][j][0] = Activation(sum)
+        neurons[i+1][j][0] = batchgamma[i+1][j] * (batch[i+1][j][0] - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
+        neurons[i+1][j][0] = Math.min(1, Math.max(0, neurons[i+1][j][0]))
+      } else {
+        neurons2[i+1][j] = sum
+        neurons[i+1][j] = Activation(sum)
+      }
     }
   }
   UpdateColor()
