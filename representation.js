@@ -25,6 +25,8 @@ let l1strength;
 let l2strength;
 let weightrange;
 let biasrange;
+let batchgammarange;
+let batchbetarange;
 
 // Visuals
 let showneurons = "all";
@@ -45,11 +47,6 @@ function DeleteGraph() {
   structure = [];
   targets = [];
   layers = 0;
-  learnrate = 0;
-  l1strength = 0;
-  l2strength = 0;
-  weightrange = 0;
-  biasrange = 0;
   batch = [];
   batchnormed = [];
   batchbeta = [0];
@@ -60,7 +57,6 @@ function DeleteGraph() {
   batchvarmoving = [0];
   batchsize = 0;
   batchcount = 0;
-  batchnorm = "none";
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -74,10 +70,19 @@ function DeleteGraph() {
 function Color(value,type) {
   let valuerange;
   if (value == 0) return `rgb(255, 255, 255)`
-  if (type == "weight") {
-    valuerange = weightrange
-  } else {
-    valuerange = biasrange
+  switch (type) {
+    case "weight":
+      valuerange = weightrange
+      break;
+    case "bias":
+      valuerange = biasrange
+      break;
+    case "batchbeta":
+      valuerange = batchbetarange
+      break;
+    case "batchgamma":
+      valuerange = batchgammarange
+      break;
   }
   let red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
   let green = Math.round(255 * (1 - Math.abs(value / valuerange)));
@@ -94,6 +99,8 @@ function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
       let neuronvalue;
+      let gammavalue;
+      let betavalue;
       if (batchnorm != "none") {
         neuronvalue = neurons[i][j][batchsize-1]
       } else {
@@ -101,6 +108,14 @@ function UpdateColor() {
       }
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
+      if (batchnorm != "none" && i>0) {
+        betavalue = batchbeta[i][j]
+        gammavalue = batchgamma[i][j]
+        let betatext = document.getElementById("betatext " + i + "," + j)
+        let gammatext = document.getElementById("gammatext " + i + "," + j)
+        betatext.style.color = Color(betatext,"batchbeta")
+        gammatext.style.color = Color(gammatext,"batchgamma")
+      } 
     }
     for (let j=0; j<structure[i+1]; j++) { 
       let biasvalue = biases[i+1][j]
@@ -182,6 +197,8 @@ function CreateGraph() {
   l2strength = document.getElementById("L2strength").value
 
   batchsize = document.getElementById("batchsize").value
+  batchbetarange = document.getElementById("batchbetarange").value
+  batchgammarange = document.getElementById("batchgammarange").value
 
   if (document.getElementById("batch").checked == true) {
     batchnorm = "after"
@@ -232,6 +249,22 @@ function CreateGraph() {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
+      if (batchnorm != "none" && i>0) {
+        let betatext = document.createElement("span")
+        betatext.className = "neurontext"
+        betatext.id = "betatext " + i + "," + j
+        betatext.innerHTML = "$$ \\beta $$"
+        neuron.appendChild(betatext)
+        let neurontext = document.createElement("span")
+        neurontext.className = "neurontext"
+        neurontext.innerHTML = ","
+        neuron.appendChild(neurontext)
+        let gammatext = document.createElement("span")
+        gammatext.className = "neurontext"
+        gammatext.id = "gammatext " + i + "," + j
+        gammatext.innerHTML = "$$ \\gamma $$"
+        neuron.appendChild(gammatext)
+      }
       column.appendChild(neuron)
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
