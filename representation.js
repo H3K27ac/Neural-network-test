@@ -241,13 +241,12 @@ function CreateGraph() {
       batch.push(batchsubarray)
       neurons.push(batchneuronssubarray)
       neurons2.push(batchneurons2subarray)
-      Testing3()
     } else {
       neurons.push(neuronssubarray)
       neurons2.push(neurons2subarray)
     }
   }
-  
+  Testing3()
   
   for (let i=0; i<layers; i++) {
     let subarray = [];
