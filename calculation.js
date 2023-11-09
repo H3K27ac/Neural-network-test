@@ -283,6 +283,7 @@ function BatchBackprop() {
       }
     }
   }
+  document.getElementById("layers").innerHTML = "done"
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
