@@ -72,7 +72,9 @@ function BatchForwardPass() {
         batchsum += Activation(sum)
       }
       batchmean[i+1][j] = batchsum / batchsize
-      Testing3()
+      let text3 = document.createElement("span")
+      text3.innerHTML = JSON.stringify(batch) + "," + JSON.stringify(neurons) + "," + JSON.stringify(neurons2) 
+      document.getElementById("inputfield").appendChild(text3)
       for (let n=0; n<batchsize; n++) {
         batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
       }
@@ -124,22 +126,7 @@ function Testing() {
   }
 }
 
-function Testing3() {
-  for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i]; j++) {
-      for (let n=0; n<batchsize; n++) {
-        let text = document.createElement("span")
-        text.innerHTML = batch[i][j][0] + "," + neurons[i][j][0] + "," + neurons2[i][j][0] + "(" + i + "," + j + "," + n ")"
-        document.getElementById("inputfield").appendChild(text)
-      }
-    }
-  }
-}
 
-
-function Testing4(arr) {
-  return "[" + JSON.stringify(arr) + "]";
-}
 
 function Testing2() {
   for (let i=0; i<layers; i++) {
