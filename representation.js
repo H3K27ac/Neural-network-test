@@ -110,10 +110,10 @@ function UpdateColor() {
   }
 }
 
-function ClearNeurons(batchmode = false) {
+function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
-      if (batchmode == true) {
+      if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
           neurons[i][j][n] = 0
         }
@@ -124,21 +124,21 @@ function ClearNeurons(batchmode = false) {
   }
 }
 
+
 function RandomizeInput() {
   ClearNeurons()
   for (let j=0; j<structure[0]; j++) {
+    if (batchnorm != "none") {
+      for (let n=0; n<batchsize; n++) {
+        neurons[0][j][n] = Math.random();
+      }
+    } else {
       neurons[0][j] = Math.random();
-  }
-}
-
-function BatchRandomizeInput() {
-  ClearNeurons(true)
-  for (let j=0; j<structure[0]; j++) {
-    for (let n=0; n<batchsize; n++) {
-      neurons[0][j][n] = Math.random();
     }
   }
 }
+
+
 
 function Randomize() {
   ClearNeurons()
