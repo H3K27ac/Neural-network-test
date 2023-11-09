@@ -94,7 +94,7 @@ function UpdateColor() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
       if (batchnorm != "none") {
-        let neuronvalue = neurons[i][j][batchsize-1]
+        let neuronvalue = neurons[i][j][batchsize-2]
       } else {
         let neuronvalue = neurons[i][j]
       }
