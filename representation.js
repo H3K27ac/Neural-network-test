@@ -106,7 +106,7 @@ function UpdateColor() {
   }
 }
 
-function ClearNeurons(batch) {
+function ClearNeurons(batch=false) {
   for (let i=1; i<layers; i++) {
     for (let j=0; j<structure[i]; j++) {
       if (batch == true) {
@@ -127,7 +127,7 @@ function RandomizeInput() {
 }
 
 function BatchRandomizeInput() {
-  ClearNeurons()
+  ClearNeurons(true)
   for (let j=0; j<structure[0]; j++) {
     for (let n=0; n<batchsize; n++) {
       neurons[0][j][n] = Math.random();
