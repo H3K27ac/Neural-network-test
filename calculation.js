@@ -254,7 +254,7 @@ function BatchMeanCost(i,j) {
 }
 function BatchCost(i,j,n) {
   let text3 = document.createElement("span")
-      text3.innerHTML = "BatchCost:  " + BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
+      text3.innerHTML = "BatchCost:  " + (BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize))
       document.getElementById("inputfield").appendChild(text3)
   document.getElementById("layers").innerHTML = "batchcost"
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
