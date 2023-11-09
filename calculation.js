@@ -201,9 +201,6 @@ function BatchNeuronCost(i,j,n) {
   }
 }
 function BatchNormCost(i,j,n) {
-  let text14 = document.createElement("span")
-      text14.innerHTML = "NormCost:  " + batchgamma[i][j] * BatchNeuronCost(i,j,n)
-      document.getElementById("inputfield").appendChild(text14)
   return sum
   return batchgamma[i][j] * BatchNeuronCost(i,j,n)
 }
@@ -213,9 +210,6 @@ function BatchGammaCost(i,j) {
     document.getElementById("layers").innerHTML = "gammacost"
     sum += batchnormed[i][j][n] * BatchNeuronCost(i,j,n)
   }
-  let text13 = document.createElement("span")
-      text13.innerHTML = "GammaCost:  " + sum
-      document.getElementById("inputfield").appendChild(text13)
   return sum
 }
 function BatchBetaCost(i,j) {
@@ -223,9 +217,6 @@ function BatchBetaCost(i,j) {
   for (let n=0; n<batchsize; n++) {
     sum += BatchNeuronCost(i,j,n)
   }
-  let text12 = document.createElement("span")
-      text12.innerHTML = "BetaCost:  " + sum
-      document.getElementById("inputfield").appendChild(text12)
   return sum
 }
 function BatchVarCost(i,j) {
@@ -234,9 +225,6 @@ function BatchVarCost(i,j) {
     document.getElementById("layers").innerHTML = "varcost"
     sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
   }
-  let text11 = document.createElement("span")
-      text11.innerHTML = "VarCost:  " + sum
-      document.getElementById("inputfield").appendChild(text11)
   return sum
 }
 function BatchMeanCost(i,j) {
@@ -246,15 +234,9 @@ function BatchMeanCost(i,j) {
     document.getElementById("layers").innerHTML = "meancost"
     sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
-  let text10 = document.createElement("span")
-      text10.innerHTML = "MeanCost:  " + sum
-      document.getElementById("inputfield").appendChild(text10)
   return sum
 }
 function BatchCost(i,j,n) {
-  let text3 = document.createElement("span")
-      text3.innerHTML = "BatchCost:  " + (BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize))
-      document.getElementById("inputfield").appendChild(text3)
   document.getElementById("layers").innerHTML = "batchcost"
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
@@ -288,11 +270,12 @@ function BatchBackprop() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       for (let n=0; n<batchsize; n++) {
-        document.getElementById("layers").innerHTML = "very broken"
         biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
+        document.getElementById("training").innerHTML = "bias done"
         batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
         batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
+        document.getElementById("training").innerHTML = "gamma, beta done"
         for (let k=0; k<structure[i]; k++) {
           // Elastic net regularisation
           let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
