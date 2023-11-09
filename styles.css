@@ -81,6 +81,13 @@ body {
   z-index: 2;
 }
 
+.neuroncontainer {
+  display: inline-block;
+  background-color: black;
+  border: 1px solid white;
+  margin: 1px;
+}
+
 .neurontext {
   display: inline-block;
   font-size: 10px;
