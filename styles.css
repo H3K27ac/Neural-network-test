@@ -64,7 +64,7 @@ th, td {
 
 .inputcontainer {
   position: relative;
-  height: 350px;
+  height: 400px;
   width: 800px;
   background-color: black;
   display: flex;
@@ -75,15 +75,15 @@ th, td {
 }
 
 .layercontainer {
-  position: relative;
-  height: 150px;
+  position: absolute;
+  height: 120px;
   background-color: white;
   border: 1px solid black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 10px auto;
+  margin-top: 200px auto;
 }
 
 .layerincontainer {
