@@ -14,7 +14,28 @@ function ReplenishLayers() {
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
       container.appendChild(layer);
-      MakeDraggable(i)
+      let isDragging = false;
+      let xOffset = 0;
+      let yOffset = 0;
+      layer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        xOffset = e.clientX - layer.offsetLeft;
+        yOffset = e.clientY - layer.offsetTop;
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          const xPos = e.clientX - xOffset;
+          const yPos = e.clientY - yOffset;
+          
+          layer.style.left = xPos + 'px';
+          layer.style.top = yPos + 'px';
+        }
+      });
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+
     }
   }
   UpdateContainerWidth();
@@ -54,6 +75,7 @@ function CreateLayers() {
 }
 
 
+/*
 function MakeDraggable(i) {
     let object = document.getElementById(layertypes[i] + "incontainer")
     let isDragging = false;
@@ -180,3 +202,4 @@ function MakeDraggable(i) {
     }
 }
 
+*/
