@@ -65,7 +65,7 @@ th, td {
 .inputcontainer {
   position: relative;
   height: 400px;
-  width: 800px;
+  width: 1000px;
   background-color: black;
   display: flex;
   flex-direction: row;
@@ -117,6 +117,16 @@ th, td {
 .layertext {
   font-size: 15px;
   color: black;
+}
+
+.deletelayer {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 10px;
+  width: 15px;
+  background-color: red;
+  border: 1px solid black
 }
 
 .container {
