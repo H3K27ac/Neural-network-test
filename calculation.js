@@ -1,11 +1,18 @@
 let training;
 let traincount;
-let activation = "Sigmoid";
+let hiddenactivation = "Sigmoid";
+let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let epsilon = 0.00001;
 
 
-function Activation(input) {
+function Activation(input,i) {
+  let activation;
+  if (i == layers-2) {
+    activation = outputactivation
+  } else {
+    activation = hiddenactivation
+  }
   switch (activation) {
     case "Sigmoid":
       return 1 / (1 + Math.exp(-1 * input))
@@ -22,7 +29,13 @@ function Activation(input) {
   }
 }
 
-function DerivativeActivation(input) {
+function DerivativeActivation(input,i) {
+  let activation;
+  if (i == layers-1) {
+    activation = outputactivation
+  } else {
+    activation = hiddenactivation
+  }
   switch (activation) {
     case "Sigmoid":
       return Activation(input) * (1 - Activation(input))
@@ -72,8 +85,8 @@ function BatchForwardPass() {
         }
         sum += biases[i+1][j]
         neurons2[i+1][j][n] = sum
-        batch[i+1][j][n] = Activation(sum)
-        batchsum += Activation(sum)
+        batch[i+1][j][n] = Activation(sum,i)
+        batchsum += Activation(sum,i)
       }
       batchmean[i+1][j] = batchsum / batchsize
       for (let n=0; n<batchsize; n++) {
@@ -121,12 +134,12 @@ function FeedForward() {
       }
       sum += biases[i+1][j]
       if (batchnorm != "none") {
-        batch[i+1][j][0] = Activation(sum)
+        batch[i+1][j][0] = Activation(sum,i)
         neurons[i+1][j][0] = batchgamma[i+1][j] * (batch[i+1][j][0] - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
         neurons[i+1][j][0] = Math.min(1, Math.max(0, neurons[i+1][j][0]))
       } else {
         neurons2[i+1][j] = sum
-        neurons[i+1][j] = Activation(sum)
+        neurons[i+1][j] = Activation(sum,i)
       }
     }
   }
@@ -174,27 +187,27 @@ function NeuronCost(i,j) {
   } else {
     let sum = 0;
     for (let k=0; k<structure[i+1]; k++) {
-      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k]) * NeuronCost(i+1,k)
+      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k],i) * NeuronCost(i+1,k)
     }
     return sum
   }
 }
 
 function WeightCost(i,j,k) {
-  return neurons[i-1][k] * DerivativeActivation(neurons2[i][j]) * NeuronCost(i,j)
+  return neurons[i-1][k] * DerivativeActivation(neurons2[i][j],i) * NeuronCost(i,j)
 }
 
 function BiasCost(i,j) {
-  return DerivativeActivation(neurons2[i][j]) * NeuronCost(i,j)
+  return DerivativeActivation(neurons2[i][j],i) * NeuronCost(i,j)
 }
 
 
 
 function BatchWeightCost(i,j,k,n) {
-  return neurons[i-1][k][n] * DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j,n)
+  return neurons[i-1][k][n] * DerivativeActivation(neurons2[i][j][n],i) * BatchNeuronCost(i,j,n)
 }
 function BatchBiasCost(i,j,n) {
-  return DerivativeActivation(neurons2[i][j][n]) * BatchNeuronCost(i,j,n)
+  return DerivativeActivation(neurons2[i][j][n],i) * BatchNeuronCost(i,j,n)
 }
 function BatchNeuronCost(i,j,n) {
   if (i == layers-1) {
@@ -203,7 +216,7 @@ function BatchNeuronCost(i,j,n) {
     let sum = 0;
     for (let k=0; k<structure[i+1]; k++) {
       document.getElementById("layers").innerHTML = "neuroncost"
-      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n]) * BatchCost(i+1,k,n)
+      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n],i) * BatchCost(i+1,k,n)
     }
   //  let text15 = document.createElement("span")
   //    text15.innerHTML = "NeuronCost:  " + sum
