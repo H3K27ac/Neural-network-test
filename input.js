@@ -227,6 +227,7 @@ function MakeDraggable(i) {
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
+          document.getElementById("layers").innerHTML = closestObject
         }
       }
       /*
