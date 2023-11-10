@@ -215,8 +215,8 @@ function MakeDraggable(i) {
       const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
-      const x3 = (x1 + x2)/(layerorder.length+2);
-      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetLeft + "," + height + "," + x3 + "," + x1
+      const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
+      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetLeft + "," + height + "," + x3 + "," + x1 + "," + x2
       if (Math.abs(ghost.offsetTop-height) < 50) {
         if (layerorder == []) {
           ghost.offsetLeft = x3
