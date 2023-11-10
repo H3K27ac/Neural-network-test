@@ -84,7 +84,9 @@ function DeleteLayer(i) {
   if (index2 > -1) {
   layerid.splice(index2,1)
   }
+  document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerid)
   layer.remove()
+  document.getElementById("layers").innerHTML = "all done"
 }
 
 function MakeDraggable(i) {
