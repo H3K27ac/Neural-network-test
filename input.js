@@ -14,28 +14,6 @@ function ReplenishLayers() {
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
       container.appendChild(layer);
-      let isDragging = false;
-      let xOffset = 0;
-      let yOffset = 0;
-      layer.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        xOffset = e.clientX - layer.offsetLeft;
-        yOffset = e.clientY - layer.offsetTop;
-      });
-      document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          const xPos = e.clientX - xOffset;
-          const yPos = e.clientY - yOffset;
-          
-          layer.style.left = xPos + 'px';
-          layer.style.top = yPos + 'px';
-        }
-      });
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-
-
     }
   }
   UpdateContainerWidth();
@@ -75,7 +53,7 @@ function CreateLayers() {
 }
 
 
-/*
+
 function MakeDraggable(i) {
     let object = document.getElementById(layertypes[i] + "incontainer")
     let isDragging = false;
@@ -114,6 +92,7 @@ function MakeDraggable(i) {
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
+      document.getElementById("layers").innerHTML = "start"
       
       document.addEventListener('touchmove', handleTouchMove);
       document.addEventListener('touchend', handleTouchEnd);
@@ -137,6 +116,7 @@ function MakeDraggable(i) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
           ghost.style.left = (event.touches[0].clientX + originalPosition.x) + 'px';
           ghost.style.top = (event.touches[0].clientY + originalPosition.y) + 'px';
+          document.getElementById("layers").innerHTML = "moving"
 
           isSnapped = false;
           
@@ -171,7 +151,7 @@ function MakeDraggable(i) {
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
       let ghost = document.getElementById(layertypes[i] + "ghost");
-
+      document.getElementById("layers").innerHTML = "end"
         if (isSnapped) {
             // Object is snapped, remove the ghost and add the object
             if (ghost) {
@@ -202,4 +182,4 @@ function MakeDraggable(i) {
     }
 }
 
-*/
+
