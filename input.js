@@ -104,7 +104,7 @@ function MakeDraggable(i) {
     }
 
     function handleMouseMove(event) {
-        if (isDragging == true && isSnapped == false) {
+        if (isDragging == true) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
           ghost.style.left = (event.clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.clientY - originalPosition.y) + 'px';
@@ -117,7 +117,7 @@ function MakeDraggable(i) {
 
     function handleTouchMove(event) {
         event.preventDefault()
-        if (isDragging == true && isSnapped == false) {
+        if (isDragging == true) {
           document.getElementById("layers").innerHTML = "moving, but broken" + "," + event.touches[0].clientX + "," + event.touches[0].clientY + "," + originalPosition.x + "," +  originalPosition.y
           let ghost = document.getElementById(layertypes[i] + "ghost")
           document.getElementById("layers").innerHTML = "moving, but broken2"
