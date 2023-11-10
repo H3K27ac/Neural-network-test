@@ -14,6 +14,7 @@ function ReplenishLayers() {
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
       container.appendChild(layer);
+      MakeDraggable(i)
     }
   }
   UpdateContainerWidth();
@@ -51,3 +52,130 @@ function CreateLayers() {
   weight.style.left = centerX - (length / 2) + "px";
   container.appendChild(weight)
 }
+
+
+function MakeDraggable(i) {
+    let object = document.getElementById(layertypes[i] + "incontainer")
+    let isDragging = false;
+    let isSnapped = false;
+    let originalPosition = { x: 0, y: 0 };
+
+    object.addEventListener('mousedown', handleMouseDown);
+    object.addEventListener('touchstart', handleTouchStart);
+
+    function handleMouseDown(event) {
+      isDragging = true;
+      originalPosition.x = object.offsetLeft - event.clientX;
+      originalPosition.y = object.offsetTop - event.clientY;
+
+      let layer = document.createElement("div");
+      let layertext = document.createElement("span");
+      layer.className = "layerincontainer"
+      layer.id = layertypes[i] + "ghost"
+      layertext.className = "layertext"
+      layertext.innerHTML = layernames[i]
+      layer.appendChild(layertext)
+
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    function handleTouchStart(event) {
+      isDragging = true;
+      originalPosition.x = object.offsetLeft - event.clientX;
+      originalPosition.y = object.offsetTop - event.clientY;
+
+      let layer = document.createElement("div");
+      let layertext = document.createElement("span");
+      layer.className = "layerincontainer"
+      layer.id = layertypes[i] + "ghost"
+      layertext.className = "layertext"
+      layertext.innerHTML = layernames[i]
+      layer.appendChild(layertext)
+      
+      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchend', handleTouchEnd);
+    }
+
+    function handleMouseMove(event) {
+        if (isDragging) {
+          let ghost = document.getElementById(layertypes[i] + "ghost")
+          ghost.style.left = (event.clientX + originalPosition.x) + 'px';
+          ghost.style.top = (event.clientY + originalPosition.y) + 'px';
+
+          isSnapped = false;
+
+          handleSnap();
+        }
+    }
+
+    function handleTouchMove(event) {
+        if (isDragging) {
+          let ghost = document.getElementById(layertypes[i] + "ghost")
+          ghost.style.left = (event.touches[0].clientX + originalPosition.x) + 'px';
+          ghost.style.top = (event.touches[0].clientY + originalPosition.y) + 'px';
+
+          isSnapped = false;
+          
+          handleSnap();
+        }
+    }
+
+    function handleMouseUp() {
+      isDragging = false;
+      
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      let ghost = document.getElementById(layertypes[i] + "ghost");
+      
+        if (isSnapped) {
+            // Object is snapped, remove the ghost and add the object
+            if (ghost) {
+                ghost.remove();
+            }
+        } else {
+            // Object is not snapped, remove the ghost
+
+            if (ghost) {
+                ghost.remove();
+            }
+        }
+    }
+
+    function handleTouchEnd() {
+      isDragging = false;
+      
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+      let ghost = document.getElementById(layertypes[i] + "ghost");
+
+        if (isSnapped) {
+            // Object is snapped, remove the ghost and add the object
+            if (ghost) {
+                ghost.remove();
+            }
+        } else {
+            // Object is not snapped, remove the ghost
+            if (ghost) {
+                ghost.remove();
+            }
+        }
+    }
+
+    function handleSnap() {
+        const draggableRect = object.getBoundingClientRect();
+   //     const containerRect = container.getBoundingClientRect();
+
+   //     if (
+   //         draggableRect.left >= containerRect.left &&
+   //         draggableRect.top >= containerRect.top &&
+   //         draggableRect.right <= containerRect.right &&
+  //          draggableRect.bottom <= containerRect.bottom
+  //      ) {
+ //           isSnapped = true;
+//        } else {
+//            isSnapped = false;
+//        }
+    }
+}
+
