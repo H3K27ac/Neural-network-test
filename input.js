@@ -174,7 +174,7 @@ function MakeDraggable(i) {
           } else {
             document.getElementById("layers").innerHTML = "rename"
             for (let m=closestObject; m<layerorder.length; m++) {
-              document.getElementById("layer " + m).id = "layer " + (closestObject+1)
+              document.getElementById("layer " + m).id = "layer " + (m+1)
             }
             newobject.id = "layer " + closestObject
             document.getElementById("layers").innerHTML = "insert" + closestObject
