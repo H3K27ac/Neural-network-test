@@ -217,7 +217,7 @@ function MakeDraggable(i) {
               closestObject = n;
             }
           }
-          if (ghost.offsetLeft > container.children[n+2].offsetLeft) {
+          if (ghost.offsetLeft > container.children[closestObject+2].offsetLeft) {
             closestObject += 1
           }
         }
