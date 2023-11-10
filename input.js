@@ -69,7 +69,7 @@ function GenerateLayerId() {
 }
 
 function DeleteLayer(i) {
-  let layer = document.getElementById("layer " + i)
+  let layer = document.getElementById("layer " + String(i))
   let container = document.getElementById("inputcontainer");
   let index;
   for (let m=2; m<container.children.length-1; m++) {
