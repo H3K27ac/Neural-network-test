@@ -167,27 +167,18 @@ function MakeDraggable(i) {
             container.insertBefore(object,neuron2)
             layerorder.push(layertypes[i])
           } else {
-            if (object.offsetLeft < document.getElementById("layer " + closestObject).offsetRight) {
-              document.getElementById("layers").innerHTML = "rename"
-              for (let m=closestObject; m<layerorder.length; m++) {
-                document.getElementById("layer " + m).id = "layer " + (closestObject+1)
-              }
-              object.id = "layer " + closestObject
-              document.getElementById("layers").innerHTML = "insert"
-              container.insertBefore(object,document.getElementById("layer " + closestObject))
-              layerorder.splice(closestObject,0,layertypes[i])
-            } else {
-              for (let m=closestObject+1; m<layerorder.length; m++) {
-                document.getElementById("layer " + m).id = "layer " + (closestObject+2)
-              }
-              object.id = "layer " + (closestObject+1)
-              if (closestObject+1 == layerorder) {
+            document.getElementById("layers").innerHTML = "rename"
+            for (let m=closestObject; m<layerorder.length; m++) {
+              document.getElementById("layer " + m).id = "layer " + (closestObject+1)
+            }
+            object.id = "layer " + closestObject
+            document.getElementById("layers").innerHTML = "insert"
+            if (closestObject == layerorder) {
                 container.insertBefore(object,document.getElementById("neuron2"))
                 layerorder.push(layertypes[i])
-              } else {
-                container.insertBefore(object,document.getElementById("layer " + (closestObject+1)))
-                layerorder.splice(closestObject+1,0,layertypes[i])
-              }
+            } else {
+              container.insertBefore(object,document.getElementById("layer " + closestObject);
+              layerorder.splice(closestObject,0,layertypes[i])
             }
           }
           if (ghost) {
@@ -222,11 +213,14 @@ function MakeDraggable(i) {
           let minDistance = Number.MAX_SAFE_INTEGER;
           for (let n=0; n<layerorder.length; n++) {
             const obj = document.getElementById("layer " + n)
-            const distance = Math.abs(ghost.offsetLeft - obj.right);
+            const distance = Math.abs(ghost.offsetLeft - obj.offsetRight);
             if (distance < minDistance) {
               minDistance = distance;
               closestObject = n;
             }
+          }
+          if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetRight) {
+            cloestObject += 1
           }
         }
       }
