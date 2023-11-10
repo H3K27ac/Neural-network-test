@@ -118,8 +118,10 @@ function MakeDraggable(i) {
           document.getElementById("layers").innerHTML = "moving, but broken" + "," + event.touches[0].clientX + "," + event.touches[0].clientY + "," + originalPosition.x + "," +  originalPosition.y
           let ghost = document.getElementById(layertypes[i] + "ghost")
           document.getElementById("layers").innerHTML = "moving, but broken2"
-          ghost.style.left = (event.touches[0].clientX + originalPosition.x) + 'px';
-          ghost.style.top = (event.touches[0].clientY + originalPosition.y) + 'px';
+          //ghost.style.left = (event.touches[0].clientX + originalPosition.x) + 'px';
+          //ghost.style.top = (event.touches[0].clientY + originalPosition.y) + 'px';
+          ghost.style.left = (event.touches[0].clientX) + 'px';
+          ghost.style.top = (event.touches[0].clientY) + 'px';
           document.getElementById("layers").innerHTML = "moving"
 
           isSnapped = false;
