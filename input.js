@@ -176,9 +176,15 @@ function MakeDraggable(i) {
           layertext.className = "layertext"
           layertext.innerHTML = layernames[i]
           deletelayer.className = "deletelayer"
+          if (layerorder.length == 0) {
           deletelayer.onclick = function() {
-            DeleteLayer(i);
+            DeleteLayer(0);
           };
+          } else {
+            deletelayer.onclick = function() {
+            DeleteLayer(closestObject);
+          };
+          }
           newobject.appendChild(layertext)
           newobject.appendChild(deletelayer)
           if (layerorder.length == 0) {
