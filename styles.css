@@ -69,7 +69,7 @@ th, td {
   background-color: black;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 20px auto;
 }
@@ -81,9 +81,9 @@ th, td {
   border: 1px solid black;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 250px;
 }
 
 .layerincontainer {
