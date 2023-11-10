@@ -72,13 +72,18 @@ function DeleteLayer(i) {
   let layer = document.getElementById("layer " + String(i))
   let container = document.getElementById("inputcontainer");
   let index;
+  let index2;
   for (let m=0; m<container.children.length; m++) {
     if (container.children[m] === layer) {
       index = m;
     }
   }
-  document.getElementById("layers").innerHTML = "index done" + index
   layerorder.splice(index-2,1)
+  document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerorder)
+  index2 = layerid.indexOf(i)
+  if (index2 > -1) {
+  layerid.splice(index2,1)
+  }
   layer.remove()
 }
 
