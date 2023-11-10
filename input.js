@@ -110,6 +110,7 @@ function MakeDraggable(i) {
     }
 
     function handleTouchMove(event) {
+        event.preventDefault()
         if (isDragging) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
           ghost.style.left = (event.touches[0].clientX + originalPosition.x) + 'px';
