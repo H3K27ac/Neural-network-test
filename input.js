@@ -234,6 +234,7 @@ function MakeDraggable(i) {
               minDistance = distance;
               closestObject = n;
             }
+          }
         }
       }
       /*
