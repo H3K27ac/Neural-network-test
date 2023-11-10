@@ -234,8 +234,10 @@ function CreateGraph() {
     batchnorm = "none"
   }
   
-  activation = String(document.getElementById("activation").value).trim()
+  hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
+  outputactivation = String(document.getElementById("outputactivation").value).trim()
 
+  
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
     input.className = "input"
