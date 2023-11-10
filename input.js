@@ -105,7 +105,7 @@ function MakeDraggable(i) {
 
           isSnapped = false;
 
-          handleSnap();
+   //       handleSnap();
         }
     }
 
@@ -118,7 +118,7 @@ function MakeDraggable(i) {
 
           isSnapped = false;
           
-          handleSnap();
+    //      handleSnap();
         }
     }
 
