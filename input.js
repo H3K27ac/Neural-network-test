@@ -223,8 +223,8 @@ function MakeDraggable(i) {
               minDistance = distance;
               closestObject = n;
             }
-            document.getElementById("layers").innerHTML = distance
           }
+          document.getElementById("layers").innerHTML = ghost.offsetLeft + "," + document.getElementById("layer " + closestObject).offsetLef
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
