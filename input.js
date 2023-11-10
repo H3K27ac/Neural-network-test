@@ -78,6 +78,7 @@ function DeleteLayer(i) {
       index = m;
     }
   }
+  layer.remove()
   layerorder.splice(index-2,1)
   document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerorder)
   index2 = layerid.indexOf(i)
