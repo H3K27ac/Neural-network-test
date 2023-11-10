@@ -168,18 +168,13 @@ function MakeDraggable(i) {
           newobject.appendChild(layertext)
           if (layerorder.length == 0) {
             document.getElementById("layers").innerHTML = "insert"
-            container.insertBefore(newobject,container.children[layerorder.length])
+            container.insertBefore(newobject,container.children[layerorder.length+1])
             layerorder.push(layertypes[i])
           } else {
             newobject.id = "layer " + closestObject
             document.getElementById("layers").innerHTML = "insert" + closestObject
-            if (closestObject == layerorder.length) {
-                container.insertBefore(newobject,container.children[layerorder.length])
-                layerorder.push(layertypes[i])
-            } else {
-              container.insertBefore(newobject,container.children[closestObject+1]);
-              layerorder.splice(closestObject,0,layertypes[i])
-            }
+            container.insertBefore(newobject,container.children[closestObject+1]);
+            layerorder.splice(closestObject,0,layertypes[i])
           }
           if (ghost) {
                 ghost.remove();
