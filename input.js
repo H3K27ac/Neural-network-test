@@ -167,22 +167,17 @@ function MakeDraggable(i) {
           layertext.innerHTML = layernames[i]
           newobject.appendChild(layertext)
           if (layerorder.length == 0) {
-            newobject.id = "layer 0"
             document.getElementById("layers").innerHTML = "insert"
-            container.insertBefore(newobject,neuron2)
+            container.insertBefore(newobject,container.children[layerorder.length])
             layerorder.push(layertypes[i])
           } else {
-            document.getElementById("layers").innerHTML = "rename"
-            for (let m=closestObject; m<layerorder.length; m++) {
-              document.getElementById("layer " + m).id = "layer " + (m+1)
-            }
             newobject.id = "layer " + closestObject
             document.getElementById("layers").innerHTML = "insert" + closestObject
             if (closestObject == layerorder.length) {
-                container.insertBefore(newobject,document.getElementById("neuron2"))
+                container.insertBefore(newobject,container.children[layerorder.length])
                 layerorder.push(layertypes[i])
             } else {
-              container.insertBefore(newobject,document.getElementById("layer " + closestObject));
+              container.insertBefore(newobject,container.children[closestObject+1]);
               layerorder.splice(closestObject,0,layertypes[i])
             }
           }
