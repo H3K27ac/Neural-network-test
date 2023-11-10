@@ -158,6 +158,7 @@ function MakeDraggable(i) {
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
       let ghost = document.getElementById(layertypes[i] + "ghost");
+      let container = document.getElementById("inputcontainer");
       document.getElementById("layers").innerHTML = "end"
         if (isSnapped) {
             // Object is snapped, remove the ghost and add the object
@@ -214,8 +215,6 @@ function MakeDraggable(i) {
       const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
-      
-      let container = document.getElementById("inputcontainer");
       if (layerorder == []) {
         ghost.offsetLeft = x3
       } else {
