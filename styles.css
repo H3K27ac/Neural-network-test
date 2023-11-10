@@ -83,7 +83,7 @@ th, td {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 200px auto;
+  margin-top: 200px;
 }
 
 .layerincontainer {
