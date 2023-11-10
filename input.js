@@ -222,8 +222,8 @@ function MakeDraggable(i) {
           document.getElementById("layers").innerHTML = "snapping"
           isSnapped = true
           document.getElementById("layers").innerHTML = "set"
-          ghost.offsetLeft = x3
-          ghost.offsetTop = height
+          ghost.style.left = x3
+          ghost.style.top = height
         }
       }
       /*
