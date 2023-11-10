@@ -31,7 +31,7 @@ function UpdateContainerWidth() {
 }
 
 function CreateLayers() {
-  let container = document.getElementById("inputcontainee");
+  let container = document.getElementById("inputcontainer");
   let neuron = document.createElement("div")
   neuron.className = "neuron"
   neuron.id = "neuron"
