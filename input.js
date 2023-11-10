@@ -179,24 +179,24 @@ function MakeDraggable(i) {
                 closestObject = n;
               }
             }
-            if (object.offsetLeft < document.getElementById("layer " + n).offsetRight) {
-              for (let m=n; m<layerorder.length; m++) {
-                document.getElementById("layer " + m).id = "layer " + (n+1)
+            if (object.offsetLeft < document.getElementById("layer " + closestObject).offsetRight) {
+              for (let m=closestObject; m<layerorder.length; m++) {
+                document.getElementById("layer " + m).id = "layer " + (closestObject+1)
               }
-              object.id = "layer " + n
-              container.insertBefore(object,document.getElementById("layer " + n))
-              layerorder.splice(n,0,layertypes[i])
+              object.id = "layer " + closestObject
+              container.insertBefore(object,document.getElementById("layer " + closestObject))
+              layerorder.splice(closestObject,0,layertypes[i])
             } else {
-              for (let m=n+1; m<layerorder.length; m++) {
-                document.getElementById("layer " + m).id = "layer " + (n+2)
+              for (let m=closestObject+1; m<layerorder.length; m++) {
+                document.getElementById("layer " + m).id = "layer " + (closestObject+2)
               }
-              object.id = "layer " + (n+1)
-              if (n+1 == layerorder) {
+              object.id = "layer " + (closestObject+1)
+              if (closestObject+1 == layerorder) {
                 container.insertBefore(object,document.getElementById("neuron2"))
                 layerorder.push(layertypes[i])
               } else {
-                container.insertBefore(object,document.getElementById("layer " + n+1))
-                layerorder.splice(n+1,0,layertypes[i])
+                container.insertBefore(object,document.getElementById("layer " + (closestObject+1))
+                layerorder.splice(closestObject+1,0,layertypes[i])
               }
             }
       }
@@ -221,6 +221,7 @@ function MakeDraggable(i) {
       } else {
         ghost.offsetLeft = x3
       }
+      isSnapped = true
    //     const containerRect = container.getBoundingClientRect();
 
    //     if (
