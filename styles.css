@@ -87,6 +87,18 @@ th, td {
   overflow: auto;
 }
 
+.layerincontainer {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  background-color: white;
+  margin: 10px;
+  z-index: 2;
+}
+
 .container {
   position: relative;
   height: 500px;
