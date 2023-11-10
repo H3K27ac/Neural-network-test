@@ -168,7 +168,7 @@ function MakeDraggable(i) {
             layerorder.push(layertypes[i])
           } else {
             if (object.offsetLeft < document.getElementById("layer " + closestObject).offsetRight) {
-              document.getElementById("layers").innerHTML = "rename
+              document.getElementById("layers").innerHTML = "rename"
               for (let m=closestObject; m<layerorder.length; m++) {
                 document.getElementById("layer " + m).id = "layer " + (closestObject+1)
               }
