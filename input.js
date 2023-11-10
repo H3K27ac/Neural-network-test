@@ -66,8 +66,8 @@ function MakeDraggable(i) {
 
     function handleMouseDown(event) {
       isDragging = true;
-      originalPosition.x = object.offsetLeft - event.clientX;
-      originalPosition.y = object.offsetTop - event.clientY;
+      originalPosition.x = event.clientX - object.offsetLeft;
+      originalPosition.y = event.clientY - object.offsetTop;
 
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
@@ -84,8 +84,8 @@ function MakeDraggable(i) {
     function handleTouchStart(event) {
       event.preventDefault()
       isDragging = true;
-      originalPosition.x = object.offsetLeft - event.touches[0].clientX;
-      originalPosition.y = object.offsetTop - event.touches[0].clientY;
+      originalPosition.x = event.touches[0].clientX - object.offsetLeft;
+      originalPosition.y = event.touches[0].clientY - object.offsetTop;
 
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
@@ -103,8 +103,8 @@ function MakeDraggable(i) {
     function handleMouseMove(event) {
         if (isDragging) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
-          ghost.style.left = (event.clientX + originalPosition.x) + 'px';
-          ghost.style.top = (event.clientY + originalPosition.y) + 'px';
+          ghost.style.left = (event.clientX - originalPosition.x) + 'px';
+          ghost.style.top = (event.clientY - originalPosition.y) + 'px';
 
           isSnapped = false;
 
