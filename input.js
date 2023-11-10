@@ -30,3 +30,24 @@ function UpdateContainerWidth() {
   container.style.width = width + 'px'
 }
 
+function CreateLayers() {
+  let container = document.getElementById("inputcontainee");
+  let neuron = document.createElement("div")
+  neuron.className = "neuron"
+  neuron.id = "neuron"
+  let neuron2 = document.createElement("div")
+  neuron2.className = "neuron"
+  neuron2.id = "neuron2"
+  container.appendChild(neuron)
+  container.appendChild(neuron2)
+  let weight = document.createElement("div")
+  weight.className = "weight"
+  weight.id = "weight"
+  const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
+  const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+  const length = x2 - x1;
+  const centerX = (x1 + x2) / 2;
+  weight.style.width = length + "px";
+  weight.style.left = centerX - (length / 2) + "px";
+  container.appendChild(weight)
+}
