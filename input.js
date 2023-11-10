@@ -219,7 +219,7 @@ function MakeDraggable(i) {
       const centerY = (y1 + y2) / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
       const y3 = ghost.offsetTop + ghost.offsetHeight / 2;
-      document.getElementById("layers").innerHTML = "snap"
+      document.getElementById("layers").innerHTML = "snap" + "," + y3 + "," + centerY
       if (Math.abs(y3-centerY) < 50) {
         ghost.offsetLeft = x3
         ghost.offsetTop = centerY
