@@ -124,8 +124,6 @@ function MakeDraggable(i) {
           ghost.style.left = (event.touches[0].clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.touches[0].clientY - originalPosition.y) + 'px';
           document.getElementById("layers").innerHTML = "moving"
-
-          isSnapped = false;
           
           handleSnap();
         }
@@ -167,6 +165,7 @@ function MakeDraggable(i) {
             }
           if (layerorder == []) {
             object.id = "layer " + i
+            document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(object,neuron2)
             layerorder.push(layertypes[i])
           } else {
@@ -216,9 +215,9 @@ function MakeDraggable(i) {
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
       if (layerorder == []) {
-        ghost.offsetLeft = x3
+        ghost.style.left = x3
       } else {
-        ghost.offsetLeft = x3
+        ghost.style.left = x3
       }
       isSnapped = true
    //     const containerRect = container.getBoundingClientRect();
