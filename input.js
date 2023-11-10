@@ -1,5 +1,6 @@
 let layertypes = ["activationlayer","batchnormlayer"];
 let layernames = ["Activation layer", "Batch normalisation"];
+let layerorder = [];
 
 
 function ReplenishLayers() {
@@ -172,7 +173,34 @@ function MakeDraggable(i) {
     }
 
     function handleSnap() {
-        const draggableRect = object.getBoundingClientRect();
+      let neuron = document.getElementById("neuron")
+      let neuron2 = document.getElementById("neuron2")
+      /*
+      const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
+      const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+      const x3 = (x1 + x2)/(layerorder.length+2);
+      */
+      
+      let container = document.getElementById("inputcontainer");
+      if (layerorder == []) {
+        object.id = "layer " + i
+        container.insertBefore(object,neuron2)
+        layerorder.push(layertypes[i])
+      } else {
+        let closestObject;
+        let minDistance = Number.MAX_SAFE_INTEGER;
+        for (let n=0; n<layerorder.length; n++) {
+        const obj = document.getElementById("layer " + n)
+        const distance = Math.abs(ghost.offsetLeft - obj.right);
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestObject = n;
+        }
+        }
+        if (object.offsetLeft < document.getElementById("layer " + n).offsetRight) {
+        }
+      }
    //     const containerRect = container.getBoundingClientRect();
 
    //     if (
