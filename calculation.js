@@ -321,7 +321,7 @@ function ToggleTraining() {
   } else {
     document.getElementById("training").innerHTML = "Stop training"
     if (batchnorm != "none") {
-      training = setInterval(BatchBackprop, 1000);
+      training = setInterval(BatchBackprop, 200);
     } else {
       training = setInterval(Backprop, 100);
     }
