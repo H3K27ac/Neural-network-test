@@ -71,7 +71,7 @@ function MakeDraggable(i) {
 
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
-      layer.className = "layerincontainer"
+      layer.className = "layerghost"
       layer.id = layertypes[i] + "ghost"
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
@@ -89,7 +89,7 @@ function MakeDraggable(i) {
 
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
-      layer.className = "layerincontainer"
+      layer.className = "layerghost"
       layer.id = layertypes[i] + "ghost"
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
