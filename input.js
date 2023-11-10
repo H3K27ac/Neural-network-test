@@ -189,6 +189,7 @@ function MakeDraggable(i) {
           if (ghost) {
                 ghost.remove();
             }
+          document.getElementById("layers").innerHTML = JSON.stringify(layerorder)
         } else {
             // Object is not snapped, remove the ghost
             if (ghost) {
@@ -224,27 +225,11 @@ function MakeDraggable(i) {
               closestObject = n;
             }
           }
-          document.getElementById("layers").innerHTML = ghost.offsetLeft + "," + document.getElementById("layer " + closestObject).offsetLeft
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
         }
       }
-      /*
-      if (layerorder == []) {
-          } else {
-            let closestObject;
-            let minDistance = Number.MAX_SAFE_INTEGER;
-            for (let n=0; n<layerorder.length; n++) {
-              const obj = document.getElementById("layer " + n)
-              const distance = Math.abs(ghost.offsetLeft - obj.right);
-              if (distance < minDistance) {
-                minDistance = distance;
-                closestObject = n;
-              }
-            }
-      }
-      */
     }
 }
 
