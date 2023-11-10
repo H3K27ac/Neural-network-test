@@ -209,7 +209,7 @@ function MakeDraggable(i) {
           isSnapped = true
           closestObject = 0
           let minDistance = Number.MAX_SAFE_INTEGER;
-          for (let n=1; n<layerorder.length-2; n++) {
+          for (let n=1; n<layerorder.length+1; n++) {
             const obj = container.children[n]
             const distance = Math.abs(ghost.offsetLeft - obj.offsetLeft);
             if (distance < minDistance) {
