@@ -213,13 +213,13 @@ function MakeDraggable(i) {
           let minDistance = Number.MAX_SAFE_INTEGER;
           for (let n=0; n<layerorder.length; n++) {
             const obj = document.getElementById("layer " + n)
-            const distance = Math.abs(ghost.offsetLeft - obj.offsetRight);
+            const distance = Math.abs(ghost.offsetLeft - obj.offsetLeft);
             if (distance < minDistance) {
               minDistance = distance;
               closestObject = n;
             }
           }
-          if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetRight) {
+          if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
         }
