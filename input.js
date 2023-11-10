@@ -37,8 +37,14 @@ function CreateLayers() {
   let neuron = document.createElement("div")
   let neuron2 = document.createElement("div")
   let weight = document.createElement("div")
+  neuron.className = "neuron"
+  neuron.id = "neuron"
+  neuron2.className = "neuron"
+  neuron2.id = "neuron2"
   weight.className = "weight"
   weight.id = "weight"
+  container.appendChild(neuron)
+  container.appendChild(neuron2)
   const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
   const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
   const length = x2 - x1;
@@ -46,12 +52,6 @@ function CreateLayers() {
   weight.style.width = length + "px";
   weight.style.left = centerX - (length / 2) + "px";
   container.appendChild(weight)
-  neuron.className = "neuron"
-  neuron.id = "neuron"
-  neuron2.className = "neuron"
-  neuron2.id = "neuron2"
-  container.appendChild(neuron)
-  container.appendChild(neuron2)
 }
 
 
@@ -168,7 +168,7 @@ function MakeDraggable(i) {
           newobject.appendChild(layertext)
           if (layerorder.length == 0) {
             document.getElementById("layers").innerHTML = "insert"
-            container.insertBefore(newobject,container.children[layerorder.length+3])
+            container.insertBefore(newobject,container.children[layerorder.length+2])
             layerorder.push(layertypes[i])
           } else {
             newobject.id = "layer " + closestObject
