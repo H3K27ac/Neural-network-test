@@ -209,11 +209,13 @@ function MakeDraggable(i) {
     }
 
     function handleSnap() {
+      document.getElementById("layers").innerHTML = "bad snap"
       let neuron = document.getElementById("neuron")
       let neuron2 = document.getElementById("neuron2")
       const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
+      document.getElementById("layers").innerHTML = "snap"
       if (layerorder == []) {
         ghost.style.left = x3
       } else {
