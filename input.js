@@ -1,5 +1,6 @@
 let layertypes = ["activationlayer","batchnormlayer"];
 let layernames = ["Activation layer", "Batch normalisation"];
+let layercolor = ["lightgray","lightblue"];
 let layerorder = [];
 
 
@@ -11,6 +12,7 @@ function ReplenishLayers() {
       let layertext = document.createElement("span");
       layer.className = "layerincontainer"
       layer.id = layertypes[i] + "incontainer"
+      layer.backgroundColor = layercolor[i]
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
@@ -94,6 +96,7 @@ function MakeDraggable(i) {
       let layertext = document.createElement("span");
       layer.className = "layerghost"
       layer.id = layertypes[i] + "ghost"
+      layer.backgroundColor = layercolor[i]
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
@@ -164,6 +167,7 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           newobject.className = "layerincontainer"
+          newobject.backgroundColor = layercolor[i]
           layertext.className = "layertext"
           layertext.innerHTML = layernames[i]
           newobject.appendChild(layertext)
