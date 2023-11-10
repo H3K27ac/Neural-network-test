@@ -84,7 +84,6 @@ th, td {
   justify-content: space-between;
   align-items: center;
   margin: 10px auto;
-  overflow: auto;
 }
 
 .layerincontainer {
@@ -97,6 +96,11 @@ th, td {
   background-color: white;
   margin: 10px;
   z-index: 2;
+}
+
+.layertext {
+  font-size: 15px;
+  color: black;
 }
 
 .container {
