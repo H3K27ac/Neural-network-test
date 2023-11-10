@@ -49,7 +49,7 @@
     </table>
     <table class="InputTable">
       <tr>
-        <td colspan="3"><span>Regularisation</span></td>
+        <th colspan="2"><span>Regularisation</span></th>
       </tr>
       <tr>
         <td><span class="inputheading typeset">L1/Lasso Regularisation strength $$ \lambda_1 $$</span></td>
@@ -59,13 +59,17 @@
         <td><input type="number" class="tableinput" id="L1strength" placeholder="0"></td>
         <td><input type="number" class="tableinput" id="L2strength" placeholder="0"></td>
       </tr>
+    </table>
+    <table class="InputTable">
       <tr>
-        <td><span>Batch normalisation</span></td>
+        <th colspan="2"><span>Batch normalisation</span></th>
+      </tr>
+      <tr>
         <td><input type="checkbox" class="tableinput" id="batch"></td>
         <td><input type="number" class="tableinput" id="batchsize" placeholder="Batchsize"></td>
       </tr>
       <tr>
-        <td><span>Batch ranges</span></td>
+     <!--   <td><span>Batch ranges</span></td> -->
         <td><input type="number" class="tableinput" id="batchgammarange" placeholder="2"></td>
         <td><input type="number" class="tableinput" id="batchbetarange" placeholder="1"></td>
       </tr>
