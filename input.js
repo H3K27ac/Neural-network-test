@@ -82,8 +82,8 @@ function MakeDraggable(i) {
 
     function handleTouchStart(event) {
       isDragging = true;
-      originalPosition.x = object.offsetLeft - event.clientX;
-      originalPosition.y = object.offsetTop - event.clientY;
+      originalPosition.x = object.offsetLeft - event.touches[0].clientX;
+      originalPosition.y = object.offsetTop - event.touches[0].clientY;
 
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
