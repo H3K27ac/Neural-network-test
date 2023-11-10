@@ -61,6 +61,7 @@ function MakeDraggable(i) {
     let isDragging = false;
     let isSnapped = false;
     let originalPosition = { x: 0, y: 0 };
+    let closestObject;
 
     object.addEventListener('mousedown', handleMouseDown);
     object.addEventListener('touchstart', handleTouchStart);
@@ -152,7 +153,6 @@ function MakeDraggable(i) {
 
     function handleTouchEnd() {
       isDragging = false;
-      
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
       let ghost = document.getElementById(layertypes[i] + "ghost");
@@ -224,6 +224,16 @@ function MakeDraggable(i) {
           document.getElementById("layers").innerHTML = "set"
           ghost.style.left = x3
           ghost.style.top = height
+        } else {
+          isSnapped = true
+          let minDistance = Number.MAX_SAFE_INTEGER;
+          for (let n=0; n<layerorder.length; n++) {
+            const obj = document.getElementById("layer " + n)
+            const distance = Math.abs(ghost.offsetLeft - obj.right);
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestObject = n;
+            }
         }
       }
       /*
