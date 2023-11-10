@@ -69,8 +69,15 @@ function GenerateLayerId() {
 }
 
 function DeleteLayer(i) {
-  document.getElementById("layer " + i).remove()
-//  layerorder.splice(i,1)
+  let layer = document.getElementById("layer " + i)
+  let container = document.getElementById("inputcontainer");
+  let index;
+  for (let m=2; m<container.children.length-1; m++) {
+    if (container.children[m] === layer) {
+      index = m-2;
+    }
+  }
+  layerorder.splice(m,1)
 }
 
 function MakeDraggable(i) {
