@@ -206,6 +206,7 @@ function MakeDraggable(i) {
           ghost.style.top = height
         } else {
           isSnapped = true
+          closestObject = 0
           let minDistance = Number.MAX_SAFE_INTEGER;
           for (let n=0; n<layerorder.length; n++) {
             const obj = document.getElementById("layer " + n)
