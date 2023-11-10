@@ -10,6 +10,7 @@ function ReplenishLayers() {
       let layertext = document.createElement("span");
       layer.className = "layerincontainer"
       layer.id = layertypes[i] + "incontainer"
+      layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
       container.appendChild(layer);
@@ -25,6 +26,7 @@ function UpdateContainerWidth() {
   for (let i=0; i<children.length; i++) {
     width += children[i].offsetWidth;
   }
+  width += 10
   container.style.width = width + 'px'
 }
 
