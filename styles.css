@@ -100,6 +100,19 @@ th, td {
   z-index: 2;
 }
 
+.layerghost {
+  position: absolute;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: lightgray;
+  z-index: 3;
+}
+
 .layertext {
   font-size: 15px;
   color: black;
