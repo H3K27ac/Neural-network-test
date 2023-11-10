@@ -218,8 +218,8 @@ function MakeDraggable(i) {
       const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
       const centerY = (y1 + y2) / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
-      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetTop + "," + neuron.offsetTop + "," + centerY
-      if (Math.abs(ghost.offsetTop-neuron.offsetTop) < 50) {
+      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetTop + "," + neuron.offsetTop + "," + centerY + "," + y1
+      if (Math.abs(ghost.offsetTop-y1) < 50) {
         ghost.offsetLeft = x3
         ghost.offsetTop = centerY
         isSnapped = true
