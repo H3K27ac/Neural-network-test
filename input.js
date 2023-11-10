@@ -104,20 +104,20 @@ function MakeDraggable(i) {
     }
 
     function handleMouseMove(event) {
-        if (isDragging) {
+        if (isDragging == true && isSnapped == false) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
           ghost.style.left = (event.clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.clientY - originalPosition.y) + 'px';
 
           isSnapped = false;
 
-   //       handleSnap();
+          handleSnap();
         }
     }
 
     function handleTouchMove(event) {
         event.preventDefault()
-        if (isDragging) {
+        if (isDragging == true && isSnapped == false) {
           document.getElementById("layers").innerHTML = "moving, but broken" + "," + event.touches[0].clientX + "," + event.touches[0].clientY + "," + originalPosition.x + "," +  originalPosition.y
           let ghost = document.getElementById(layertypes[i] + "ghost")
           document.getElementById("layers").innerHTML = "moving, but broken2"
@@ -127,7 +127,7 @@ function MakeDraggable(i) {
 
           isSnapped = false;
           
-    //      handleSnap();
+          handleSnap();
         }
     }
 
@@ -164,6 +164,42 @@ function MakeDraggable(i) {
             if (ghost) {
                 ghost.remove();
             }
+          if (layerorder == []) {
+            object.id = "layer " + i
+            container.insertBefore(object,neuron2)
+            layerorder.push(layertypes[i])
+          } else {
+            let closestObject;
+            let minDistance = Number.MAX_SAFE_INTEGER;
+            for (let n=0; n<layerorder.length; n++) {
+              const obj = document.getElementById("layer " + n)
+              const distance = Math.abs(ghost.offsetLeft - obj.right);
+              if (distance < minDistance) {
+                minDistance = distance;
+                closestObject = n;
+              }
+            }
+            if (object.offsetLeft < document.getElementById("layer " + n).offsetRight) {
+              for (let m=n; m<layerorder.length; m++) {
+                document.getElementById("layer " + m).id = "layer " + (n+1)
+              }
+              object.id = "layer " + n
+              container.insertBefore(object,document.getElementById("layer " + n))
+              layerorder.splice(n,0,layertypes[i])
+            } else {
+              for (let m=n+1; m<layerorder.length; m++) {
+                document.getElementById("layer " + m).id = "layer " + (n+2)
+              }
+              object.id = "layer " + (n+1)
+              if (n+1 == layerorder) {
+                container.insertBefore(object,document.getElementById("neuron2"))
+                layerorder.push(layertypes[i])
+              } else {
+                container.insertBefore(object,document.getElementById("layer " + n+1))
+                layerorder.splice(n+1,0,layertypes[i])
+              }
+            }
+      }
         } else {
             // Object is not snapped, remove the ghost
             if (ghost) {
@@ -175,31 +211,15 @@ function MakeDraggable(i) {
     function handleSnap() {
       let neuron = document.getElementById("neuron")
       let neuron2 = document.getElementById("neuron2")
-      /*
       const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const x3 = (x1 + x2)/(layerorder.length+2);
-      */
       
       let container = document.getElementById("inputcontainer");
       if (layerorder == []) {
-        object.id = "layer " + i
-        container.insertBefore(object,neuron2)
-        layerorder.push(layertypes[i])
+        ghost.offsetLeft = x3
       } else {
-        let closestObject;
-        let minDistance = Number.MAX_SAFE_INTEGER;
-        for (let n=0; n<layerorder.length; n++) {
-        const obj = document.getElementById("layer " + n)
-        const distance = Math.abs(ghost.offsetLeft - obj.right);
-
-        if (distance < minDistance) {
-            minDistance = distance;
-            closestObject = n;
-        }
-        }
-        if (object.offsetLeft < document.getElementById("layer " + n).offsetRight) {
-        }
+        ghost.offsetLeft = x3
       }
    //     const containerRect = container.getBoundingClientRect();
 
