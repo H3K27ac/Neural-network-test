@@ -1,6 +1,7 @@
 let layertypes = ["activationlayer","batchnormlayer"];
 let layernames = ["Activation layer", "Batch normalisation"];
 let layercolor = ["lightgray","lightblue"];
+let layerid = [];
 let layerorder = [];
 
 
@@ -56,10 +57,20 @@ function CreateLayers() {
   container.appendChild(weight)
 }
 
+function GenerateLayerId() {
+  let random = Math.random()
+  for (let m=0; m<layerid.length; m++) {
+    if (random == layerid[m]) {
+      GenerateLayerId() // absolutely unnecessary
+    } else {
+      return random
+    }
+  }
+}
+
 function DeleteLayer(i) {
-  let container = document.getElementById("inputcontainer");
-  container.children[i+2].remove()
-  layerorder.splice(i,1)
+  document.getElementById("layer " + i).remove()
+//  layerorder.splice(i,1)
 }
 
 function MakeDraggable(i) {
@@ -171,20 +182,17 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
+          let random = GenerateLayerId()
+          layerid.push(random)
           newobject.className = "layerincontainer"
+          newobject.id = "layer " + String(random)
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
           layertext.innerHTML = layernames[i]
           deletelayer.className = "deletelayer"
-          if (layerorder.length == 0) {
           deletelayer.onclick = function() {
-            DeleteLayer(0);
+            DeleteLayer(random);
           };
-          } else {
-            deletelayer.onclick = function() {
-            DeleteLayer(closestObject);
-          };
-          }
           newobject.appendChild(layertext)
           newobject.appendChild(deletelayer)
           if (layerorder.length == 0) {
