@@ -14,6 +14,7 @@ function ReplenishLayers() {
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
       container.appendChild(layer);
+      MakeDraggable(i)
     }
   }
   UpdateContainerWidth();
