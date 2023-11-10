@@ -58,25 +58,26 @@ function CreateLayers() {
 }
 
 function GenerateLayerId() {
-  let random = Math.random()
+  let random = Math.random().toFixed(5)
   for (let m=0; m<layerid.length; m++) {
     if (random == layerid[m]) {
       GenerateLayerId() // absolutely unnecessary
-    } else {
-      return random
     }
   }
+  return random
 }
 
 function DeleteLayer(i) {
+  document.getElementById("layers").innerHTML = "layer id"
   let layer = document.getElementById("layer " + String(i))
   let container = document.getElementById("inputcontainer");
   let index;
   for (let m=2; m<container.children.length-1; m++) {
     if (container.children[m] === layer) {
-      index = m-1;
+      index = m-2;
     }
   }
+  document.getElementById("layers").innerHTML = "index done"
   layerorder.splice(m,1)
   layer.remove()
 }
@@ -204,12 +205,11 @@ function MakeDraggable(i) {
           newobject.appendChild(layertext)
           newobject.appendChild(deletelayer)
           if (layerorder.length == 0) {
-            document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(newobject,container.children[layerorder.length+2])
             layerorder.push(layertypes[i])
           } else {
             newobject.id = "layer " + closestObject
-            document.getElementById("layers").innerHTML = "insert" + JSON.stringify(layerid)
+            document.getElementById("layers").innerHTML = "insert" 
             container.insertBefore(newobject,container.children[closestObject+2]);
             layerorder.splice(closestObject,0,layertypes[i])
           }
@@ -217,7 +217,7 @@ function MakeDraggable(i) {
                 ghost.remove();
             }
           isSnapped = false;
-          document.getElementById("layers").innerHTML = JSON.stringify(layerorder)
+          document.getElementById("layers").innerHTML = JSON.stringify(layerid)
         } else {
             // Object is not snapped, remove the ghost
             if (ghost) {
