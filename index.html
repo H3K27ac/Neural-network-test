@@ -35,14 +35,29 @@
         <td><input type="number" class="tableinput" id="weightrange" placeholder="1"></td>
         <td><input type="number" class="tableinput" id="biasrange" placeholder="1"></td>
       </tr>
+    </table>
+    <table class="InputTable">
+       <tr>
+        <td rowspan="2"><span>Activation function</span></td>
+        <td><span class="inputheading">Hidden layers</span></td>
+        <td><span class="inputheading">Output layers</span></td>
+      </tr>
       <tr>
-        <td rowspan="2"><span>Regularisation</span></td>
+        <td><input type="text" class="input" id="hiddenactivation"></td>
+        <td><input type="text" class="input" id="outputactivation"></td>
+      </tr>
+    </table>
+    <table class="InputTable">
+      <tr>
+        <td colspan="3"><span>Regularisation</span></td>
+      </tr>
+      <tr>
         <td><span class="inputheading typeset">L1/Lasso Regularisation strength $$ \lambda_1 $$</span></td>
         <td><span class="inputheading typeset">L2/Ridge Regularisation strength $$ \lambda_2 $$</span></td>
       </tr>
       <tr>
-        <td><input type="number" class="tableinput" id="L1strength" placeholder="L1 (Lasso)"></td>
-        <td><input type="number" class="tableinput" id="L2strength" placeholder="L2 (Ridge)"></td>
+        <td><input type="number" class="tableinput" id="L1strength" placeholder="0"></td>
+        <td><input type="number" class="tableinput" id="L2strength" placeholder="0"></td>
       </tr>
       <tr>
         <td><span>Batch normalisation</span></td>
@@ -51,8 +66,8 @@
       </tr>
       <tr>
         <td><span>Batch ranges</span></td>
-        <td><input type="number" class="tableinput" id="batchgammarange" placeholder="$$ \\gamma (1) $$"></td>
-        <td><input type="number" class="tableinput" id="batchbetarange" placeholder="$$ \\beta (1) $$"></td>
+        <td><input type="number" class="tableinput" id="batchgammarange" placeholder="2"></td>
+        <td><input type="number" class="tableinput" id="batchbetarange" placeholder="1"></td>
       </tr>
       <!--
       <tr>
