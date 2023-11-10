@@ -216,24 +216,29 @@ function MakeDraggable(i) {
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
       const x3 = (x1 + x2)/(layerorder.length+2);
-      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetTop + "," + height + "," + x3 + "," + x1
+      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetLeft + "," + height + "," + x3 + "," + x1
       if (Math.abs(ghost.offsetTop-height) < 50) {
-        ghost.offsetLeft = x3
-        ghost.offsetTop = height
+        if (layerorder == []) {
+          ghost.offsetLeft = x3
+          ghost.offsetTop = height
+        }
         isSnapped = true
       }
-   //     const containerRect = container.getBoundingClientRect();
-
-   //     if (
-   //         draggableRect.left >= containerRect.left &&
-   //         draggableRect.top >= containerRect.top &&
-   //         draggableRect.right <= containerRect.right &&
-  //          draggableRect.bottom <= containerRect.bottom
-  //      ) {
- //           isSnapped = true;
-//        } else {
-//            isSnapped = false;
-//        }
+      /*
+      if (layerorder == []) {
+          } else {
+            let closestObject;
+            let minDistance = Number.MAX_SAFE_INTEGER;
+            for (let n=0; n<layerorder.length; n++) {
+              const obj = document.getElementById("layer " + n)
+              const distance = Math.abs(ghost.offsetLeft - obj.right);
+              if (distance < minDistance) {
+                minDistance = distance;
+                closestObject = n;
+              }
+            }
+      }
+      */
     }
 }
 
