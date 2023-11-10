@@ -173,7 +173,7 @@ function MakeDraggable(i) {
           } else {
             newobject.id = "layer " + closestObject
             document.getElementById("layers").innerHTML = "insert" + closestObject
-            container.insertBefore(newobject,container.children[closestObject+3]);
+            container.insertBefore(newobject,container.children[closestObject+2]);
             layerorder.splice(closestObject,0,layertypes[i])
           }
           if (ghost) {
