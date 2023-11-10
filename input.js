@@ -74,10 +74,11 @@ function DeleteLayer(i) {
   let index;
   for (let m=2; m<container.children.length-1; m++) {
     if (container.children[m] === layer) {
-      index = m-2;
+      index = m-1;
     }
   }
   layerorder.splice(m,1)
+  layer.remove()
 }
 
 function MakeDraggable(i) {
@@ -208,7 +209,7 @@ function MakeDraggable(i) {
             layerorder.push(layertypes[i])
           } else {
             newobject.id = "layer " + closestObject
-            document.getElementById("layers").innerHTML = "insert" + closestObject
+            document.getElementById("layers").innerHTML = "insert" + JSON.stringify(layerid)
             container.insertBefore(newobject,container.children[closestObject+2]);
             layerorder.splice(closestObject,0,layertypes[i])
           }
