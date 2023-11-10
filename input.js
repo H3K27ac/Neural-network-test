@@ -173,11 +173,11 @@ function MakeDraggable(i) {
             }
             object.id = "layer " + closestObject
             document.getElementById("layers").innerHTML = "insert"
-            if (closestObject == layerorder) {
+            if (closestObject == layerorder.length) {
                 container.insertBefore(object,document.getElementById("neuron2"))
                 layerorder.push(layertypes[i])
             } else {
-              container.insertBefore(object,document.getElementById("layer " + closestObject);
+              container.insertBefore(object,document.getElementById("layer " + closestObject));
               layerorder.splice(closestObject,0,layertypes[i])
             }
           }
