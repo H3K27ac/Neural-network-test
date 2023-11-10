@@ -74,6 +74,19 @@ th, td {
   margin: 20px auto;
 }
 
+.layercontainer {
+  position: relative;
+  height: 150px;
+  background-color: white;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px auto;
+  overflow: auto;
+}
+
 .container {
   position: relative;
   height: 500px;
