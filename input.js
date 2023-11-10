@@ -167,7 +167,7 @@ function MakeDraggable(i) {
           layertext.innerHTML = layernames[i]
           newobject.appendChild(layertext)
           if (layerorder.length == 0) {
-            newobject.id = "layer " + 0
+            newobject.id = "layer 0"
             document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(newobject,neuron2)
             layerorder.push(layertypes[i])
