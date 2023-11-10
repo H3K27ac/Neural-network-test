@@ -223,11 +223,11 @@ function MakeDraggable(i) {
               minDistance = distance;
               closestObject = n;
             }
+            document.getElementById("layers").innerHTML = distance
           }
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
-          document.getElementById("layers").innerHTML = closestObject
         }
       }
       /*
