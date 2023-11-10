@@ -125,7 +125,8 @@ function MakeDraggable(i) {
           ghost.style.left = (event.touches[0].clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.touches[0].clientY - originalPosition.y) + 'px';
           document.getElementById("layers").innerHTML = "moving"
-          
+
+          isSnapped = false;
           handleSnap();
         }
     }
@@ -179,6 +180,7 @@ function MakeDraggable(i) {
           if (ghost) {
                 ghost.remove();
             }
+          isSnapped = false;
           document.getElementById("layers").innerHTML = JSON.stringify(layerorder)
         } else {
             // Object is not snapped, remove the ghost
