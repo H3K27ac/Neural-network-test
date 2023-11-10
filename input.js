@@ -82,6 +82,7 @@ function MakeDraggable(i) {
     }
 
     function handleTouchStart(event) {
+      event.preventDefault()
       isDragging = true;
       originalPosition.x = object.offsetLeft - event.touches[0].clientX;
       originalPosition.y = object.offsetTop - event.touches[0].clientY;
