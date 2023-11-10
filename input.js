@@ -189,6 +189,7 @@ function MakeDraggable(i) {
     }
 
     function handleSnap() {
+      let container = document.getElementById("inputcontainer");
       let ghost = document.getElementById(layertypes[i] + "ghost");
       let neuron = document.getElementById("neuron")
       let neuron2 = document.getElementById("neuron2")
@@ -208,15 +209,15 @@ function MakeDraggable(i) {
           isSnapped = true
           closestObject = 0
           let minDistance = Number.MAX_SAFE_INTEGER;
-          for (let n=0; n<layerorder.length; n++) {
-            const obj = document.getElementById("layer " + n)
+          for (let n=1; n<layerorder.length-2; n++) {
+            const obj = container.children[n]
             const distance = Math.abs(ghost.offsetLeft - obj.offsetLeft);
             if (distance < minDistance) {
               minDistance = distance;
-              closestObject = n;
+              closestObject = n-1;
             }
           }
-          if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
+          if (ghost.offsetLeft > container.children[n+1].offsetLeft) {
             closestObject += 1
           }
         }
