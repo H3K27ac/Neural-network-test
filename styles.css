@@ -62,6 +62,18 @@ th, td {
   width: 120px;
 }
 
+.inputcontainer {
+  position: relative;
+  height: 200px;
+  width: 800px;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px auto;
+}
+
 .container {
   position: relative;
   height: 500px;
