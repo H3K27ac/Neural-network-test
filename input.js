@@ -218,7 +218,7 @@ function MakeDraggable(i) {
       const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
       document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetLeft + "," + height + "," + x3 + "," + x1 + "," + x2
       if (Math.abs(ghost.offsetTop-height) < 50) {
-        if (layerorder == []) {
+        if (layerorder.length == 0) {
           document.getElementById("layers").innerHTML = "snapping"
           isSnapped = true
           document.getElementById("layers").innerHTML = "set"
