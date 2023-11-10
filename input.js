@@ -77,7 +77,7 @@ function DeleteLayer(i) {
       index = m;
     }
   }
-  document.getElementById("layers").innerHTML = "index done"
+  document.getElementById("layers").innerHTML = "index done" + m
   layerorder.splice(m-2,1)
   layer.remove()
 }
