@@ -76,6 +76,7 @@ function MakeDraggable(i) {
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
+      document.getElementById("layercontainer").appendChild(layer)
 
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
@@ -94,6 +95,7 @@ function MakeDraggable(i) {
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
+      document.getElementById("layercontainer").appendChild(layer)
       document.getElementById("layers").innerHTML = "start"
       
       document.addEventListener('touchmove', handleTouchMove);
