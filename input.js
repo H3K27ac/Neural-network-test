@@ -68,8 +68,8 @@ function GenerateLayerId() {
 }
 
 function DeleteLayer(i) {
-  document.getElementById("layers").innerHTML = "layer id"
   let layer = document.getElementById("layer " + String(i).replace(".",""))
+  document.getElementById("layers").innerHTML = layer.id
   let container = document.getElementById("inputcontainer");
   let index;
   let index2;
@@ -78,7 +78,7 @@ function DeleteLayer(i) {
       index = m;
     }
   }
-  layer.remove()
+  document.getElementById("layer " + String(i).replace(".","")).remove()
   layerorder.splice(index-2,1)
   document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerorder)
   index2 = layerid.indexOf(i)
