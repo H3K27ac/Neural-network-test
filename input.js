@@ -10,6 +10,7 @@ function ReplenishLayers() {
       let container = document.getElementById("layercontainer");
       let layer = document.createElement("div");
       let layertext = document.createElement("span");
+      let deletelayer = document.createElement("button");
       layer.className = "layerincontainer"
       layer.id = layertypes[i] + "incontainer"
       layer.style.backgroundColor = layercolor[i]
@@ -56,7 +57,11 @@ function CreateLayers() {
   container.appendChild(weight)
 }
 
-
+function DeleteLayer(i) {
+  let container = document.getElementById("inputcontainer");
+  container.children[i+2].remove()
+  layerorder.splice(i,1)
+}
 
 function MakeDraggable(i) {
     let object = document.getElementById(layertypes[i] + "incontainer")
