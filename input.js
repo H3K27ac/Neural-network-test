@@ -224,7 +224,7 @@ function MakeDraggable(i) {
               closestObject = n;
             }
           }
-          document.getElementById("layers").innerHTML = ghost.offsetLeft + "," + document.getElementById("layer " + closestObject).offsetLef
+          document.getElementById("layers").innerHTML = ghost.offsetLeft + "," + document.getElementById("layer " + closestObject).offsetLeft
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetLeft) {
             closestObject += 1
           }
