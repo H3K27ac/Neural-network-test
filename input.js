@@ -172,7 +172,7 @@ function MakeDraggable(i) {
               document.getElementById("layer " + m).id = "layer " + (closestObject+1)
             }
             object.id = "layer " + closestObject
-            document.getElementById("layers").innerHTML = "insert"
+            document.getElementById("layers").innerHTML = "insert" + closestObject
             if (closestObject == layerorder.length) {
                 container.insertBefore(object,document.getElementById("neuron2"))
                 layerorder.push(layertypes[i])
@@ -220,7 +220,7 @@ function MakeDraggable(i) {
             }
           }
           if (ghost.offsetLeft > document.getElementById("layer " + closestObject).offsetRight) {
-            cloestObject += 1
+            closestObject += 1
           }
         }
       }
