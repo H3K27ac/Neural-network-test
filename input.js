@@ -162,7 +162,7 @@ function MakeDraggable(i) {
             // Object is snapped, remove the ghost and add the object
             
           if (layerorder.length == 0) {
-            object.id = "layer " + i
+            object.id = "layer " + 0
             document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(object,neuron2)
             layerorder.push(layertypes[i])
