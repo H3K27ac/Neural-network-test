@@ -61,7 +61,7 @@ function GenerateLayerId() {
   let random = Math.random().toFixed(5)
   for (let m=0; m<layerid.length; m++) {
     if (random == layerid[m]) {
-      GenerateLayerId() // absolutely unnecessary
+      random = GenerateLayerId() // absolutely unnecessary
     }
   }
   return random
@@ -69,7 +69,7 @@ function GenerateLayerId() {
 
 function DeleteLayer(i) {
   document.getElementById("layers").innerHTML = "layer id"
-  let layer = document.getElementById("layer " + String(i))
+  let layer = document.getElementById("layer " + String(i).replace(".",""))
   let container = document.getElementById("inputcontainer");
   let index;
   let index2;
@@ -199,7 +199,7 @@ function MakeDraggable(i) {
           let random = GenerateLayerId()
           layerid.push(random)
           newobject.className = "layerincontainer"
-          newobject.id = "layer " + String(random)
+          newobject.id = "layer " + String(random).replace(".","")
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
           layertext.innerHTML = layernames[i]
