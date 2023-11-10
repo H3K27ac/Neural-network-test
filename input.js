@@ -163,7 +163,7 @@ function MakeDraggable(i) {
             if (ghost) {
                 ghost.remove();
             }
-          if (layerorder == []) {
+          if (layerorder.length == 0) {
             object.id = "layer " + i
             document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(object,neuron2)
