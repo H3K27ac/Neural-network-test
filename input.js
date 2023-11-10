@@ -160,25 +160,13 @@ function MakeDraggable(i) {
       document.getElementById("layers").innerHTML = "end"
         if (isSnapped) {
             // Object is snapped, remove the ghost and add the object
-            if (ghost) {
-                ghost.remove();
-            }
+            
           if (layerorder.length == 0) {
             object.id = "layer " + i
             document.getElementById("layers").innerHTML = "insert"
             container.insertBefore(object,neuron2)
             layerorder.push(layertypes[i])
           } else {
-            let closestObject;
-            let minDistance = Number.MAX_SAFE_INTEGER;
-            for (let n=0; n<layerorder.length; n++) {
-              const obj = document.getElementById("layer " + n)
-              const distance = Math.abs(ghost.offsetLeft - obj.right);
-              if (distance < minDistance) {
-                minDistance = distance;
-                closestObject = n;
-              }
-            }
             if (object.offsetLeft < document.getElementById("layer " + closestObject).offsetRight) {
               for (let m=closestObject; m<layerorder.length; m++) {
                 document.getElementById("layer " + m).id = "layer " + (closestObject+1)
@@ -199,7 +187,10 @@ function MakeDraggable(i) {
                 layerorder.splice(closestObject+1,0,layertypes[i])
               }
             }
-      }
+          }
+          if (ghost) {
+                ghost.remove();
+            }
         } else {
             // Object is not snapped, remove the ghost
             if (ghost) {
