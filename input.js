@@ -195,7 +195,7 @@ function MakeDraggable(i) {
                 container.insertBefore(object,document.getElementById("neuron2"))
                 layerorder.push(layertypes[i])
               } else {
-                container.insertBefore(object,document.getElementById("layer " + (closestObject+1))
+                container.insertBefore(object,document.getElementById("layer " + (closestObject+1)))
                 layerorder.splice(closestObject+1,0,layertypes[i])
               }
             }
