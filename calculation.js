@@ -4,7 +4,7 @@ let hiddenactivation = "Sigmoid";
 let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let epsilon = 0.00001;
-let costcache = [[]];
+let costcache = [0];
 
 
 function Activation(input,i) {
@@ -123,7 +123,7 @@ function BatchForwardPass() {
 //      text6.innerHTML = "After exp:  " +  JSON.stringify(batchnormed) + ",    " + JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
 //      document.getElementById("inputfield").appendChild(text6)
 
-function FeedForward() {
+function FeedForward(color = true) {
   ClearNeurons()
   let sum;
   for (let i=0; i<layers; i++) {
@@ -149,7 +149,9 @@ function FeedForward() {
       }
     }
   }
-  UpdateColor()
+  if (color) {
+    UpdateColor()
+  }
 }
 
 function Testing() {
@@ -296,7 +298,7 @@ function ResetCache() {
 
 function Backprop() {
   RandomizeInput()
-  FeedForward()
+  FeedForward(false)
   SetTarget()
   ResetCache()
   for (let i=layers-2; i>-1; i--) {
