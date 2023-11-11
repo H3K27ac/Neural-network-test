@@ -119,6 +119,7 @@ function UpdateColor() {
       } else {
         neuronvalue = neurons[i][j].toFixed(2)
       }
+      if (showneurons == "all" || i=layers-1) {
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
@@ -136,6 +137,7 @@ function UpdateColor() {
         betatext.style.color = Color(betavalue,"batchbeta")
         gammatext.style.color = Color(gammavalue,"batchgamma")
       } 
+      }
     }
     let j3 = structure[i+1]
     for (let j=0; j<j3; j++) { 
@@ -247,6 +249,12 @@ function CreateGraph() {
   } else {
     batchnorm = "none"
   }
+
+if (document.getElementById("showneurons").checked == true) {
+    showneurons = "all"
+  } else {
+    showneurons = "output"
+  }
   
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
@@ -292,6 +300,7 @@ function CreateGraph() {
       let batchnormedsubsubarray = [];
       let neuronssubsubarray = [];
       let neurons2subsubarray = [];
+      if (showneurons == "all" || i=layers-1) {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
@@ -322,6 +331,7 @@ function CreateGraph() {
         neuron.appendChild(neuroncontainer)
       }
       column.appendChild(neuron)
+      }
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
           batchsubsubarray.push(0)
