@@ -119,7 +119,7 @@ function UpdateColor() {
       } else {
         neuronvalue = neurons[i][j].toFixed(2)
       }
-      if (showneurons == "all" || i=layers-1) {
+      if (showneurons == "all" || i==layers-1) {
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
@@ -300,7 +300,7 @@ if (document.getElementById("showneurons").checked == true) {
       let batchnormedsubsubarray = [];
       let neuronssubsubarray = [];
       let neurons2subsubarray = [];
-      if (showneurons == "all" || i=layers-1) {
+      if (showneurons == "all" || i==layers-1) {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
       neuron.id = "neuron " + i + "," + j
