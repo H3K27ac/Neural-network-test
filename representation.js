@@ -229,7 +229,7 @@ function CreateGraph() {
   let structureinput = document.getElementById("structure").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
-  document.getElementById("structure").innerHTML = "Structure: " + JSON.stringify(structure)
+  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
   let neuroncount = 0;
   let weightcount = 0;
