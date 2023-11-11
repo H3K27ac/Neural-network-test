@@ -6,6 +6,10 @@ let structure = [];
 let targets = [];
 let layers;
 
+let dropout;
+let dropoutinput = [];
+let dropoutprob;
+
 // Batch normalisation variables
 let batch = [];
 let batchnormed = [];
