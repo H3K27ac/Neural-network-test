@@ -4,7 +4,7 @@ let hiddenactivation = "Sigmoid";
 let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let epsilon = 0.00001;
-let costcache = [0];
+let costcache = [[]];
 
 
 function Activation(input,i) {
@@ -296,7 +296,7 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
-  costcache = [];
+  costcache = [[]];
   for (let i=layers-2; i>-1; i--) 
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
