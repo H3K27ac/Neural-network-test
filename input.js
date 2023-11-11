@@ -1,7 +1,6 @@
 let layertypes = ["activationlayer","batchnormlayer"];
 let layernames = ["Activation layer", "Batch normalisation"];
 let layercolor = ["lightgray","lightblue"];
-let layerid = [];
 let layerorder = [];
 
 
@@ -28,7 +27,8 @@ function UpdateContainerWidth() {
   let container = document.getElementById("layercontainer");
   let children = container.children;
   let width = 0;
-  for (let i=0; i<children.length; i++) {
+  let i2 = children.length;
+  for (let i=0; i<i2; i++) {
     width += children[i].offsetWidth;
   }
   width += 10
@@ -55,43 +55,6 @@ function CreateLayers() {
   weight.style.width = length + "px";
   weight.style.left = centerX - (length / 2) + "px";
   container.appendChild(weight)
-}
-
-function GenerateLayerId() {
-  let random = Math.random().toFixed(5)
-  for (let m=0; m<layerid.length; m++) {
-    if (random == layerid[m]) {
-      random = GenerateLayerId() // absolutely unnecessary
-    }
-  }
-  return random
-}
-
-function DeleteLayer(i) {
-  let layer = document.getElementById("layer " + String(i).replace(".",""))
-  document.getElementById("layers").innerHTML = "broken"
-  if (layer) {
-    document.getElementById("layers").innerHTML = "layer exists" + i
-  }
-  let container = document.getElementById("inputcontainer");
-  let index;
-  let index2;
-  let m2 = container.children.length
-  for (let m=0; m<m2; m++) {
-    if (container.children[m] === layer) {
-      index = m;
-    }
-  }
-  layer.remove()
-  layerorder.splice(index-2,1)
-  document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerorder)
-  index2 = layerid.indexOf(i)
-  if (index2 > -1) {
-  layerid.splice(index2,1)
-  }
-  document.getElementById("layers").innerHTML = "index done" + JSON.stringify(layerid)
-  layer.remove()
-  document.getElementById("layers").innerHTML = "all done"
 }
 
 function MakeDraggable(i) {
@@ -203,10 +166,7 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
-          let random = GenerateLayerId()
-          layerid.push(random)
           newobject.className = "layerincontainer"
-          newobject.id = "layer " + String(random).replace(".","")
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
           layertext.innerHTML = layernames[i]
