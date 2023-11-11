@@ -135,8 +135,8 @@ function UpdateColor() {
         gammatext.style.color = Color(gammavalue,"batchgamma")
       } 
     }
-    let j2 = structure[i+1]
-    for (let j=0; j<j2; j++) { 
+    let j3 = structure[i+1]
+    for (let j=0; j<j3; j++) { 
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
@@ -144,8 +144,7 @@ function UpdateColor() {
         let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
         neuroncontainer.style.borderColor = Color(biasvalue,"bias")
       }
-      let k2 = structure[i]
-      for (let k=0; k<k2; k++) {
+      for (let k=0; k<j2; k++) {
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
@@ -156,7 +155,8 @@ function UpdateColor() {
 
 function ClearNeurons() {
   for (let i=1; i<layers; i++) {
-    for (let j=0; j<structure[i]; j++) {
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
           neurons[i][j][n] = 0
@@ -171,7 +171,8 @@ function ClearNeurons() {
 
 function RandomizeInput() {
   ClearNeurons()
-  for (let j=0; j<structure[0]; j++) {
+  let j2 = structure[0]
+  for (let j=0; j<j2; j++) {
     if (batchnorm != "none") {
       for (let n=0; n<batchsize; n++) {
         neurons[0][j][n] = Math.random();
