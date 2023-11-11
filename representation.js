@@ -88,14 +88,16 @@ function Color(value,type) {
   }
   if (type == "batchgamma") {
     if (value == 1) return `rgb(255, 255, 255)`
-    red = (Math.log(value) / Math.log(valuerange)) > 0 ? 255 : Math.round(255 * (1 + (Math.log(value) / Math.log(valuerange))));
-    green = Math.round(255 * (1 - Math.abs(Math.log(value) / Math.log(valuerange))));
-    blue = (Math.log(value) / Math.log(valuerange)) > 0 ? Math.round(255 * (1 - (Math.log(value) / Math.log(valuerange)))) : 255;
+    let value2 = Math.log(value) / Math.log(valuerange)
+    red = value2 > 0 ? 255 : Math.round(255 * (1 + value2));
+    green = Math.round(255 * (1 - Math.abs(value2)));
+    blue = value2 > 0 ? Math.round(255 * (1 - value2)) : 255;
   } else {
     if (value == 0) return `rgb(255, 255, 255)`
-    red = value > 0 ? 255 : Math.round(255 * (1 + (value / valuerange)));
-    green = Math.round(255 * (1 - Math.abs(value / valuerange)));
-    blue = value > 0 ? Math.round(255 * (1 - (value / valuerange))) : 255;
+    let value3 = value / valuerange
+    red = value > 0 ? 255 : Math.round(255 * (1 + value3));
+    green = Math.round(255 * (1 - Math.abs(value3)));
+    blue = value > 0 ? Math.round(255 * (1 - value3)) : 255;
   }
   return `rgb(${red}, ${green}, ${blue})`;
 }
@@ -113,22 +115,22 @@ function UpdateColor() {
       let gammavalue;
       let betavalue;
       if (batchnorm != "none") {
-        neuronvalue = neurons[i][j][0] // To be improved
+        neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
       } else {
-        neuronvalue = neurons[i][j]
+        neuronvalue = neurons[i][j].toFixed(2)
       }
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
-      neuronvaluetext.innerHTML = neuronvalue.toFixed(2)
+      neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
         neuronvaluetext.style.color = `rgb(0,0,0)`
       } else {
         neuronvaluetext.style.color = `rgb(255,255,255)`
       }
       if (batchnorm != "none" && i>0) {
-        betavalue = batchbeta[i][j]
-        gammavalue = batchgamma[i][j]
+        betavalue = batchbeta[i][j].toFixed(2)
+        gammavalue = batchgamma[i][j].toFixed(2)
         let betatext = document.getElementById("betatext " + i + "," + j)
         let gammatext = document.getElementById("gammatext " + i + "," + j)
         betatext.style.color = Color(betavalue,"batchbeta")
@@ -137,7 +139,7 @@ function UpdateColor() {
     }
     let j3 = structure[i+1]
     for (let j=0; j<j3; j++) { 
-      let biasvalue = biases[i+1][j]
+      let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
       if (batchnorm != "none") {
@@ -145,7 +147,7 @@ function UpdateColor() {
         neuroncontainer.style.borderColor = Color(biasvalue,"bias")
       }
       for (let k=0; k<j2; k++) {
-        let weightvalue = weights[i+1][j][k]
+        let weightvalue = weights[i+1][j][k].toFixed(2)
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
       }
