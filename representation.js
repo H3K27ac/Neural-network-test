@@ -295,9 +295,10 @@ if (document.getElementById("showneurons").checked == true) {
     let neurons2subarray = [];
     let batchneuronssubarray = [];
     let batchneurons2subarray = [];
+    let column;
     if (showneurons == "all") {
       document.getElementById("layers").innerHTML = "why"
-    let column = document.createElement("div")
+    column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
     }
@@ -362,7 +363,7 @@ if (document.getElementById("showneurons").checked == true) {
     }
     if (showneurons == "all") {
       document.getElementById("layers").innerHTML = "notworking"
-    container.appendChild(column)
+      container.appendChild(column)
     }
     if (batchnorm != "none") {
       if (i < layers-1) {
