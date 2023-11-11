@@ -212,7 +212,16 @@ function MakeDraggable(i) {
           layertext.innerHTML = layernames[i]
           deletelayer.className = "deletelayer"
           deletelayer.onclick = function() {
-            DeleteLayer(random);
+            let index;
+            let m2 = container.children.length
+              for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+            newobject.remove()
+            layerorder.splice(index-2,1)
+            document.getElementById("layers").innerHTML = "index done"
           };
           newobject.appendChild(layertext)
           newobject.appendChild(deletelayer)
