@@ -119,13 +119,13 @@ th, td {
 }
 
 .deletelayer {
-  position: absolute;
   top: 2px;
   right: 2px;
   height: 10px;
   width: 15px;
   background-color: red;
   border: 1px solid black
+  z-index: 3;
 }
 
 .container {
