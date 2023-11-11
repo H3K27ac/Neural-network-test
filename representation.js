@@ -229,7 +229,7 @@ function CreateGraph() {
   let structureinput = document.getElementById("structure").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
-  document.getElementById("structure").innerHTML = "Structure: " + JSON.stringify(structureinput).replace(/[{}]/g,"")
+  document.getElementById("structure").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
   let neuroncount = 0;
   let weightcount = 0;
@@ -296,6 +296,7 @@ if (document.getElementById("showneurons").checked == true) {
     let batchneuronssubarray = [];
     let batchneurons2subarray = [];
     if (showneurons == "all") {
+      document.getElementById("layers").innerHTML = "why"
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
@@ -336,7 +337,8 @@ if (document.getElementById("showneurons").checked == true) {
         neuron.appendChild(neuroncontainer)
       }
         if (showneurons == "all") {
-      column.appendChild(neuron)
+          document.getElementById("layers").innerHTML = "is this"
+          column.appendChild(neuron)
         } else {
           container.appendChild(neuron)
         }
@@ -359,6 +361,7 @@ if (document.getElementById("showneurons").checked == true) {
       neuroncount += 1
     }
     if (showneurons == "all") {
+      document.getElementById("layers").innerHTML = "notworking"
     container.appendChild(column)
     }
     if (batchnorm != "none") {
