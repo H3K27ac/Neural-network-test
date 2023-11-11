@@ -6,6 +6,7 @@ let gradient = 0.05;
 let epsilon = 0.00001;
 let costcache = [0];
 let activationcache = [0];
+let varcache = [0];
 let batchalpha = 0.99;
 
 function Activation(input,i) {
@@ -225,7 +226,6 @@ function BatchBiasCost(i,j,n,actcache2) {
 function BatchNeuronCost(i,j,n) {
   if (i == layers-1) {
     let result = 2 * (neurons[i][j][n] - targets[j][n])
-    costcache[i][j][n] = result
     return result
   } else {
     let sum = 0;
@@ -234,7 +234,6 @@ function BatchNeuronCost(i,j,n) {
       document.getElementById("layers").innerHTML = "neuroncost"
       sum += weights[i+1][k][j] * activationcache[i+1][k][n] * BatchCost(i+1,k,n) 
     }
-    costcache[i][j][n] = sum
     return sum
   }
 }
@@ -244,7 +243,6 @@ function BatchNormCost(i,j,n) {
 function BatchGammaCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
-    document.getElementById("layers").innerHTML = "gammacost"
     sum += batchnormed[i][j][n] * BatchNeuronCost(i,j,n)
   }
   return sum
@@ -258,23 +256,26 @@ function BatchBetaCost(i,j) {
 }
 function BatchVarCost(i,j) {
   let sum = 0;
+  let tempsum = (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
+  let tempmean = batchmean[i][j]
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += costcache[i][j][n] * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
+    sum += costcache[i][j][n] * (batch[i][j][n] - tempmean) * tempsum
   }
   return sum
 }
 function BatchMeanCost(i,j) {
   let sum = 0;
+  let tempsum = (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon)
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "meancost"
-    sum += costcache[i][j][n] * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
+    sum += costcache[i][j][n] * tempsum + (varcache[i][j] * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
   return sum
 }
 function BatchCost(i,j,n) {
   document.getElementById("layers").innerHTML = "batchcost"
-  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
+  return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (varcache[i][j] * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
 
 function ResetCache() {
@@ -283,6 +284,7 @@ function ResetCache() {
   for (let i=0; i<layers-1; i++) {
     let subarray = [];
     let subarray2 = [];
+    let subarray3 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
       if (batchnorm != "none") {
@@ -294,6 +296,7 @@ function ResetCache() {
         }
         subarray.push(subsubarray)
         subarray2.push(subsubarray2)
+        subarray3.push(0)
       } else {
         subarray.push(0)
         subarray2.push(0)
@@ -301,6 +304,9 @@ function ResetCache() {
     }
     costcache.push(subarray)
     activationcache.push(subarray2)
+    if (batchnorm != "none") {
+      varcache.push(subarray3)
+    }
   }
 }
 
@@ -337,11 +343,10 @@ function BatchBackprop() {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       for (let n=0; n<batchsize; n++) {
+        costcache[i+1][j][n] = BatchNeuronCost(i+1,j,n)
         let actcache2 = DerivativeActivation(neurons2[i+1][j][n],i+1)
         activationcache[i+1][j][n] = actcache2
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BatchBiasCost(i+1,j,n,actcache2))))
-        batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j] - (learnrate * BatchGammaCost(i+1,j))))
-        batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j] - (learnrate * BatchBetaCost(i+1,j))))
         let k2 = structure[i];
         for (let k=0; k<k2; k++) {
           // Elastic net regularisation
@@ -349,6 +354,10 @@ function BatchBackprop() {
           weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k] - (learnrate * error)))
         }
       }
+      let varcache2 = BatchVarCost(i+1,j)
+      varcache[i+1][j] = varcache2
+      batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j] - (learnrate * BatchGammaCost(i+1,j))))
+      batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j] - (learnrate * BatchBetaCost(i+1,j))))
     }
   }
   UpdateColor()
