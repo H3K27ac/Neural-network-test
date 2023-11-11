@@ -132,10 +132,12 @@ function FeedForward() {
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
-      for (let k=0; k<k2; k++) {
-        if (batchnorm != "none") {
+      if (batchnorm != "none") {
+        for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
-        } else {
+        }
+      } else {
+        for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k]
         }
       }
@@ -143,7 +145,7 @@ function FeedForward() {
       let result = Activation(sum,i)
       if (batchnorm != "none") {
         batch[i+1][j][0] = result
-        let result2 = batchgamma[i+1][j] * (batch[i+1][j][0] - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
+        let result2 = batchgamma[i+1][j] * (result - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
         neurons[i+1][j][0] = Math.min(1, Math.max(0, result2))
       } else {
         neurons2[i+1][j] = sum
@@ -302,22 +304,18 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
-// ResetCache()
-  costcache = [[]];
-  activationcache = [[]];
+  ResetCache()
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       let actcache2 = DerivativeActivation(neurons2[i+1][j],i+1)
       activationcache[i+1][j] = actcache2
-      biases[i+1][j] -= learnrate * BiasCost(i+1,j,actcache2)
-      biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
+      biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BiasCost(i+1,j,actcache2)))
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
         // Elastic net regularisation
         let error = WeightCost(i+1,j,k,actcache2) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
-        weights[i+1][j][k] -= learnrate * error
-        weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k]))
+        weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k] - (learnrate * error)))
       }
     }
   }
