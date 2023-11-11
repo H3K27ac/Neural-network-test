@@ -106,8 +106,8 @@ function BatchForwardPass() {
         neurons[i+1][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
       }
       // Exponential moving average
-      batchmeanmoving[i+1][j] = (1 - batchalpha) * batchmeanmoving[i+1][j]) + (batchalpha * tempmean) 
-      batchvarmoving[i+1][j] = (1 - batchalpha) * batchvarmoving[i+1][j]) + (batchalpha * tempvar)
+      batchmeanmoving[i+1][j] = ((1 - batchalpha) * batchmeanmoving[i+1][j]) + (batchalpha * tempmean) 
+      batchvarmoving[i+1][j] = ((1 - batchalpha) * batchvarmoving[i+1][j]) + (batchalpha * tempvar)
     }
   }
 }
@@ -293,7 +293,7 @@ function ResetCache() {
           subsubarray2.push(0)
         }
         subarray.push(subsubarray)
-        subarray.push(subsubarray2)
+        subarray2.push(subsubarray2)
       } else {
         subarray.push(0)
         subarray2.push(0)
