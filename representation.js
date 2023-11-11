@@ -139,6 +139,7 @@ function UpdateColor() {
     }
     let j3 = structure[i+1]
     for (let j=0; j<j3; j++) { 
+      if (showbiases) {
       let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
@@ -146,10 +147,13 @@ function UpdateColor() {
         let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
         neuroncontainer.style.borderColor = Color(biasvalue,"bias")
       }
+      }
+      if (showweights) {
       for (let k=0; k<j2; k++) {
         let weightvalue = weights[i+1][j][k].toFixed(2)
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
+      }
       }
     }
   }
@@ -234,6 +238,10 @@ function CreateGraph() {
   batchbetarange = document.getElementById("batchbetarange").value
   batchgammarange = document.getElementById("batchgammarange").value
 
+  showweights = document.getElementById("showweights").checked
+  showbiases = document.getElementById("showbiases").checked
+
+  
   if (document.getElementById("batch").checked == true) {
     batchnorm = "after"
   } else {
@@ -365,6 +373,7 @@ function CreateGraph() {
       let subsubarray = [];
       subarray2.push(0)
       for (let k=0; k<structure[i]; k++) {
+        if (showweights) {
         let weight = document.createElement("div")
         weight.className = "weight"
         weight.id = "weight " + (i+1) + "," + j + "," + k
@@ -385,6 +394,7 @@ function CreateGraph() {
         weight.style.left = centerX - (length / 2) + "px";
         weight.style.top = centerY + "px";
         document.getElementById("container").appendChild(weight)
+        }
         subsubarray.push(0)
       }
       subarray.push(subsubarray)
