@@ -71,6 +71,59 @@ function ManualFF() {
   FeedForward()
 }
 
+function Test50() {
+  let i2 = layerorder.length
+  let input;
+  for (let i=0; i<i2; i++) {
+    switch (layerorder[i]) {
+      case "activationlayer":
+        return Activation(input)
+      case "batchnormlayer":
+        return BatchNorm(input)
+    }
+  }
+}
+
+function BatchNorm(input,i,j,l) {
+  let batchsum = 0;
+  let batchsum2 = 0;
+  for (let n=0; n<batchsize; n++) {
+    batchsum += batch[i][j][n]
+  }
+  let tempmean = batchsum / batchsize
+  batchmean[i][j] = tempmean
+  for (let n=0; n<batchsize; n++) {
+    batchsum2 += (batch[i][j][n] - tempmean) ** 2
+  }
+  let tempvar = batchsum2 / batchsize
+  batchvar[i][j] = tempvar
+  let tempgamma = batchgamma[i][j]
+  let tempbeta = batchbeta[i][j]
+  let tempnorm2 = Math.sqrt(tempvar + epsilon)
+  switch (layerorder[l+1]) {
+    case "activationlayer":
+      for (let n=0; n<batchsize; n++) {
+        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
+        batchnormed[i][j][n] = tempnorm
+        neurons2[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
+      }
+    case "dropoutlayer": 
+      for (let n=0; n<batchsize; n++) {
+        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
+        batchnormed[i][j][n] = tempnorm
+        dropoutin[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
+      }
+    default:
+      for (let n=0; n<batchsize; n++) {
+        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
+        batchnormed[i][j][n] = tempnorm
+        neurons[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
+      }
+  }
+  batchmeanmoving[i][j] = ((1 - batchalpha) * batchmeanmoving[i][j]) + (batchalpha * tempmean) 
+  batchvarmoving[i][j] = ((1 - batchalpha) * batchvarmoving[i][j]) + (batchalpha * tempvar)
+}
+
 function BatchForwardPass() {
   let sum;
   let batchsum;
