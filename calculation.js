@@ -123,7 +123,7 @@ function BatchForwardPass() {
 //      text6.innerHTML = "After exp:  " +  JSON.stringify(batchnormed) + ",    " + JSON.stringify(batchmean) + ",    " + JSON.stringify(batchvar) + ",    " + JSON.stringify(batchmeanmoving) +  ",    " + JSON.stringify(batchvarmoving) + "," + batchcount
 //      document.getElementById("inputfield").appendChild(text6)
 
-function FeedForward(color = true) {
+function FeedForward() {
   ClearNeurons()
   let sum;
   for (let i=0; i<layers; i++) {
@@ -148,9 +148,6 @@ function FeedForward(color = true) {
         neurons[i+1][j] = Activation(sum,i)
       }
     }
-  }
-  if (color) {
-    UpdateColor()
   }
 }
 
@@ -298,7 +295,7 @@ function ResetCache() {
 
 function Backprop() {
   RandomizeInput()
-  FeedForward(false)
+  FeedForward()
   SetTarget()
   ResetCache()
   for (let i=layers-2; i>-1; i--) {
