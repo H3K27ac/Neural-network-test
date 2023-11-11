@@ -107,7 +107,8 @@ function Color2(value) {
 
 function UpdateColor() {
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i]; j++) {
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
       let neuronvalue;
       let gammavalue;
       let betavalue;
@@ -134,7 +135,8 @@ function UpdateColor() {
         gammatext.style.color = Color(gammavalue,"batchgamma")
       } 
     }
-    for (let j=0; j<structure[i+1]; j++) { 
+    let j2 = structure[i+1]
+    for (let j=0; j<j2; j++) { 
       let biasvalue = biases[i+1][j]
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
@@ -142,7 +144,8 @@ function UpdateColor() {
         let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
         neuroncontainer.style.borderColor = Color(biasvalue,"bias")
       }
-      for (let k=0; k<structure[i]; k++) {
+      let k2 = structure[i]
+      for (let k=0; k<k2; k++) {
         let weightvalue = weights[i+1][j][k]
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
