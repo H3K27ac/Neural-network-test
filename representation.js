@@ -225,11 +225,14 @@ function ChooseFunction(name) {
 
 function CreateGraph() {
   DeleteGraph()
+  let container = document.getElementById("container")
   let structureinput = document.getElementById("structure").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
+  document.getElementById("structure").innerHTML = "Structure: " + JSON.stringify(structure).replace(/[{}]/g,"")
   structure.push(0)
-
+  let neuroncount = 0;
+  let weightcount = 0;
   learnrate = document.getElementById("learnrate").value
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
@@ -292,9 +295,11 @@ if (document.getElementById("showneurons").checked == true) {
     let neurons2subarray = [];
     let batchneuronssubarray = [];
     let batchneurons2subarray = [];
+    if (showneurons == "all") {
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
+    }
     for (let j=0; j<structure[i]; j++) {
       let batchsubsubarray = [];
       let batchnormedsubsubarray = [];
@@ -330,7 +335,11 @@ if (document.getElementById("showneurons").checked == true) {
         MathJax.typeset([gammatext])
         neuron.appendChild(neuroncontainer)
       }
+        if (showneurons == "all") {
       column.appendChild(neuron)
+        } else {
+          container.appendChild(neuron)
+        }
       }
       if (batchnorm != "none") {
         for (let n=0; n<batchsize; n++) {
@@ -347,8 +356,11 @@ if (document.getElementById("showneurons").checked == true) {
         neuronssubarray.push(0)
         neurons2subarray.push(0)
       }
+      neuroncount += 1
     }
-    document.getElementById("container").appendChild(column)
+    if (showneurons == "all") {
+    container.appendChild(column)
+    }
     if (batchnorm != "none") {
       if (i < layers-1) {
         for (let j=0; j<structure[i+1]; j++) {
@@ -406,14 +418,16 @@ if (document.getElementById("showneurons").checked == true) {
         document.getElementById("container").appendChild(weight)
         }
         subsubarray.push(0)
+        weightcount += 1
       }
       subarray.push(subsubarray)
     }
     weights.push(subarray)
     biases.push(subarray2)
   }
-  
-  document.getElementById("layers").innerHTML = layers
+  document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
+  document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
+  document.getElementById("layercount").innerHTML = "Number of layers: " + layers
 }
 
 
