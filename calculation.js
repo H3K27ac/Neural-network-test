@@ -297,7 +297,7 @@ function Backprop() {
   FeedForward()
   SetTarget()
   costcache = [[]];
-  for (let i=layers-2; i>-1; i--) 
+  for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
