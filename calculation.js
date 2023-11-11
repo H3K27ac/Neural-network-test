@@ -5,6 +5,7 @@ let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let epsilon = 0.00001;
 let costcache = [0];
+let activationcache = [0];
 
 
 function Activation(input,i) {
@@ -126,7 +127,7 @@ function BatchForwardPass() {
 function FeedForward() {
   ClearNeurons()
   let sum;
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       sum = 0
@@ -139,13 +140,14 @@ function FeedForward() {
         }
       }
       sum += biases[i+1][j]
+      let result = Activation(sum,i)
       if (batchnorm != "none") {
-        batch[i+1][j][0] = Activation(sum,i)
-        neurons[i+1][j][0] = batchgamma[i+1][j] * (batch[i+1][j][0] - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
-        neurons[i+1][j][0] = Math.min(1, Math.max(0, neurons[i+1][j][0]))
+        batch[i+1][j][0] = result
+        let result2 = batchgamma[i+1][j] * (batch[i+1][j][0] - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
+        neurons[i+1][j][0] = Math.min(1, Math.max(0, result2))
       } else {
         neurons2[i+1][j] = sum
-        neurons[i+1][j] = Activation(sum,i)
+        neurons[i+1][j] = result
       }
     }
   }
@@ -203,7 +205,7 @@ function NeuronCost(i,j) {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
-      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k],i) * costcache[i+1][k] // NeuronCost(i+1,k)
+      sum += weights[i+1][k][j] * activationcache[i+1][k] * costcache[i+1][k] // NeuronCost(i+1,k)
     }
     costcache[i][j] = sum
     return sum
@@ -211,13 +213,12 @@ function NeuronCost(i,j) {
 }
 
 function WeightCost(i,j,k) {
-  return neurons[i-1][k] * DerivativeActivation(neurons2[i][j],i) * NeuronCost(i,j)
+  return neurons[i-1][k] * activationcache[i][j] * NeuronCost(i,j)
 }
 
 function BiasCost(i,j) {
-  return DerivativeActivation(neurons2[i][j],i) * NeuronCost(i,j)
+  return activationcache[i][j] * NeuronCost(i,j)
 }
-
 
 
 function BatchWeightCost(i,j,k,n) {
@@ -283,13 +284,17 @@ function BatchCost(i,j,n) {
 
 function ResetCache() {
   costcache = [0];
+  activationcache = [0];
   for (let i=0; i<layers; i++) {
     let subarray = [];
+    let subarray2 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
       subarray.push(0)
+      subarray2.push(0)
     }
     costcache.push(subarray)
+    activationcache.push(subarray2)
   }
 }
 
@@ -301,6 +306,7 @@ function Backprop() {
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
+      activationcache[i+1][j] = DerivativeActivation(neurons2[i+1][j],i+1)
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
       let k2 = structure[i];
