@@ -57,7 +57,8 @@ function DerivativeActivation(input,i) {
 }
 
 function ManualFF() {
-  for (let i=0; i<structure[0]; i++) {
+  let i2 = structure[0]
+  for (let i=0; i<i2; i++) {
     if (batchnorm != "none") {
       neurons[0][i][0] = document.getElementById("input " + i).value
     } else {
@@ -72,12 +73,14 @@ function BatchForwardPass() {
   let batchsum;
   let batchsum2;
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
       batchsum = 0;
       batchsum2 = 0;
       for (let n=0; n<batchsize; n++) {
         sum = 0;
-        for (let k=0; k<structure[i]; k++) {
+        let k2 = structure[i];
+        for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][n]
           if (i==1 && j==0) {
         document.getElementById("training").innerHTML = sum + "," + weights[i+1][j][k] + "," + neurons[i][k][n] + "," + batchvar[1][0]
@@ -123,9 +126,11 @@ function FeedForward() {
   ClearNeurons()
   let sum;
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
       sum = 0
-      for (let k=0; k<structure[i]; k++) {
+      let k2 = structure[i];
+      for (let k=0; k<k2; k++) {
         if (batchnorm != "none") {
           sum += weights[i+1][j][k] * neurons[i][k][0]
         } else {
@@ -148,7 +153,8 @@ function FeedForward() {
 
 function Testing() {
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
       let text = document.createElement("span")
       text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "," + batchbeta[i+1][j] + "(" + (i+1) + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
@@ -160,7 +166,8 @@ function Testing() {
 
 function Testing2() {
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i]; j++) {
+    let j2 = structure[i];
+    for (let j=0; j<j2; j++) {
       let text = document.createElement("span")
       text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")"
       document.getElementById("inputfield").appendChild(text)
@@ -169,7 +176,8 @@ function Testing2() {
 }
 
 function SetTarget() {
-  for (let i=0; i<structure[layers-1]; i++) {
+  let i2 = structure[layers-1];
+  for (let i=0; i<i2; i++) {
     if (batchnorm != "none") {
       for (let n=0; n<batchsize; n++) {
         targets[i][n] = 1
@@ -186,7 +194,8 @@ function NeuronCost(i,j) {
     return 2 * (neurons[i][j] - targets[j])
   } else {
     let sum = 0;
-    for (let k=0; k<structure[i+1]; k++) {
+    let k2 = structure[i+1];
+    for (let k=0; k<k2; k++) {
       sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k],i) * NeuronCost(i+1,k)
     }
     return sum
@@ -214,7 +223,8 @@ function BatchNeuronCost(i,j,n) {
     return 2 * (neurons[i][j][n] - targets[j][n])
   } else {
     let sum = 0;
-    for (let k=0; k<structure[i+1]; k++) {
+    let k2 = structure[i+1];
+    for (let k=0; k<k2; k++) {
       document.getElementById("layers").innerHTML = "neuroncost"
       sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n],i) * BatchCost(i+1,k,n)
     }
@@ -268,10 +278,12 @@ function Backprop() {
   FeedForward()
   SetTarget()
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
-      for (let k=0; k<structure[i]; k++) {
+      let k2 = structure[i];
+      for (let k=0; k<k2; k++) {
         // Elastic net regularisation
         let error = WeightCost(i+1,j,k) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
         weights[i+1][j][k] -= learnrate * error
@@ -290,7 +302,8 @@ function BatchBackprop() {
   BatchForwardPass()
   SetTarget()
   for (let i=0; i<layers; i++) {
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
       for (let n=0; n<batchsize; n++) {
         biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
         biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
@@ -298,7 +311,8 @@ function BatchBackprop() {
         batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
         batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j]))
         batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j]))
-        for (let k=0; k<structure[i]; k++) {
+        let k2 = structure[i];
+        for (let k=0; k<k2; k++) {
           // Elastic net regularisation
           let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
           weights[i+1][j][k] -= learnrate * error
