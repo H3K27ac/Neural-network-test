@@ -1,6 +1,6 @@
-let layertypes = ["activationlayer","batchnormlayer"];
-let layernames = ["Activation layer", "Batch normalisation"];
-let layercolor = ["lightgray","lightblue"];
+let layertypes = ["activationlayer","batchnormlayer","dropoutlayer"];
+let layernames = ["Activation layer", "Batch normalisation","Dropout layer"];
+let layercolor = ["lightgray","lightblue","lightgreen"];
 let layerorder = [];
 
 
