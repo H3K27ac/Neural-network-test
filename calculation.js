@@ -302,18 +302,22 @@ function ResetCache() {
 
 function Backprop() {
   RandomizeInput()
+  document.getElementById("layers").innerHTML = "forward"
   FeedForward()
   SetTarget()
   ResetCache()
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
+      document.getElementById("layers").innerHTML = "actcache"
       let actcache2 = DerivativeActivation(neurons2[i+1][j],i+1)
       activationcache[i+1][j] = actcache2
+      document.getElementById("layers").innerHTML = "bias"
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BiasCost(i+1,j,actcache2)))
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
         // Elastic net regularisation
+        document.getElementById("layers").innerHTML = "weight"
         let error = WeightCost(i+1,j,k,actcache2) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
         weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k] - (learnrate * error)))
       }
