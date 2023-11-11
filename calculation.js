@@ -4,6 +4,7 @@ let hiddenactivation = "Sigmoid";
 let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let epsilon = 0.00001;
+let costcache = [0];
 
 
 function Activation(input,i) {
@@ -190,14 +191,20 @@ function SetTarget() {
 
 
 function NeuronCost(i,j) {
+  if (costcache[i][j] != undefined) {
+    return costcache[i][j]
+  } 
   if (i == layers-1) {
-    return 2 * (neurons[i][j] - targets[j])
+    let result = 2 * (neurons[i][j] - targets[j])
+    costcache[i][j] = result
+    return result
   } else {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
       sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k],i) * NeuronCost(i+1,k)
     }
+    costcache[i][j] = sum
     return sum
   }
 }
@@ -273,11 +280,24 @@ function BatchCost(i,j,n) {
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
 
+function ResetCache() {
+  costcache = [0];
+  for (let i=0; i<layers; i++) {
+    let subarray = [];
+    let j2 = structure[i+1]
+    for (let j=0; j<j2; j++) {
+      subarray.push(0)
+    }
+    costcache.push(subarray)
+  }
+}
+
 function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
-  for (let i=0; i<layers; i++) {
+  costcache = [];
+  for (let i=layers-2; i>-1; i--) 
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       biases[i+1][j] -= learnrate * BiasCost(i+1,j)
