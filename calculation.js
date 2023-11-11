@@ -6,7 +6,7 @@ let gradient = 0.05;
 let epsilon = 0.00001;
 let costcache = [0];
 let activationcache = [0];
-
+let batchalpha = 0.99;
 
 function Activation(input,i) {
   let activation;
@@ -84,37 +84,30 @@ function BatchForwardPass() {
         let k2 = structure[i];
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][n]
-          if (i==1 && j==0) {
-        document.getElementById("training").innerHTML = sum + "," + weights[i+1][j][k] + "," + neurons[i][k][n] + "," + batchvar[1][0]
-        }
         }
         sum += biases[i+1][j]
         neurons2[i+1][j][n] = sum
-        batch[i+1][j][n] = Activation(sum,i)
-        batchsum += Activation(sum,i)
+        let result = Activation(sum,i)
+        batch[i+1][j][n] = result
+        batchsum += result
       }
-      batchmean[i+1][j] = batchsum / batchsize
+      let tempmean = batchsum / batchsize
+      batchmean[i+1][j] = tempmean
       for (let n=0; n<batchsize; n++) {
-        batchsum2 += (batch[i+1][j][n] - batchmean[i+1][j]) ** 2
+        batchsum2 += (batch[i+1][j][n] - tempmean) ** 2
       }
-      document.getElementById("layers").innerHTML = "beforevar"
-      batchvar[i+1][j] = batchsum2 / batchsize
+      let tempvar = batchsum2 / batchsize
+      batchvar[i+1][j] = tempvar
+      let tempgamma = batchgamma[i+1][j]
+      let tempbeta = batchbeta[i+1][j]
       for (let n=0; n<batchsize; n++) {
-        document.getElementById("layers").innerHTML = "neurons"
-        batchnormed[i+1][j][n] = (batch[i+1][j][n] - batchmean[i+1][j]) / Math.sqrt(batchvar[i+1][j] + epsilon)
-        neurons[i+1][j][n] = batchgamma[i+1][j] * batchnormed[i+1][j][n] + batchbeta[i+1][j]
-        neurons[i+1][j][n] = Math.min(1, Math.max(0, neurons[i+1][j][n]))
+        let tempnorm = (batch[i+1][j][n] - tempmean) / Math.sqrt(tempvar + epsilon)
+        batchnormed[i+1][j][n] = tempnorm
+        neurons[i+1][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
       }
-      document.getElementById("layers").innerHTML = "exp moving avg"
       // Exponential moving average
-      if (batchcount == 0) {
-        batchmeanmoving[i+1][j] = batchmean[i+1][j]
-        batchvarmoving[i+1][j] = batchvar[i+1][j]
-      } else {
-        batchmeanmoving[i+1][j] = ((1 - (1/batchcount)) * batchmeanmoving[i+1][j]) + ((1 / batchcount) * batchmean[i+1][j]) 
-        batchvarmoving[i+1][j] = ((1 - (1/batchcount)) * batchvarmoving[i+1][j]) + ((1 / batchcount) * batchvar[i+1][j])
-      }
-      batchcount += 1
+      batchmeanmoving[i+1][j] = (1 - batchalpha) * batchmeanmoving[i+1][j]) + (batchalpha * tempmean) 
+      batchvarmoving[i+1][j] = (1 - batchalpha) * batchvarmoving[i+1][j]) + (batchalpha * tempvar)
     }
   }
 }
@@ -223,30 +216,30 @@ function BiasCost(i,j,actcache2) {
 }
 
 
-function BatchWeightCost(i,j,k,n) {
-  return neurons[i-1][k][n] * DerivativeActivation(neurons2[i][j][n],i) * BatchNeuronCost(i,j,n)
+function BatchWeightCost(i,j,k,n,actcache2) {
+  return neurons[i-1][k][n] * actcache2 * BatchNeuronCost(i,j,n)
 }
-function BatchBiasCost(i,j,n) {
-  return DerivativeActivation(neurons2[i][j][n],i) * BatchNeuronCost(i,j,n)
+function BatchBiasCost(i,j,n,actcache2) {
+  return actcache2 * BatchNeuronCost(i,j,n)
 }
 function BatchNeuronCost(i,j,n) {
   if (i == layers-1) {
-    return 2 * (neurons[i][j][n] - targets[j][n])
+    let result = 2 * (neurons[i][j][n] - targets[j][n])
+    costcache[i][j][n] = result
+    return result
   } else {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
       document.getElementById("layers").innerHTML = "neuroncost"
-      sum += weights[i+1][k][j] * DerivativeActivation(neurons2[i+1][k][n],i) * BatchCost(i+1,k,n)
+      sum += weights[i+1][k][j] * activationcache[i+1][k][n] * BatchCost(i+1,k,n) 
     }
-  //  let text15 = document.createElement("span")
-  //    text15.innerHTML = "NeuronCost:  " + sum
-  //    document.getElementById("inputfield").appendChild(text15)
+    costcache[i][j][n] = sum
     return sum
   }
 }
 function BatchNormCost(i,j,n) {
-  return batchgamma[i][j] * BatchNeuronCost(i,j,n)
+  return batchgamma[i][j] * costcache[i][j][n]
 }
 function BatchGammaCost(i,j) {
   let sum = 0;
@@ -267,7 +260,7 @@ function BatchVarCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "varcost"
-    sum += BatchNeuronCost(i,j,n) * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
+    sum += costcache[i][j][n] * (batch[i][j][n] - batchmean[i][j]) * (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
   }
   return sum
 }
@@ -275,7 +268,7 @@ function BatchMeanCost(i,j) {
   let sum = 0;
   for (let n=0; n<batchsize; n++) {
     document.getElementById("layers").innerHTML = "meancost"
-    sum += BatchNeuronCost(i,j,n) * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
+    sum += costcache[i][j][n] * (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon) + (BatchVarCost(i,j) * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
   return sum
 }
@@ -287,13 +280,24 @@ function BatchCost(i,j,n) {
 function ResetCache() {
   costcache = [0];
   activationcache = [0];
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers-1; i++) {
     let subarray = [];
     let subarray2 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
-      subarray.push(0)
-      subarray2.push(0)
+      if (batchnorm != "none") {
+        let subsubarray = [];
+        let subsubarray2 = [];
+        for (let n=0; n<batchsize; n++) {
+          subsubarray.push(0)
+          subsubarray2.push(0)
+        }
+        subarray.push(subsubarray)
+        subarray.push(subsubarray2)
+      } else {
+        subarray.push(0)
+        subarray2.push(0)
+      }
     }
     costcache.push(subarray)
     activationcache.push(subarray2)
@@ -326,30 +330,27 @@ function Backprop() {
 
 function BatchBackprop() {
   RandomizeInput()
-  document.getElementById("layers").innerHTML = batchnorm
   BatchForwardPass()
   SetTarget()
-  for (let i=0; i<layers; i++) {
+  ResetCache()
+  for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       for (let n=0; n<batchsize; n++) {
-        biases[i+1][j] -= learnrate * BatchBiasCost(i+1,j,n)
-        biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
-        batchgamma[i+1][j] -= learnrate * BatchGammaCost(i+1,j)
-        batchbeta[i+1][j] -= learnrate * BatchBetaCost(i+1,j)
-        batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j]))
-        batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j]))
+        let actcache2 = DerivativeActivation(neurons2[i+1][j][n],i+1)
+        activationcache[i+1][j][n] = actcache2
+        biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BatchBiasCost(i+1,j,n,actcache2))))
+        batchgamma[i+1][j] = Math.min(batchgammarange, Math.max(1/batchgammarange, batchgamma[i+1][j] - (learnrate * BatchGammaCost(i+1,j))))
+        batchbeta[i+1][j] = Math.min(batchbetarange, Math.max(batchbetarange * -1, batchbeta[i+1][j] - (learnrate * BatchBetaCost(i+1,j))))
         let k2 = structure[i];
         for (let k=0; k<k2; k++) {
           // Elastic net regularisation
-          let error = BatchWeightCost(i+1,j,k,n) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
-          weights[i+1][j][k] -= learnrate * error
-          weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k]))
+          let error = BatchWeightCost(i+1,j,k,n,actcache2) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
+          weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k] - (learnrate * error)))
         }
       }
     }
   }
-  document.getElementById("layers").innerHTML = "done"
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
