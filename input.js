@@ -69,7 +69,10 @@ function GenerateLayerId() {
 
 function DeleteLayer(i) {
   let layer = document.getElementById("layer " + String(i).replace(".",""))
-  document.getElementById("layers").innerHTML = layer.id
+  document.getElementById("layers").innerHTML = "broken"
+  if (layer) {
+    document.getElementById("layers").innerHTML = "layer exists" + i
+  }
   let container = document.getElementById("inputcontainer");
   let index;
   let index2;
