@@ -302,12 +302,14 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
-  ResetCache()
+// ResetCache()
+  costcache = [[]];
+  activationcache = [[]];
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
-      activationcache[i+1][j] = DerivativeActivation(neurons2[i+1][j],i+1)
-      let actcache2 = activationcache[i+1][j]
+      let actcache2 = DerivativeActivation(neurons2[i+1][j],i+1)
+      activationcache[i+1][j] = actcache2
       biases[i+1][j] -= learnrate * BiasCost(i+1,j,actcache2)
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
       let k2 = structure[i];
