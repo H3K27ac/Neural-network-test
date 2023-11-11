@@ -212,12 +212,12 @@ function NeuronCost(i,j) {
   }
 }
 
-function WeightCost(i,j,k) {
-  return neurons[i-1][k] * activationcache[i][j] * NeuronCost(i,j)
+function WeightCost(i,j,k,actcache2) {
+  return neurons[i-1][k] * actcache2 * NeuronCost(i,j)
 }
 
-function BiasCost(i,j) {
-  return activationcache[i][j] * NeuronCost(i,j)
+function BiasCost(i,j,actcache2) {
+  return actcache2 * NeuronCost(i,j)
 }
 
 
@@ -307,12 +307,13 @@ function Backprop() {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       activationcache[i+1][j] = DerivativeActivation(neurons2[i+1][j],i+1)
-      biases[i+1][j] -= learnrate * BiasCost(i+1,j)
+      let actcache2 = activationcache[i+1][j]
+      biases[i+1][j] -= learnrate * BiasCost(i+1,j,actcache2)
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j]))
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
         // Elastic net regularisation
-        let error = WeightCost(i+1,j,k) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
+        let error = WeightCost(i+1,j,k,actcache2) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
         weights[i+1][j][k] -= learnrate * error
         weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k]))
       }
