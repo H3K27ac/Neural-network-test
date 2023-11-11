@@ -101,8 +101,9 @@ function BatchForwardPass() {
       batchvar[i+1][j] = tempvar
       let tempgamma = batchgamma[i+1][j]
       let tempbeta = batchbeta[i+1][j]
+      let tempnorm2 = Math.sqrt(tempvar + epsilon)
       for (let n=0; n<batchsize; n++) {
-        let tempnorm = (batch[i+1][j][n] - tempmean) / Math.sqrt(tempvar + epsilon)
+        let tempnorm = (batch[i+1][j][n] - tempmean) / tempnorm2
         batchnormed[i+1][j][n] = tempnorm
         neurons[i+1][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
       }
@@ -218,10 +219,10 @@ function BiasCost(i,j,actcache2) {
 
 
 function BatchWeightCost(i,j,k,n,actcache2) {
-  return neurons[i-1][k][n] * actcache2 * BatchNeuronCost(i,j,n)
+  return neurons[i-1][k][n] * actcache2 * costcache[i][j][n]
 }
 function BatchBiasCost(i,j,n,actcache2) {
-  return actcache2 * BatchNeuronCost(i,j,n)
+  return actcache2 * costcache[i][j][n]
 }
 function BatchNeuronCost(i,j,n) {
   if (i == layers-1) {
@@ -231,7 +232,6 @@ function BatchNeuronCost(i,j,n) {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
-      document.getElementById("layers").innerHTML = "neuroncost"
       sum += weights[i+1][k][j] * activationcache[i+1][k][n] * BatchCost(i+1,k,n) 
     }
     return sum
@@ -259,7 +259,6 @@ function BatchVarCost(i,j) {
   let tempsum = (-1 * batchgamma[i][j] / 2 * Math.pow(batchvar[i][j] + epsilon,-3/2)) 
   let tempmean = batchmean[i][j]
   for (let n=0; n<batchsize; n++) {
-    document.getElementById("layers").innerHTML = "varcost"
     sum += costcache[i][j][n] * (batch[i][j][n] - tempmean) * tempsum
   }
   return sum
@@ -268,13 +267,11 @@ function BatchMeanCost(i,j) {
   let sum = 0;
   let tempsum = (-1 * batchgamma[i][j]) / Math.sqrt(batchvar[i][j] + epsilon)
   for (let n=0; n<batchsize; n++) {
-    document.getElementById("layers").innerHTML = "meancost"
     sum += costcache[i][j][n] * tempsum + (varcache[i][j] * (-2 * (batch[i][j][n] - batchmean[i][j])) / batchsize)
   }
   return sum
 }
 function BatchCost(i,j,n) {
-  document.getElementById("layers").innerHTML = "batchcost"
   return BatchNormCost(i,j,n) / Math.sqrt(batchvar[i][j] + epsilon) + (varcache[i][j] * 2 * (batch[i][j][n] - batchmean[i][j]) / batchsize) + (BatchMeanCost(i,j) / batchsize)
 }
 
