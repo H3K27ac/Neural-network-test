@@ -132,15 +132,20 @@ th, td {
 
 .modifylayercontainer {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   bottom: 5px;
   left: 2px;
   height: 15px;
-  width: 50px;
+  width: 80px;
   border: 1px solid black;
 }
 
 .modifylayer {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 15px;
   width: 15px; 
   border: 0px;
