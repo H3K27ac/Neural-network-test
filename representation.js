@@ -237,6 +237,7 @@ function CreateGraph() {
   layers = structure.length
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
+  CreateArray()
   let neuroncount = 0;
   learnrate = document.getElementById("learnrate").value
   weightrange = document.getElementById("weightrange").value
