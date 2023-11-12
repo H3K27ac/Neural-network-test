@@ -1,12 +1,16 @@
 let batching = false;
+let infering = false;
 let neurons3 = [];
 let neurons4 = [];
 
 
 function ActivationLayer(input,i,j,m) {
+  let result2 = Activation(input,i)
+//  if (infering == false) {
+//  }
   switch (layerorder[m+1]) {
     case "batchnormlayer": 
-      return Activation(BatchInference(input,i,j,m+1),i)
+      return BatchInference(result2,i,j,m+1)
     default:
       return Activation(input,i)
   }
@@ -64,6 +68,32 @@ function GeneralInference() {
 
 
 function GeneralForward() {
+  ClearNeurons()
+  let sum;
+  for (let i=0; i<layers-1; i++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
+      sum = 0
+      let k2 = structure[i];
+      for (let k=0; k<k2; k++) {
+        sum += weights[i+1][j][k] * neurons[i][k]
+      }
+      sum += biases[i+1][j]
+      let result;
+      switch (layerorder[0]) {
+        case "activationlayer":
+          result = ActivationLayer(sum,i,j,0)
+          break;
+        default:
+          result = sum
+          break;
+      }
+      neurons[i+1][j] = Math.min(1, Math.max(0, result))
+    }
+  }
+}
+
+function BatchGeneralForward() {
   ClearNeurons()
   let sum;
   for (let i=0; i<layers-1; i++) {
