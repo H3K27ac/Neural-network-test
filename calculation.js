@@ -8,7 +8,6 @@ let costcache = [0];
 let activationcache = [0];
 let varcache = [0];
 let batchalpha = 0.99;
-let layerarray = [];
 
 function Activation(input,i) {
   let activation;
@@ -125,31 +124,6 @@ function BatchNorm(input,i,j,l) {
   batchvarmoving[i][j] = ((1 - batchalpha) * batchvarmoving[i][j]) + (batchalpha * tempvar)
 }
 
-function CreateArray() {
-  layerarray = [];
-  let i2 = structure.length-1
-  for (let i=0; i<i2; i++) {
-    let subarray = [];
-    let j2 = structure[i]
-    for (let j=0; j<j2; j++) {
-      subarray.push(j)
-    }
-    layerarray.push(subarray)
-  }
-}
-
-function CalculateNeurons(weight, neuron, i) {
-  const parallel = new Parallel(layerarray[i]);
-  let test100 = parallel.map(function (index) {
-    return weight[index] * neuron[index];
-  });
-  document.getElementById("layers").innerHTML = JSON.stringify(test100)
-  const sum = parallel.reduce(function (d) {
-    return d[0] + d[1];
-  });
-  return sum;
-}
-
 
 function BatchForwardPass() {
   let sum;
@@ -207,11 +181,6 @@ function FeedForward() {
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
-      document.getElementById("layers").innerHTML = "weightcount"
-      if (weightcount>1000) {
-        document.getElementById("layers").innerHTML = "test"
-        sum = CalculateNeurons(weights[i+1][j],neurons[i],i)
-      } else {
       if (batchnorm != "none") {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
@@ -220,7 +189,6 @@ function FeedForward() {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k]
         }
-      }
       }
       sum += biases[i+1][j]
       let result = Activation(sum,i)
