@@ -18,6 +18,7 @@ function ActivationLayer(input,i,j,m) {
         return result2
       }
     default:
+      document.getElementById("layers").innerHTML = "default"
       return result2
   }
 }
@@ -69,6 +70,7 @@ function GeneralInference() {
       if (batching) {
         neurons[i+1][j][0] = Math.min(1, Math.max(0, result))
       } else {
+        document.getElementById("layers").innerHTML = "neurons"
         neurons[i+1][j] = Math.min(1, Math.max(0, result))
       }
     }
