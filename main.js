@@ -75,6 +75,7 @@ function GeneralInference() {
       }
     }
   }
+  UpdateColor()
 }
 
 
