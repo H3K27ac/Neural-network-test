@@ -220,7 +220,7 @@ function MakeDraggable(i) {
               modifylayercontainer.appendChild(modifylayer)
               newobject.appendChild(modifylayercontainer)
               break;
-              /*
+              
             case "layernorm":
               let modifylayercontainer = document.createElement("div");
               let modifylayer = document.createElement("button");
@@ -238,6 +238,7 @@ function MakeDraggable(i) {
               modifylayer2.style.backgroundColor = "slateblue"
               modifylayertext2.className = "modifylayertext"
               modifylayertext2.innerHTML = "GN"
+              /*
               modifylayer.onclick = function() {
                 let index;
                 let m2 = container.children.length
