@@ -3,14 +3,24 @@ let neurons3 = [];
 let neurons4 = [];
 
 
-function func1(input) {
-  return input
+function ActivationLayer(input,i,j,m) {
+  switch (layerorder[m+1]) {
+    case "batchnormlayer": 
+      return Activation(BatchInference(input,i,j,m+1),i)
+    default:
+      return Activation(input,i)
+  }
 }
-function func2(input) {
-  return func1(input)
-}
-function func3(input) {
-  return func2(input)
+
+function BatchInference(input,i,j,m) {
+  batch[i+1][j][0] = input
+  let result2 = batchgamma[i+1][j] * (input - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
+  switch (layerorder[m+1]) {
+    case "activationlayer": 
+      return ActivationLayer(result2,i,j,m+1)
+    default:
+      return result2
+  }
 }
 
 function GeneralInference() {
@@ -23,23 +33,33 @@ function GeneralInference() {
       let k2 = structure[i];
       if (batching) {
         for (let k=0; k<k2; k++) {
-          sum += weights[i+1][j][k] * neurons[i][k]
+          sum += weights[i+1][j][k] * neurons[i][k][0]
         }
       } else {
         for (let k=0; k<k2; k++) {
-          sum += weights[i+1][j][k] * neurons[i][k][0]
+          sum += weights[i+1][j][k] * neurons[i][k]
         }
       }
       sum += biases[i+1][j]
-      let result = func3(sum)
-      if (batchnorm != "none") {
-        batch[i+1][j][0] = result
-        let result2 = batchgamma[i+1][j] * (result - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
-        neurons[i+1][j][0] = Math.min(1, Math.max(0, result2))
+      let result;
+      switch (layerorder[0]) {
+        case "activationlayer":
+          result = ActivationLayer(sum,i,j,0)
+          break;
+        case "batchnormlayer": 
+          result = BatchInference(sum,i,j,0)
+          break;
+        default:
+          result = sum
+          break;
+      }
+      if (batching) {
+        neurons[i+1][j][0] = Math.min(1, Math.max(0, result))
       } else {
-        neurons2[i+1][j] = sum
-        neurons[i+1][j] = result
+        neurons[i+1][j] = Math.min(1, Math.max(0, result))
       }
     }
   }
 }
+
+
