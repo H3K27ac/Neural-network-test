@@ -68,7 +68,7 @@ function ManualFF() {
       neurons[0][i] = document.getElementById("input " + i).value
     }
   }
-  FeedForward()
+  GeneralInference()
 }
 
 function BatchForwardPass() {
