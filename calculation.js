@@ -63,9 +63,9 @@ function ManualFF() {
   let i2 = structure[0]
   for (let i=0; i<i2; i++) {
     if (batchnorm) {
-      neurons[0][i][0] = document.getElementById("input " + i).value
+      neurons[0][i][0] = Number(document.getElementById("input " + i).value)
     } else {
-      neurons[0][i] = document.getElementById("input " + i).value
+      neurons[0][i] = Number(document.getElementById("input " + i).value)
     }
   }
   GeneralInference()
