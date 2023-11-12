@@ -62,7 +62,7 @@ function DerivativeActivation(input,i) {
 function ManualFF() {
   let i2 = structure[0]
   for (let i=0; i<i2; i++) {
-    if (batchnorm != "none") {
+    if (batchnorm) {
       neurons[0][i][0] = document.getElementById("input " + i).value
     } else {
       neurons[0][i] = document.getElementById("input " + i).value
@@ -70,60 +70,6 @@ function ManualFF() {
   }
   FeedForward()
 }
-
-function Test50() {
-  let i2 = layerorder.length
-  let input;
-  for (let i=0; i<i2; i++) {
-    switch (layerorder[i]) {
-      case "activationlayer":
-        return Activation(input)
-      case "batchnormlayer":
-        return BatchNorm(input)
-    }
-  }
-}
-
-function BatchNorm(input,i,j,l) {
-  let batchsum = 0;
-  let batchsum2 = 0;
-  for (let n=0; n<batchsize; n++) {
-    batchsum += batch[i][j][n]
-  }
-  let tempmean = batchsum / batchsize
-  batchmean[i][j] = tempmean
-  for (let n=0; n<batchsize; n++) {
-    batchsum2 += (batch[i][j][n] - tempmean) ** 2
-  }
-  let tempvar = batchsum2 / batchsize
-  batchvar[i][j] = tempvar
-  let tempgamma = batchgamma[i][j]
-  let tempbeta = batchbeta[i][j]
-  let tempnorm2 = Math.sqrt(tempvar + epsilon)
-  switch (layerorder[l+1]) {
-    case "activationlayer":
-      for (let n=0; n<batchsize; n++) {
-        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
-        batchnormed[i][j][n] = tempnorm
-        neurons2[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
-      }
-    case "dropoutlayer": 
-      for (let n=0; n<batchsize; n++) {
-        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
-        batchnormed[i][j][n] = tempnorm
-        dropoutin[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
-      }
-    default:
-      for (let n=0; n<batchsize; n++) {
-        let tempnorm = (batch[i][j][n] - tempmean) / tempnorm2
-        batchnormed[i][j][n] = tempnorm
-        neurons[i][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
-      }
-  }
-  batchmeanmoving[i][j] = ((1 - batchalpha) * batchmeanmoving[i][j]) + (batchalpha * tempmean) 
-  batchvarmoving[i][j] = ((1 - batchalpha) * batchvarmoving[i][j]) + (batchalpha * tempvar)
-}
-
 
 function BatchForwardPass() {
   let sum;
@@ -174,14 +120,13 @@ function BatchForwardPass() {
 //      document.getElementById("inputfield").appendChild(text6)
 
 function FeedForward() {
-  ClearNeurons()
   let sum;
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
-      if (batchnorm != "none") {
+      if (batchnorm) {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
         }
@@ -192,7 +137,7 @@ function FeedForward() {
       }
       sum += biases[i+1][j]
       let result = Activation(sum,i)
-      if (batchnorm != "none") {
+      if (batchnorm) {
         batch[i+1][j][0] = result
         let result2 = batchgamma[i+1][j] * (result - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
         neurons[i+1][j][0] = Math.min(1, Math.max(0, result2))
@@ -231,7 +176,7 @@ function Testing2() {
 function SetTarget() {
   let i2 = structure[layers-1];
   for (let i=0; i<i2; i++) {
-    if (batchnorm != "none") {
+    if (batchnorm) {
       for (let n=0; n<batchsize; n++) {
         targets[i][n] = 1
       }
@@ -338,7 +283,7 @@ function ResetCache() {
     let subarray3 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
-      if (batchnorm != "none") {
+      if (batchnorm) {
         let subsubarray = [];
         let subsubarray2 = [];
         for (let n=0; n<batchsize; n++) {
@@ -355,7 +300,7 @@ function ResetCache() {
     }
     costcache.push(subarray)
     activationcache.push(subarray2)
-    if (batchnorm != "none") {
+    if (batchnorm) {
       varcache.push(subarray3)
     }
   }
@@ -423,7 +368,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    if (batchnorm != "none") {
+    if (batchnorm) {
       training = setInterval(BatchBackprop, 200);
     } else {
       training = setInterval(Backprop, 100);
