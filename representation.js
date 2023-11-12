@@ -21,7 +21,7 @@ let batchmeanmoving = [0];
 let batchvarmoving = [0];
 let batchsize;
 let batchcount;
-let batchnorm = "none";
+let batchnorm = false;
 
 // Input variables
 let learnrate;
@@ -120,7 +120,7 @@ function UpdateColor() {
       let neuronvalue;
       let gammavalue;
       let betavalue;
-      if (batchnorm != "none") {
+      if (batchnorm) {
         neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
       } else {
         neuronvalue = neurons[i][j].toFixed(2)
@@ -135,7 +135,7 @@ function UpdateColor() {
       } else {
         neuronvaluetext.style.color = `rgb(255,255,255)`
       }
-      if (batchnorm != "none" && i>0) {
+      if (batchnorm && i>0) {
         betavalue = batchbeta[i][j].toFixed(2)
         gammavalue = batchgamma[i][j].toFixed(2)
         let betatext = document.getElementById("betatext " + i + "," + j)
@@ -151,7 +151,7 @@ function UpdateColor() {
       let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
-      if (batchnorm != "none") {
+      if (batchnorm) {
         let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
         neuroncontainer.style.borderColor = Color(biasvalue,"bias")
       }
@@ -171,7 +171,7 @@ function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
-      if (batchnorm != "none") {
+      if (batchnorm) {
         for (let n=0; n<batchsize; n++) {
           neurons[i][j][n] = 0
         }
@@ -187,7 +187,7 @@ function RandomizeInput() {
   ClearNeurons()
   let j2 = structure[0]
   for (let j=0; j<j2; j++) {
-    if (batchnorm != "none") {
+    if (batchnorm) {
       for (let n=0; n<batchsize; n++) {
         neurons[0][j][n] = Math.random();
       }
@@ -207,7 +207,7 @@ function Randomize() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
-      if (batchnorm != "none") {
+      if (batchnorm) {
         batchgamma[i+1][j] = Math.pow(batchgammarange,(Math.random() * 2 - 1));
         batchbeta[i+1][j] = (Math.random() * 2 - 1);
       }
@@ -252,12 +252,8 @@ function CreateGraph() {
   showweights = document.getElementById("showweights").checked
   showbiases = document.getElementById("showbiases").checked
 
+  batchnorm = document.getElementById("batch").checked
   
-  if (document.getElementById("batch").checked == true) {
-    batchnorm = "after"
-  } else {
-    batchnorm = "none"
-  }
 
 if (document.getElementById("showneurons").checked == true) {
     showneurons = "all"
@@ -277,7 +273,7 @@ if (document.getElementById("showneurons").checked == true) {
   }
   
   for (let i=0; i<structure[layers-1]; i++) {
-    if (batchnorm !== "none") {
+    if (batchnorm) {
       let subarray = [];
       for (let n=0; n<batchsize; n++) {
         subarray.push(0)
@@ -321,7 +317,7 @@ if (document.getElementById("showneurons").checked == true) {
       neuronvalue.className = "neuronvalue"
       neuronvalue.id = "neuronvalue " + i + "," + j
       neuron.appendChild(neuronvalue)
-      if (batchnorm != "none" && i>0) {
+      if (batchnorm && i>0) {
         let neuroncontainer = document.createElement("div")
         neuroncontainer.className = "neuroncontainer"
         neuroncontainer.id = "neuroncontainer " + i + "," + j
@@ -350,7 +346,7 @@ if (document.getElementById("showneurons").checked == true) {
           container.appendChild(neuron)
         }
       }
-      if (batchnorm != "none") {
+      if (batchnorm) {
         for (let n=0; n<batchsize; n++) {
           batchsubsubarray.push(0)
           batchnormedsubsubarray.push(0)
@@ -371,7 +367,7 @@ if (document.getElementById("showneurons").checked == true) {
       document.getElementById("layers").innerHTML = "notworking"
       container.appendChild(column)
     }
-    if (batchnorm != "none") {
+    if (batchnorm) {
       if (i < layers-1) {
         for (let j=0; j<structure[i+1]; j++) {
           betasubarray.push(0)
