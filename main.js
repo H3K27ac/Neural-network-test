@@ -55,7 +55,6 @@ function GeneralInference() {
       }
       sum += biases[i+1][j]
       let result;
-      document.getElementById("layers").innerHTML = "switch"
       switch (layerorder[0]) {
         case "activationlayer":
           result = ActivationLayer(sum,i,j,0)
@@ -72,6 +71,7 @@ function GeneralInference() {
       } else {
         neurons[i+1][j] = Math.min(1, Math.max(0, result))
       }
+      document.getElementById("layers").innerHTML = JSON.stringify(neurons)
     }
   }
   UpdateColor()
