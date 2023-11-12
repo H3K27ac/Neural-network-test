@@ -71,6 +71,11 @@ function ManualFF() {
   GeneralInference()
 }
 
+function Testing100() {
+  RandomizeInput()
+  GeneralInference()
+}
+
 function BatchForwardPass() {
   let sum;
   let batchsum;
@@ -371,7 +376,7 @@ function ToggleTraining() {
     if (batchnorm) {
       training = setInterval(BatchBackprop, 200);
     } else {
-      training = setInterval(Backprop, 100);
+      training = setInterval(Testing100, 100);
     }
   }
 }
