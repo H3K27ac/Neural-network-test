@@ -130,6 +130,24 @@ th, td {
   z-index: 3;
 }
 
+.modifylayercontainer {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  height: 10px;
+  width: 50px;
+}
+
+.modifylayer {
+  height: 10px;
+  width: 12px;
+  border: 1px solid black;
+}
+
+.modifylayertext {
+  font-size: 10px;
+}
+
 .container {
   position: relative;
   height: 500px;
