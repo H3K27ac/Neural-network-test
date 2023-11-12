@@ -146,21 +146,23 @@ function BatchGeneralForward() {
       let tempgamma = batchgamma[i+1][j]
       let tempbeta = batchbeta[i+1][j]
       let tempnorm2 = Math.sqrt(tempvar + epsilon)
-      for (let n=0; n<batchsize; n++) {
-        let tempnorm = (batch[i+1][j][n] - tempmean) / tempnorm2
-        batchnormed[i+1][j][n] = tempnorm
-        let result2 = tempgamma * tempnorm + tempbeta
-        let result3;
-        switch (layerorder[batchnormindex+1]) {
+      switch (layerorder[batchnormindex+1]) {
         case "activationlayer":
-          result3 = ActivationLayer(result2,i,j,batchnormindex+1)
+          for (let n=0; n<batchsize; n++) {
+            let tempnorm = (batch[i+1][j][n] - tempmean) / tempnorm2
+            batchnormed[i+1][j][n] = tempnorm
+            let result2 = ActivationLayer(tempgamma * tempnorm + tempbeta,i,j,batchnormindex+1)
+            neurons[i+1][j][n] = Math.min(1, Math.max(0, result2))
+          }
           break;
         default:
-          result3 = result2
+          for (let n=0; n<batchsize; n++) {
+            let tempnorm = (batch[i+1][j][n] - tempmean) / tempnorm2
+            batchnormed[i+1][j][n] = tempnorm
+            neurons[i+1][j][n] = Math.min(1, Math.max(0, tempgamma * tempnorm + tempbeta))
+          }
           break;
         }
-        neurons[i+1][j][n] = Math.min(1, Math.max(0, result3))
-      }
       batchmeanmoving[i+1][j] = ((1 - batchalpha) * batchmeanmoving[i+1][j]) + (batchalpha * tempmean) 
       batchvarmoving[i+1][j] = ((1 - batchalpha) * batchvarmoving[i+1][j]) + (batchalpha * tempvar)
       }
