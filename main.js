@@ -6,6 +6,7 @@ let neurons4 = [];
 
 
 function ActivationLayer(input,i,j,m) {
+  document.getElementById("layers").innerHTML = "activation"
   let result2 = Activation(input,i)
 //  if (infering == false) {
 //  }
@@ -14,10 +15,10 @@ function ActivationLayer(input,i,j,m) {
       if (infering) {
         return BatchInference(result2,i,j,m+1)
       } else {
-        return Activation(input,i)
+        return result2
       }
     default:
-      return Activation(input,i)
+      return result2
   }
 }
 
@@ -33,6 +34,7 @@ function BatchInference(input,i,j,m) {
 }
 
 function GeneralInference() {
+  document.getElementById("layers").innerHTML = "start
   infering = true
   let sum;
   for (let i=0; i<layers-1; i++) {
@@ -40,6 +42,7 @@ function GeneralInference() {
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
+      document.getElementById("layers").innerHTML = "batching"
       if (batching) {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
@@ -51,6 +54,7 @@ function GeneralInference() {
       }
       sum += biases[i+1][j]
       let result;
+      document.getElementById("layers").innerHTML = "switch"
       switch (layerorder[0]) {
         case "activationlayer":
           result = ActivationLayer(sum,i,j,0)
