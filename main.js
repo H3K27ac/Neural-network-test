@@ -70,7 +70,7 @@ function GeneralInference() {
       if (batching) {
         neurons[i+1][j][0] = Math.min(1, Math.max(0, result))
       } else {
-        document.getElementById("layers").innerHTML = "neurons"
+        document.getElementById("layers").innerHTML = "neurons " + result
         neurons[i+1][j] = Math.min(1, Math.max(0, result))
       }
     }
