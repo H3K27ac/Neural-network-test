@@ -40,12 +40,20 @@ function CreateLayers() {
   let neuron = document.createElement("div")
   let neuron2 = document.createElement("div")
   let weight = document.createElement("div")
+  let neuronvalue = document.createElement("span")
+  neuronvalue.className = "neuronvalue"
+  neuronvalue.innerHTML = "In"
+  let neuronvalue2 = document.createElement("span")
+  neuronvalue2.className = "neuronvalue"
+  neuronvalue2.innerHTML = "Out"
   neuron.className = "neuron"
   neuron.id = "neuron"
   neuron2.className = "neuron"
   neuron2.id = "neuron2"
   weight.className = "weight"
   weight.id = "weight"
+  neuron.appendChild(neuronvalue)
+  neuron2.appendChild(neuronvalue2)
   container.appendChild(neuron)
   container.appendChild(neuron2)
   const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
@@ -208,8 +216,73 @@ function MakeDraggable(i) {
             }
               modifylayer.appendChild(modifylayertext)
               originallayer.appendChild(originallayertext)
-              modifylayercontainer.appendChild(modifylayer)
               modifylayercontainer.appendChild(originallayer)
+              modifylayercontainer.appendChild(modifylayer)
+              newobject.appendChild(modifylayercontainer)
+              break;
+            case "layernorm":
+              let modifylayercontainer = document.createElement("div");
+              let modifylayer = document.createElement("button");
+              let modifylayer2 = document.createElement("button");
+              let originallayer = document.createElement("button");
+              let modifylayertext = document.createElement("span");
+              let modifylayertext2 = document.createElement("span");
+              let originallayertext = document.createElement("span");
+              modifylayercontainer.className = "modifylayercontainer"
+              modifylayer.className = "modifylayer"
+              modifylayer.style.backgroundColor = "steelblue"
+              modifylayertext.className = "modifylayertext"
+              modifylayertext.innerHTML = "IN"
+              modifylayer2.className = "modifylayer"
+              modifylayer2.style.backgroundColor = "slateblue"
+              modifylayertext2.className = "modifylayertext"
+              modifylayertext2.innerHTML = "GN"
+              modifylayer.onclick = function() {
+                let index;
+                let m2 = container.children.length
+                for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+              layerorder[index-2] = "instancenorm"
+              layertext.innerHTML = "Instance normalisation"
+              newobject.style.backgroundColor = "steelblue"
+            }
+              modifylayer2.onclick = function() {
+                let index;
+                let m2 = container.children.length
+                for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+              layerorder[index-2] = "groupnorm"
+              layertext.innerHTML = "Group normalisation"
+              newobject.style.backgroundColor = "slateblue"
+            }
+              originallayer.className = "modifylayer"
+              originallayer.style.backgroundColor = "blue"
+              originallayertext.className = "modifylayertext"
+              originallayertext.innerHTML = "LN"
+              originallayer.onclick = function() {
+                let index;
+                let m2 = container.children.length
+                for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+              layerorder[index-2] = "layernorm"
+              layertext.innerHTML = "Layer normalisation"
+              newobject.style.backgroundColor = "blue"
+            }
+              modifylayer.appendChild(modifylayertext)
+              modifylayer2.appendChild(modifylayertext2)
+              originallayer.appendChild(originallayertext)
+              modifylayercontainer.appendChild(originallayer)
+              modifylayercontainer.appendChild(modifylayer)
+              modifylayercontainer.appendChild(modifylayer2)
               newobject.appendChild(modifylayercontainer)
               break;
             default:
