@@ -125,11 +125,11 @@ function BatchNorm(input,i,j,l) {
 }
 
 
-function CalculateNeurons(input, weight) {
+function CalculateNeurons(weight, neuron) {
   document.getElementById("layers").innerHTML = "parallel"
-  const parallel = new Parallel(input);
-  parallel.map(function (number) {
-    return number * weight;
+  const parallel = new Parallel(weight);
+  parallel.map(function (number,index) {
+    return number * neuron[index];
   });
   document.getElementById("layers").innerHTML = "sum"
   const sum = parallel.reduce(function (acc, result) {
@@ -198,7 +198,7 @@ function FeedForward() {
       document.getElementById("layers").innerHTML = "weightcount"
       if (weightcount>1000) {
         document.getElementById("layers").innerHTML = "test"
-        sum = CalculateNeurons(weights[i+1][j],neurons[i][k])
+        sum = CalculateNeurons(weights[i+1][j],neurons[i])
       } else {
       if (batchnorm != "none") {
         for (let k=0; k<k2; k++) {
