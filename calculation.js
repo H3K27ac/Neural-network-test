@@ -8,6 +8,7 @@ let costcache = [0];
 let activationcache = [0];
 let varcache = [0];
 let batchalpha = 0.99;
+let layerarray = [];
 
 function Activation(input,i) {
   let activation;
@@ -124,12 +125,24 @@ function BatchNorm(input,i,j,l) {
   batchvarmoving[i][j] = ((1 - batchalpha) * batchvarmoving[i][j]) + (batchalpha * tempvar)
 }
 
+function CreateArray() {
+  layerarray = [];
+  let i2 = structure.length-1
+  for (let i=0; i<i2; i++) {
+    let subarray = [];
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
+      subarray.push(j)
+    }
+    layerarray.push(subarray)
+  }
+}
 
-function CalculateNeurons(weight, neuron) {
+function CalculateNeurons(weight, neuron, i) {
   document.getElementById("layers").innerHTML = "parallel"
-  const parallel = new Parallel(weight);
-  parallel.map(function (number,index) {
-    return number * neuron[index];
+  const parallel = new Parallel(layerarray[i]);
+  parallel.map(function (index) {
+    return weight[index] * neuron[index];
   });
   document.getElementById("layers").innerHTML = "sum"
   const sum = parallel.reduce(function (acc, result) {
@@ -198,7 +211,7 @@ function FeedForward() {
       document.getElementById("layers").innerHTML = "weightcount"
       if (weightcount>1000) {
         document.getElementById("layers").innerHTML = "test"
-        sum = CalculateNeurons(weights[i+1][j],neurons[i])
+        sum = CalculateNeurons(weights[i+1][j],neurons[i],i)
       } else {
       if (batchnorm != "none") {
         for (let k=0; k<k2; k++) {
