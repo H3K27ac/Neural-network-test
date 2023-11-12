@@ -34,7 +34,7 @@ function BatchInference(input,i,j,m) {
 }
 
 function GeneralInference() {
-  document.getElementById("layers").innerHTML = "start
+  document.getElementById("layers").innerHTML = "start"
   infering = true
   let sum;
   for (let i=0; i<layers-1; i++) {
