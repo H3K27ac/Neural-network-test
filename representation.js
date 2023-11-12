@@ -62,6 +62,7 @@ function DeleteGraph() {
   batchvarmoving = [0];
   batchsize = 0;
   batchcount = 0;
+  weightcount = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
