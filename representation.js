@@ -36,6 +36,7 @@ let batchbetarange;
 let showneurons = "all";
 let showbiases = true;
 let showweights = true;
+let weightcount = 0;
 
 // Sub-layers in order: neurons2 (activation) batch (norm) batchnormed (shift) neurons
 
@@ -236,7 +237,6 @@ function CreateGraph() {
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
   let neuroncount = 0;
-  let weightcount = 0;
   learnrate = document.getElementById("learnrate").value
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
