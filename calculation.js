@@ -124,6 +124,21 @@ function BatchNorm(input,i,j,l) {
   batchvarmoving[i][j] = ((1 - batchalpha) * batchvarmoving[i][j]) + (batchalpha * tempvar)
 }
 
+
+function CalculateNeurons(input, weight) {
+  document.getElementById("layers").innerHTML = "parallel"
+  const parallel = new Parallel(input);
+  parallel.map(function (number) {
+    return number * weight;
+  });
+  document.getElementById("layers").innerHTML = "sum"
+  const sum = parallel.reduce(function (acc, result) {
+    return acc + result;
+  });
+  return sum;
+}
+
+
 function BatchForwardPass() {
   let sum;
   let batchsum;
@@ -180,6 +195,11 @@ function FeedForward() {
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
+      document.getElementById("layers").innerHTML = "weightcount"
+      if (weightcount>1000) {
+        document.getElementById("layers").innerHTML = "test"
+        sum = CalculateNeurons(weights[i+1][j],neurons[i][k])
+      } else {
       if (batchnorm != "none") {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
@@ -188,6 +208,7 @@ function FeedForward() {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k]
         }
+      }
       }
       sum += biases[i+1][j]
       let result = Activation(sum,i)
