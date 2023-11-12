@@ -6,7 +6,6 @@ let neurons4 = [];
 
 
 function ActivationLayer(input,i,j,m) {
-  document.getElementById("layers").innerHTML = "activation"
   let result2 = Activation(input,i)
 //  if (infering == false) {
 //  }
@@ -18,7 +17,6 @@ function ActivationLayer(input,i,j,m) {
         return result2
       }
     default:
-      document.getElementById("layers").innerHTML = "default" + m + i + j
       return result2
   }
 }
@@ -35,7 +33,6 @@ function BatchInference(input,i,j,m) {
 }
 
 function GeneralInference() {
-  document.getElementById("layers").innerHTML = "start"
   infering = true
   let sum;
   for (let i=0; i<layers-1; i++) {
@@ -43,7 +40,6 @@ function GeneralInference() {
     for (let j=0; j<j2; j++) {
       sum = 0
       let k2 = structure[i];
-      document.getElementById("layers").innerHTML = "batching"
       if (batching) {
         for (let k=0; k<k2; k++) {
           sum += weights[i+1][j][k] * neurons[i][k][0]
@@ -71,7 +67,6 @@ function GeneralInference() {
       } else {
         neurons[i+1][j] = Math.min(1, Math.max(0, result))
       }
-      document.getElementById("layers").innerHTML = JSON.stringify(neurons)
     }
   }
   UpdateColor()
