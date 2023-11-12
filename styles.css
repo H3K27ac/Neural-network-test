@@ -132,20 +132,21 @@ th, td {
 
 .modifylayercontainer {
   position: absolute;
-  bottom: 2px;
+  bottom: 5px;
   left: 2px;
   height: 10px;
   width: 50px;
+  border: 1px solid black;
 }
 
 .modifylayer {
-  height: 10px;
-  width: 12px;
-  border: 1px solid black;
+  height: 15px;
+  width: 15px; 
 }
 
 .modifylayertext {
   font-size: 10px;
+  color: black;
 }
 
 .container {
