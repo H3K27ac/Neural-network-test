@@ -1,6 +1,6 @@
-let layertypes = ["activationlayer","batchnormlayer","dropoutlayer"];
-let layernames = ["Activation layer", "Batch normalisation","Dropout layer"];
-let layercolor = ["lightgray","lightblue","lightgreen"];
+let layertypes = ["activationlayer","dropoutlayer","batchnormlayer","layernorm"];
+let layernames = ["Activation layer","Dropout layer","Batch normalisation","Layer normalisation"];
+let layercolor = ["lightgray","lightgreen","lightblue","blue"];
 let layerorder = [];
 
 
@@ -166,6 +166,52 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
+          switch (layertypes[i]) {
+            case "batchnormlayer":
+              let modifylayer = document.createElement("button");
+              let originallayer = document.createElement("button");
+              let modifylayertext = document.createElement("span");
+              let originallayertext = document.createElement("span");
+              modifylayer.className = "modifylayer"
+              modifylayer.style.backgroundColor = "deepskyblue"
+              modifylayertext.className = "modifylayertext"
+              modifylayertext.innerHTML = "BRN"
+              modifylayer.onclick = function() {
+                let index;
+                let m2 = container.children.length
+                for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+              layerorder[m-2] = "batchrenorm"
+              layertext.innerHTML = "Batch renormalisation"
+              newobject.style.backgroundColor = "deepskyblue"
+            }
+              originallayer.className = "modifylayer"
+              originallayer.style.backgroundColor = "lightblue"
+              originallayertext.className = "modifylayertext"
+              originallayertext.innerHTML = "BN"
+              originallayer.onclick = function() {
+                let index;
+                let m2 = container.children.length
+                for (let m=0; m<m2; m++) {
+                if (container.children[m] === newobject) {
+                  index = m;
+                }
+              }
+              layerorder[m-2] = "batchnormlayer"
+              layertext.innerHTML = "Batch normalisation"
+              newobject.style.backgroundColor = "lightblue"
+            }
+          modifylayer.appendChild(modifylayertext)
+          originallayer.appendChild(originallayertext)
+          newobject.appendChild(modifylayer)
+          newobject.appendChild(originallayer)
+              break;
+            default:
+              break;
+          }
           newobject.className = "layerincontainer"
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
@@ -215,15 +261,14 @@ function MakeDraggable(i) {
       const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
       const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
       const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
-      const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
-      document.getElementById("layers").innerHTML = "snap" + "," + ghost.offsetLeft + "," + height + "," + x3 + "," + x1 + "," + x2
+  //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
       if (Math.abs(ghost.offsetTop-height) < 50) {
         if (layerorder.length == 0) {
           document.getElementById("layers").innerHTML = "snapping"
           isSnapped = true
           document.getElementById("layers").innerHTML = "set"
-          ghost.style.left = x3
-          ghost.style.top = height
+   //       ghost.style.left = x3
+   //       ghost.style.top = height
         } else {
           isSnapped = true
           closestObject = 0
