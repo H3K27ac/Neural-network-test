@@ -134,14 +134,16 @@ th, td {
   position: absolute;
   bottom: 5px;
   left: 2px;
-  height: 10px;
+  height: 15px;
   width: 50px;
   border: 1px solid black;
 }
 
 .modifylayer {
+  text-align: center;
   height: 15px;
   width: 15px; 
+  border: 0px;
 }
 
 .modifylayertext {
