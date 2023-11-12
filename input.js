@@ -197,7 +197,7 @@ function MakeDraggable(i) {
               layerorder[index-2] = "batchrenorm"
               layertext.innerHTML = "Batch renormalisation"
               newobject.style.backgroundColor = "deepskyblue"
-            }
+              }
               originallayer.className = "modifylayer"
               originallayer.style.backgroundColor = "lightblue"
               originallayertext.className = "modifylayertext"
@@ -220,6 +220,7 @@ function MakeDraggable(i) {
               modifylayercontainer.appendChild(modifylayer)
               newobject.appendChild(modifylayercontainer)
               break;
+              /*
             case "layernorm":
               let modifylayercontainer = document.createElement("div");
               let modifylayer = document.createElement("button");
@@ -285,6 +286,7 @@ function MakeDraggable(i) {
               modifylayercontainer.appendChild(modifylayer2)
               newobject.appendChild(modifylayercontainer)
               break;
+              */
             default:
               break;
           }
