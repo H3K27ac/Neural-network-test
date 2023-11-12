@@ -168,10 +168,12 @@ function MakeDraggable(i) {
           let deletelayer = document.createElement("button");
           switch (layertypes[i]) {
             case "batchnormlayer":
+              let modifylayercontainer = document.createElement("div");
               let modifylayer = document.createElement("button");
               let originallayer = document.createElement("button");
               let modifylayertext = document.createElement("span");
               let originallayertext = document.createElement("span");
+              modifylayercontainer.className = "modifylayercontainer"
               modifylayer.className = "modifylayer"
               modifylayer.style.backgroundColor = "deepskyblue"
               modifylayertext.className = "modifylayertext"
@@ -184,7 +186,7 @@ function MakeDraggable(i) {
                   index = m;
                 }
               }
-              layerorder[m-2] = "batchrenorm"
+              layerorder[index-2] = "batchrenorm"
               layertext.innerHTML = "Batch renormalisation"
               newobject.style.backgroundColor = "deepskyblue"
             }
@@ -200,14 +202,15 @@ function MakeDraggable(i) {
                   index = m;
                 }
               }
-              layerorder[m-2] = "batchnormlayer"
+              layerorder[index-2] = "batchnormlayer"
               layertext.innerHTML = "Batch normalisation"
               newobject.style.backgroundColor = "lightblue"
             }
-          modifylayer.appendChild(modifylayertext)
-          originallayer.appendChild(originallayertext)
-          newobject.appendChild(modifylayer)
-          newobject.appendChild(originallayer)
+              modifylayer.appendChild(modifylayertext)
+              originallayer.appendChild(originallayertext)
+              modifylayercontainer.appendChild(modifylayer)
+              modifylayercontainer.appendChild(originallayer)
+              newobject.appendChild(modifylayercontainer)
               break;
             default:
               break;
