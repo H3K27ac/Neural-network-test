@@ -140,9 +140,10 @@ function CreateArray() {
 
 function CalculateNeurons(weight, neuron, i) {
   const parallel = new Parallel(layerarray[i]);
-  parallel.map(function (index) {
+  let test100 = parallel.map(function (index) {
     return weight[index] * neuron[index];
   });
+  document.getElementById("layers").innerHTML = JSON.stringify(test100)
   const sum = parallel.reduce(function (d) {
     return d[0] + d[1];
   });
