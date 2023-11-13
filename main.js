@@ -67,7 +67,9 @@ function TestNeuronCost(i) {
   */
   if (i == layers-1) {
     document.getElementById("layers").innerHTML = "layer"
-    let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
+    let temparray = nj.ones([structure[i]])
+    temparray.add(temparray)
+    let result = nj.multiply(nj.subtract(testneurons[i],testtargets),temparray)
     testcostcache[i] = result
     return result
   } else {
