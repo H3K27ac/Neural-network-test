@@ -20,8 +20,10 @@ function SetTestArrays() {
     let nextneurons = structure[i+1]
     testneurons.push(nj.zeros([prevneurons]))       
     testneurons2.push(nj.zeros([prevneurons]))
+    if (nextneurons != 0) {
     testbiases.push(nj.zeros([nextneurons]))
     testweights.push(nj.zeros([nextneurons,prevneurons]))
+    }
   }
   testtargets.push(nj.zeros([structure[layers-1]]))
 }
