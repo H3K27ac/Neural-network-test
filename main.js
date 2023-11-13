@@ -1,9 +1,28 @@
 let batching = false;
 let infering = false;
 let batchnormindex;
-let neurons3 = [];
-let neurons4 = [];
+let testneurons = [];
+let testneurons2 = [];
+let testweights = [0];
+let testbiases = [0];
 
+function SetTestArrays() {
+  for (let i=0; i<layers; i++) {
+    let prevneurons = structure[i]
+    let nextneurons = structure[i+1]
+    testneurons.push(nj.zeros([prevneurons]))       
+    testneurons2.push(nj.zeros([prevneurons]))
+    testbiases.push(nj.zeros([nextneurons]))
+    testweights.push(nj.zeros([nextneurons,prevneurons]))
+  }
+}
+
+function TestForward() {
+  for (let i=0; i<layers; i++) {
+    let sum = nj.sum(nj.dot(testweights[i+1],testneurons[i]))
+//    sum += 
+  }
+}
 
 function ActivationLayer(input,i,j,m) {
   let result2 = Activation(input,i)
