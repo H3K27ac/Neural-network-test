@@ -88,12 +88,12 @@ function TestWeightCost(i) {
   let tempmatrix2 = tempvector2;
   document.getElementById("layers").innerHTML = "concat"
   let j2 = structure[i]
-  for (let j=0; j<j2; j++) {
-    nj.stack(tempmatrix,tempvector)
+  for (let j=1; j<j2; j++) {
+    tempmatrix = nj.stack([tempmatrix,tempvector])
   }
   let j3 = structure[i-1]
-  for (let j=0; j<j3; j++) {
-    nj.stack(tempmatrix2,tempvector2)
+  for (let j=1; j<j3; j++) {
+    tempmatrix2 = nj.stack([tempmatrix2,tempvector2])
   }
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix,tempmatrix2.T)
