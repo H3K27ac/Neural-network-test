@@ -41,7 +41,7 @@ function TestResetCache() {
 }
 
 function TestForward() {
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers-1; i++) {
     let sum = nj.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
     document.getElementById("layers").innerHTML = "sum"
