@@ -78,6 +78,60 @@ function TestRandomizeInput() {
   testneurons[0] = nj.random([structure[0]])
 }
 
+function TestUpdateColor() {
+  for (let i=0; i<layers; i++) {
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
+      let neuronvalue;
+      let gammavalue;
+      let betavalue;
+      if (batchnorm) {
+        neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
+      } else {
+        neuronvalue = testneurons[i].get(j).toFixed(2)
+      }
+      if (showneurons == "all" || i==layers-1) {
+      let neuron = document.getElementById("neuron " + i + "," + j)
+      neuron.style.backgroundColor = Color2(neuronvalue)
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
+      neuronvaluetext.innerHTML = neuronvalue
+      if (neuronvalue > 0.5) {
+        neuronvaluetext.style.color = `rgb(0,0,0)`
+      } else {
+        neuronvaluetext.style.color = `rgb(255,255,255)`
+      }
+      if (batchnorm && i>0) {
+        betavalue = batchbeta[i][j].toFixed(2)
+        gammavalue = batchgamma[i][j].toFixed(2)
+        let betatext = document.getElementById("betatext " + i + "," + j)
+        let gammatext = document.getElementById("gammatext " + i + "," + j)
+        betatext.style.color = Color(betavalue,"batchbeta")
+        gammatext.style.color = Color(gammavalue,"batchgamma")
+      } 
+      }
+    }
+    let j3 = structure[i+1]
+    for (let j=0; j<j3; j++) { 
+      if (showbiases) {
+      let biasvalue = testbiases[i+1].get(j).toFixed(2)
+      let neuron = document.getElementById("neuron " + (i+1) + "," + j)
+      neuron.style.borderColor = Color(biasvalue,"bias")
+      if (batchnorm) {
+        let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
+        neuroncontainer.style.borderColor = Color(biasvalue,"bias")
+      }
+      }
+      if (showweights) {
+      for (let k=0; k<j2; k++) {
+        let weightvalue = testweights[i+1].get(j,k).toFixed(2)
+        let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
+        weight.style.backgroundColor = Color(weightvalue,"weight")
+      }
+      }
+    }
+  }
+}
+
 function TestBackprop() {
   TestRandomizeInput()
   TestForward()
