@@ -29,6 +29,8 @@ function TestResetCache() {
     testcostcache.push(nj.zeros([neuronstemp]))
     testactcache.push(nj.zeros([neuronstemp]))
   }
+  
+    document.getElementById("layers").innerHTML = "reset
 }
 
 function TestForward() {
@@ -47,6 +49,7 @@ function TestActivation(input) {
 
 function TestDerivativeActivation(input) {
   let tempresult = nj.sigmoid(input)
+  document.getElementById("layers").innerHTML = "scalar"
   return nj.multiply(tempresult,nj.subtract(1,tempresult))
 }
 
