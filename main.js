@@ -103,7 +103,6 @@ function TestWeightCost(i) {
 }
 
 function TestBiasCost(i) {
-  document.getElementById("layers").innerHTML = "again" + JSON.stringify(nj.multiply(testactcache[i],TestNeuronCost(i))) + i
   return nj.multiply(testactcache[i],TestNeuronCost(i))
 }
 
@@ -176,6 +175,7 @@ function TestBackprop() {
   for (let i=layers-2; i>-1; i--) {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
+    document.getElementById("layers").innerHTML = "again" + JSON.stringify(nj.multiply(TestBiasCost(i+1),learnrate)) + i
     let test384638 = nj.multiply(TestBiasCost(i+1),learnrate)
     document.getElementById("layers").innerHTML = "biases2"
     let test73636 = nj.subtract(testbiases[i+1],test384638)
