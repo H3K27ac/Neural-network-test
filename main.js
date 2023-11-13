@@ -24,7 +24,7 @@ function SetTestArrays() {
     testneurons2.push(nj.zeros([prevneurons]))
     testbiases.push(nj.zeros([nextneurons]))
     testweights.push(nj.zeros([nextneurons,prevneurons]))
-    testlearnrate.push(nj.zeros([nextneurons]).assign(learnrate,false))
+    testlearnrate.push(nj.zeros([nextneurons])) //.assign(learnrate,false)
   }
   testtargets.push(nj.zeros([structure[layers-1]]))
 }
