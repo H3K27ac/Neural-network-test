@@ -239,7 +239,7 @@ function CreateGraph() {
   structure.push(0)
 
   let neuroncount = 0;
-  learnrate = document.getElementById("learnrate").value
+  learnrate = Number(document.getElementById("learnrate").value)
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
   l1strength = document.getElementById("L1strength").value
