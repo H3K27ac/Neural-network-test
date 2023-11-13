@@ -5,6 +5,9 @@ let testneurons = [];
 let testneurons2 = [];
 let testweights = [0];
 let testbiases = [0];
+let testtargets = [];
+let testcostcache = [];
+let testactcache = [];
 
 function SetTestArrays() {
   for (let i=0; i<layers; i++) {
@@ -15,11 +18,20 @@ function SetTestArrays() {
     testbiases.push(nj.zeros([nextneurons]))
     testweights.push(nj.zeros([nextneurons,prevneurons]))
   }
+  testtargets.push(nj.zeros([structure[layers-1]]))
+}
+
+function ResetTestCache() {
+  for (let i=0; i<layers; i++) {
+    let neuronstemp = structure[i]
+    testcostcache.push(nj.zeros([neuronstemp]))
+    testactcache.push(nj.zeros([neuronstemp]))
+  }
 }
 
 function TestForward() {
   for (let i=0; i<layers; i++) {
-    let sum = nj.sum(nj.dot(testweights[i+1],testneurons[i]))
+    let sum = nj.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
     testneurons[i+1] = TestActivation(sum)
   }
@@ -27,6 +39,32 @@ function TestForward() {
 
 function TestActivation(input) {
   return nj.sigmoid(input)
+}
+
+function TestNeuronCost(i) {
+  /*
+  if (costcache[i][j] != undefined) {
+    return costcache[i][j]
+  } 
+  */
+  if (i == layers-1) {
+    let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
+    testcostcache[i] = result
+    return result
+  } else {
+    let sum = nj.dot(testweights[i+1],nj.multiply(testactcache[i+1],testcostcache[i+1]
+    sum += weights[i+1][k][j] * activationcache[i+1][k] * costcache[i+1][k] // NeuronCost(i+1,k)
+    costcache[i][j] = sum
+    return sum
+  }
+}
+
+function WeightCost(i,j,k,actcache2) {
+  return neurons[i-1][k] * actcache2 * NeuronCost(i,j)
+}
+
+function BiasCost(i,j,actcache2) {
+  return actcache2 * NeuronCost(i,j)
 }
 
 function ActivationLayer(input,i,j,m) {
