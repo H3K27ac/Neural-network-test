@@ -81,6 +81,7 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
+  /*
   document.getElementById("layers").innerHTML = "startweight"
   let tempvector = nj.multiply(testactcache[i],TestNeuronCost(i))
   let tempvector2 = testneurons[i-1]
@@ -97,9 +98,9 @@ function TestWeightCost(i) {
   }
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix,tempmatrix2.T)
-  
-//  document.getElementById("layers").innerHTML = "weight"
- // return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
+  */
+  document.getElementById("layers").innerHTML = "weight"
+  return nj.dot(testneurons[i-1].reshape(1,structure[i-1]),nj.multiply(testactcache[i],TestNeuronCost(i)).reshape(structure[i],1))
 }
 
 function TestBiasCost(i) {
