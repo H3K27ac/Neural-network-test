@@ -10,7 +10,6 @@ let testcostcache = [0];
 let testactcache = [0];
 
 function SetTestArrays() {
-  let testing7287 = nj.multiply(nj.ones([3,2]),2)
   testneurons = [];
   testneurons2 = [];
   testweights = [0];
@@ -32,7 +31,7 @@ function SetTestArrays() {
 function TestResetCache() {
   testcostcache = [0];
   testactcache = [0];
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers-1; i++) {
     let neuronstemp = structure[i+1]
     testcostcache.push(nj.zeros([neuronstemp]))
     testactcache.push(nj.zeros([neuronstemp]))
