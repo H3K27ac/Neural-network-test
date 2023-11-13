@@ -47,10 +47,11 @@ function TestActivation(input) {
   return nj.sigmoid(input)
 }
 
-function TestDerivativeActivation(input) {
+function TestDerivativeActivation(input,i) {
   let tempresult = nj.sigmoid(input)
+  let temparray = nj.ones([structure[i]])
   document.getElementById("layers").innerHTML = "scalar"
-  return nj.multiply(tempresult,nj.subtract(1,tempresult))
+  return nj.multiply(tempresult,nj.subtract(temparray,tempresult))
 }
 
 function TestNeuronCost(i) {
@@ -145,7 +146,7 @@ function TestBackprop() {
   document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
-    testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1])
+    testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases"
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
