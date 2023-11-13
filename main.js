@@ -67,7 +67,7 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
-  return nj.multiply(testneurons[i-1],nj.multiply(testactcache[i],TestNeuronCost(i)))
+  return nj.dot(nj.transpose(testneurons[i-1]),nj.multiply(testactcache[i],TestNeuronCost(i)))
 }
 
 function TestBiasCost(i) {
