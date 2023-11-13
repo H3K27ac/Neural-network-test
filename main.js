@@ -35,6 +35,7 @@ function TestForward() {
   for (let i=0; i<layers; i++) {
     let sum = nj.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
+    document.getElementById("layers").innerHTML = "sum"
     testneurons2[i+1] = sum
     testneurons[i+1] = TestActivation(sum)
   }
@@ -133,16 +134,21 @@ function TestUpdateColor() {
 }
 
 function TestBackprop() {
+  document.getElementById("layers").innerHTML = "randomise"
   TestRandomizeInput()
+  document.getElementById("layers").innerHTML = "forward"
   TestForward()
   testtargets = nj.ones([structure[layers-1]])
+  document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
     actcache[i+1] = TestDerivativeActivation(testneurons2[i+1])
+    document.getElementById("layers").innerHTML = "biases"
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
+  document.getElementById("layers").innerHTML = "color"
   TestUpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
