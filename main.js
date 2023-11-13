@@ -21,7 +21,7 @@ function SetTestArrays() {
   testtargets.push(nj.zeros([structure[layers-1]]))
 }
 
-function ResetTestCache() {
+function TestResetCache() {
   testcostcache = [0];
   testactcache = [0];
   for (let i=0; i<layers; i++) {
