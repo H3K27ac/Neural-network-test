@@ -89,14 +89,14 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "concat"
   let j2 = structure[i]
   for (let j=0; j<j2; j++) {
-    nj.concatenate(tempmatrix,tempvector.reshape(j2,1))
+    nj.stack(tempmatrix,tempvector)
   }
   let j3 = structure[i-1]
   for (let j=0; j<j3; j++) {
-    nj.concatenate(tempmatrix2,tempvector2.reshape(j3,1))
+    nj.stack(tempmatrix2,tempvector2)
   }
   document.getElementById("layers").innerHTML = "multiply"
-  return nj.multiply(tempmatrix.T,tempmatrix2)
+  return nj.multiply(tempmatrix,tempmatrix2.T)
   
 //  document.getElementById("layers").innerHTML = "weight"
  // return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
