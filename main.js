@@ -174,7 +174,7 @@ function TestBackprop() {
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
-    document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
+    document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
     let test384638 = nj.multiply(TestBiasCost(i+1),learnrate)
     document.getElementById("layers").innerHTML = "biases2"
     let test73636 = nj.subtract(testbiases[i+1],test384638)
