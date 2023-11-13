@@ -35,12 +35,18 @@ function TestForward() {
   for (let i=0; i<layers; i++) {
     let sum = nj.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
+    testneurons2[i+1] = sum
     testneurons[i+1] = TestActivation(sum)
   }
 }
 
 function TestActivation(input) {
   return nj.sigmoid(input)
+}
+
+function TestDerivativeActivation(input) {
+  let tempresult = nj.sigmoid(input)
+  return nj.multiply(tempresult,nj.subtract(1,tempresult))
 }
 
 function TestNeuronCost(i) {
@@ -66,6 +72,26 @@ function TestWeightCost(i) {
 
 function TestBiasCost(i) {
   return nj.multiply(testactcache[i],TestNeuronCost(i))
+}
+
+function TestRandomizeInput() {
+  testneurons[0] = nj.random([structure[0]])
+}
+
+function TestBackprop() {
+  TestRandomizeInput()
+  TestForward()
+  testtargets = nj.ones([structure[layers-1]])
+  TestResetCache()
+  for (let i=layers-2; i>-1; i--) {
+    actcache[i+1] = TestDerivativeActivation(testneurons2[i+1])
+    testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
+    testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
+    //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
+  }
+  TestUpdateColor()
+  traincount += 1
+  document.getElementById("trainingcount").innerHTML = traincount
 }
 
 function ActivationLayer(input,i,j,m) {
