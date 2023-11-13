@@ -30,7 +30,7 @@ function TestResetCache() {
     testactcache.push(nj.zeros([neuronstemp]))
   }
   
-    document.getElementById("layers").innerHTML = "reset
+    document.getElementById("layers").innerHTML = "reset"
 }
 
 function TestForward() {
