@@ -10,6 +10,11 @@ let testcostcache = [0];
 let testactcache = [0];
 
 function SetTestArrays() {
+  testneurons = [];
+  testneurons2 = [];
+  testweights = [0];
+  testbiases = [0];
+  testtargets = [];
   for (let i=0; i<layers; i++) {
     let prevneurons = structure[i]
     let nextneurons = structure[i+1]
@@ -61,6 +66,7 @@ function TestNeuronCost(i) {
   } 
   */
   if (i == layers-1) {
+    document.getElementById("layers").innerHTML = "layer"
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
     testcostcache[i] = result
     return result
@@ -72,6 +78,7 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
+  /*
   let tempvector = nj.multiply(testactcache[i],TestNeuronCost(i))
   let tempvector2 = testneurons[i-1]
   let tempmatrix = tempvector;
@@ -87,6 +94,8 @@ function TestWeightCost(i) {
   }
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix.T,tempmatrix2)
+  */
+  return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
 }
 
 function TestBiasCost(i) {
@@ -161,7 +170,7 @@ function TestBackprop() {
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
-    document.getElementById("layers").innerHTML = "biases"
+    document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights)
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
