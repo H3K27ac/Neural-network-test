@@ -10,6 +10,7 @@ let testcostcache = [0];
 let testactcache = [0];
 
 function SetTestArrays() {
+  let testing7287 = nj.multiply(nj.ones([3,2]),2)
   testneurons = [];
   testneurons2 = [];
   testweights = [0];
