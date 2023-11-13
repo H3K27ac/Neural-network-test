@@ -72,7 +72,21 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
-  return nj.dot(nj.transpose(testneurons[i-1]),nj.multiply(testactcache[i],TestNeuronCost(i)))
+  let tempvector = nj.multiply(testactcache[i],TestNeuronCost(i))
+  let tempvector2 = testneurons[i-1]
+  let tempmatrix = tempvector;
+  let tempmatrix2 = tempvector2;
+  document.getElementById("layers").innerHTML = "concat"
+  let j2 = structure[i]
+  for (let j=0; j<j2; j++) {
+    nj.concatenate(tempmatrix,tempvector.reshape(j2,1))
+  }
+  let j3 = structure[i-1]
+  for (let j=0; j<j3; j++) {
+    nj.concatenate(tempmatrix2,tempvector2.reshape(j3,1))
+  }
+  document.getElementById("layers").innerHTML = "multiply"
+  return nj.multiply(tempmatrix.T,tempmatrix2)
 }
 
 function TestBiasCost(i) {
