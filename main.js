@@ -81,7 +81,7 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
-  /*
+  document.getElementById("layers").innerHTML = "startweight"
   let tempvector = nj.multiply(testactcache[i],TestNeuronCost(i))
   let tempvector2 = testneurons[i-1]
   let tempmatrix = tempvector;
@@ -97,9 +97,9 @@ function TestWeightCost(i) {
   }
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix.T,tempmatrix2)
-  */
-  document.getElementById("layers").innerHTML = "weight"
-  return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
+  
+//  document.getElementById("layers").innerHTML = "weight"
+ // return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
 }
 
 function TestBiasCost(i) {
@@ -175,11 +175,6 @@ function TestBackprop() {
   for (let i=layers-2; i>-1; i--) {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
-    document.getElementById("layers").innerHTML = "again" + JSON.stringify(nj.multiply(TestBiasCost(i+1),0.2)) + i
-    let test384638 = nj.multiply(TestBiasCost(i+1),learnrate)
-    document.getElementById("layers").innerHTML = "biases2"
-    let test73636 = nj.subtract(testbiases[i+1],test384638)
-    document.getElementById("layers").innerHTML = "biases3"
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
