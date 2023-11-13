@@ -253,8 +253,8 @@ function CreateGraph() {
   showbiases = document.getElementById("showbiases").checked
 
   batchnorm = document.getElementById("batch").checked
-  
 
+  
 if (document.getElementById("showneurons").checked == true) {
     showneurons = "all"
   } else {
@@ -264,6 +264,7 @@ if (document.getElementById("showneurons").checked == true) {
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
 
+  SetTestArrays()
   
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
