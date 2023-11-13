@@ -8,7 +8,6 @@ let testbiases = [0];
 let testtargets = [];
 let testcostcache = [0];
 let testactcache = [0];
-let testlearnrate = [0];
 
 function SetTestArrays() {
   testneurons = [];
@@ -16,7 +15,6 @@ function SetTestArrays() {
   testweights = [0];
   testbiases = [0];
   testtargets = [];
-  testlearnrate = [0];
   for (let i=0; i<layers; i++) {
     let prevneurons = structure[i]
     let nextneurons = structure[i+1]
@@ -24,7 +22,6 @@ function SetTestArrays() {
     testneurons2.push(nj.zeros([prevneurons]))
     testbiases.push(nj.zeros([nextneurons]))
     testweights.push(nj.zeros([nextneurons,prevneurons]))
-    testlearnrate.push(nj.zeros([nextneurons])) //.assign(learnrate,false)
   }
   testtargets.push(nj.zeros([structure[layers-1]]))
 }
@@ -100,6 +97,7 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix.T,tempmatrix2)
   */
+  document.getElementById("layers").innerHTML = "weight"
   return nj.dot(testneurons[i-1].T,nj.multiply(testactcache[i],TestNeuronCost(i)))
 }
 
@@ -176,9 +174,8 @@ function TestBackprop() {
   for (let i=layers-2; i>-1; i--) {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights)
-    testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),testlearnrate[i+1])),biasrange * -1,biasrange)
-    document.getElementById("layers").innerHTML = "biasdone"
-    testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),testlearnrate[i+1])),weightrange * -1,weightrange)
+    testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
+    testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
   document.getElementById("layers").innerHTML = "color"
