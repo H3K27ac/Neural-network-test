@@ -72,6 +72,7 @@ function TestNeuronCost(i) {
     temparray.add(temparray)
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),temparray)
     testcostcache[i] = result
+    document.getElementById("layers").innerHTML = "again" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
     return result
   } else {
     let sum = nj.dot(testweights[i+1],nj.multiply(testactcache[i+1],testcostcache[i+1]))
