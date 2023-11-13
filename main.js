@@ -20,8 +20,13 @@ function SetTestArrays() {
 function TestForward() {
   for (let i=0; i<layers; i++) {
     let sum = nj.sum(nj.dot(testweights[i+1],testneurons[i]))
-//    sum += 
+    sum.add(testbiases[i+1])
+    testneurons[i+1] = TestActivation(sum)
   }
+}
+
+function TestActivation(input) {
+  return nj.sigmoid(input)
 }
 
 function ActivationLayer(input,i,j,m) {
