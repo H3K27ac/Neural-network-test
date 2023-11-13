@@ -100,7 +100,7 @@ function TestWeightCost(i) {
   return nj.multiply(tempmatrix,tempmatrix2.T)
   */
   document.getElementById("layers").innerHTML = "weight"
-  return nj.dot(testneurons[i-1].reshape(1,structure[i-1]),nj.multiply(testactcache[i],TestNeuronCost(i)).reshape(structure[i],1))
+  return nj.dot(nj.reshape(testneurons[i-1],[1,structure[i-1]]),nj.reshape(nj.multiply(testactcache[i],TestNeuronCost(i)),[structure[i],1]))
 }
 
 function TestBiasCost(i) {
