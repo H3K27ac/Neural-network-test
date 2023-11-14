@@ -112,7 +112,7 @@ function TestWeightCost(i) {
       tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
   }
-  document.getElementById("layers").innerHTML = "weight"
+  document.getElementById("layers").innerHTML = "weight" + JSON.stringify(tempmatrix) + i
   return tempmatrix
  // return nj.dot(nj.reshape(testneurons[i-1],[1,structure[i-1]]),nj.reshape(nj.multiply(testactcache[i],TestNeuronCost(i)),[structure[i],1]))
 }
