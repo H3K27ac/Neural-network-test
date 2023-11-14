@@ -376,7 +376,7 @@ function ToggleTraining() {
     if (batchnorm) {
       training = setInterval(BatchBackprop, 200);
     } else {
-      training = setInterval(Testing100, 100);
+      training = setInterval(TestBackprop, 100);
     }
   }
 }
