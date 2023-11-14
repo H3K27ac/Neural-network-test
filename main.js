@@ -18,14 +18,14 @@ function SetTestArrays() {
   for (let i=0; i<layers; i++) {
     let prevneurons = structure[i]
     let nextneurons = structure[i+1]
-    testneurons.push(nj.zeros([prevneurons]))       
-    testneurons2.push(nj.zeros([prevneurons]))
+    testneurons.push(tf.zeros([prevneurons]))       
+    testneurons2.push(tf.zeros([prevneurons]))
     if (nextneurons != 0) {
-    testbiases.push(nj.zeros([nextneurons]))
-    testweights.push(nj.zeros([nextneurons,prevneurons]))
+    testbiases.push(tf.zeros([nextneurons]))
+    testweights.push(tf.zeros([nextneurons,prevneurons]))
     }
   }
-  testtargets.push(nj.zeros([structure[layers-1]]))
+  testtargets.push(tf.zeros([structure[layers-1]]))
 }
 
 function TestResetCache() {
@@ -33,8 +33,8 @@ function TestResetCache() {
   testactcache = [0];
   for (let i=0; i<layers-1; i++) {
     let neuronstemp = structure[i+1]
-    testcostcache.push(nj.zeros([neuronstemp]))
-    testactcache.push(nj.zeros([neuronstemp]))
+    testcostcache.push(tf.zeros([neuronstemp]))
+    testactcache.push(tf.zeros([neuronstemp]))
   }
   
     document.getElementById("layers").innerHTML = "reset"
@@ -42,7 +42,7 @@ function TestResetCache() {
 
 function TestForward() {
   for (let i=0; i<layers-1; i++) {
-    let sum = nj.dot(testweights[i+1],testneurons[i])
+    let sum = tf.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
     document.getElementById("layers").innerHTML = "sum"
     testneurons2[i+1] = sum
@@ -51,14 +51,14 @@ function TestForward() {
 }
 
 function TestActivation(input) {
-  return nj.sigmoid(input)
+  return tf.sigmoid(input)
 }
 
 function TestDerivativeActivation(input,i) {
-  let tempresult = nj.sigmoid(input)
-  let temparray = nj.ones([structure[i]])
+  let tempresult = tf.sigmoid(input)
+  let temparray = tf.ones([structure[i]])
   document.getElementById("layers").innerHTML = "scalar"
-  return nj.multiply(tempresult,nj.subtract(temparray,tempresult))
+  return tf.multiply(tempresult,tf.subtract(temparray,tempresult))
 }
 
 function TestNeuronCost(i) {
@@ -68,13 +68,11 @@ function TestNeuronCost(i) {
   } 
   */
   if (i == layers-1) {
-    let temparray = nj.ones([structure[i]])
-    temparray.add(temparray)
-    let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
+    let result = tf.multiply(tf.subtract(testneurons[i],testtargets),2)
     return result
   } else {
-    document.getElementById("layers").innerHTML = "after" + JSON.stringify(nj.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
-    let sum = nj.dot(testweights[i+1].T,nj.multiply(testactcache[i+1],testcostcache[i+1]))
+    document.getElementById("layers").innerHTML = "after" + JSON.stringify(tf.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
+    let sum = tf.dot(testweights[i+1].T,tf.multiply(testactcache[i+1],testcostcache[i+1]))
     return sum
   }
 }
@@ -98,11 +96,11 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix,tempmatrix2.T)
   */
-  let temparray = nj.multiply(testactcache[i],testcostcache[i])
+  let temparray = tf.multiply(testactcache[i],testcostcache[i])
   let temparray2 = testneurons[i-1]
   let j2 = temparray.shape
   let j3 = temparray2.shape
-  let tempmatrix = nj.zeros([j2,j3])
+  let tempmatrix = tf.zeros([j2,j3])
   for (let j=0; j<j2; j++) {
     for (let k=0; k<j3; k++) {
       tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
@@ -113,11 +111,11 @@ function TestWeightCost(i) {
 }
 
 function TestBiasCost(i) {
-  return nj.multiply(testactcache[i],testcostcache[i])
+  return tf.multiply(testactcache[i],testcostcache[i])
 }
 
 function TestRandomizeInput() {
-  testneurons[0] = nj.random([structure[0]])
+  testneurons[0] = tf.random([structure[0]])
 }
 
 function TestUpdateColor() {
@@ -179,16 +177,16 @@ function TestBackprop() {
   TestRandomizeInput()
   document.getElementById("layers").innerHTML = "forward"
   TestForward()
-  testtargets = nj.ones([structure[layers-1]])
+  testtargets = tf.ones([structure[layers-1]])
   document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
     testcostcache[i+1] = TestNeuronCost(i+1)
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
-    testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
-    document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1].shape) + JSON.stringify(nj.multiply(TestWeightCost(i+1),learnrate).shape) + i
-    testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate).reshape(testweights[i+1].shape)),weightrange * -1,weightrange)
+    testbiases[i+1] = tf.clipByValue(tf.subtract(testbiases[i+1],tf.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
+    document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1].shape) + JSON.stringify(tf.multiply(TestWeightCost(i+1),learnrate).shape) + i
+    testweights[i+1] = tf.clipByValue(testweights[i+1].subtract(tf.multiply(TestWeightCost(i+1),learnrate).reshape(testweights[i+1].shape)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
   document.getElementById("layers").innerHTML = "color"
