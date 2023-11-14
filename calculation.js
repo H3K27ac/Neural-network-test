@@ -6,6 +6,7 @@ let gradient = 0.05;
 let epsilon = 0.00001;
 let costcache = [0];
 let activationcache = [0];
+let productcache = [0]
 let varcache = [0];
 let batchalpha = 0.99;
 
@@ -196,16 +197,18 @@ function SetTarget() {
 }
 
 
-function NeuronCost(i,j) {
+function NeuronCost(i,j,prodcache) {
   if (i == layers-1) {
     return 2 * (neurons[i][j] - targets[j])
   } else {
+    /*
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
       sum += weights[i+1][k][j] * activationcache[i+1][k] * costcache[i+1][k] // NeuronCost(i+1,k)
     }
-    return sum
+    */
+    return prodcache
   }
 }
 
@@ -302,6 +305,7 @@ function ResetCache() {
     }
     costcache.push(subarray)
     activationcache.push(subarray2)
+    productcache.push(0)
     if (batchnorm) {
       varcache.push(subarray3)
     }
@@ -317,9 +321,10 @@ function Backprop() {
   ResetCache()
   const t0 = performance.now()
   for (let i=layers-1; i>0; i--) {
+    let tempcache2 = 0;
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
-      let costcache2 = NeuronCost(i,j)
+      let costcache2 = NeuronCost(i,j,productcache[i+1]);
       let actcache2 = DerivativeActivation(neurons2[i][j],i)
       let tempcache = actcache2 * costcache2
       activationcache[i][j] = actcache2
@@ -328,11 +333,13 @@ function Backprop() {
       let k2 = structure[i-1];
       for (let k=0; k<k2; k++) {
         let weightvalue = weights[i][j][k]
+        tempcache2 += weightvalue * tempcache
         // Elastic net regularisation
         let error = neurons[i-1][k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
         weights[i][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
+    productcache[i] = tempcache2;
   }
   const t1 = performance.now()
   document.getElementById("performance3").innerHTML = (t1-t0) 
