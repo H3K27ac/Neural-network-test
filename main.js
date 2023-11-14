@@ -109,7 +109,7 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "matrix"
   for (let j=0; j<j3; j++) {
     for (let k=0; k<j3; k++) {
-      tempmatrix.set(j,k) = temparray.get(j) * temparray2.get(k)
+      tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
   }
   document.getElementById("layers").innerHTML = "weight"
