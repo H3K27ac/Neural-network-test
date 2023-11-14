@@ -317,15 +317,18 @@ function Backprop() {
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
-      costcache[i][j] = NeuronCost(i+1,j)
+      let costcache2 = NeuronCost(i+1,j)
       let actcache2 = DerivativeActivation(neurons2[i+1][j],i+1)
+      let tempnumber = actcache2 * costcache2
       activationcache[i+1][j] = actcache2
-      biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BiasCost(i+1,j,actcache2))))
+      costcache[i+1][j] = costcache2
+      biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * tempnumber)))
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
+        let weightvalue = weights[i+1][j][k]
         // Elastic net regularisation
-        let error = WeightCost(i+1,j,k,actcache2) + (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
-        weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weights[i+1][j][k] - (learnrate * error)))
+        let error = neurons[i][k] * tempnumber + (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        weights[i+1][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
   }
