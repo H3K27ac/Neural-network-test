@@ -189,6 +189,7 @@ function TestBackprop() {
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights) + nj.multiply(TestWeightCost(i+1),learnrate) + i
     testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
+    document.getElementById("layers").innerHTML = "after"
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
   document.getElementById("layers").innerHTML = "color"
