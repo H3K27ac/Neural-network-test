@@ -74,7 +74,7 @@ function TestNeuronCost(i) {
     return result
   } else {
     document.getElementById("layers").innerHTML = "after" + JSON.stringify(nj.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
-    let sum = nj.dot(testweights[i+1],nj.multiply(testactcache[i+1],testcostcache[i+1]))
+    let sum = nj.dot(testweights[i+1].T,nj.multiply(testactcache[i+1],testcostcache[i+1]))
     return sum
   }
 }
