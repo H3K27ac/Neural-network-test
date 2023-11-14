@@ -103,8 +103,8 @@ function TestWeightCost(i) {
   let temparray = nj.multiply(testactcache[i],TestNeuronCost(i))
   let temparray2 = testneurons[i-1]
   document.getElementById("layers").innerHTML = "shape"
-  let j2 = nj.shape(temparray)
-  let j3 = nj.shape(temparray2)
+  let j2 = nj.shape(temparray)[0]
+  let j3 = nj.shape(temparray2)[0]
   let tempmatrix = nj.zeros([j2,j3])
   document.getElementById("layers").innerHTML = "matrix"
   for (let j=0; j<j3; j++) {
