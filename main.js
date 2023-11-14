@@ -73,6 +73,7 @@ function TestNeuronCost(i) {
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
     return result
   } else {
+    document.getElementById("layers").innerHTML = "after" + JSON.stringify(nj.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
     let sum = nj.dot(testweights[i+1],nj.multiply(testactcache[i+1],testcostcache[i+1]))
     return sum
   }
@@ -188,7 +189,6 @@ function TestBackprop() {
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1].shape) + JSON.stringify(nj.multiply(TestWeightCost(i+1),learnrate).shape) + i
     testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate).reshape(testweights[i+1].shape)),weightrange * -1,weightrange)
-    document.getElementById("layers").innerHTML = "after" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
   document.getElementById("layers").innerHTML = "color"
