@@ -15,6 +15,8 @@ function SetTestArrays() {
   testweights = [0];
   testbiases = [0];
   testtargets = [];
+  let test383746 = nj.zeros([2,3])
+  test383746.subtract(test383746)
   for (let i=0; i<layers; i++) {
     let prevneurons = structure[i]
     let nextneurons = structure[i+1]
