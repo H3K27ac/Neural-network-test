@@ -187,7 +187,7 @@ function TestBackprop() {
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testcostcache) + JSON.stringify(testactcache) + i
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
-    document.getElementById("layers").innerHTML = "weight" + nj.add(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate))
+    document.getElementById("layers").innerHTML = "weight" + testweights[i+1] + nj.multiply(TestWeightCost(i+1),learnrate)
     testweights[i+1] = nj.clip(nj.subtract(testweights[i+1],nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
