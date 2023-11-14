@@ -106,7 +106,7 @@ function TestWeightCost(i) {
   let tempmatrix = nj.zeros([j2,j3])
   for (let j=0; j<j3; j++) {
     for (let k=0; k<j3; k++) {
-      tempmatrix.set(j,k,nj.multiply(temparray.get(j),temparray2.get(k)))
+      tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
   }
   return tempmatrix
