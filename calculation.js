@@ -197,11 +197,6 @@ function SetTarget() {
 
 
 function NeuronCost(i,j) {
-  /*
-  if (costcache[i][j] != undefined) {
-    return costcache[i][j]
-  } 
-  */
   if (i == layers-1) {
     return 2 * (neurons[i][j] - targets[j])
   } else {
@@ -334,7 +329,7 @@ function Backprop() {
       for (let k=0; k<k2; k++) {
         let weightvalue = weights[i][j][k]
         // Elastic net regularisation
-        let error = neurons[i-1][k] * tempcache + (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        let error = neurons[i-1][k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
         weights[i][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
