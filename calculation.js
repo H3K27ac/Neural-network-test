@@ -200,7 +200,6 @@ function NeuronCost(i,j) {
   */
   if (i == layers-1) {
     let result = 2 * (neurons[i][j] - targets[j])
-    costcache[i][j] = result
     return result
   } else {
     let sum = 0;
@@ -208,17 +207,16 @@ function NeuronCost(i,j) {
     for (let k=0; k<k2; k++) {
       sum += weights[i+1][k][j] * activationcache[i+1][k] * costcache[i+1][k] // NeuronCost(i+1,k)
     }
-    costcache[i][j] = sum
     return sum
   }
 }
 
 function WeightCost(i,j,k,actcache2) {
-  return neurons[i-1][k] * actcache2 * NeuronCost(i,j)
+  return neurons[i-1][k] * actcache2 * costcache[i][j]
 }
 
 function BiasCost(i,j,actcache2) {
-  return actcache2 * NeuronCost(i,j)
+  return actcache2 * costcache[i][j]
 }
 
 
@@ -319,6 +317,7 @@ function Backprop() {
   for (let i=layers-2; i>-1; i--) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
+      costcache[i][j] = NeuronCost(i+1,j)
       let actcache2 = DerivativeActivation(neurons2[i+1][j],i+1)
       activationcache[i+1][j] = actcache2
       biases[i+1][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i+1][j] - (learnrate * BiasCost(i+1,j,actcache2))))
@@ -376,7 +375,7 @@ function ToggleTraining() {
     if (batchnorm) {
       training = setInterval(BatchBackprop, 200);
     } else {
-      training = setInterval(TestBackprop, 100);
+      training = setInterval(Backprop, 100);
     }
   }
 }
