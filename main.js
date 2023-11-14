@@ -71,11 +71,9 @@ function TestNeuronCost(i) {
     let temparray = nj.ones([structure[i]])
     temparray.add(temparray)
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),temparray)
-    testcostcache[i] = result
     return result
   } else {
     let sum = nj.dot(testweights[i+1],nj.multiply(testactcache[i+1],testcostcache[i+1]))
-    testcostcache[i] = sum
     return sum
   }
 }
@@ -99,7 +97,7 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix,tempmatrix2.T)
   */
-  let temparray = nj.multiply(testactcache[i],TestNeuronCost(i))
+  let temparray = nj.multiply(testactcache[i],testcostcache[i])
   let temparray2 = testneurons[i-1]
   let j2 = temparray.shape
   let j3 = temparray2.shape
@@ -114,7 +112,7 @@ function TestWeightCost(i) {
 }
 
 function TestBiasCost(i) {
-  return nj.multiply(testactcache[i],TestNeuronCost(i))
+  return nj.multiply(testactcache[i],testcostcache[i])
 }
 
 function TestRandomizeInput() {
@@ -184,6 +182,7 @@ function TestBackprop() {
   document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
+    testcostcache[i+1] = TestNeuronCost(i+1)
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
