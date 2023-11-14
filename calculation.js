@@ -126,6 +126,7 @@ function BatchForwardPass() {
 //      document.getElementById("inputfield").appendChild(text6)
 
 function FeedForward() {
+  const t0 = performance.now()
   let sum;
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
@@ -153,6 +154,8 @@ function FeedForward() {
       }
     }
   }
+  const t1 = performance.now()
+  document.getElementById("performance1").innerHTML = (t1-t0) 
 }
 
 function Testing() {
@@ -278,6 +281,7 @@ function BatchCost(i,j,n) {
 }
 
 function ResetCache() {
+  const t0 = performance.now()
   costcache = [0];
   activationcache = [0];
   for (let i=0; i<layers-1; i++) {
@@ -307,6 +311,8 @@ function ResetCache() {
       varcache.push(subarray3)
     }
   }
+  const t1 = performance.now()
+  document.getElementById("performance2").innerHTML = (t1-t0) 
 }
 
 function Backprop() {
@@ -314,6 +320,7 @@ function Backprop() {
   FeedForward()
   SetTarget()
   ResetCache()
+  const t0 = performance.now()
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
@@ -332,6 +339,8 @@ function Backprop() {
       }
     }
   }
+  const t1 = performance.now()
+  document.getElementById("performance3").innerHTML = (t1-t0) 
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
