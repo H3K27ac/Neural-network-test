@@ -104,7 +104,7 @@ function TestWeightCost(i) {
   let j2 = temparray.shape
   let j3 = temparray2.shape
   let tempmatrix = nj.zeros([j2,j3])
-  for (let j=0; j<j3; j++) {
+  for (let j=0; j<j2; j++) {
     for (let k=0; k<j3; k++) {
       tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
@@ -188,7 +188,7 @@ function TestBackprop() {
     document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
     document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1]) + JSON.stringify(nj.multiply(TestWeightCost(i+1),learnrate))
-    testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate),false),weightrange * -1,weightrange)
+    testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
   document.getElementById("layers").innerHTML = "color"
