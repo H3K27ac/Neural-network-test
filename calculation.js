@@ -320,10 +320,10 @@ function ResetCache() {
 }
 
 function Backprop() {
+  ResetCache()
   RandomizeInput()
   FeedForward()
   SetTarget()
-  ResetCache()
   const t0 = performance.now()
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
