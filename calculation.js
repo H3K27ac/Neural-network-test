@@ -6,6 +6,7 @@ let gradient = 0.05;
 let epsilon = 0.00001;
 let costcache = [0];
 let activationcache = [0];
+let activationcache2 = [0];
 let varcache = [0];
 let batchalpha = 0.99;
 
@@ -32,7 +33,7 @@ function Activation(input,i) {
   }
 }
 
-function DerivativeActivation(input,i) {
+function DerivativeActivation(input,i,actcache) {
   let activation;
   if (i == layers-1) {
     activation = outputactivation
@@ -41,8 +42,8 @@ function DerivativeActivation(input,i) {
   }
   switch (activation) {
     case "Sigmoid":
-      let result = Activation(input)
-      return result * (1 - result)
+      // let result = Activation(input)
+      return actcache * (1 - actcache)
     case "ReLU": 
       if (input > 0) {
         return 1
@@ -144,6 +145,7 @@ function FeedForward() {
       }
       sum += biases[i+1][j]
       let result = Activation(sum,i)
+      activationcache2[i+1][j] = result
       if (batchnorm) {
         batch[i+1][j][0] = result
         let result2 = batchgamma[i+1][j] * (result - batchmeanmoving[i+1][j]) / Math.sqrt(batchvarmoving[i+1][j] + epsilon) + batchbeta[i+1][j]
@@ -279,29 +281,36 @@ function ResetCache() {
   const t0 = performance.now()
   costcache = [0];
   activationcache = [0];
+  activationcache2 = [0];
   for (let i=0; i<layers-1; i++) {
     let subarray = [];
     let subarray2 = [];
     let subarray3 = [];
+    let subarray4 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
       if (batchnorm) {
         let subsubarray = [];
         let subsubarray2 = [];
+        let subsubarray4 = [];
         for (let n=0; n<batchsize; n++) {
           subsubarray.push(0)
           subsubarray2.push(0)
+          subsubarray4.push(0)
         }
         subarray.push(subsubarray)
         subarray2.push(subsubarray2)
         subarray3.push(0)
+        subarray4.push(subsubarray4)
       } else {
         subarray.push(0)
         subarray2.push(0)
+        subarray4.push(0)
       }
     }
     costcache.push(subarray)
     activationcache.push(subarray2)
+    activationcache2.push(subarray4)
     if (batchnorm) {
       varcache.push(subarray3)
     }
@@ -319,8 +328,9 @@ function Backprop() {
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
+      let actcache3 = activationcache2[i][j]
       let costcache2 = NeuronCost(i,j);
-      let actcache2 = DerivativeActivation(neurons2[i][j],i)
+      let actcache2 = DerivativeActivation(neurons2[i][j],i,actcache3) 
       let tempcache = actcache2 * costcache2
       activationcache[i][j] = actcache2
       costcache[i][j] = costcache2
