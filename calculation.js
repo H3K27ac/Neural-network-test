@@ -185,14 +185,20 @@ function Testing2() {
 }
 
 function SetTarget() {
+  let j2 = structure[0];
+  let sum = 0;
+  for (let j=0; j<j2; j++) {
+    sum += neurons[0][j]
+  }
+  let target = sum / j2
   let i2 = structure[layers-1];
   for (let i=0; i<i2; i++) {
     if (batchnorm) {
       for (let n=0; n<batchsize; n++) {
-        targets[i][n] = 1
+        targets[i][n] = target
       }
     } else {
-      targets[i] = 1
+      targets[i] = target
     }
   }
 }
