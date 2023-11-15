@@ -101,11 +101,13 @@ function TestWeightCost(i) {
   let j2 = temparray.shape
   let j3 = temparray2.shape
   let tempmatrix = nj.zeros([j2,j3])
+  /*
   for (let j=0; j<j2; j++) {
     for (let k=0; k<j3; k++) {
       tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
   }
+  */
   return tempmatrix
  // return nj.dot(nj.reshape(testneurons[i-1],[1,structure[i-1]]),nj.reshape(nj.multiply(testactcache[i],TestNeuronCost(i)),[structure[i],1]))
 }
@@ -180,6 +182,7 @@ function TestBackprop() {
   testtargets = nj.ones([structure[layers-1]])
 //  document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
+  const t0 = performance.now()
   for (let i=layers-2; i>-1; i--) {
     testcostcache[i+1] = TestNeuronCost(i+1)
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
@@ -190,6 +193,8 @@ function TestBackprop() {
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
 //  document.getElementById("layers").innerHTML = "color"
+  const t1 = performance.now()
+  document.getElementById("performance3").innerHTML = (t1-t0)
   TestUpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
