@@ -37,14 +37,14 @@ function TestResetCache() {
     testactcache.push(nj.zeros([neuronstemp]))
   }
   
-    document.getElementById("layers").innerHTML = "reset"
+   // document.getElementById("layers").innerHTML = "reset"
 }
 
 function TestForward() {
   for (let i=0; i<layers-1; i++) {
     let sum = nj.dot(testweights[i+1],testneurons[i])
     sum.add(testbiases[i+1])
-    document.getElementById("layers").innerHTML = "sum"
+ //   document.getElementById("layers").innerHTML = "sum"
     testneurons2[i+1] = sum
     testneurons[i+1] = TestActivation(sum)
   }
@@ -57,7 +57,7 @@ function TestActivation(input) {
 function TestDerivativeActivation(input,i) {
   let tempresult = nj.sigmoid(input)
   let temparray = nj.ones([structure[i]])
-  document.getElementById("layers").innerHTML = "scalar"
+  // document.getElementById("layers").innerHTML = "scalar"
   return nj.multiply(tempresult,nj.subtract(temparray,tempresult))
 }
 
@@ -71,7 +71,7 @@ function TestNeuronCost(i) {
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
     return result
   } else {
-    document.getElementById("layers").innerHTML = "after" + JSON.stringify(nj.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
+    // document.getElementById("layers").innerHTML = "after" + JSON.stringify(nj.multiply(testactcache[i+1],testcostcache[i+1]).shape) + JSON.stringify(testweights[i+1].shape) + i
     let sum = nj.dot(testweights[i+1].T,nj.multiply(testactcache[i+1],testcostcache[i+1]))
     return sum
   }
@@ -173,23 +173,23 @@ function TestUpdateColor() {
 }
 
 function TestBackprop() {
-  document.getElementById("layers").innerHTML = "randomise"
+ // document.getElementById("layers").innerHTML = "randomise"
   TestRandomizeInput()
-  document.getElementById("layers").innerHTML = "forward"
+ // document.getElementById("layers").innerHTML = "forward"
   TestForward()
   testtargets = nj.ones([structure[layers-1]])
-  document.getElementById("layers").innerHTML = "cache"
+//  document.getElementById("layers").innerHTML = "cache"
   TestResetCache()
   for (let i=layers-2; i>-1; i--) {
     testcostcache[i+1] = TestNeuronCost(i+1)
     testactcache[i+1] = TestDerivativeActivation(testneurons2[i+1],i+1)
-    document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
+  //  document.getElementById("layers").innerHTML = "biases" + JSON.stringify(testneurons) + JSON.stringify(testweights) + i
     testbiases[i+1] = nj.clip(nj.subtract(testbiases[i+1],nj.multiply(TestBiasCost(i+1),learnrate)),biasrange * -1,biasrange)
-    document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1].shape) + JSON.stringify(nj.multiply(TestWeightCost(i+1),learnrate).shape) + i
+  //  document.getElementById("layers").innerHTML = "weight" + JSON.stringify(testweights[i+1].shape) + JSON.stringify(nj.multiply(TestWeightCost(i+1),learnrate).shape) + i
     testweights[i+1] = nj.clip(testweights[i+1].subtract(nj.multiply(TestWeightCost(i+1),learnrate).reshape(testweights[i+1].shape)),weightrange * -1,weightrange)
     //  (l1strength * Math.sign(weights[i+1][j][k])) + (l2strength * (weights[i+1][j][k] ** 2))
   }
-  document.getElementById("layers").innerHTML = "color"
+//  document.getElementById("layers").innerHTML = "color"
   TestUpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
