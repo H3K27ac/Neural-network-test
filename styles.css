@@ -101,7 +101,7 @@ th, td {
 }
 
 .layerghost {
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: center; 
   align-items: center; 
@@ -115,7 +115,7 @@ th, td {
 }
 
 .layertext {
-  font-size: 12px;
+  font-size: 14px;
   color: black;
 }
 
