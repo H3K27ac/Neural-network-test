@@ -132,7 +132,7 @@ function MakeDraggable(i) {
 
     function handleTouchMove(event) {
         event.preventDefault()
-        if (isDragging == true) {
+        if (isDragging == true && isSnapped == false) {
           document.getElementById("layers").innerHTML = "moving, but broken" + "," + event.touches[0].clientX + "," + event.touches[0].clientY + "," + originalPosition.x + "," +  originalPosition.y
           let ghost = document.getElementById(layertypes[i] + "ghost")
           document.getElementById("layers").innerHTML = "moving, but broken2"
