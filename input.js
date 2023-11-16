@@ -174,19 +174,26 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
+          let modifytypes = [];
+          let modifynames = [];
+          let modifynames2 = [];
+          let modifycolor = [];
           switch (layertypes[i]) {
             case "batchnormlayer":
+              modifytypes = ["batchnormlayer","batchrenorm"];
+              modifynames = ["Batch normalisation","Batch renornalisation"];
+              modifynames2 = ["BN","BRN"];
+              modifycolor = ["lightblue","deepskyblue"];
               let modifylayercontainer = document.createElement("div");
-              let modifylayer = document.createElement("button");
-              let originallayer = document.createElement("button");
-              let modifylayertext = document.createElement("span");
-              let originallayertext = document.createElement("span");
-              modifylayercontainer.className = "modifylayercontainer"
-              modifylayer.className = "modifylayer"
-              modifylayer.style.backgroundColor = "deepskyblue"
-              modifylayertext.className = "modifylayertext"
-              modifylayertext.innerHTML = "BRN"
-              modifylayer.onclick = function() {
+              for (let j=0; j<modifytypes.length j++) {
+                let modifylayer = document.createElement("button");
+                let modifylayertext = document.createElement("span");
+                modifylayercontainer.className = "modifylayercontainer"
+                modifylayer.className = "modifylayer"
+                modifylayer.style.backgroundColor = layercolor[j]
+                modifylayertext.className = "modifylayertext"
+                modifylayertext.innerHTML = layernames2[j]
+                modifylayer.onclick = function() {
                 let index;
                 let m2 = container.children.length
                 for (let m=0; m<m2; m++) {
@@ -194,30 +201,13 @@ function MakeDraggable(i) {
                   index = m;
                 }
               }
-              layerorder[index-2] = "batchrenorm"
-              layertext.innerHTML = "Batch renormalisation"
-              newobject.style.backgroundColor = "deepskyblue"
+              layerorder[index-2] = modifytypes[j]
+              layertext.innerHTML = modifynames[j]
+              newobject.style.backgroundColor = modifycolor[j]
               }
-              originallayer.className = "modifylayer"
-              originallayer.style.backgroundColor = "lightblue"
-              originallayertext.className = "modifylayertext"
-              originallayertext.innerHTML = "BN"
-              originallayer.onclick = function() {
-                let index;
-                let m2 = container.children.length
-                for (let m=0; m<m2; m++) {
-                if (container.children[m] === newobject) {
-                  index = m;
-                }
+                modifylayer.appendChild(modifylayertext)
+                modifylayercontainer.appendChild(modifylayer)
               }
-              layerorder[index-2] = "batchnormlayer"
-              layertext.innerHTML = "Batch normalisation"
-              newobject.style.backgroundColor = "lightblue"
-            }
-              modifylayer.appendChild(modifylayertext)
-              originallayer.appendChild(originallayertext)
-              modifylayercontainer.appendChild(originallayer)
-              modifylayercontainer.appendChild(modifylayer)
               newobject.appendChild(modifylayercontainer)
               break;
               
