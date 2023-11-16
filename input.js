@@ -255,8 +255,9 @@ function MakeDraggable(i) {
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
       if (Math.abs(ghost.offsetTop-height) < 50) {
         isSnapped = true
-        ghost.style.left = 0;
-        ghost.style.top = 0;
+        ghost.style.left = 0 + "px";
+        ghost.style.top = 0 + "px";
+        ghost.style.position = "relative"
         if (layerorder.length == 0) {
           document.getElementById("layers").innerHTML = "set"
           container.insertBefore(ghost,container.children[layerorder.length+2])
