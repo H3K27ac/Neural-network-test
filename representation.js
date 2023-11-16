@@ -225,12 +225,7 @@ function Typeset() {
   }
 }
 
-function ChooseFunction(name) {
-  activation = name
-}
-
-function CreateGraph() {
-  DeleteGraph()
+function SetInputs() {
   let container = document.getElementById("container")
   let structureinput = document.getElementById("structure").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
@@ -263,7 +258,11 @@ if (document.getElementById("showneurons").checked == true) {
   
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
-    
+}
+
+function CreateGraph() {
+  DeleteGraph()
+  SetInputs()
   SetTestArrays()
   
   for (let i=0; i<structure[0]; i++) {
@@ -305,7 +304,8 @@ if (document.getElementById("showneurons").checked == true) {
     column.className = "column"
     column.id = "column " + i
     }
-    for (let j=0; j<structure[i]; j++) {
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
       let batchsubsubarray = [];
       let batchnormedsubsubarray = [];
       let neuronssubsubarray = [];
@@ -370,7 +370,8 @@ if (document.getElementById("showneurons").checked == true) {
     }
     if (batchnorm) {
       if (i < layers-1) {
-        for (let j=0; j<structure[i+1]; j++) {
+        let j3 = structure[i+1]
+        for (let j=0; j<j3; j++) {
           betasubarray.push(0)
           gammasubarray.push(1)
           meansubarray.push(0)
@@ -398,10 +399,12 @@ if (document.getElementById("showneurons").checked == true) {
   for (let i=0; i<layers-1; i++) {
     let subarray = [];
     let subarray2 = [];
-    for (let j=0; j<structure[i+1]; j++) {
+    let j2 = structure[i+1]
+    for (let j=0; j<j2; j++) {
       let subsubarray = [];
       subarray2.push(0)
-      for (let k=0; k<structure[i]; k++) {
+      let k2 = structure[i]
+      for (let k=0; k<k2; k++) {
         if (showweights) {
         let weight = document.createElement("div")
         weight.className = "weight"
