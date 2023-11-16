@@ -180,7 +180,7 @@ function MakeDraggable(i) {
           let deletelayer = document.createElement("button");
           let modifylayercontainer = document.createElement("div");
           modifylayercontainer.className = "modifylayercontainer"
-          for (let j=0; j<modifytypes[i].length j++) {
+          for (let j=0; j<modifytypes[i].length; j++) {
             let modifylayer = document.createElement("button");
             let modifylayertext = document.createElement("span");
             modifylayer.className = "modifylayer"
