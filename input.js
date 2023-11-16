@@ -70,28 +70,22 @@ function CreateLayers() {
 }
 
 function MakeDraggable(i) {
-    let object = document.getElementById(layertypes[i] + "incontainer")
-    let isDragging = false;
-    let isSnapped = false;
-    let originalPosition = { x: 0, y: 0 };
-    let closestObject;
+  let object = document.getElementById(layertypes[i] + "incontainer")
+  let layercontainer = document.getElementById(layercontainer)
+  let isDragging = false;
+  let isSnapped = false;
+  let originalPosition = { x: 0, y: 0 };
+  let closestObject;
 
-    object.addEventListener('mousedown', handleMouseDown);
-    object.addEventListener('touchstart', handleTouchStart);
+  object.addEventListener('mousedown', handleMouseDown);
+  object.addEventListener('touchstart', handleTouchStart);
 
     function handleMouseDown(event) {
       isDragging = true;
       originalPosition.x = event.clientX - object.offsetLeft;
       originalPosition.y = event.clientY - object.offsetTop;
 
-      let layer = document.createElement("div");
-      let layertext = document.createElement("span");
-      layer.className = "layerghost"
-      layer.id = layertypes[i] + "ghost"
-      layertext.className = "layertext"
-      layertext.innerHTML = layernames[i]
-      layer.appendChild(layertext)
-      document.getElementById("layercontainer").appendChild(layer)
+      CreateGhost()
 
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
@@ -103,16 +97,7 @@ function MakeDraggable(i) {
       originalPosition.x = event.touches[0].clientX - object.offsetLeft;
       originalPosition.y = event.touches[0].clientY - object.offsetTop;
 
-      let layer = document.createElement("div");
-      let layertext = document.createElement("span");
-      layer.className = "layerghost"
-      layer.id = layertypes[i] + "ghost"
-      layer.style.backgroundColor = layercolor[i]
-      layertext.className = "layertext"
-      layertext.innerHTML = layernames[i]
-      layer.appendChild(layertext)
-      document.getElementById("layercontainer").appendChild(layer)
-      document.getElementById("layers").innerHTML = "start"
+      CreateGhost()
       
       document.addEventListener('touchmove', handleTouchMove);
       document.addEventListener('touchend', handleTouchEnd);
@@ -244,44 +229,59 @@ function MakeDraggable(i) {
         }
     }
 
-    function handleSnap() {
-      let container = document.getElementById("inputcontainer");
-      let ghost = document.getElementById(layertypes[i] + "ghost");
-      let neuron = document.getElementById("neuron")
-      let neuron2 = document.getElementById("neuron2")
-      const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
-      const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-      const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
+  function CreateGhost() {
+    let layer = document.createElement("div");
+    let layertext = document.createElement("span");
+    layer.className = "layerghost"
+    layer.id = layertypes[i] + "ghost"
+    layer.style.backgroundColor = layercolor[i]
+    layertext.className = "layertext"
+    layertext.innerHTML = layernames[i]
+    layer.appendChild(layertext)
+    layercontainer.appendChild(layer)
+  }
+  
+  function handleSnap() {
+    let container = document.getElementById("inputcontainer");
+    let ghost = document.getElementById(layertypes[i] + "ghost");
+    let neuron = document.getElementById("neuron")
+    let neuron2 = document.getElementById("neuron2")
+    const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
+    const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+    const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
-      if (Math.abs(ghost.offsetTop-height) < 50) {
-        let ghostleft = ghost.offsetLeft;
-        isSnapped = true
-        ghost.style.left = 0 + "px";
-        ghost.style.top = 0 + "px";
-        ghost.style.position = "relative";
-        ghost.style.opacity = 0.8;
-        if (layerorder.length == 0) {
-          document.getElementById("layers").innerHTML = "set"
-          container.insertBefore(ghost,container.children[layerorder.length+2])
+    if (Math.abs(ghost.offsetTop-height) < 50) {
+      let ghostleft = ghost.offsetLeft;
+      isSnapped = true
+      ghost.style.left = 0 + "px";
+      ghost.style.top = 0 + "px";
+      ghost.style.position = "relative";
+      ghost.style.opacity = 0.8;
+      if (layerorder.length == 0) {
+        document.getElementById("layers").innerHTML = "set"
+        container.insertBefore(ghost,container.children[layerorder.length+2])
    //       ghost.style.left = x3
    //       ghost.style.top = height
-        } else {
-          closestObject = 0
-          let minDistance = Number.MAX_SAFE_INTEGER;
-          for (let n=0; n<layerorder.length; n++) {
-            const obj = container.children[n+2]
-            const distance = Math.abs(ghostleft - obj.offsetLeft);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestObject = n;
-            }
+      } else {
+        closestObject = 0
+        let minDistance = Number.MAX_SAFE_INTEGER;
+        for (let n=0; n<layerorder.length; n++) {
+          const obj = container.children[n+2]
+          const distance = Math.abs(ghostleft - obj.offsetLeft);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestObject = n;
           }
-          if (ghostleft > container.children[closestObject+2].offsetLeft) {
-            closestObject += 1
-          }
-            container.insertBefore(ghost,container.children[closestObject+2]);
         }
-      }
+        if (ghostleft > container.children[closestObject+2].offsetLeft) {
+          closestObject += 1
+        }
+          container.insertBefore(ghost,container.children[closestObject+2]);
+        }
+      } else {
+      ghost.remove()
+      CreateGhost()
+    }
     }
 }
 
