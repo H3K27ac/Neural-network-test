@@ -185,8 +185,8 @@ function MakeDraggable(i) {
             let modifylayertext = document.createElement("span");
             modifylayer.className = "modifylayer"
             modifylayertext.className = "modifylayertext"
-            modifylayer.style.backgroundColor = layercolor[i][j]
-            modifylayertext.innerHTML = layernames2[i][j]
+            modifylayer.style.backgroundColor = modifycolor[i][j]
+            modifylayertext.innerHTML = modifynames2[i][j]
             modifylayer.onclick = function() {
               let index;
               let m2 = container.children.length
