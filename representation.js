@@ -233,7 +233,6 @@ function SetInputs() {
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
 
-  let neuroncount = 0;
   learnrate = Number(document.getElementById("learnrate").value)
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
@@ -264,7 +263,7 @@ function CreateGraph() {
   DeleteGraph()
   SetInputs()
   SetTestArrays()
-  
+  let neuroncount = 0;
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
     input.className = "input"
