@@ -1,6 +1,10 @@
 let layertypes = ["activationlayer","dropoutlayer","batchnormlayer","layernorm"];
 let layernames = ["Activation layer","Dropout layer","Batch normalisation","Layer normalisation"];
 let layercolor = ["lightgray","lightgreen","lightblue","blue"];
+let modifytypes = [["activationlayer"],["dropoutlayer"],["batchnormlayer","batchrenorm"],["layernorm","instancenorm","groupnorm"]];
+let modifynames = [["Activation layer"],["Dropout layer"],["Batch normalisation","Batch renormalisation"],["Layer normalisation","Instance normalisation","Group normalisation"]];
+let modifynames2 = [["AL"],["DL"],["BN","BRN"],["LN","IN","GN"]];
+let modifycolor = [["lightgray"],["lightgreen"],["lightblue","deepskyblue"],["blue","steelblue","slateblue"]];
 let layerorder = [];
 
 
@@ -174,76 +178,31 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
-          let modifytypes = [];
-          let modifynames = [];
-          let modifynames2 = [];
-          let modifycolor = [];
-          switch (layertypes[i]) {
-            case "batchnormlayer":
-              modifytypes = ["batchnormlayer","batchrenorm"];
-              modifynames = ["Batch normalisation","Batch renornalisation"];
-              modifynames2 = ["BN","BRN"];
-              modifycolor = ["lightblue","deepskyblue"];
-              let modifylayercontainer = document.createElement("div");
-              for (let j=0; j<modifytypes.length j++) {
-                let modifylayer = document.createElement("button");
-                let modifylayertext = document.createElement("span");
-                modifylayercontainer.className = "modifylayercontainer"
-                modifylayer.className = "modifylayer"
-                modifylayer.style.backgroundColor = layercolor[j]
-                modifylayertext.className = "modifylayertext"
-                modifylayertext.innerHTML = layernames2[j]
-                modifylayer.onclick = function() {
-                let index;
-                let m2 = container.children.length
-                for (let m=0; m<m2; m++) {
+          let modifylayercontainer = document.createElement("div");
+          modifylayercontainer.className = "modifylayercontainer"
+          for (let j=0; j<modifytypes[i].length j++) {
+            let modifylayer = document.createElement("button");
+            let modifylayertext = document.createElement("span");
+            modifylayer.className = "modifylayer"
+            modifylayertext.className = "modifylayertext"
+            modifylayer.style.backgroundColor = layercolor[i][j]
+            modifylayertext.innerHTML = layernames2[i][j]
+            modifylayer.onclick = function() {
+              let index;
+              let m2 = container.children.length
+              for (let m=0; m<m2; m++) {
                 if (container.children[m] === newobject) {
                   index = m;
                 }
               }
-              layerorder[index-2] = modifytypes[j]
-              layertext.innerHTML = modifynames[j]
-              newobject.style.backgroundColor = modifycolor[j]
-              }
-                modifylayer.appendChild(modifylayertext)
-                modifylayercontainer.appendChild(modifylayer)
-              }
-              newobject.appendChild(modifylayercontainer)
-              break;
-            case "layernorm":
-              modifytypes = ["layernorm","instancenorm","groupnorm"];
-              modifynames = ["Layer normalisation","Instance nornalisation","Group nornalisation"];
-              modifynames2 = ["LN","IN","GN"];
-              modifycolor = ["blue","steelblue","slateblue"];
-              let modifylayercontainer2 = document.createElement("div");
-              for (let j=0; j<modifytypes.length j++) {
-                let modifylayer = document.createElement("button");
-                let modifylayertext = document.createElement("span");
-                modifylayercontainer.className = "modifylayercontainer"
-                modifylayer.className = "modifylayer"
-                modifylayer.style.backgroundColor = layercolor[j]
-                modifylayertext.className = "modifylayertext"
-                modifylayertext.innerHTML = layernames2[j]
-                modifylayer.onclick = function() {
-                let index;
-                let m2 = container.children.length
-                for (let m=0; m<m2; m++) {
-                if (container.children[m] === newobject) {
-                  index = m;
-                }
-              }
-              layerorder[index-2] = modifytypes[j]
-              layertext.innerHTML = modifynames[j]
-              newobject.style.backgroundColor = modifycolor[j]
-              }
-                modifylayer.appendChild(modifylayertext)
-                modifylayercontainer2.appendChild(modifylayer)
-              }
-              newobject.appendChild(modifylayercontainer2)
-              break;
-            default:
-              break;
+              layerorder[index-2] = modifytypes[i][j]
+              layertext.innerHTML = modifynames[i][j]
+              newobject.style.backgroundColor = modifycolor[i][j]
+            }
+              modifylayer.appendChild(modifylayertext)
+              modifylayercontainer.appendChild(modifylayer)
           }
+          newobject.appendChild(modifylayercontainer)
           newobject.className = "layerincontainer"
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
