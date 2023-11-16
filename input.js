@@ -175,6 +175,9 @@ function MakeDraggable(i) {
       document.getElementById("layers").innerHTML = "end"
         if (isSnapped) {
             // Object is snapped, remove the ghost and add the object
+          if (ghost) {
+                ghost.remove();
+            }
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
@@ -231,9 +234,6 @@ function MakeDraggable(i) {
             container.insertBefore(newobject,container.children[closestObject+2]);
             layerorder.splice(closestObject,0,layertypes[i])
           }
-          if (ghost) {
-                ghost.remove();
-            }
           isSnapped = false;
           document.getElementById("layers").innerHTML = JSON.stringify(layerid)
         } else {
@@ -258,6 +258,7 @@ function MakeDraggable(i) {
           document.getElementById("layers").innerHTML = "snapping"
           isSnapped = true
           document.getElementById("layers").innerHTML = "set"
+          container.insertBefore(ghost,container.children[layerorder.length+2])
    //       ghost.style.left = x3
    //       ghost.style.top = height
         } else {
@@ -275,6 +276,7 @@ function MakeDraggable(i) {
           if (ghost.offsetLeft > container.children[closestObject+2].offsetLeft) {
             closestObject += 1
           }
+            container.insertBefore(ghost,container.children[closestObject+2]);
         }
       }
     }
