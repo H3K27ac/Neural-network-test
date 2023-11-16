@@ -117,7 +117,7 @@ function MakeDraggable(i) {
 
     function handleTouchMove(event) {
         event.preventDefault()
-        if (isDragging == true) {
+        if (isDragging && isSnapped == false) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
           ghost.style.left = (event.touches[0].clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.touches[0].clientY - originalPosition.y) + 'px';
