@@ -71,7 +71,7 @@ function CreateLayers() {
 
 function MakeDraggable(i) {
   let object = document.getElementById(layertypes[i] + "incontainer")
-  let layercontainer = document.getElementById(layercontainer)
+  let layercontainer = document.getElementById("layercontainer")
   let isDragging = false;
   let isSnapped = false;
   let originalPosition = { x: 0, y: 0 };
