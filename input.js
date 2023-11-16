@@ -117,15 +117,10 @@ function MakeDraggable(i) {
 
     function handleTouchMove(event) {
         event.preventDefault()
-        if (isDragging == true && isSnapped == false) {
-          document.getElementById("layers").innerHTML = "moving, but broken" + "," + event.touches[0].clientX + "," + event.touches[0].clientY + "," + originalPosition.x + "," +  originalPosition.y
+        if (isDragging == true) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
-          document.getElementById("layers").innerHTML = "moving, but broken2"
           ghost.style.left = (event.touches[0].clientX - originalPosition.x) + 'px';
           ghost.style.top = (event.touches[0].clientY - originalPosition.y) + 'px';
-          document.getElementById("layers").innerHTML = "moving"
-
-          isSnapped = false;
           handleSnap();
         }
     }
@@ -279,8 +274,11 @@ function MakeDraggable(i) {
           container.insertBefore(ghost,container.children[closestObject+2]);
         }
       } else {
-      ghost.remove()
-      handleGhost()
+      if (isSnapped) {
+        isSnapped = false;
+        ghost.remove()
+        handleGhost()
+      }
     }
     }
 }
