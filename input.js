@@ -85,7 +85,7 @@ function MakeDraggable(i) {
       originalPosition.x = event.clientX - object.offsetLeft;
       originalPosition.y = event.clientY - object.offsetTop;
 
-      CreateGhost()
+      createGhost()
 
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
@@ -97,7 +97,7 @@ function MakeDraggable(i) {
       originalPosition.x = event.touches[0].clientX - object.offsetLeft;
       originalPosition.y = event.touches[0].clientY - object.offsetTop;
 
-      CreateGhost()
+      createGhost()
       
       document.addEventListener('touchmove', handleTouchMove);
       document.addEventListener('touchend', handleTouchEnd);
@@ -229,7 +229,7 @@ function MakeDraggable(i) {
         }
     }
 
-  function CreateGhost() {
+  function createGhost() {
     let layer = document.createElement("div");
     let layertext = document.createElement("span");
     layer.className = "layerghost"
@@ -280,7 +280,7 @@ function MakeDraggable(i) {
         }
       } else {
       ghost.remove()
-      CreateGhost()
+      createGhost()
     }
     }
 }
