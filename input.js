@@ -257,7 +257,8 @@ function MakeDraggable(i) {
         isSnapped = true
         ghost.style.left = 0 + "px";
         ghost.style.top = 0 + "px";
-        ghost.style.position = "relative"
+        ghost.style.position = "relative";
+        ghost.style.opacity = 0.8;
         if (layerorder.length == 0) {
           document.getElementById("layers").innerHTML = "set"
           container.insertBefore(ghost,container.children[layerorder.length+2])
