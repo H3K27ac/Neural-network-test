@@ -254,15 +254,15 @@ function MakeDraggable(i) {
       const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
       if (Math.abs(ghost.offsetTop-height) < 50) {
+        isSnapped = true
+        ghost.style.left = 0;
+        ghost.style.top = 0;
         if (layerorder.length == 0) {
-          document.getElementById("layers").innerHTML = "snapping"
-          isSnapped = true
           document.getElementById("layers").innerHTML = "set"
           container.insertBefore(ghost,container.children[layerorder.length+2])
    //       ghost.style.left = x3
    //       ghost.style.top = height
         } else {
-          isSnapped = true
           closestObject = 0
           let minDistance = Number.MAX_SAFE_INTEGER;
           for (let n=0; n<layerorder.length; n++) {
