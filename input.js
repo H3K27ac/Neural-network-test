@@ -235,7 +235,7 @@ function MakeDraggable(i) {
             layerorder.splice(closestObject,0,layertypes[i])
           }
           isSnapped = false;
-          document.getElementById("layers").innerHTML = JSON.stringify(layerid)
+          document.getElementById("layers").innerHTML = JSON.stringify(layerorder)
         } else {
             // Object is not snapped, remove the ghost
             if (ghost) {
