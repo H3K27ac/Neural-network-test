@@ -1,10 +1,10 @@
 let layertypes = ["connectedlayer","activationlayer","dropoutlayer","batchnormlayer","layernorm","weightnorm"];
 let layernames = ["Fully connected layer","Activation layer","Dropout layer","Batch normalisation","Layer normalisation","Weight normalisation"];
 let layercolor = ["white","lightgray","lightgreen","lightblue","blue","mediumslateblue"];
-let modifytypes = [[],[],["dropoutlayer","dropconnect"],["batchnormlayer","batchrenorm","batchkalman"],["layernorm","instancenorm","groupnorm"],["weightnorm","weightstand"]];
-let modifynames = [[],[],["Dropout layer","Dropconnect layer"],["Batch normalisation","Batch renormalisation","Batch Kalman normalisation"],["Layer normalisation","Instance normalisation","Group normalisation"],["Weight normalisation","Weight Standardisation"]];
-let modifynames2 = [[],[],["DL","DCL"],["BN","BRN","BKN"],["LN","IN","GN"],["WN","WS"]];
-let modifycolor = [[],[],["lightgreen","chartreuse"],["lightblue","deepskyblue","cornflowerblue"],["blue","steelblue","darkcyan"],["mediumslateblue","slateblue"]];
+let modifytypes = [[],[],["dropoutlayer","dropconnect"],["batchnormlayer","batchrenorm","batchkalman","decorbatchnorm"],["layernorm","instancenorm","groupnorm"],["weightnorm","weightstand"]];
+let modifynames = [[],[],["Dropout layer","Dropconnect layer"],["Batch normalisation","Batch renormalisation","Batch Kalman normalisation","Decorrelated batch normalisation"],["Layer normalisation","Instance normalisation","Group normalisation"],["Weight normalisation","Weight Standardisation"]];
+let modifynames2 = [[],[],["DL","DCL"],["BN","BRN","BKN","DBN"],["LN","IN","GN"],["WN","WS"]];
+let modifycolor = [[],[],["lightgreen","chartreuse"],["lightblue","deepskyblue","cornflowerblue","lightskyblue"],["blue","steelblue","darkcyan"],["mediumslateblue","slateblue"]];
 let layerorder = [];
 
 
