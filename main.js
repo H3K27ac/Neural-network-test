@@ -1,3 +1,4 @@
+const gpu = new GPU()
 let batching = false;
 let infering = false;
 let batchnormindex;
@@ -9,7 +10,21 @@ let testtargets = [];
 let testcostcache = [0];
 let testactcache = [0];
 
+function TestForward() {
+  const CalculateWeights = gpu.createKernel(function() {
+    let k2 = structure[this.thread.x];
+    let sum = 0;
+    for (let k=0; k<k2; k++) {
+      sum += weights[this.thread.x + 1][this.thread.y][k] * neurons[this.thread.x][k]
+    }
+    sum += biases[this.thread.x + 1][this.thread.y]
+    return Activation(sum)
+  }).setOutput([layers,structure[this.thread.x]]);
+  neurons = CalculateWeights()
+}
+
 function SetTestArrays() {
+  /*
   testneurons = [];
   testneurons2 = [];
   testweights = [0];
@@ -26,8 +41,9 @@ function SetTestArrays() {
     }
   }
   testtargets.push(nj.zeros([structure[layers-1]]))
+  */
 }
-
+/*
 function TestResetCache() {
   testcostcache = [0];
   testactcache = [0];
@@ -62,11 +78,6 @@ function TestDerivativeActivation(input,i) {
 }
 
 function TestNeuronCost(i) {
-  /*
-  if (costcache[i][j] != undefined) {
-    return costcache[i][j]
-  } 
-  */
   if (i == layers-1) {
     let result = nj.multiply(nj.subtract(testneurons[i],testtargets),2)
     return result
@@ -78,6 +89,7 @@ function TestNeuronCost(i) {
 }
 
 function TestWeightCost(i) {
+  */
   /*
   document.getElementById("layers").innerHTML = "startweight"
   let tempvector = nj.multiply(testactcache[i],TestNeuronCost(i))
@@ -96,21 +108,23 @@ function TestWeightCost(i) {
   document.getElementById("layers").innerHTML = "multiply"
   return nj.multiply(tempmatrix,tempmatrix2.T)
   */
+/*
   let temparray = nj.multiply(testactcache[i],testcostcache[i])
   let temparray2 = testneurons[i-1]
   let j2 = temparray.shape
   let j3 = temparray2.shape
   let tempmatrix = nj.zeros([j2,j3])
-  /*
+  
   for (let j=0; j<j2; j++) {
     for (let k=0; k<j3; k++) {
       tempmatrix.set(j,k,temparray.get(j) * temparray2.get(k))
     }
   }
   */
-  return tempmatrix
+//  return tempmatrix
  // return nj.dot(nj.reshape(testneurons[i-1],[1,structure[i-1]]),nj.reshape(nj.multiply(testactcache[i],TestNeuronCost(i)),[structure[i],1]))
 }
+
 
 function TestBiasCost(i) {
   return nj.multiply(testactcache[i],testcostcache[i])
