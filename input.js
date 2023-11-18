@@ -20,6 +20,22 @@ function ReplenishLayers() {
       layertext.className = "layertext"
       layertext.innerHTML = layernames[i]
       layer.appendChild(layertext)
+      let j2 = modifytypes[i].length
+      if (j2 != 0) {
+        let modifylayercontainer = document.createElement("div");
+        modifylayercontainer.className = "modifylayercontainer"
+        for (let j=0; j<j2; j++) {
+          let modifylayer = document.createElement("button");
+          let modifylayertext = document.createElement("span");
+          modifylayer.className = "modifylayer"
+          modifylayertext.className = "modifylayertext"
+          modifylayer.style.backgroundColor = modifycolor[i][j]
+          modifylayertext.innerHTML = modifynames2[i][j]
+          modifylayer.appendChild(modifylayertext)
+          modifylayercontainer.appendChild(modifylayer)
+        }
+        layer.appendChild(modifylayercontainer)
+      }
       container.appendChild(layer);
       MakeDraggable(i)
     }
