@@ -1,10 +1,10 @@
-let layertypes = ["activationlayer","dropoutlayer","batchnormlayer","layernorm"];
-let layernames = ["Activation layer","Dropout layer","Batch normalisation","Layer normalisation"];
-let layercolor = ["lightgray","lightgreen","lightblue","blue"];
-let modifytypes = [["activationlayer"],["dropoutlayer"],["batchnormlayer","batchrenorm"],["layernorm","instancenorm","groupnorm"]];
-let modifynames = [["Activation layer"],["Dropout layer"],["Batch normalisation","Batch renormalisation"],["Layer normalisation","Instance normalisation","Group normalisation"]];
-let modifynames2 = [["AL"],["DL"],["BN","BRN"],["LN","IN","GN"]];
-let modifycolor = [["lightgray"],["lightgreen"],["lightblue","deepskyblue"],["blue","steelblue","slateblue"]];
+let layertypes = ["connectedlayer","activationlayer","dropoutlayer","batchnormlayer","layernorm"];
+let layernames = ["Fully connected layer","Activation layer","Dropout layer","Batch normalisation","Layer normalisation"];
+let layercolor = ["white","lightgray","lightgreen","lightblue","blue"];
+let modifytypes = [[],[],["dropoutlayer","dropconnect"],["batchnormlayer","batchrenorm"],["layernorm","instancenorm","groupnorm"]];
+let modifynames = [[],[],["Dropout layer","Dropconnect layer"],["Batch normalisation","Batch renormalisation"],["Layer normalisation","Instance normalisation","Group normalisation"]];
+let modifynames2 = [[],[],["DL","DCL"],["BN","BRN"],["LN","IN","GN"]];
+let modifycolor = [[],[],["lightgreen","yellowgreen"],["lightblue","deepskyblue"],["blue","steelblue","slateblue"]];
 let layerorder = [];
 
 
@@ -161,9 +161,11 @@ function MakeDraggable(i) {
           let newobject = document.createElement("div");
           let layertext = document.createElement("span");
           let deletelayer = document.createElement("button");
+          let j2 = modifytypes[i].length
+          if (j2 != 0) {
           let modifylayercontainer = document.createElement("div");
           modifylayercontainer.className = "modifylayercontainer"
-          for (let j=0; j<modifytypes[i].length; j++) {
+          for (let j=0; j<j2; j++) {
             let modifylayer = document.createElement("button");
             let modifylayertext = document.createElement("span");
             modifylayer.className = "modifylayer"
@@ -186,6 +188,7 @@ function MakeDraggable(i) {
               modifylayercontainer.appendChild(modifylayer)
           }
           newobject.appendChild(modifylayercontainer)
+          }
           newobject.className = "layerincontainer"
           newobject.style.backgroundColor = layercolor[i]
           layertext.className = "layertext"
