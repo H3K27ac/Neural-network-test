@@ -123,7 +123,7 @@ function TestWeightCost(i) {
   */
 //  return tempmatrix
  // return nj.dot(nj.reshape(testneurons[i-1],[1,structure[i-1]]),nj.reshape(nj.multiply(testactcache[i],TestNeuronCost(i)),[structure[i],1]))
-}
+// }
 
 
 function TestBiasCost(i) {
