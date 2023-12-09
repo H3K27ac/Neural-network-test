@@ -157,7 +157,7 @@ function FeedForward() {
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance1").innerHTML = (t1-t0) 
+  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2)
 }
 
 function Testing() {
@@ -322,7 +322,7 @@ function ResetCache() {
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance2").innerHTML = (t1-t0) 
+  document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2)
 }
 
 function Backprop() {
@@ -351,7 +351,7 @@ function Backprop() {
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance3").innerHTML = (t1-t0) 
+  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2)
   UpdateColor()
   traincount += 1
   document.getElementById("trainingcount").innerHTML = traincount
