@@ -94,6 +94,7 @@ function MakeDraggable(i) {
   let closestObject;
   let ghostleft = 0;
   let ghosttop = 0;
+  let leftofobj = true
   let minDistance = Number.MAX_SAFE_INTEGER;
 
   object.addEventListener('mousedown', handleMouseDown);
@@ -294,6 +295,9 @@ function MakeDraggable(i) {
         }
         if (ghostleft > container.children[closestObject+2].offsetLeft) {
           closestObject += 1
+          leftofobj = false
+        } else {
+          leftofobj = true
         }
           container.insertBefore(ghost,container.children[closestObject+2]);
         }
@@ -306,7 +310,7 @@ function MakeDraggable(i) {
         ghost.style.left = ghostleft + 'px';
         ghost.style.top = ghosttop + 'px';
       } else {
-        if (ghostleft < container.children[closestObject+2].offsetLeft) {
+        if ((!leftofobj && ghostleft < container.children[closestObject+2].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+2].offsetLeft)) {
           isSnapped = false;
           ghost.remove()
           handleGhost()
