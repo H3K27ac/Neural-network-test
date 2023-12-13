@@ -92,6 +92,8 @@ function MakeDraggable(i) {
   let isSnapped = false;
   let originalPosition = { x: 0, y: 0 };
   let closestObject;
+  let ghostleft = 0;
+  let ghosttop = 0;
 
   object.addEventListener('mousedown', handleMouseDown);
   object.addEventListener('touchstart', handleTouchStart);
@@ -133,12 +135,14 @@ function MakeDraggable(i) {
 
     function handleTouchMove(event) {
         event.preventDefault()
+        ghostleft = event.touches[0].clientX - originalPosition.x;
+        ghosttop = event.touches[0].clientY - originalPosition.y;
         if (isDragging && isSnapped == false) {
           let ghost = document.getElementById(layertypes[i] + "ghost")
-          ghost.style.left = (event.touches[0].clientX - originalPosition.x) + 'px';
-          ghost.style.top = (event.touches[0].clientY - originalPosition.y) + 'px';
-          handleSnap();
+          ghost.style.left = ghostleft + 'px';
+          ghost.style.top = ghosttop + 'px';
         }
+        handleSnap();
     }
 
     function handleMouseUp() {
@@ -256,17 +260,18 @@ function MakeDraggable(i) {
   }
   
   function handleSnap() {
-    let container = document.getElementById("inputcontainer");
-    let ghost = document.getElementById(layertypes[i] + "ghost");
+    let container = document.getElementById("inputcontainer")
+    let ghost;
     let neuron = document.getElementById("neuron")
     let neuron2 = document.getElementById("neuron2")
     const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
     const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
     const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
-    if (Math.abs(ghost.offsetTop-height) < 50) {
-      let ghostleft = ghost.offsetLeft;
+    if (Math.abs(ghosttop-height) < 50) {
+      if (!isSnapped) {
       isSnapped = true
+      ghost = document.getElementById(layertypes[i] + "ghost");
       ghost.style.left = 0 + "px";
       ghost.style.top = 0 + "px";
       ghost.style.position = "relative";
@@ -292,11 +297,15 @@ function MakeDraggable(i) {
         }
           container.insertBefore(ghost,container.children[closestObject+2]);
         }
+      }
       } else {
       if (isSnapped) {
         isSnapped = false;
+        ghost = document.getElementById(layertypes[i] + "ghost");
         ghost.remove()
         handleGhost()
+        ghost.style.left = ghostleft + 'px';
+        ghost.style.top = ghosttop + 'px';
       }
     }
     }
