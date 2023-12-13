@@ -310,7 +310,7 @@ function MakeDraggable(i) {
         ghost.style.left = ghostleft + 'px';
         ghost.style.top = ghosttop + 'px';
       } else {
-        if ((!leftofobj && ghostleft < container.children[closestObject+2].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+2].offsetLeft)) {
+        if ((!leftofobj && ghostleft < container.children[closestObject+3].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+2].offsetLeft)) {
           isSnapped = false;
           ghost.remove()
           handleGhost()
