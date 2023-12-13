@@ -306,17 +306,7 @@ function MakeDraggable(i) {
         ghost.style.left = ghostleft + 'px';
         ghost.style.top = ghosttop + 'px';
       } else {
-      minDistance = Number.MAX_SAFE_INTEGER;
-      let tempObject = 0;
-        for (let n=0; n<layerorder.length; n++) {
-          const obj = container.children[n+2]
-          const distance = Math.abs(ghostleft - obj.offsetLeft);
-          if (distance < minDistance) {
-            minDistance = distance;
-            tempObject = n;
-          }
-        }
-        if (tempObject != closestObject) {
+        if (ghostleft < container.children[closestObject+2].offsetLeft) {
           isSnapped = false;
           ghost.remove()
           handleGhost()
