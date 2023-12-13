@@ -265,9 +265,9 @@ function MakeDraggable(i) {
     let container = document.getElementById("inputcontainer")
     let ghost = document.getElementById(layertypes[i] + "ghost");
     let neuron = document.getElementById("neuron")
-    let neuron2 = document.getElementById("neuron2")
-    const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
-    const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+   // let neuron2 = document.getElementById("neuron2")
+   // const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
+   // const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
     const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
     if (!isSnapped) {
@@ -310,7 +310,7 @@ function MakeDraggable(i) {
         ghost.style.left = ghostleft + 'px';
         ghost.style.top = ghosttop + 'px';
       } else {
-        if ((!leftofobj && ghostleft < container.children[closestObject+3].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+2].offsetLeft)) {
+        if ((!leftofobj && ghostleft < container.children[closestObject+3].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+3].offsetLeft)) {
           isSnapped = false;
           ghost.remove()
           handleGhost()
