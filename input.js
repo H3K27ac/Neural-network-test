@@ -94,6 +94,7 @@ function MakeDraggable(i) {
   let closestObject;
   let ghostleft = 0;
   let ghosttop = 0;
+  let minDistance = Number.MAX_SAFE_INTEGER;
 
   object.addEventListener('mousedown', handleMouseDown);
   object.addEventListener('touchstart', handleTouchStart);
@@ -261,17 +262,16 @@ function MakeDraggable(i) {
   
   function handleSnap() {
     let container = document.getElementById("inputcontainer")
-    let ghost;
+    let ghost = document.getElementById(layertypes[i] + "ghost");
     let neuron = document.getElementById("neuron")
     let neuron2 = document.getElementById("neuron2")
     const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
     const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
     const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
   //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
+    if (!isSnapped) {
     if (Math.abs(ghosttop-height) < 50) {
-      if (!isSnapped) {
       isSnapped = true
-      ghost = document.getElementById(layertypes[i] + "ghost");
       ghost.style.left = 0 + "px";
       ghost.style.top = 0 + "px";
       ghost.style.position = "relative";
@@ -283,7 +283,7 @@ function MakeDraggable(i) {
    //       ghost.style.top = height
       } else {
         closestObject = 0
-        let minDistance = Number.MAX_SAFE_INTEGER;
+        minDistance = Number.MAX_SAFE_INTEGER;
         for (let n=0; n<layerorder.length; n++) {
           const obj = container.children[n+2]
           const distance = Math.abs(ghostleft - obj.offsetLeft);
@@ -299,16 +299,33 @@ function MakeDraggable(i) {
         }
       }
       } else {
-      if (isSnapped) {
+      if (Math.abs(ghosttop-height) > 50) {
         isSnapped = false;
-        ghost = document.getElementById(layertypes[i] + "ghost");
         ghost.remove()
         handleGhost()
         ghost.style.left = ghostleft + 'px';
         ghost.style.top = ghosttop + 'px';
+      } else {
+      minDistance = Number.MAX_SAFE_INTEGER;
+      let tempObject = 0;
+        for (let n=0; n<layerorder.length; n++) {
+          const obj = container.children[n+2]
+          const distance = Math.abs(ghostleft - obj.offsetLeft);
+          if (distance < minDistance) {
+            minDistance = distance;
+            tempObject = n;
+          }
+        }
+        if (tempObject != closestObject) {
+          isSnapped = false;
+          ghost.remove()
+          handleGhost()
+          ghost.style.left = ghostleft + 'px';
+          ghost.style.top = ghosttop + 'px';
+        }
       }
     }
-    }
+  }
 }
 
 
