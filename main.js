@@ -11,16 +11,15 @@ let testcostcache = [0];
 let testactcache = [0];
 
 function TestForward() {
-  const CalculateWeights = gpu.createKernel(function() {
-    let k2 = structure[this.thread.x];
+  for (let i=0; i<layers; i++) {
     let sum = 0;
-    for (let k=0; k<k2; k++) {
-      sum += weights[this.thread.x + 1][this.thread.y][k] * neurons[this.thread.x][k]
-    }
-    sum += biases[this.thread.x + 1][this.thread.y]
-    return Activation(sum)
-  }).setOutput([layers,structure[this.thread.x]]);
-  neurons = CalculateWeights()
+    const CalculateWeights = gpu.createKernel(function() {
+      sum += weights[i+1][this.thread.x][this.thread.y] * neurons[i][this.thread.x]
+      sum += biases[i+1][this.thread.x]
+      return Activation(sum)
+    }).setOutput([structure[i+1],structure[i]]);
+    neurons[i+1] = CalculateWeights()
+  }
 }
 
 function SetTestArrays() {
