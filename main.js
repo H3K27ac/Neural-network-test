@@ -1,5 +1,4 @@
 const gpu = new GPU()
-gpu.addFunction(Activation);
 let batching = false;
 let infering = false;
 let batchnormindex;
@@ -21,7 +20,7 @@ function TestForward() {
       }
       sum += bias[this.thread.x]
       document.getElementById("layers").innerHTML = "function"
-      return Activation(sum)
+      return Math.min(1, Math.max(0, 1 / (1 + Math.exp(-1 * sum)))) 
     }).setOutput([structure[i+1]])// .setDynamicOutput(true);
     neurons[i+1] = CalculateWeights(i,structure[i],weights[i+1],neurons[i],biases[i+1])
   }
