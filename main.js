@@ -1,4 +1,5 @@
 const gpu = new GPU()
+gpu.addFunction(Activation);
 let batching = false;
 let infering = false;
 let batchnormindex;
