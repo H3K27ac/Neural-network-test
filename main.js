@@ -20,10 +20,10 @@ function TestForward() {
       }
       sum += biases[i+1][this.thread.x]
       return Activation(sum)
-      }
     }).setOutput([structure[i+1]]);
     neurons[i+1] = CalculateWeights(i)
   }
+  UpdateColor()
 }
 
 function SetTestArrays() {
