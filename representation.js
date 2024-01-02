@@ -118,13 +118,13 @@ function UpdateColor() {
     let i2 = structure[layers-1]
     for (let i=0; i<i2; i++) {
       if (batchnorm) {
-        neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
+        neuronvalue = neurons[layers-1][i][0].toFixed(2) // To be improved
       } else {
-        neuronvalue = neurons[i][j].toFixed(2)
+        neuronvalue = neurons[layers-1][i].toFixed(2)
       }
-      let neuron = document.getElementById("neuron " + i + "," + j)
+      let neuron = document.getElementById("neuron " + (layers-1) + "," + i)
       neuron.style.backgroundColor = Color2(neuronvalue)
-      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
+      let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i)
       neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
         neuronvaluetext.style.color = `rgb(0,0,0)`
