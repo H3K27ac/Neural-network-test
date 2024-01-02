@@ -19,7 +19,6 @@ function TestForward() {
         sum += weight[this.thread.x][k] * neuron[k] 
       }
       sum += bias[this.thread.x]
-      document.getElementById("layers").innerHTML = "function"
       return Math.min(1, Math.max(0, 1 / (1 + Math.exp(-1 * sum)))) 
     }).setOutput([struct[i+1]]).setDynamicOutput(true);
     neurons[i+1] = CalculateWeights(i,structure,weights[i+1],neurons[i],biases[i+1])
