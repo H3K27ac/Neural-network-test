@@ -9,20 +9,19 @@ let testbiases = [0];
 let testtargets = [];
 let testcostcache = [0];
 let testactcache = [0];
-const CalculateWeights = gpu.createKernel(function(i,struct,weight,neuron,bias) {
-  let sum = 0;
-  for (let k=0; k<struct[i]; k++) {
-    sum += weight[this.thread.x][k] * neuron[k] 
-  }
-  sum += bias[this.thread.x]
-  return Math.min(1, Math.max(0, 1 / (1 + Math.exp(-1 * sum)))) 
-}).setOutput([struct[i+1]]).setDynamicOutput(true);
-
 
 
 function TestForward() {
   document.getElementById("layers").innerHTML = "start"
   for (let i=0; i<layers-1; i++) {
+        const CalculateWeights = gpu.createKernel(function(i,struct,weight,neuron,bias) {
+      let sum = 0;
+      for (let k=0; k<struct[i]; k++) {
+        sum += weight[this.thread.x][k] * neuron[k] 
+      }
+      sum += bias[this.thread.x]
+      return Math.min(1, Math.max(0, 1 / (1 + Math.exp(-1 * sum)))) 
+    }).setOutput([structure[i+1]])
     neurons[i+1] = CalculateWeights(i,structure,weights[i+1],neurons[i],biases[i+1])
   }
   UpdateColor()
