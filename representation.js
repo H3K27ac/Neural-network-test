@@ -114,6 +114,25 @@ function Color2(value) {
 }
 
 function UpdateColor() {
+  if (showneurons == "output") {
+    let i2 = structure[layers-1]
+    for (let i=0; i<i2; i++) {
+      if (batchnorm) {
+        neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
+      } else {
+        neuronvalue = neurons[i][j].toFixed(2)
+      }
+      let neuron = document.getElementById("neuron " + i + "," + j)
+      neuron.style.backgroundColor = Color2(neuronvalue)
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
+      neuronvaluetext.innerHTML = neuronvalue
+      if (neuronvalue > 0.5) {
+        neuronvaluetext.style.color = `rgb(0,0,0)`
+      } else {
+        neuronvaluetext.style.color = `rgb(255,255,255)`
+      }
+    }
+  } else {
   for (let i=0; i<layers; i++) {
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
@@ -125,7 +144,6 @@ function UpdateColor() {
       } else {
         neuronvalue = neurons[i][j].toFixed(2)
       }
-      if (showneurons == "all" || i==layers-1) {
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
@@ -143,7 +161,6 @@ function UpdateColor() {
         betatext.style.color = Color(betavalue,"batchbeta")
         gammatext.style.color = Color(gammavalue,"batchgamma")
       } 
-      }
     }
     let j3 = structure[i+1]
     for (let j=0; j<j3; j++) { 
@@ -165,6 +182,7 @@ function UpdateColor() {
       }
     }
   }
+}
 }
 
 function ClearNeurons() {
