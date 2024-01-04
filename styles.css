@@ -173,6 +173,14 @@ th, td {
   margin: 10px;
 }
 
+.dot {
+  height: 2px;
+  width: 2px;
+  border: 0px;
+  border-radius: 50%;
+  background-color: white;
+}
+
 .neuron {
   display: flex;
   justify-content: center; 
