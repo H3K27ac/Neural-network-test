@@ -34,14 +34,6 @@ function Color(value,type) {
   let red;
   let green;
   let blue;
-  switch (type) {
-    case "weight":
-      valuerange = weightrange
-      break;
-    case "bias":
-      valuerange = biasrange
-      break;
-  }
   if (type == "batchgamma") {
     if (value == 1) return `rgb(255, 255, 255)`
     let value2 = Math.log(value) / Math.log(valuerange)
