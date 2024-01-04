@@ -183,7 +183,7 @@ th, td {
   border: 0px solid white;
   border-radius: 50%;
   background-color: white;
-  padding: 4px;
+  margin: 10px;
 }
 
 .neuron {
