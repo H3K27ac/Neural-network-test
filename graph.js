@@ -205,6 +205,8 @@ function CreateGraph() {
   document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
   document.getElementById("layercount").innerHTML = "Number of layers: " + layers
+
+  let container = document.getElementById("container")
   
   for (let i=0; i<layers; i++) {
     let neuronssubarray = [];
@@ -268,6 +270,30 @@ function CreateGraph() {
         neuronvalue.id = "neuronvalue " + i + "," + j
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
+        if (i>0 && structure[i-1] < 11) {
+        for (let k=0; k<structure[i-1]; k++) {
+          let weight = document.createElement("div")
+          weight.className = "weight"
+          weight.id = "weight " + i + "," + j + "," + k
+          let neuron1 = document.getElementById("neuron " + (i-1) + "," + k)
+          let neuron2 = document.getElementById("neuron " + i + "," + j)
+          const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
+          const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
+          const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+          const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
+
+          const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+          const angle = Math.atan2(y2 - y1, x2 - x1);
+          const centerX = (x1 + x2) / 2;
+          const centerY = (y1 + y2) / 2;
+
+          weight.style.width = length + "px";
+          weight.style.transform = `rotate(${angle}rad)`;
+          weight.style.left = centerX - (length / 2) + "px";
+          weight.style.top = centerY + "px";
+          container.appendChild(weight)
+        }
+      }
     }
     }
     container.appendChild(column)
