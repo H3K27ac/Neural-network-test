@@ -4,6 +4,10 @@ body {
   align-items: center;
 }
 
+.section {
+  padding: 20px;
+}
+
 .input {
   height: 20px;
   width: 100px;
@@ -173,7 +177,7 @@ th, td {
   margin: 10px;
 }
 
-.dot {
+.dots {
   height: 2px;
   width: 2px;
   border: 0px solid white;
