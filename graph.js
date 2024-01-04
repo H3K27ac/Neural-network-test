@@ -64,13 +64,14 @@ function Color2(value) {
 }
 
 function UpdateColor() {
-  if (showneurons == "output") {
-    let i2 = structure[layers-1]
-    for (let i=0; i<i2; i++) {
-      neuronvalue = neurons[layers-1][i].toFixed(2)
-      let neuron = document.getElementById("neuron " + (layers-1) + "," + i)
+  for (let i=0; i<layers; i++) {
+    let j2 = structure[i]
+    if (j2 > 10) {
+      for (let j=0; j<3; j++) {
+      let neuronvalue = neurons[i][j].toFixed(2)
+      let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
-      let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i)
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
       neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
         neuronvaluetext.style.color = `rgb(0,0,0)`
@@ -78,9 +79,19 @@ function UpdateColor() {
         neuronvaluetext.style.color = `rgb(255,255,255)`
       }
     }
-  } else {
-  for (let i=0; i<layers; i++) {
-    let j2 = structure[i]
+      for (let j=j2-3; j<j2; j++) {
+      let neuronvalue = neurons[i][j].toFixed(2)
+      let neuron = document.getElementById("neuron " + i + "," + j)
+      neuron.style.backgroundColor = Color2(neuronvalue)
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
+      neuronvaluetext.innerHTML = neuronvalue
+      if (neuronvalue > 0.5) {
+        neuronvaluetext.style.color = `rgb(0,0,0)`
+      } else {
+        neuronvaluetext.style.color = `rgb(255,255,255)`
+      }
+    }
+    } else {
     for (let j=0; j<j2; j++) {
       let neuronvalue = neurons[i][j].toFixed(2)
       let neuron = document.getElementById("neuron " + i + "," + j)
@@ -94,22 +105,20 @@ function UpdateColor() {
       }
     }
     let j3 = structure[i+1]
+    if (j3 < 11) {
     for (let j=0; j<j3; j++) { 
-      if (showbiases) {
       let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
-      }
-      if (showweights) {
       for (let k=0; k<j2; k++) {
         let weightvalue = weights[i+1][j][k].toFixed(2)
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
       }
-      }
+    }
     }
   }
-}
+  }
 }
 
 function ClearNeurons() {
@@ -125,7 +134,6 @@ function ClearNeurons() {
       }
     }
   }
-}
 
 
 function RandomizeInput() {
