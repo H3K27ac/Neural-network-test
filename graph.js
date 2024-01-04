@@ -205,8 +205,6 @@ function CreateGraph() {
   document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
   document.getElementById("layercount").innerHTML = "Number of layers: " + layers
-
-  let container = document.getElementById("container")
   
   for (let i=0; i<layers; i++) {
     let neuronssubarray = [];
@@ -271,12 +269,12 @@ function CreateGraph() {
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
         if (i>0 && structure[i-1] < 11) {
+        let neuron2 = document.getElementById("neuron " + i + "," + j)
         for (let k=0; k<structure[i-1]; k++) {
           let weight = document.createElement("div")
           weight.className = "weight"
           weight.id = "weight " + i + "," + j + "," + k
           let neuron1 = document.getElementById("neuron " + (i-1) + "," + k)
-          let neuron2 = document.getElementById("neuron " + i + "," + j)
           const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
           const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
           const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
