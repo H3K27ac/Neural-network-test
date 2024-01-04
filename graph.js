@@ -236,6 +236,8 @@ function CreateGraph() {
       let dots = document.createElement("div")
       dots.className = "dots"
       column.appendChild(dots)
+      let dots = document.createElement("div")
+      dots.className = "dots"
       column.appendChild(dots)
       for (let j=j2-3; j<j2; j++) {
         let neuron = document.createElement("div")
