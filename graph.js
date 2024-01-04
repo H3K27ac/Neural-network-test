@@ -69,10 +69,12 @@ function UpdateColor() {
     if (j2 > 10) {
       for (let j=0; j<3; j++) {
       let neuronvalue = neurons[i][j].toFixed(2)
-      let biasvalue = biases[i][j].toFixed(2)
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
-      neuron.style.borderColor = Color(biasvalue,"bias")
+      if (i>0) {
+        let biasvalue = biases[i][j].toFixed(2)
+        neuron.style.borderColor = Color(biasvalue,"bias")
+      }
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
       neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
@@ -83,10 +85,12 @@ function UpdateColor() {
     }
       for (let j=j2-3; j<j2; j++) {
       let neuronvalue = neurons[i][j].toFixed(2)
-      let biasvalue = biases[i][j].toFixed(2)
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
-      neuron.style.borderColor = Color(biasvalue,"bias")
+      if (i>0) {
+        let biasvalue = biases[i][j].toFixed(2)
+        neuron.style.borderColor = Color(biasvalue,"bias")
+      }
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
       neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
@@ -98,10 +102,12 @@ function UpdateColor() {
     } else {
     for (let j=0; j<j2; j++) {
       let neuronvalue = neurons[i][j].toFixed(2)
-      let biasvalue = biases[i][j].toFixed(2)
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
-      neuron.style.borderColor = Color(biasvalue,"bias")
+      if (i>0) {
+        let biasvalue = biases[i][j].toFixed(2)
+        neuron.style.borderColor = Color(biasvalue,"bias")
+      }
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
       neuronvaluetext.innerHTML = neuronvalue
       if (neuronvalue > 0.5) {
