@@ -226,14 +226,15 @@ function CreateGraph() {
         column.appendChild(neuron)
       }
       document.getElementById("layers").innerHTML = "test2"
-      /*
       for (let k=0; k<7; k++) {
         if (k=3) {
+          /*
           document.getElementById("layers").innerHTML = "test3"
           let neuronnum = document.createElement("span")
           neuronnum.className = "neuronvalue"
           neuronnum.innerHTML = String(j2 - 6)
           column.appendChild(neuronnum)
+          */
         } else {
           document.getElementById("layers").innerHTML = "test4"
           let dots = document.createElement("div")
@@ -241,8 +242,7 @@ function CreateGraph() {
           column.appendChild(dots)
         }
       }
-      */
-      for (let j=j2-3; j<j2-1; j++) {
+      for (let j=j2-3; j<j2; j++) {
         let neuron = document.createElement("div")
         neuron.className = "neuron"
         neuron.id = "neuron " + i + "," + j
