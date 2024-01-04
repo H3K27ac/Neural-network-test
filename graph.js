@@ -226,20 +226,20 @@ function CreateGraph() {
         column.appendChild(neuron)
       }
       document.getElementById("layers").innerHTML = "test2"
-      for (let k=0; k<7; k++) {
-        if (k=3) {
-          /*
+      for (let j=0; j<7; j++) {
+        if (j=3) {
           document.getElementById("layers").innerHTML = "test3"
           let neuronnum = document.createElement("span")
           neuronnum.className = "neuronvalue"
           neuronnum.innerHTML = String(j2 - 6)
           column.appendChild(neuronnum)
-          */
         } else {
+          /*
           document.getElementById("layers").innerHTML = "test4"
           let dots = document.createElement("div")
           dots.className = "dots"
           column.appendChild(dots)
+          */
         }
       }
       for (let j=j2-3; j<j2; j++) {
