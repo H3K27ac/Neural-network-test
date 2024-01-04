@@ -11,54 +11,11 @@ let varcache = [0];
 let batchalpha = 0.99;
 
 function Activation(input,i) {
-  let activation;
-  if (i == layers-2) {
-    activation = outputactivation
-  } else {
-    activation = hiddenactivation
-  }
-  switch (activation) {
-    case "Sigmoid":
-      return 1 / (1 + Math.exp(-1 * input))
-    case "ReLU": 
-      return Math.max(0,input)
-    case "Leaky ReLU":
-      if (input > 0) {
-        return input
-      } else {
-        return gradient * input
-      }
-    default:
-      break;
-  }
+    return 1 / (1 + Math.exp(-1 * input))
 }
 
 function DerivativeActivation(input,i,actcache) {
-  let activation;
-  if (i == layers-1) {
-    activation = outputactivation
-  } else {
-    activation = hiddenactivation
-  }
-  switch (activation) {
-    case "Sigmoid":
-      // let result = Activation(input)
       return actcache * (1 - actcache)
-    case "ReLU": 
-      if (input > 0) {
-        return 1
-      } else {
-        return 0 // Derivative is undefined at 0
-      }
-      case "Leaky ReLU":
-      if (input > 0) {
-        return 1
-      } else {
-        return gradient
-      }
-    default:
-      break;
-  }
 }
 
 function ManualFF() {
@@ -395,11 +352,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    if (batchnorm) {
-      training = setInterval(BatchBackprop, 200);
-    } else {
-      training = setInterval(Backprop, 100);
-    }
+    training = setInterval(Backprop, 100);
   }
 }
 
