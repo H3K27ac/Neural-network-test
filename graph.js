@@ -163,9 +163,39 @@ function SetInputs() {
   biasrange = document.getElementById("biasrange").value
 }
 
+function SetArrays() {
+  for (let i=0; i<layers; i++) {
+    let neuronssubarray = [];
+    let neurons2subarray = [];
+    let biasessubarray = [];
+    let weightssubarray = [];
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
+      neuronssubarray.push(0)
+      neurons2subarray.push(0)
+      if (i == layers-1) targets.push(0)
+      if (i>0) {
+        biasessubarray.push(0)
+        let weightssubsubarray = [];
+        let k2 = structure[i-1]
+        for (let k=0; k<k2; k++) {
+          weightssubsubarray.push(0)
+        }
+        weightssubarray.push(weightssubsubarray)
+      }
+    }
+    neurons.push(neuronssubarray)
+    neurons2.push(neurons2subarray)
+    biases.push(biasessubarray)
+    weights.push(weightssubarray)
+  }
+}
+
+
 function CreateGraph() {
   DeleteGraph()
   SetInputs()
+  SetArrays()
   let neuroncount = structure[0];
   let weightcount = 0;
   for (let i=0; i<layers-1; i++) {
@@ -175,46 +205,59 @@ function CreateGraph() {
   document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
   document.getElementById("layercount").innerHTML = "Number of layers: " + layers
-
-  for (let i=0; i<structure[layers-1]; i++) {
-    targets.push(0)
-  }
   
   for (let i=0; i<layers; i++) {
     let neuronssubarray = [];
     let neurons2subarray = [];
-    let column;
-    if (showneurons == "all") {
-      document.getElementById("layers").innerHTML = "why"
-    column = document.createElement("div")
+    let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
-    }
     let j2 = structure[i]
-    for (let j=0; j<j2; j++) {
-      if (showneurons == "all" || i==layers-1) {
-      let neuron = document.createElement("div")
-      neuron.className = "neuron"
-      neuron.id = "neuron " + i + "," + j
-      let neuronvalue = document.createElement("span")
-      neuronvalue.className = "neuronvalue"
-      neuronvalue.id = "neuronvalue " + i + "," + j
-      neuron.appendChild(neuronvalue)
-        if (showneurons == "all") {
-          document.getElementById("layers").innerHTML = "is this"
-          column.appendChild(neuron)
+    if (j2 > 10) {
+      for (let j=0; j<3; j++) {
+        let neuron = document.createElement("div")
+        neuron.className = "neuron"
+        neuron.id = "neuron " + i + "," + j
+        let neuronvalue = document.createElement("span")
+        neuronvalue.className = "neuronvalue"
+        neuronvalue.id = "neuronvalue " + i + "," + j
+        neuron.appendChild(neuronvalue)
+        column.appendChild(neuron)
+      }
+      for (let j=0; j<7; j++) {
+        if (j=3) {
+          let neuronnum = document.createElement("span")
+          neuronnum.className = "neuronvalue"
+          neuronnum.innerHTML = j2 - 6
+          column.appendChild(neuronnum)
         } else {
-          container.appendChild(neuron)
+          let dot = document.createElement("div")
+          dot.className = "dot"
+          column.appendChild(dot)
         }
       }
-        neuronssubarray.push(0)
-        neurons2subarray.push(0)
+      for (let j=layers-3; j<layers-1; j++) {
+        let neuron = document.createElement("div")
+        neuron.className = "neuron"
+        neuron.id = "neuron " + i + "," + j
+        let neuronvalue = document.createElement("span")
+        neuronvalue.className = "neuronvalue"
+        neuronvalue.id = "neuronvalue " + i + "," + j
+        neuron.appendChild(neuronvalue)
+        column.appendChild(neuron)
+      }
+    } else {
+      for (let j=0; j<j2; j++) {
+        let neuron = document.createElement("div")
+        neuron.className = "neuron"
+        neuron.id = "neuron " + i + "," + j
+        let neuronvalue = document.createElement("span")
+        neuronvalue.className = "neuronvalue"
+        neuronvalue.id = "neuronvalue " + i + "," + j
+        neuron.appendChild(neuronvalue)
+        column.appendChild(neuron)
     }
-    if (showneurons == "all") {
-      document.getElementById("layers").innerHTML = "notworking"
-      container.appendChild(column)
     }
-    neurons.push(neuronssubarray)
-    neurons2.push(neurons2subarray)
+    container.appendChild(column)
   }
 }
