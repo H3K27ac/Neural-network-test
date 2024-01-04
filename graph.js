@@ -125,25 +125,17 @@ function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
-      if (batchnorm) {
-        for (let n=0; n<batchsize; n++) {
-          neurons[i][j][n] = 0
-        }
-      } else {
         neurons[i][j] = 0
-      }
     }
   }
-
+}
 
 function RandomizeInput() {
-  ClearNeurons()
   let j2 = structure[0]
   for (let j=0; j<j2; j++) {
       neurons[0][j] = Math.random();
   }
 }
-
 
 
 function Randomize() {
