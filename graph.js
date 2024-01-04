@@ -110,8 +110,8 @@ function UpdateColor() {
     }
     }
     if (i>0 && structure[i-1] < 11 && j2 < 11) {
-    for (let j=0; j<structure[i-1]; j++) { 
-      for (let k=0; k<j2; k++) {
+    for (let j=0; j<j2; j++) { 
+      for (let k=0; k<structure[i-1]; k++) {
         let weightvalue = weights[i][j][k].toFixed(2)
         let weight = document.getElementById("weight " + i + "," + j + "," + k)
         weight.style.backgroundColor = Color(weightvalue,"weight")
@@ -139,7 +139,7 @@ function RandomizeInput() {
 
 
 function Randomize() {
-  ClearNeurons()
+//  ClearNeurons()
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
