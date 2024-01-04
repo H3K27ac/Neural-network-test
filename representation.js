@@ -254,6 +254,7 @@ function SetInputs() {
   learnrate = Number(document.getElementById("learnrate").value)
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
+  /*
   l1strength = document.getElementById("L1strength").value
   l2strength = document.getElementById("L2strength").value
 
@@ -275,20 +276,83 @@ if (document.getElementById("showneurons").checked == true) {
   
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
+  */
 }
 
 function CreateGraph() {
   DeleteGraph()
   SetInputs()
-  SetTestArrays()
-  let neuroncount = 0;
+  let neuroncount = structure[0];
+  let weightcount = 0;
+  for (let i=0; i<layers-1; i++) {
+    weightcount += structure[i] * structure [i+1]
+    neuroncount += structure[i+1]
+  }
+  document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
+  document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
+  document.getElementById("layercount").innerHTML = "Number of layers: " + layers
+
+  for (let i=0; i<structure[layers-1]; i++) {
+    targets.push(0)
+  }
+  
+  for (let i=0; i<layers; i++) {
+    let neuronssubarray = [];
+    let neurons2subarray = [];
+    let column;
+    if (showneurons == "all") {
+      document.getElementById("layers").innerHTML = "why"
+    column = document.createElement("div")
+    column.className = "column"
+    column.id = "column " + i
+    }
+    let j2 = structure[i]
+    for (let j=0; j<j2; j++) {
+      if (showneurons == "all" || i==layers-1) {
+      let neuron = document.createElement("div")
+      neuron.className = "neuron"
+      neuron.id = "neuron " + i + "," + j
+      let neuronvalue = document.createElement("span")
+      neuronvalue.className = "neuronvalue"
+      neuronvalue.id = "neuronvalue " + i + "," + j
+      neuron.appendChild(neuronvalue)
+        if (showneurons == "all") {
+          document.getElementById("layers").innerHTML = "is this"
+          column.appendChild(neuron)
+        } else {
+          container.appendChild(neuron)
+        }
+      }
+        neuronssubarray.push(0)
+        neurons2subarray.push(0)
+    }
+    if (showneurons == "all") {
+      document.getElementById("layers").innerHTML = "notworking"
+      container.appendChild(column)
+    }
+    neurons.push(neuronssubarray)
+    neurons2.push(neurons2subarray)
+  }
+}
+
+function CreateGraphOld() {
+  DeleteGraph()
+  SetInputs()
+//  SetTestArrays()
+  let neuroncount = structure[0];
+  let weightcount = 0;
+  for (let i=0; i<layers-1; i++) {
+    weightcount += structure[i] * structure [i+1]
+    neuroncount += structure[i+1]
+  }
+  /*
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
     input.className = "input"
     input.id = "input " + i
     document.getElementById("inputfield").appendChild(input)
   }
-  
+  */
   for (let i=0; i<structure[layers-1]; i++) {
     if (batchnorm) {
       let subarray = [];
@@ -379,7 +443,6 @@ function CreateGraph() {
         neuronssubarray.push(0)
         neurons2subarray.push(0)
       }
-      neuroncount += 1
     }
     if (showneurons == "all") {
       document.getElementById("layers").innerHTML = "notworking"
@@ -445,7 +508,6 @@ function CreateGraph() {
         document.getElementById("container").appendChild(weight)
         }
         subsubarray.push(0)
-        weightcount += 1
       }
       subarray.push(subsubarray)
     }
