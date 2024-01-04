@@ -207,8 +207,6 @@ function CreateGraph() {
   document.getElementById("layercount").innerHTML = "Number of layers: " + layers
   
   for (let i=0; i<layers; i++) {
-    let neuronssubarray = [];
-    let neurons2subarray = [];
     let column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
@@ -271,8 +269,10 @@ function CreateGraph() {
       }
     }
     container.appendChild(column)
-    if (i>0 && structure[i-1] < 11 && j2 < 11) {
-      for (let j=0; j<j2; j++) {
+  }
+  for (let i=1; i<layers; i++) {
+    if (structure[i-1] < 11 && structure[i] < 11) {
+      for (let j=0; j<structure[i]; j++) {
         let neuron2 = document.getElementById("neuron " + i + "," + j)
         const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
         const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
