@@ -228,7 +228,7 @@ function CreateGraph() {
         if (j=3) {
           let neuronnum = document.createElement("span")
           neuronnum.className = "neuronvalue"
-          neuronnum.innerHTML = j2 - 6
+          neuronnum.innerHTML = String(j2 - 6)
           column.appendChild(neuronnum)
         } else {
           let dot = document.createElement("div")
