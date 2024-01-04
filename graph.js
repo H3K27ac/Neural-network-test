@@ -151,7 +151,6 @@ function Randomize() {
 }
 
 function SetInputs() {
-  let container = document.getElementById("container")
   let structureinput = document.getElementById("structure").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
@@ -193,6 +192,7 @@ function SetArrays() {
 
 
 function CreateGraph() {
+  let container = document.getElementById("container")
   DeleteGraph()
   SetInputs()
   SetArrays()
