@@ -104,8 +104,9 @@ function UpdateColor() {
         neuronvaluetext.style.color = `rgb(255,255,255)`
       }
     }
+    }
     let j3 = structure[i+1]
-    if (j3 < 11) {
+    if (j3 < 11 && j2 < 11) {
     for (let j=0; j<j3; j++) { 
       let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
@@ -128,7 +129,6 @@ function UpdateColor() {
        neuron.style.borderColor = Color(biasvalue,"bias")
        }
     }
-  }
   }
 }
 
