@@ -178,11 +178,12 @@ th, td {
 }
 
 .dots {
-  height: 2px;
-  width: 2px;
+  height: 4px;
+  width: 4px;
   border: 0px solid white;
   border-radius: 50%;
   background-color: white;
+  padding: 10px;
 }
 
 .neuron {
