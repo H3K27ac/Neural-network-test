@@ -235,9 +235,9 @@ function CreateGraph() {
           column.appendChild(neuronnum)
         } else {
           document.getElementById("layers").innerHTML = "test4"
-          let dot = document.createElement("div")
-          dot.className = "dot"
-          column.appendChild(dot)
+          let dots = document.createElement("div")
+          dots.className = "dots"
+          column.appendChild(dots)
         }
       }
       for (let j=j2-3; j<j2-1; j++) {
