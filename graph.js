@@ -50,7 +50,7 @@ function Color(value,type) {
     blue = value2 > 0 ? Math.round(255 * (1 - value2)) : 255;
   } else {
     if (value == 0) return `rgb(255, 255, 255)`
-    let value3 = value / valuerange
+    let value3 = value / 1 //range
     red = value > 0 ? 255 : Math.round(255 * (1 + value3));
     green = Math.round(255 * (1 - Math.abs(value3)));
     blue = value > 0 ? Math.round(255 * (1 - value3)) : 255;
