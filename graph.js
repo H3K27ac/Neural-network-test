@@ -236,7 +236,7 @@ function CreateGraph() {
           column.appendChild(dot)
         }
       }
-      for (let j=layers-3; j<layers-1; j++) {
+      for (let j=j2-3; j<j2-1; j++) {
         let neuron = document.createElement("div")
         neuron.className = "neuron"
         neuron.id = "neuron " + i + "," + j
