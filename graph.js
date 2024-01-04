@@ -268,9 +268,10 @@ function CreateGraph() {
         neuronvalue.id = "neuronvalue " + i + "," + j
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
-        if (i>0) {
-        if (structure[i-1] < 11) {
+        if (i>0 && structure[i-1] < 11) {
         let neuron2 = document.getElementById("neuron " + i + "," + j)
+        const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+        const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
         for (let k=0; k<structure[i-1]; k++) {
           let weight = document.createElement("div")
           weight.className = "weight"
@@ -278,8 +279,6 @@ function CreateGraph() {
           let neuron1 = document.getElementById("neuron " + (i-1) + "," + k)
           const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
           const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
-          const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-          const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
 
           const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
           const angle = Math.atan2(y2 - y1, x2 - x1);
@@ -291,7 +290,6 @@ function CreateGraph() {
           weight.style.left = centerX - (length / 2) + "px";
           weight.style.top = centerY + "px";
           container.appendChild(weight)
-        }
         }
       }
     }
