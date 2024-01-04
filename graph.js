@@ -268,7 +268,11 @@ function CreateGraph() {
         neuronvalue.id = "neuronvalue " + i + "," + j
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
-        if (i>0 && structure[i-1] < 11) {
+      }
+    }
+    container.appendChild(column)
+    if (i>0 && structure[i-1] < 11 && j2 < 11) {
+      for (let j=0; j<j2; j++) {
         let neuron2 = document.getElementById("neuron " + i + "," + j)
         const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
         const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
@@ -293,7 +297,5 @@ function CreateGraph() {
         }
       }
     }
-    }
-    container.appendChild(column)
   }
 }
