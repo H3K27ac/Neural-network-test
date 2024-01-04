@@ -176,7 +176,7 @@ th, td {
 .dot {
   height: 2px;
   width: 2px;
-  border: 0px;
+  border: 0px solid white;
   border-radius: 50%;
   background-color: white;
 }
