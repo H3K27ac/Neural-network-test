@@ -4,33 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+ <!--   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!--  <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.16.1/dist/numjs.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.13.0/dist/tf-core.min.js"></script> -->
-    <script src="https://unpkg.com/gpu.js@latest/dist/gpu-browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.16.1/dist/numjs.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.13.0/dist/tf-core.min.js"></script>
+    <script src="https://unpkg.com/gpu.js@latest/dist/gpu-browser.min.js"></script> -->
     <script type="text/javascript" src="representation.js"></script>
     <script type="text/javascript" src="calculation.js"></script>
     <script type="text/javascript" src="input.js"></script>
-    <script type="text/javascript" src="main.js"></script>
+ <!--   <script type="text/javascript" src="main.js"></script> -->
   </head>
   <body onload="Load()">
     <script>
       function Load() {
-        Typeset()
-        ReplenishLayers()
-        CreateLayers()
+       // Typeset()
+       // ReplenishLayers()
+       // CreateLayers()
       }
     </script>
-    <span>Structure:</span>
-    <input type="text" class="maininput" id="structure">
-    <br>
-    <datalist id="activation">
-      <option value="Sigmoid"> 
-      <option value="ReLU">
-      <option value="Leaky ReLU">
-    </datalist>
-    <br>
+    <div>
+      <span>Structure:</span>
+      <input type="text" class="maininput" id="structure">
+    </div>
+    <div>
+      <span>Learning rate:</span>
+      <input type="number" class="tableinput" id="learnrate">
+    </div>
+    <div>
+      <span>Weight range:</span>
+      <input type="number" class="tableinput" id="weightrange" placeholder="1">
+      <span>Bias range:</span>
+      <input type="number" class="tableinput" id="biasrange" placeholder="1">
+    </div>
+    <div>
+      <span>Activation function: Sigmoid (More coming soon)</span>
+    </div>
+    <!--
     <table class="InputTable">
       <tr>
         <td><span>Learning rate</span></td>
@@ -45,78 +54,11 @@
         <td><input type="number" class="tableinput" id="weightrange" placeholder="1"></td>
         <td><input type="number" class="tableinput" id="biasrange" placeholder="1"></td>
       </tr>
-    </table>
-    <table class="InputTable">
-       <tr>
-        <td rowspan="2"><span>Activation function</span></td>
-        <td><span class="inputheading">Hidden layers</span></td>
-        <td><span class="inputheading">Output layers</span></td>
-      </tr>
-      <tr>
-        <td><input type="text" class="input" id="hiddenactivation"></td>
-        <td><input type="text" class="input" id="outputactivation"></td>
-      </tr>
-    </table>
-    <table class="InputTable">
-      <tr>
-        <th colspan="2"><span>Regularisation</span></th>
-      </tr>
-      <tr>
-        <td><span class="inputheading typeset">L1/Lasso Regularisation strength $$ \lambda_1 $$</span></td>
-        <td><span class="inputheading typeset">L2/Ridge Regularisation strength $$ \lambda_2 $$</span></td>
-      </tr>
-      <tr>
-        <td><input type="number" class="tableinput" id="L1strength" placeholder="0"></td>
-        <td><input type="number" class="tableinput" id="L2strength" placeholder="0"></td>
-      </tr>
-    </table>
-    <table class="InputTable">
-      <tr>
-        <th colspan="2"><span>Batch normalisation</span></th>
-      </tr>
-      <tr>
-        <td><input type="checkbox" class="tableinput" id="batch"></td>
-        <td><input type="number" class="tableinput" id="batchsize" placeholder="Batchsize"></td>
-      </tr>
-      <tr>
-     <!--   <td><span>Batch ranges</span></td> -->
-        <td><input type="number" class="tableinput" id="batchgammarange" placeholder="2"></td>
-        <td><input type="number" class="tableinput" id="batchbetarange" placeholder="1"></td>
-      </tr>
-      <!--
-      <tr>
-        <td><span>Learning rate</span></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">Implicit: </span></td>
-        <td style="border-left: 0px"><input type="checkbox" id="ImplicitInput" onchange="ChangeMethod()"></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">Adaptive: </span></td>
-        <td style="border-left: 0px"><input type="checkbox" id="AdaptiveInput" onchange="ChangeMethod()"></td>
-      </tr>
-      <tr>
-        <td><span>Initial Values</span></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">x0: </span></td>
-        <td style="border-left: 0px"><input type="number" id="x0" class="Input"></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">y0: </span></td>
-        <td style="border-left: 0px"><input type="number" id="y0" class="Input"></td>
-      </tr>
-      -->
-    </table>
-    <table class="InputTable">
-      <tr>
-        <th colspan="3"><span>Settings</span></th>
-      </tr>
-      <tr>
-        <td><input type="checkbox" class="tableinput" id="showbiases"></td>
-        <td><input type="checkbox" class="tableinput" id="showweights"></td>
-        <td><input type="checkbox" class="tableinput" id="showneurons"></td>
-      </tr>
-    </table>
-    <br>
-    <div id="inputfield"></div>
-    <br>
+    </table> 
+    <div id="inputfield"></div> 
     <div class="inputcontainer" id="inputcontainer">
       <div class="layercontainer" id="layercontainer"></div>
-    </div>
-    <br>
+    </div> -->
     <button onClick="CreateGraph()" class="button">Create</button>
     <button onClick="FeedForward()" class="button">Run</button>
     <button onClick="ManualFF()" class="button">Manual run</button>
