@@ -116,6 +116,17 @@ function UpdateColor() {
         weight.style.backgroundColor = Color(weightvalue,"weight")
       }
     }
+    } else {
+       for (let j=0; j<3; j++) { 
+       let biasvalue = biases[i+1][j].toFixed(2)
+       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
+       neuron.style.borderColor = Color(biasvalue,"bias")
+       }
+      for (let j=j2-3; j<j2; j++) { 
+       let biasvalue = biases[i+1][j].toFixed(2)
+       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
+       neuron.style.borderColor = Color(biasvalue,"bias")
+       }
     }
   }
   }
