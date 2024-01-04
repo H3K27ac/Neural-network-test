@@ -215,7 +215,7 @@ function CreateGraph() {
     let j2 = structure[i]
     if (j2 > 10) {
       for (let j=0; j<3; j++) {
-        document.getElementById("layer").innerHTML = "test"
+        document.getElementById("layers").innerHTML = "test"
         let neuron = document.createElement("div")
         neuron.className = "neuron"
         neuron.id = "neuron " + i + "," + j
@@ -225,16 +225,16 @@ function CreateGraph() {
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
       }
-      document.getElementById("layer").innerHTML = "test2"
+      document.getElementById("layers").innerHTML = "test2"
       for (let k=0; k<7; k++) {
         if (k=3) {
-          document.getElementById("layer").innerHTML = "test3"
+          document.getElementById("layers").innerHTML = "test3"
           let neuronnum = document.createElement("span")
           neuronnum.className = "neuronvalue"
           neuronnum.innerHTML = String(j2 - 6)
           column.appendChild(neuronnum)
         } else {
-          document.getElementById("layer").innerHTML = "test4"
+          document.getElementById("layers").innerHTML = "test4"
           let dot = document.createElement("div")
           dot.className = "dot"
           column.appendChild(dot)
