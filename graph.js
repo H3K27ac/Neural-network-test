@@ -228,11 +228,13 @@ function CreateGraph() {
       document.getElementById("layers").innerHTML = "test2"
       for (let j=0; j<7; j++) {
         if (j=3) {
+          /*
           document.getElementById("layers").innerHTML = "test3"
           let neuronnum = document.createElement("span")
           neuronnum.className = "neuronvalue"
           neuronnum.innerHTML = String(j2 - 6)
           column.appendChild(neuronnum)
+          */
         } else {
           /*
           document.getElementById("layers").innerHTML = "test4"
