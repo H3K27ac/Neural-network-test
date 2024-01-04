@@ -268,7 +268,8 @@ function CreateGraph() {
         neuronvalue.id = "neuronvalue " + i + "," + j
         neuron.appendChild(neuronvalue)
         column.appendChild(neuron)
-        if (i>0 && structure[i-1] < 11) {
+        if (i>0) {
+        if (structure[i-1] < 11) {
         let neuron2 = document.getElementById("neuron " + i + "," + j)
         for (let k=0; k<structure[i-1]; k++) {
           let weight = document.createElement("div")
@@ -290,6 +291,7 @@ function CreateGraph() {
           weight.style.left = centerX - (length / 2) + "px";
           weight.style.top = centerY + "px";
           container.appendChild(weight)
+        }
         }
       }
     }
