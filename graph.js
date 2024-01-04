@@ -226,19 +226,28 @@ function CreateGraph() {
         column.appendChild(neuron)
       }
       document.getElementById("layers").innerHTML = "test2"
-          /*
-          document.getElementById("layers").innerHTML = "test3"
-          let neuronnum = document.createElement("span")
-          neuronnum.className = "neuronvalue"
-          neuronnum.innerHTML = String(j2 - 6)
-          column.appendChild(neuronnum)
-          */
       let dots = document.createElement("div")
       dots.className = "dots"
       column.appendChild(dots)
-      let dots = document.createElement("div")
-      dots.className = "dots"
-      column.appendChild(dots)
+      let dots2 = document.createElement("div")
+      dots2.className = "dots"
+      column.appendChild(dots2)
+      let dots3 = document.createElement("div")
+      dots3.className = "dots"
+      column.appendChild(dots3)
+      let neuronnum = document.createElement("span")
+      neuronnum.className = "neuronvalue"
+      neuronnum.innerHTML = String(j2 - 6)
+      column.appendChild(neuronnum)
+      let dots4 = document.createElement("div")
+      dots4.className = "dots"
+      column.appendChild(dots4)
+      let dots5 = document.createElement("div")
+      dots5.className = "dots"
+      column.appendChild(dots5)
+      let dots6 = document.createElement("div")
+      dots6.className = "dots"
+      column.appendChild(dots6)
       for (let j=j2-3; j<j2; j++) {
         let neuron = document.createElement("div")
         neuron.className = "neuron"
