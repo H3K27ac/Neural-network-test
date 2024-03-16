@@ -15,7 +15,7 @@ let weightcount = 0;
 let showneurons = "all";
 let showbiases = true;
 let showweights = true;
-let weightcount = 0;
+
 
 
 function DeleteGraph() {
