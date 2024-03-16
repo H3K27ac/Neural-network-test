@@ -55,6 +55,8 @@ function Color(value,type) {
     case "bias":
       valuerange = biasrange
       break;
+    default:
+      break;
   }
   if (type == "batchgamma") {
     if (value == 1) return `rgb(255, 255, 255)`
