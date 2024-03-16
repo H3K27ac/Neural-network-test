@@ -61,9 +61,10 @@ function DerivativeActivation(input,i,actcache) {
 function ManualFF() {
   let i2 = structure[0]
   for (let i=0; i<i2; i++) {
-    neurons[0][i] = Number(document.getElementById("input " + i).value)
+    neurons[i] = Number(document.getElementById("input " + i).value)
   }
-  GeneralInference()
+  FeedForward()
+  UpdateColor()
 }
 
 function Testing100() {
@@ -79,15 +80,17 @@ function FeedForward() {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       sum = 0
+      let index = structure3[i+1]+structure[i]*j+1
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
-        sum += weights[i+1][j][k] * neurons[structure2[i]+k]
+        sum += weights[index+k] * neurons[structure2[i]+k]
       }
-      sum += biases[i+1][j]
+      let index2 = structure2[i+1]+j
+      sum += biases[index2+1]
       let result = Activation(sum,i)
-      activationcache2[i+1][j] = result
-      neurons2[i+1][j] = sum
-      neurons[i+1][j] = result
+   //   activationcache2[index2] = result
+      neurons2[index2] = sum
+      neurons[index2] = result
     }
   }
   const t1 = performance.now()
@@ -162,9 +165,9 @@ function BiasCost(i,j,actcache2) {
 
 function ResetCache() {
   const t0 = performance.now()
-  costcache = [];
-  activationcache = [0];
-  activationcache2 = [0];
+  costcache = Array(neuroncount).fill(0);
+  activationcache = Array(neuroncount).fill(0);
+  activationcache2 = Array(neuroncount).fill(0);
   const t1 = performance.now()
   document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2)
 }
