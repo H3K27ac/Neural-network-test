@@ -204,7 +204,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    training = setInterval(Backprop, 100);
+    training = setInterval(Backprop, 1);
   }
 }
 
