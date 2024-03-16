@@ -81,7 +81,7 @@ function FeedForward() {
       sum = 0
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
-        sum += weights[i+1][j][k] * neurons[i][k]
+        sum += weights[i+1][j][k] * neurons[structure2[i]+k]
       }
       sum += biases[i+1][j]
       let result = Activation(sum,i)
@@ -162,42 +162,9 @@ function BiasCost(i,j,actcache2) {
 
 function ResetCache() {
   const t0 = performance.now()
-  costcache = [0];
+  costcache = [];
   activationcache = [0];
   activationcache2 = [0];
-  for (let i=0; i<layers-1; i++) {
-    let subarray = [];
-    let subarray2 = [];
-    let subarray3 = [];
-    let subarray4 = [];
-    let j2 = structure[i+1]
-    for (let j=0; j<j2; j++) {
-      if (batchnorm) {
-        let subsubarray = [];
-        let subsubarray2 = [];
-        let subsubarray4 = [];
-        for (let n=0; n<batchsize; n++) {
-          subsubarray.push(0)
-          subsubarray2.push(0)
-          subsubarray4.push(0)
-        }
-        subarray.push(subsubarray)
-        subarray2.push(subsubarray2)
-        subarray3.push(0)
-        subarray4.push(subsubarray4)
-      } else {
-        subarray.push(0)
-        subarray2.push(0)
-        subarray4.push(0)
-      }
-    }
-    costcache.push(subarray)
-    activationcache.push(subarray2)
-    activationcache2.push(subarray4)
-    if (batchnorm) {
-      varcache.push(subarray3)
-    }
-  }
   const t1 = performance.now()
   document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2)
 }
