@@ -10,6 +10,8 @@ var layers;
 
 let neuroncount = 0;
 let weightcount = 0;
+let weightrange;
+let biasrange;
 
 // Visuals
 let showneurons = "all";
