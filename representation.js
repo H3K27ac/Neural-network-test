@@ -205,11 +205,11 @@ if (document.getElementById("showneurons").checked == true) {
     }
   }
 
-  neurons = Array(neuroncount).fill(0)
-  neurons2 = Array(neuroncount+1).fill(0)
-  weights = Array(weightcount+1).fill(0)
-  biases = Array(neuroncount+1).fill(0)
-  targets = Array(structure[layers-1]).fill(0)
+  neurons = new Float32Array(neuroncount).fill(0)
+  neurons2 = new Float32Array(neuroncount+1).fill(0)
+  weights = new Float32Array(weightcount+1).fill(0)
+  biases = new Float32Array(neuroncount+1).fill(0)
+  targets = new Float32Array(structure[layers-1]).fill(0)
   
   document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
