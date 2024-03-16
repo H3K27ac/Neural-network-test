@@ -1,44 +1,16 @@
-let weights = [0];
-let neurons = [];
-let neurons2 = [];
-let biases = [0];
-let structure = [];
-let targets = [];
-let layers;
-
-let dropout;
-let dropoutinput = [];
-let dropoutprob;
-
-// Batch normalisation variables
-let batch = [];
-let batchnormed = [];
-let batchbeta = [0];
-let batchgamma = [0];
-let batchmean = [0];
-let batchvar = [0];
-let batchmeanmoving = [0];
-let batchvarmoving = [0];
-let batchsize;
-let batchcount;
-let batchnorm = false;
-
-// Input variables
-let learnrate;
-let l1strength;
-let l2strength;
-let weightrange;
-let biasrange;
-let batchgammarange;
-let batchbetarange;
+var weights = [0];
+var neurons = [];
+var neurons2 = [];
+var biases = [0];
+var structure = [];
+var targets = [];
+var layers;
 
 // Visuals
 let showneurons = "all";
 let showbiases = true;
 let showweights = true;
 let weightcount = 0;
-
-// Sub-layers in order: neurons2 (activation) batch (norm) batchnormed (shift) neurons
 
 
 function DeleteGraph() {
@@ -52,16 +24,6 @@ function DeleteGraph() {
   structure = [];
   targets = [];
   layers = 0;
-  batch = [];
-  batchnormed = [];
-  batchbeta = [0];
-  batchgamma = [0];
-  batchmean = [0];
-  batchvar = [0];
-  batchmeanmoving = [0];
-  batchvarmoving = [0];
-  batchsize = 0;
-  batchcount = 0;
   weightcount = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
@@ -84,12 +46,6 @@ function Color(value,type) {
       break;
     case "bias":
       valuerange = biasrange
-      break;
-    case "batchbeta":
-      valuerange = batchbetarange
-      break;
-    case "batchgamma":
-      valuerange = batchgammarange
       break;
   }
   if (type == "batchgamma") {
@@ -117,11 +73,7 @@ function UpdateColor() {
   if (showneurons == "output") {
     let i2 = structure[layers-1]
     for (let i=0; i<i2; i++) {
-      if (batchnorm) {
-        neuronvalue = neurons[layers-1][i][0].toFixed(2) // To be improved
-      } else {
-        neuronvalue = neurons[layers-1][i].toFixed(2)
-      }
+      neuronvalue = neurons[layers-1][i].toFixed(2)
       let neuron = document.getElementById("neuron " + (layers-1) + "," + i)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i)
@@ -137,13 +89,7 @@ function UpdateColor() {
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
       let neuronvalue;
-      let gammavalue;
-      let betavalue;
-      if (batchnorm) {
-        neuronvalue = neurons[i][j][0].toFixed(2) // To be improved
-      } else {
-        neuronvalue = neurons[i][j].toFixed(2)
-      }
+      neuronvalue = neurons[i][j].toFixed(2)
       let neuron = document.getElementById("neuron " + i + "," + j)
       neuron.style.backgroundColor = Color2(neuronvalue)
       let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
@@ -153,14 +99,6 @@ function UpdateColor() {
       } else {
         neuronvaluetext.style.color = `rgb(255,255,255)`
       }
-      if (batchnorm && i>0) {
-        betavalue = batchbeta[i][j].toFixed(2)
-        gammavalue = batchgamma[i][j].toFixed(2)
-        let betatext = document.getElementById("betatext " + i + "," + j)
-        let gammatext = document.getElementById("gammatext " + i + "," + j)
-        betatext.style.color = Color(betavalue,"batchbeta")
-        gammatext.style.color = Color(gammavalue,"batchgamma")
-      } 
     }
     let j3 = structure[i+1]
     for (let j=0; j<j3; j++) { 
@@ -168,10 +106,6 @@ function UpdateColor() {
       let biasvalue = biases[i+1][j].toFixed(2)
       let neuron = document.getElementById("neuron " + (i+1) + "," + j)
       neuron.style.borderColor = Color(biasvalue,"bias")
-      if (batchnorm) {
-        let neuroncontainer = document.getElementById("neuroncontainer " + (i+1) + "," + j)
-        neuroncontainer.style.borderColor = Color(biasvalue,"bias")
-      }
       }
       if (showweights) {
       for (let k=0; k<j2; k++) {
@@ -189,13 +123,7 @@ function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
-      if (batchnorm) {
-        for (let n=0; n<batchsize; n++) {
-          neurons[i][j][n] = 0
-        }
-      } else {
-        neurons[i][j] = 0
-      }
+      neurons[i][j] = 0
     }
   }
 }
