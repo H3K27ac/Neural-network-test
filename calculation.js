@@ -170,29 +170,30 @@ function Backprop() {
   RandomizeInput()
   FeedForward()
   SetTarget()
+  let tempcache, actcache2, costcache2, weightvalue, error;
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
+    let k2 = structure[i-1];
     for (let j=0; j<j2; j++) {
-      let costcache2 = NeuronCost(i,j);
-      let actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
-      let tempcache = actcache2 * costcache2
+      costcache2 = NeuronCost(i,j);
+      actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
+      tempcache = actcache2 * costcache2
       costcache[structure2[i]+j] = costcache2
       activationcache[structure2[i]+j] = actcache2
       biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)))
-      let k2 = structure[i-1];
       let index = structure3[i-1]+k2*j+1
       for (let k=0; k<k2; k++) {
-        let weightvalue = weights[index+k]
-        let error = neurons[structure2[i-1]+k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        weightvalue = weights[index+k]
+        error = neurons[structure2[i-1]+k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
         weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2)
   UpdateColor()
-  traincount += 1
+  traincount++
   document.getElementById("trainingcount").innerHTML = traincount
+  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2)
 }
 
 
