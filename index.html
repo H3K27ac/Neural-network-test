@@ -4,22 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!--  <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.16.1/dist/numjs.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.13.0/dist/tf-core.min.js"></script> -->
-    <script src="https://unpkg.com/gpu.js@latest/dist/gpu-browser.min.js"></script>
     <script type="text/javascript" src="representation.js"></script>
     <script type="text/javascript" src="calculation.js"></script>
-    <script type="text/javascript" src="input.js"></script>
-    <script type="text/javascript" src="main.js"></script>
   </head>
   <body onload="Load()">
     <script>
       function Load() {
-        Typeset()
-        ReplenishLayers()
-        CreateLayers()
       }
     </script>
     <span>Structure:</span>
@@ -83,22 +73,6 @@
         <td><input type="number" class="tableinput" id="batchgammarange" placeholder="2"></td>
         <td><input type="number" class="tableinput" id="batchbetarange" placeholder="1"></td>
       </tr>
-      <!--
-      <tr>
-        <td><span>Learning rate</span></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">Implicit: </span></td>
-        <td style="border-left: 0px"><input type="checkbox" id="ImplicitInput" onchange="ChangeMethod()"></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">Adaptive: </span></td>
-        <td style="border-left: 0px"><input type="checkbox" id="AdaptiveInput" onchange="ChangeMethod()"></td>
-      </tr>
-      <tr>
-        <td><span>Initial Values</span></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">x0: </span></td>
-        <td style="border-left: 0px"><input type="number" id="x0" class="Input"></td>
-        <td style="border-right: 0px"><span style="font-size: 10px">y0: </span></td>
-        <td style="border-left: 0px"><input type="number" id="y0" class="Input"></td>
-      </tr>
-      -->
     </table>
     <table class="InputTable">
       <tr>
@@ -113,19 +87,8 @@
     <br>
     <div id="inputfield"></div>
     <br>
-    <div class="inputcontainer" id="inputcontainer">
-      <div class="layercontainer" id="layercontainer"></div>
-    </div>
-    <br>
     <button onClick="CreateGraph()" class="button">Create</button>
-    <button onClick="FeedForward()" class="button">Run</button>
-    <button onClick="ManualFF()" class="button">Manual run</button>
-    <button onClick="TestForward()" class="button">Testing</button>
-    <button onClick="Testing2()" class="button">Testing2</button>
-    <button onClick="UpdateColor()" class="button">Update</button>
     <button onClick="Randomize()" class="button">Random</button>
-    <button onClick="TestBackprop()" class="button">Train</button>
-    <button onClick="BatchBackprop()" class="button">Batch train</button>
     <button onClick="ToggleTraining()" class="button" id="training">Start training</button>
     <span id="trainingcount">0</span>
     <span id="layers">0</span>
