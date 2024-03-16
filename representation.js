@@ -213,7 +213,7 @@ if (document.getElementById("showneurons").checked == true) {
   neurons = Array(neuroncount).fill(0)
   neurons2 = Array(neuroncount+1).fill(0)
   weights = Array(weightcount+1).fill(0)
-  biases = Array(layers).fill(0)
+  biases = Array(neuroncount+1).fill(0)
   targets = Array(structure[layers-1]).fill(0)
   
   document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
