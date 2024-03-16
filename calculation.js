@@ -4,6 +4,7 @@ let hiddenactivation = "Sigmoid";
 let outputactivation = "Sigmoid";
 let gradient = 0.05;
 let costcache = [0];
+let costcache2 = [0];
 let activationcache = [0];
 let activationcache2 = [0];
 
@@ -170,15 +171,15 @@ function Backprop() {
   FeedForward()
   SetTarget()
   for (let i=layers-1; i>0; i--) {
+    costcache2 = Array(j2).fill(0);
+    activationcache2 = Array(j2).fill(0);
     let j2 = structure[i];
-    costcache = Array(j2).fill(0); // ResetCache()
-    activationcache = Array(j2).fill(0);
     for (let j=0; j<j2; j++) {
-      let costcache2 = NeuronCost(i,j);
+      let costcache3 = NeuronCost(i,j);
       let actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
-      let tempcache = actcache2 * costcache2
-      costcache[j] = costcache2
-      activationcache[j] = actcache2
+      let tempcache = actcache2 * costcache3
+      costcache2[j] = costcache3
+      activationcache2[j] = actcache2
       biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)))
       let k2 = structure[i-1];
       let index = structure3[i-1]+k2*j+1
@@ -187,6 +188,8 @@ function Backprop() {
         weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weights[index+k] - (learnrate * (neurons[structure2[i-1]+k] * tempcache))))
       }
     }
+    activationcache = activationcache2
+    costcache = costcache2
   }
   const t1 = performance.now()
   document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2)
