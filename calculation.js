@@ -178,7 +178,7 @@ function Backprop() {
       let tempcache = actcache2 * costcache2
       costcache[structure2[i]+j] = costcache2
       activationcache[structure2[i]+j] = actcache2
-      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[i][j] - (learnrate * tempcache)))
+      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)))
       let k2 = structure[i-1];
       let index = structure3[i-1]+k2*j+1
       for (let k=0; k<k2; k++) {
