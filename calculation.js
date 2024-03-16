@@ -183,8 +183,9 @@ function Backprop() {
       let k2 = structure[i-1];
       let index = structure3[i-1]+k2*j+1
       for (let k=0; k<k2; k++) {
+        let weightvalue = weights[index+k]
         // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
-        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weights[index+k] - (learnrate * (neurons[structure2[i-1]+k] * tempcache))))
+        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * (neurons[structure2[i-1]+k] * tempcache))))
       }
     }
   }
