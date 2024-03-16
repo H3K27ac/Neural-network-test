@@ -3,9 +3,13 @@ var neurons = [];
 var neurons2 = [];
 var biases = [0];
 var structure = [];
-var structure2 = [];
+var structure2 = [0];
+var structure3 = [0];
 var targets = [];
 var layers;
+
+let neuroncount = 0;
+let weightcount = 0;
 
 // Visuals
 let showneurons = "all";
@@ -23,9 +27,12 @@ function DeleteGraph() {
   neurons2 = [];
   biases = [0];
   structure = [];
-  structure2 = [];
+  structure2 = [0];
+  structure3 = [0];
   targets = [];
   layers = 0;
+  neuroncount = 0;
+  weightcount = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -189,12 +196,13 @@ if (document.getElementById("showneurons").checked == true) {
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
 
-  let neuroncount = 0;
-  let weightcount = 0;
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i]
     structure2.push(neuroncount)
-    if (i>0) weightcount += structure[i] * structure[i-1]
+    if (i>0) { 
+      weightcount += structure[i] * structure[i-1]
+      structure3.push(weightcount)
+    }
   }
 
   neurons = Array(neuroncount).fill(0)
