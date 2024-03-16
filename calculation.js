@@ -166,8 +166,8 @@ function ResetCache() {
 function Backprop() {
   const t0 = performance.now()
   // ResetCache()
-  costcache2 = Array(neuroncount).fill(0);
-  activationcache2 = Array(neuroncount).fill(0);
+  costcache = Array(neuroncount).fill(0);
+  activationcache = Array(neuroncount).fill(0);
   RandomizeInput()
   FeedForward()
   SetTarget()
