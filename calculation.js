@@ -95,6 +95,9 @@ function FeedForward() {
   }
   const t1 = performance.now()
   document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2)
+  let text = document.createElement("span")
+      text.innerHTML = JSON.stringify(neurons)
+      document.getElementById("inputfield").appendChild(text)
 }
 
 function Testing() {
