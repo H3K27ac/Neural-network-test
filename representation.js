@@ -24,7 +24,6 @@ function DeleteGraph() {
   structure = [];
   targets = [];
   layers = 0;
-  weightcount = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -164,12 +163,6 @@ function Randomize() {
   }
 }
 
-function Typeset() {
-  let object = document.getElementsByClassName("typeset")
-  for (let i=0; i<object.length; i++) {
-    MathJax.typeset([object[i]])
-  }
-}
 
 function SetInputs() {
   let container = document.getElementById("container")
@@ -178,21 +171,15 @@ function SetInputs() {
   layers = structure.length
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
-
+  
   learnrate = Number(document.getElementById("learnrate").value)
   weightrange = document.getElementById("weightrange").value
   biasrange = document.getElementById("biasrange").value
   l1strength = document.getElementById("L1strength").value
   l2strength = document.getElementById("L2strength").value
-
-  batchsize = document.getElementById("batchsize").value
-  batchbetarange = document.getElementById("batchbetarange").value
-  batchgammarange = document.getElementById("batchgammarange").value
-
+  
   showweights = document.getElementById("showweights").checked
   showbiases = document.getElementById("showbiases").checked
-
-  batchnorm = document.getElementById("batch").checked
 
   
 if (document.getElementById("showneurons").checked == true) {
@@ -203,13 +190,29 @@ if (document.getElementById("showneurons").checked == true) {
   
   hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
   outputactivation = String(document.getElementById("outputactivation").value).trim()
+
+  let neuroncount = 0;
+  let weightcount = 0;
+  for (let i=0; i<layers; i++) {
+    neuroncount += structure[i]
+    if (i>0) weightcount += structure[i] * structure[i-1]
+  }
+
+  neurons = Array(neuroncount).fill(0)
+  neurons2 = Array(neuroncount+1).fill(0)
+  weights = Array(weightcount+1).fill(0)
+  biases = Array(layers).fill(0)
+  targets = Array(structure[layers-1]).fill(0)
+  
+  document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
+  document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
+  document.getElementById("layercount").innerHTML = "Number of layers: " + layers
 }
 
 function CreateGraph() {
   DeleteGraph()
   SetInputs()
-  SetTestArrays()
-  let neuroncount = 0;
+  
   for (let i=0; i<structure[0]; i++) {
     let input = document.createElement("input")
     input.className = "input"
@@ -217,44 +220,15 @@ function CreateGraph() {
     document.getElementById("inputfield").appendChild(input)
   }
   
-  for (let i=0; i<structure[layers-1]; i++) {
-    if (batchnorm) {
-      let subarray = [];
-      for (let n=0; n<batchsize; n++) {
-        subarray.push(0)
-      }
-      targets.push(subarray)
-    } else {
-      targets.push(0)
-    }
-  }
-  
   for (let i=0; i<layers; i++) {
-    let betasubarray = [];
-    let gammasubarray = [];
-    let meansubarray = [];
-    let varsubarray = [];
-    let movingmeansubarray = [];
-    let movingvarsubarray = [];
-    let batchsubarray = [];
-    let batchnormedsubarray = [];
-    let neuronssubarray = [];
-    let neurons2subarray = [];
-    let batchneuronssubarray = [];
-    let batchneurons2subarray = [];
     let column;
     if (showneurons == "all") {
-      document.getElementById("layers").innerHTML = "why"
     column = document.createElement("div")
     column.className = "column"
     column.id = "column " + i
     }
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
-      let batchsubsubarray = [];
-      let batchnormedsubsubarray = [];
-      let neuronssubsubarray = [];
-      let neurons2subsubarray = [];
       if (showneurons == "all" || i==layers-1) {
       let neuron = document.createElement("div")
       neuron.className = "neuron"
@@ -263,91 +237,22 @@ function CreateGraph() {
       neuronvalue.className = "neuronvalue"
       neuronvalue.id = "neuronvalue " + i + "," + j
       neuron.appendChild(neuronvalue)
-      if (batchnorm && i>0) {
-        let neuroncontainer = document.createElement("div")
-        neuroncontainer.className = "neuroncontainer"
-        neuroncontainer.id = "neuroncontainer " + i + "," + j
-        let betatext = document.createElement("span")
-        betatext.className = "neurontext"
-        betatext.id = "betatext " + i + "," + j
-        betatext.innerHTML = "$$ \\beta $$"
-        neuroncontainer.appendChild(betatext)
-        MathJax.typeset([betatext])
-        let neurontext = document.createElement("span")
-        neurontext.className = "neurontext"
-        neurontext.innerHTML = ","
-        neuroncontainer.appendChild(neurontext)
-        let gammatext = document.createElement("span")
-        gammatext.className = "neurontext"
-        gammatext.id = "gammatext " + i + "," + j
-        gammatext.innerHTML = "$$ \\gamma $$"
-        neuroncontainer.appendChild(gammatext)
-        MathJax.typeset([gammatext])
-        neuron.appendChild(neuroncontainer)
-      }
         if (showneurons == "all") {
-          document.getElementById("layers").innerHTML = "is this"
           column.appendChild(neuron)
         } else {
           container.appendChild(neuron)
         }
       }
-      if (batchnorm) {
-        for (let n=0; n<batchsize; n++) {
-          batchsubsubarray.push(0)
-          batchnormedsubsubarray.push(0)
-          neuronssubsubarray.push(0)
-          neurons2subsubarray.push(0)
-        }
-        batchsubarray.push(batchsubsubarray)
-        batchnormedsubarray.push(batchnormedsubsubarray)
-        batchneuronssubarray.push(neuronssubsubarray)
-        batchneurons2subarray.push(neurons2subsubarray)
-      } else {
-        neuronssubarray.push(0)
-        neurons2subarray.push(0)
-      }
-      neuroncount += 1
     }
     if (showneurons == "all") {
       document.getElementById("layers").innerHTML = "notworking"
       container.appendChild(column)
     }
-    if (batchnorm) {
-      if (i < layers-1) {
-        let j3 = structure[i+1]
-        for (let j=0; j<j3; j++) {
-          betasubarray.push(0)
-          gammasubarray.push(1)
-          meansubarray.push(0)
-          varsubarray.push(0)
-          movingmeansubarray.push(0)
-          movingvarsubarray.push(0)
-        }
-        batchbeta.push(betasubarray)
-        batchgamma.push(gammasubarray)
-        batchmean.push(meansubarray)
-        batchvar.push(varsubarray)
-        batchmeanmoving.push(movingmeansubarray)
-        batchvarmoving.push(movingvarsubarray)
-      } 
-      batch.push(batchsubarray)
-      batchnormed.push(batchnormedsubarray)
-      neurons.push(batchneuronssubarray)
-      neurons2.push(batchneurons2subarray)
-    } else {
-      neurons.push(neuronssubarray)
-      neurons2.push(neurons2subarray)
-    }
   }
   
   for (let i=0; i<layers-1; i++) {
-    let subarray = [];
-    let subarray2 = [];
     let j2 = structure[i+1]
     for (let j=0; j<j2; j++) {
-      let subsubarray = [];
-      subarray2.push(0)
       let k2 = structure[i]
       for (let k=0; k<k2; k++) {
         if (showweights) {
@@ -372,17 +277,9 @@ function CreateGraph() {
         weight.style.top = centerY + "px";
         document.getElementById("container").appendChild(weight)
         }
-        subsubarray.push(0)
-        weightcount += 1
       }
-      subarray.push(subsubarray)
     }
-    weights.push(subarray)
-    biases.push(subarray2)
   }
-  document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
-  document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
-  document.getElementById("layercount").innerHTML = "Number of layers: " + layers
 }
 
 
