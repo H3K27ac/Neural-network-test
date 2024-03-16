@@ -120,7 +120,7 @@ function UpdateColor() {
       neuron.style.borderColor = Color(biasvalue,"bias")
       }
       if (showweights) {
-        let index = structure3[i+1]+structure[i]*j+1
+        let index = structure3[i]+structure[i]*j+1
       for (let k=0; k<j2; k++) {
         let weightvalue = weights[index+k].toFixed(2)
         let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
