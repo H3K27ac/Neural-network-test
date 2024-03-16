@@ -143,31 +143,24 @@ function ClearNeurons() {
 
 
 function RandomizeInput() {
-  ClearNeurons()
   let j2 = structure[0]
   for (let j=0; j<j2; j++) {
-    if (batchnorm) {
-      for (let n=0; n<batchsize; n++) {
-        neurons[0][j][n] = Math.random();
-      }
-    } else {
-      neurons[0][j] = Math.random();
-    }
+      neurons[j] = Math.random();
   }
 }
 
 
 
 function Randomize() {
-  ClearNeurons()
 //  for (let j=0; j<structure[0]; j++) {
    //   neurons[0][j] = Math.random();
 //  }
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
+      biases[structure2[i+1]+j] = (Math.random() * 2 - 1) * biasrange;
+      let index = structure3[i]+structure[i]*j+1
       for (let k=0; k<structure[i]; k++) {
-        weights[i+1][j][k] = (Math.random() * 2 - 1) * weightrange;
+        weights[index+k] = (Math.random() * 2 - 1) * weightrange;
       }
     }
   }
