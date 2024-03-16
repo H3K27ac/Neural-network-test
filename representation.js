@@ -13,6 +13,8 @@ let weightcount = 0;
 let weightrange;
 let biasrange;
 
+let learnrate = 0;
+
 // Visuals
 let showneurons = "all";
 let showbiases = true;
