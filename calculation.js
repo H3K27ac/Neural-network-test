@@ -93,10 +93,7 @@ function FeedForward() {
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2)
-  let text = document.createElement("span")
-      text.innerHTML = JSON.stringify(neurons)
-      document.getElementById("inputfield").appendChild(text)
+  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2
 }
 
 function Testing() {
@@ -127,18 +124,12 @@ function SetTarget() {
   let j2 = structure[0];
   let sum = 0;
   for (let j=0; j<j2; j++) {
-    sum += neurons[0][j]
+    sum += neurons[j]
   }
   let target = sum / j2
   let i2 = structure[layers-1];
   for (let i=0; i<i2; i++) {
-    if (batchnorm) {
-      for (let n=0; n<batchsize; n++) {
-        targets[i][n] = target
-      }
-    } else {
       targets[i] = target
-    }
   }
 }
 
@@ -168,14 +159,12 @@ function BiasCost(i,j,actcache2) {
 function ResetCache() {
   const t0 = performance.now()
   costcache = Array(neuroncount).fill(0);
-  activationcache = Array(neuroncount).fill(0);
-  activationcache2 = Array(neuroncount).fill(0);
   const t1 = performance.now()
   document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2)
 }
 
 function Backprop() {
-  ResetCache()
+  costcache = Array(neuroncount).fill(0); // ResetCache()
   RandomizeInput()
   FeedForward()
   SetTarget()
@@ -183,19 +172,17 @@ function Backprop() {
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
-      let actcache3 = activationcache2[i][j]
       let costcache2 = NeuronCost(i,j);
-      let actcache2 = DerivativeActivation(neurons2[i][j],i,actcache3) 
+      let actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
       let tempcache = actcache2 * costcache2
-      activationcache[i][j] = actcache2
-      costcache[i][j] = costcache2
-      biases[i][j] = Math.min(biasrange, Math.max(biasrange * -1, biases[i][j] - (learnrate * tempcache)))
+      costcache[structure2[i]+j] = costcache2
+      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[i][j] - (learnrate * tempcache)))
       let k2 = structure[i-1];
+      let index = structure3[i-1]+k2*j+1
       for (let k=0; k<k2; k++) {
-        let weightvalue = weights[i][j][k]
-        // Elastic net regularisation
-        let error = neurons[i-1][k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
-        weights[i][j][k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
+        let weightvalue = weights[index+k]
+        let error = neurons[structure2[i-1]+k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
   }
@@ -214,11 +201,7 @@ function ToggleTraining() {
     training = undefined;
   } else {
     document.getElementById("training").innerHTML = "Stop training"
-    if (batchnorm) {
-      training = setInterval(BatchBackprop, 200);
-    } else {
-      training = setInterval(Backprop, 100);
-    }
+    training = setInterval(Backprop, 100);
   }
 }
 
