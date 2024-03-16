@@ -3,6 +3,7 @@ var neurons = [];
 var neurons2 = [];
 var biases = [0];
 var structure = [];
+var structure2 = [];
 var targets = [];
 var layers;
 
@@ -22,6 +23,7 @@ function DeleteGraph() {
   neurons2 = [];
   biases = [0];
   structure = [];
+  structure2 = [];
   targets = [];
   layers = 0;
   let graph = document.getElementById("container");
@@ -152,10 +154,6 @@ function Randomize() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[i+1][j] = (Math.random() * 2 - 1) * biasrange;
-      if (batchnorm) {
-        batchgamma[i+1][j] = Math.pow(batchgammarange,(Math.random() * 2 - 1));
-        batchbeta[i+1][j] = (Math.random() * 2 - 1);
-      }
       for (let k=0; k<structure[i]; k++) {
         weights[i+1][j][k] = (Math.random() * 2 - 1) * weightrange;
       }
@@ -195,6 +193,7 @@ if (document.getElementById("showneurons").checked == true) {
   let weightcount = 0;
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i]
+    structure2.push(neuroncount)
     if (i>0) weightcount += structure[i] * structure[i-1]
   }
 
