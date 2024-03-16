@@ -164,10 +164,9 @@ function ResetCache() {
 }
 
 function Backprop() {
-  // ResetCache()
-  costcache = Array(neuroncount).fill(0);
-  activationcache = Array(neuroncount).fill(0);
   const t0 = performance.now()
+  costcache = Array(neuroncount).fill(0); // ResetCache()
+  activationcache = Array(neuroncount).fill(0);
   RandomizeInput()
   FeedForward()
   SetTarget()
@@ -184,8 +183,8 @@ function Backprop() {
       let index = structure3[i-1]+k2*j+1
       for (let k=0; k<k2; k++) {
         let weightvalue = weights[index+k]
-        // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
-        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * (neurons[structure2[i-1]+k] * tempcache))))
+        let error = neurons[structure2[i-1]+k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
       }
     }
   }
@@ -213,4 +212,3 @@ function Train100() {
     Backprop()
   }
 }
-
