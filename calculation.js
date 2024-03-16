@@ -171,9 +171,9 @@ function Backprop() {
   FeedForward()
   SetTarget()
   for (let i=layers-1; i>0; i--) {
+    let j2 = structure[i];
     costcache2 = Array(j2).fill(0);
     activationcache2 = Array(j2).fill(0);
-    let j2 = structure[i];
     for (let j=0; j<j2; j++) {
       let costcache3 = NeuronCost(i,j);
       let actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
