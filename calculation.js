@@ -136,12 +136,12 @@ function SetTarget() {
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
-    return 2 * (neurons[i][j] - targets[j])
+    return 2 * (neurons[structure2[i]+j] - targets[j])
   } else {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
-      sum += weights[i+1][k][j] * activationcache[i+1][k] * costcache[i+1][k] // NeuronCost(i+1,k)
+      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k] // NeuronCost(i+1,k)
     }
     return sum
   }
@@ -165,6 +165,7 @@ function ResetCache() {
 
 function Backprop() {
   costcache = Array(neuroncount).fill(0); // ResetCache()
+  activationcache = Array(neuroncount).fill(0);
   RandomizeInput()
   FeedForward()
   SetTarget()
@@ -176,6 +177,7 @@ function Backprop() {
       let actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
       let tempcache = actcache2 * costcache2
       costcache[structure2[i]+j] = costcache2
+      activationcache[structure2[i]+j] = actcache2
       biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[i][j] - (learnrate * tempcache)))
       let k2 = structure[i-1];
       let index = structure3[i-1]+k2*j+1
