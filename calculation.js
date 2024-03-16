@@ -165,11 +165,11 @@ function ResetCache() {
 }
 
 function Backprop() {
-  const t0 = performance.now()
   // ResetCache()
   RandomizeInput()
   FeedForward()
   SetTarget()
+  const t0 = performance.now()
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
     costcache2 = Array(j2).fill(0);
