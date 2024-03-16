@@ -93,7 +93,7 @@ function FeedForward() {
     }
   }
   const t1 = performance.now()
-  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2
+  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2)
 }
 
 function Testing() {
