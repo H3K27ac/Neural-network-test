@@ -80,7 +80,7 @@ function FeedForward() {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
       sum = 0
-      let index = structure3[i+1]+structure[i]*j+1
+      let index = structure3[i]+structure[i]*j+1
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
         sum += weights[index+k] * neurons[structure2[i]+k]
