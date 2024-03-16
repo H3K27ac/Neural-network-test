@@ -85,12 +85,11 @@ function FeedForward() {
       for (let k=0; k<k2; k++) {
         sum += weights[index+k] * neurons[structure2[i]+k]
       }
-      let index2 = structure2[i+1]+j
-      sum += biases[index2+1]
+      sum += biases[structure2[i]+j+1]
       let result = Activation(sum,i)
    //   activationcache2[index2] = result
-      neurons2[index2] = sum
-      neurons[index2] = result
+      neurons2[structure2[i+1]+j] = sum
+      neurons[structure2[i+1]+j] = result
     }
   }
   const t1 = performance.now()
