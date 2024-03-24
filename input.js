@@ -22,6 +22,7 @@ function AddLayer() {
   let increment = document.createElement("button")
   let decrement = document.createElement("button")
   let input = document.createElement("input")
+  inputfield.id = "layerinput " + currentlayer
   display.id = "layerdisplay " + currentlayer
   display.innerHTML = "0"
   increment.className = "smallbutton"
@@ -40,12 +41,22 @@ function AddLayer() {
   document.getElementById("layerinput").appendChild(inputfield)
 }
 
+function DeleteLayer() {
+  let inputfield = document.getElementById("layerinput " + (layers-1));
+  while (inputfield.hasChildNodes()) {
+      inputfield.removeChild(inputfield.firstChild);
+  }
+  layers--
+  structure.pop()
+  CreateGraph()
+}
+
 function ChangeLayer(layer,value,step) {
   if (step) {
     structure[layer] += value
   } else {
     structure[layer] = value
   }
-  document.getElementById("layerdisplay " + layer).innerHTML = value
+  document.getElementById("layerdisplay " + layer).innerHTML = structure[layer]
   CreateGraph()
 }
