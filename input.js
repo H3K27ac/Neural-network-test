@@ -13,53 +13,11 @@ function Tab(id) {
   }
 }
 
-function AddLayer() {
-  layers++
-  structure.push(1)
-  let currentlayer = layers-1
-  let inputfield = document.createElement("div")
-  let display = document.createElement("span")
-  let increment = document.createElement("button")
-  let decrement = document.createElement("button")
-  let input = document.createElement("input")
-  inputfield.id = "layerinput " + currentlayer
-  display.id = "layerdisplay " + currentlayer
-  display.innerHTML = "1"
-  increment.className = "smallbutton"
-  decrement.className = "smallbutton"
-  increment.innerHTML = "+"
-  decrement.innerHTML = "-"
-  increment.onclick = function() {ChangeLayer(currentlayer,1,true)}
-  decrement.onclick = function() {ChangeLayer(currentlayer,-1,true)}
-  input.className = "tableinput"
-  input.id = "structureinput " + currentlayer
-  inputfield.appendChild(display)
-  inputfield.appendChild(increment)
-  inputfield.appendChild(decrement)
-  inputfield.appendChild(input)
-  document.getElementById("layers").innerHTML = layers
-  document.getElementById("layerinput").appendChild(inputfield)
-}
-
-function DeleteLayer() {
-  if (layers > 1) {
-    layers--
-    let inputfield = document.getElementById("layerinput " + layers);
-    while (inputfield.hasChildNodes()) {
-      inputfield.removeChild(inputfield.firstChild);
-    }
-    structure.pop()
-    document.getElementById("layers").innerHTML = layers
-    CreateGraph()
-  }
-}
-
-function ChangeLayer(layer,value,step) {
-  if (step) {
-    if (structure[layer] > 1 || value == 1) structure[layer] += value
-  } else {
-    if (value > 0) structure[layer] = value
-  }
-  document.getElementById("layerdisplay " + layer).innerHTML = structure[layer]
+function ChangeStructure() {
+  let structureinput = document.getElementById("structure").value
+  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  layers = structure.length
+  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
+  structure.push(0)
   CreateGraph()
 }
