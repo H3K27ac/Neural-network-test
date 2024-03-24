@@ -14,7 +14,7 @@ function Tab(id) {
 }
 
 function ChangeStructure() {
-  let structureinput = document.getElementById("structure").value
+  let structureinput = document.getElementById("structureinput").value
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
