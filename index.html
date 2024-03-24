@@ -12,15 +12,18 @@
       function Load() {
       }
     </script>
-    <span>Structure:</span>
-    <input type="text" class="maininput" id="structure">
-    <br>
-    <datalist id="activation">
-      <option value="Sigmoid"> 
-      <option value="ReLU">
-      <option value="Leaky ReLU">
-    </datalist>
-    <br>
+    <div>
+      <button onClick="Tab('structure')" class="button">Edit Structure</button>
+      <button onClick="Tab('parameters')" class="button">Edit Parameters</button>
+      <button onClick="Tab('data')" class="button">Edit Data</button>
+    </div>
+    <div class="Tab" id="structure">
+    </div>
+    <div class="Tab" id="parameters">
+    </div>
+    <div class="Tab" id="data">
+    </div>
+
     <table class="InputTable">
       <tr>
         <td><span>Learning rate</span></td>
@@ -86,26 +89,27 @@
     </table>
     <br>
     <div id="inputfield"></div>
-    <br>
-    <button onClick="CreateGraph()" class="button">Create</button>
-    <button onClick="Randomize()" class="button">Random</button>
-    <button onClick="ManualFF()" class="button">Manual</button>
-    <button onClick="ToggleTraining()" class="button" id="training">Start training</button>
-    <span id="trainingcount">0</span>
-    <span id="layers">0</span>
-    <br>
-    <span id="performance1">0</span>
-    <span id="performance2">0</span>
-    <span id="performance3">0</span>
-    <br>
-    <span id="structuredisplay"></span>
-    <br>
-    <span id="layercount"></span>
-    <br>
-    <span id="neuroncount"></span>
+    <div id="main">
+      <button onClick="CreateGraph()" class="button">Create</button>
+      <button onClick="Randomize()" class="button">Random</button>
+      <button onClick="ManualFF()" class="button">Manual</button>
+      <button onClick="ToggleTraining()" class="button" id="training">Start training</button>
+      <span id="trainingcount">0</span>
+      <span id="layers">0</span>
+      <br>
+      <span id="performance1">0</span>
+      <span id="performance2">0</span>
+      <span id="performance3">0</span>
+      <br>
+      <span id="structuredisplay"></span>
+      <br>
+      <span id="layercount"></span>
+      <br>
+      <span id="neuroncount"></span>
     <br>
     <span id="weightcount"></span>
     <br>
     <div class="container" id="container"></div>
+    </div>
   </body>
 </html>
