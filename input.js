@@ -15,7 +15,7 @@ function Tab(id) {
 
 function AddLayer() {
   layers++
-  structure.push(0)
+  structure.push(1)
   let currentlayer = layers-1
   let inputfield = document.createElement("div")
   let display = document.createElement("span")
@@ -24,7 +24,7 @@ function AddLayer() {
   let input = document.createElement("input")
   inputfield.id = "layerinput " + currentlayer
   display.id = "layerdisplay " + currentlayer
-  display.innerHTML = "0"
+  display.innerHTML = "1"
   increment.className = "smallbutton"
   decrement.className = "smallbutton"
   increment.innerHTML = "+"
@@ -42,20 +42,23 @@ function AddLayer() {
 }
 
 function DeleteLayer() {
-  let inputfield = document.getElementById("layerinput " + (layers-1));
-  while (inputfield.hasChildNodes()) {
+  if (layers > 1) {
+    let inputfield = document.getElementById("layerinput " + (layers-1));
+    while (inputfield.hasChildNodes()) {
       inputfield.removeChild(inputfield.firstChild);
+    }
+    layers--
+    structure.pop()
+    document.getElementById("layers").innerHTML = layers
+    CreateGraph()
   }
-  layers--
-  structure.pop()
-  CreateGraph()
 }
 
 function ChangeLayer(layer,value,step) {
   if (step) {
-    structure[layer] += value
+    if (structure[layer] > 1 || value == 1) structure[layer] += value
   } else {
-    structure[layer] = value
+    if (value > 0) structure[layer] = value
   }
   document.getElementById("layerdisplay " + layer).innerHTML = structure[layer]
   CreateGraph()
