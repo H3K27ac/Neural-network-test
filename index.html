@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="input.js"></script>
     <script type="text/javascript" src="representation.js"></script>
     <script type="text/javascript" src="calculation.js"></script>
   </head>
@@ -18,6 +19,8 @@
       <button onClick="Tab('data')" class="button">Edit Data</button>
     </div>
     <div class="Tab" id="structure">
+      <button class="button" onClick="AddLayer()">Add layer</button>
+      <div id="layerinput"></div>
     </div>
     <div class="Tab" id="parameters">
       <span>Learning rate</span>
