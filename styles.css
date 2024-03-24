@@ -20,7 +20,6 @@ body {
   border: 1px solid black;
   border-radius: 1px;
   outline: none;
-  padding: 10px;
 }
 
 .maininput {
@@ -29,7 +28,6 @@ body {
   border: 1px solid black;
   border-radius: 2px;
   outline: none;
-  padding: 15px;
 }
 
 .tableinput {
@@ -98,7 +96,6 @@ th, td {
   display: none;
   font-size: 200px;
   color: red;
-  border: 20px;
 }
 
 .container {
@@ -111,7 +108,6 @@ th, td {
   justify-content: space-between;
   align-items: center;
   margin: 0px auto;
-  border: 20px;
 }
 
 .column {
@@ -139,7 +135,6 @@ th, td {
   border: 1px solid white;
   border-radius: 50%;
   background-color: black;
-  border: 10px;
   z-index: 2;
 }
 
@@ -167,7 +162,6 @@ th, td {
   display: inline-block;
   font-size: 10px;
   color: white;
-  border: 1px;
 }
 
 .weight {
