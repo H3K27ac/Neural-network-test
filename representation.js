@@ -6,7 +6,7 @@ var structure = [];
 var structure2 = [0];
 var structure3 = [0];
 var targets = [];
-var layers;
+var layers = 0;
 
 let neuroncount = 0;
 let weightcount = 0;
@@ -30,11 +30,9 @@ function DeleteGraph() {
   neurons = [];
   neurons2 = [];
   biases = [0];
-  structure = [];
   structure2 = [0];
   structure3 = [0];
   targets = [];
-  layers = 0;
   neuroncount = 0;
   weightcount = 0;
   let graph = document.getElementById("container");
@@ -177,11 +175,11 @@ function SetInputs() {
 //  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
   
-  learnrate = Number(document.getElementById("learnrate").value)
-  weightrange = document.getElementById("weightrange").value
-  biasrange = document.getElementById("biasrange").value
-  l1strength = document.getElementById("L1strength").value
-  l2strength = document.getElementById("L2strength").value
+//  learnrate = Number(document.getElementById("learnrate").value)
+//  weightrange = document.getElementById("weightrange").value
+//  biasrange = document.getElementById("biasrange").value
+//  l1strength = document.getElementById("L1strength").value
+//  l2strength = document.getElementById("L2strength").value
   
   showweights = document.getElementById("showweights").checked
   showbiases = document.getElementById("showbiases").checked
