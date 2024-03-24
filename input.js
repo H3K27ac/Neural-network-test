@@ -18,6 +18,8 @@ function ChangeStructure() {
   structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   layers = structure.length
   document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
-  structure.push(0)
-  CreateGraph()
+  if (layers > 1) {
+    structure.push(0)
+    CreateGraph()
+  }
 }
