@@ -43,11 +43,11 @@ function AddLayer() {
 
 function DeleteLayer() {
   if (layers > 1) {
-    let inputfield = document.getElementById("layerinput " + (layers-1));
+    layers--
+    let inputfield = document.getElementById("layerinput " + layers);
     while (inputfield.hasChildNodes()) {
       inputfield.removeChild(inputfield.firstChild);
     }
-    layers--
     structure.pop()
     document.getElementById("layers").innerHTML = layers
     CreateGraph()
