@@ -10,6 +10,10 @@ body {
   padding: 20px;
 }
 
+.Tab {
+  padding: 20px;
+}
+
 .input {
   height: 20px;
   width: 100px;
@@ -68,6 +72,16 @@ th, td {
   width: 120px;
 }
 
+.smallbutton {
+  font-size: 5px;
+  color: black;
+  background-color: lightgray;
+  padding: 2px;
+  border: 1px solid white;
+  height: 20px;
+  width: 20px;
+}
+
 .inputcontainer {
   position: relative;
   height: 400px;
@@ -78,6 +92,13 @@ th, td {
   justify-content: space-between;
   align-items: center;
   padding: 20px auto;
+}
+
+.errortext {
+  display: none;
+  font-size: 200px;
+  color: red;
+  padding: 20px;
 }
 
 .container {
