@@ -20,25 +20,16 @@
     <div class="Tab" id="structure">
     </div>
     <div class="Tab" id="parameters">
+      <span>Learning rate</span>
+      <input type="number" class="tableinput" id="learnrate">
+      <span>Weight range</span>
+      <input type="number" class="tableinput" id="weightrange">
+      <span>Bias range</span>
+      <input type="number" class="tableinput" id="biasrange">
     </div>
     <div class="Tab" id="data">
     </div>
-
-    <table class="InputTable">
-      <tr>
-        <td><span>Learning rate</span></td>
-        <td colspan="2"><input type="number" class="tableinput" id="learnrate"></td>
-      </tr>
-      <tr>
-        <td rowspan="2"><span>Ranges</span></td>
-        <td><span class="inputheading typeset">Weight range $$ [-x,x] $$</span></td>
-        <td><span class="inputheading typeset">Bias range $$ [-x,x] $$</span></td>
-      </tr>
-      <tr>
-        <td><input type="number" class="tableinput" id="weightrange" placeholder="1"></td>
-        <td><input type="number" class="tableinput" id="biasrange" placeholder="1"></td>
-      </tr>
-    </table>
+<!--
     <table class="InputTable">
        <tr>
         <td rowspan="2"><span>Activation function</span></td>
@@ -72,7 +63,7 @@
         <td><input type="number" class="tableinput" id="batchsize" placeholder="Batchsize"></td>
       </tr>
       <tr>
-     <!--   <td><span>Batch ranges</span></td> -->
+        <td><span>Batch ranges</span></td> 
         <td><input type="number" class="tableinput" id="batchgammarange" placeholder="2"></td>
         <td><input type="number" class="tableinput" id="batchbetarange" placeholder="1"></td>
       </tr>
@@ -88,6 +79,7 @@
       </tr>
     </table>
     <br>
+    -->
     <div id="inputfield"></div>
     <div id="main">
       <button onClick="CreateGraph()" class="button">Create</button>
@@ -106,10 +98,10 @@
       <span id="layercount"></span>
       <br>
       <span id="neuroncount"></span>
-    <br>
-    <span id="weightcount"></span>
-    <br>
-    <div class="container" id="container"></div>
+      <br>
+      <span id="weightcount"></span>
+      <br>
+      <div class="container" id="container"></div>
     </div>
   </body>
 </html>
