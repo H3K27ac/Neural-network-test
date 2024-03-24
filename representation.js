@@ -171,10 +171,10 @@ function Randomize() {
 
 function SetInputs() {
   let container = document.getElementById("container")
-  let structureinput = document.getElementById("structure").value
-  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
-  layers = structure.length
-  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
+//  let structureinput = document.getElementById("structure").value
+//  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+//  layers = structure.length
+//  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
   structure.push(0)
   
   learnrate = Number(document.getElementById("learnrate").value)
