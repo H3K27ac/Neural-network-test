@@ -10,8 +10,8 @@ var layers = 0;
 
 let neuroncount = 0;
 let weightcount = 0;
-let weightrange;
-let biasrange;
+let weightrange = 1;
+let biasrange = 1;
 
 let learnrate = 0;
 
@@ -169,31 +169,14 @@ function Randomize() {
 
 function SetInputs() {
   let container = document.getElementById("container")
-//  let structureinput = document.getElementById("structure").value
-//  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
-//  layers = structure.length
-//  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
-  structure.push(0)
   
-//  learnrate = Number(document.getElementById("learnrate").value)
-//  weightrange = document.getElementById("weightrange").value
-//  biasrange = document.getElementById("biasrange").value
+  learnrate = Number(document.getElementById("learnrate").value)
+  weightrange = document.getElementById("weightrange").value
+  biasrange = document.getElementById("biasrange").value
 //  l1strength = document.getElementById("L1strength").value
 //  l2strength = document.getElementById("L2strength").value
+ 
   
-  showweights = document.getElementById("showweights").checked
-  showbiases = document.getElementById("showbiases").checked
-
-  
-if (document.getElementById("showneurons").checked == true) {
-    showneurons = "all"
-  } else {
-    showneurons = "output"
-  }
-  
-  hiddenactivation = String(document.getElementById("hiddenactivation").value).trim()
-  outputactivation = String(document.getElementById("outputactivation").value).trim()
-
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i]
     structure2.push(neuroncount)
@@ -201,6 +184,16 @@ if (document.getElementById("showneurons").checked == true) {
       weightcount += structure[i] * structure[i-1]
       structure3.push(weightcount)
     }
+  }
+
+  if (neuroncount < 100) {
+    showweights = true
+    showbiases = true
+    showneurons = "all"
+  } else {
+    showweights = false
+    showbiases = false
+    showneurons = "output"
   }
 
   neurons = new Float32Array(neuroncount).fill(0)
