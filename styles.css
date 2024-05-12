@@ -15,9 +15,13 @@ body {
 }
 
 .header {
+  height: 50px;
+  width: 400px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin: 0px auto;
 }
 
 .input {
