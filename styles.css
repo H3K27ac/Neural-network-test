@@ -64,6 +64,7 @@ th, td {
   font-size: 15px;
   color: black;
   background-color: lightgray;
+  display: flex;
   padding: 5px;
   border: 1px solid white;
   height: 40px;
