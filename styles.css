@@ -12,11 +12,16 @@ body {
 
 .Tab {
   padding: 20px;
+  display: none;
 }
 
-.header {
+.Created {
+  display: none;
+}
+
+.Header {
   height: 50px;
-  width: 400px;
+  width: 800px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,7 +29,7 @@ body {
   margin: 0px auto;
 }
 
-.input {
+.Input {
   height: 20px;
   width: 100px;
   border: 1px solid black;
@@ -32,7 +37,7 @@ body {
   outline: none;
 }
 
-.maininput {
+.MainInput {
   height: 25px;
   width: 120px;
   border: 1px solid black;
@@ -40,7 +45,7 @@ body {
   outline: none;
 }
 
-.tableinput {
+.TableInput {
   width: 100px;
   height: 20px;
   background-color: white;
@@ -50,7 +55,7 @@ body {
   margin: 0px;
 }
 
-.inputheading {
+.InputHeading {
   font-size: 15px;
   border-bottom: 0px;
 }
@@ -70,7 +75,7 @@ th, td {
   text-align: center;
 }
 
-.button {
+.Button {
   font-size: 15px;
   color: black;
   background-color: lightgray;
@@ -80,17 +85,39 @@ th, td {
   width: 120px;
 }
 
-.smallbutton {
-  font-size: 5px;
-  color: black;
-  background-color: lightgray;
-  padding: 2px;
-  border: 1px solid white;
-  height: 20px;
-  width: 20px;
+.MainDisplay {
+  height: 100px;
+  width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto;
 }
 
-.inputcontainer {
+.Display {
+  height: 50px;
+  width: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto;
+}
+
+.SubDisplay {
+  height: 50px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto;
+}
+
+.DisplayText {
+  font-size: 10px;
+  color: white;
+}
+
+.InputContainer {
   position: relative;
   height: 400px;
   width: 1000px;
@@ -102,13 +129,7 @@ th, td {
   padding: 20px auto;
 }
 
-.errortext {
-  display: none;
-  font-size: 200px;
-  color: red;
-}
-
-.container {
+.Container {
   position: relative;
   height: 600px;
   width: 800px;
@@ -120,14 +141,14 @@ th, td {
   margin: 0px auto;
 }
 
-.column {
+.Column {
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 10px;
 }
 
-.dots {
+.Dots {
   height: 2px;
   width: 2px;
   border: 0px solid white;
@@ -136,7 +157,7 @@ th, td {
   margin: 10px;
 }
 
-.neuron {
+.Neuron {
   display: flex;
   justify-content: center; 
   align-items: center; 
@@ -148,12 +169,12 @@ th, td {
   z-index: 2;
 }
 
-.neuronvalue {
+.NeuronValue {
   font-size: 15px;
   color: white;
 }
 
-.neuroncontainer {
+.NeuronContainer {
   position: absolute;
   display: flex;
   justify-content: center; 
@@ -168,13 +189,13 @@ th, td {
   z-index: 3;
 }
 
-.neurontext {
+.NeuronText {
   display: inline-block;
   font-size: 10px;
   color: white;
 }
 
-.weight {
+.Weight {
   position: absolute;
   border: 0px solid white;
   background-color: white;
