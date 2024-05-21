@@ -187,15 +187,15 @@ function Create() {
     if (createready) {
       mode = "created"
       FillColor("White")
-      document.getElementbyId("edit").style.display = "none"
-      document.getElementbyId("created").style.display = "inline"
+      document.getElementbyId("editbuttons").style.display = "none"
+      document.getElementbyId("createdbuttons").style.display = "inline"
       let createbutton = document.getElementbyId("createbutton")
       createbutton.innerHTML = "Edit"
     }
   } else {
     mode = "edit"
-    document.getElementbyId("edit").style.display = "inline"
-    document.getElementbyId("created").style.display = "none"
+    document.getElementbyId("editbuttons").style.display = "inline"
+    document.getElementbyId("createdbuttons").style.display = "none"
     let createbutton = document.getElementbyId("createbutton")
     createbutton.innerHTML = "Create"
   }
