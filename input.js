@@ -5,22 +5,22 @@ var structureready = false
 function SetInputs() {
   ChangeStructure()
   let container = document.getElementById("container")
-  let lr = document.getElementById("learnrate").value
-  let wr = document.getElementById("weightrange").value
-  let br = document.getElementById("biasrange").value
+  let lr = document.getElementById("learnrate")
+  let wr = document.getElementById("weightrange")
+  let br = document.getElementById("biasrange")
   let complete = 0
 
-  if (lr === undefined || lr.trim() === "") {
+  if (lr.value === undefined || lr.value === "") {
     complete++
-    learnrate = Number(lr)
+    learnrate = Number(lr.value)
   }
-  if (wr === undefined || wr.trim() === "") {
+  if (wr.value === undefined || wr.value === "") {
     complete++
-    weightrange = wr
+    weightrange = wr.value
   }
-  if (br === undefined || br.trim() === "") {
+  if (br.value === undefined || br.value === "") {
     complete++
-    biasrange = br
+    biasrange = br.value
   }
 
   let display = document.getElementById("parameterstatus")
