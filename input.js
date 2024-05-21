@@ -47,12 +47,12 @@ function Toggle(id,c="Tab",invert=0) {
     let tab = tabs[i]
     if (tab.id === id) {
       if (invert==0) {
-        tab.style.display = "block"
+        tab.style.display = "inline"
       } else {tab.style.display = "none"}
     } else {
       if (invert==0) {
         tab.style.display = "none"
-      } else {tab.style.display = "block"}
+      } else {tab.style.display = "inline"}
     }
   }
 }
