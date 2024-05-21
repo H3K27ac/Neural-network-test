@@ -1,3 +1,6 @@
+var createready = false
+var parametersready = false
+var structureready = false
 
 function SetInputs() {
   ChangeStructure()
@@ -27,6 +30,8 @@ function SetInputs() {
   } else if (complete == 3) {
     display.innerHTML = "Parameters OK"
     display.style.color = "Green"
+    parametersready = true
+    if (structureready) createready = true
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)"
     display.style.color = "Yellow"
@@ -98,6 +103,10 @@ function ChangeStructure() {
     if (layers > 1) {
       structure.push(0)
       CreateGraph()
+      let display = document.getElementById("structurestatus")
+      display.innerHTML = "Structure OK"
+      display.style.color = "Green"
+      structureready = true
     }
   }
 }
