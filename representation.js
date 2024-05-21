@@ -8,17 +8,17 @@ var structure3 = [0];
 var targets = [];
 var layers = 0;
 
-let neuroncount = 0;
-let weightcount = 0;
-let weightrange = 1;
-let biasrange = 1;
+var neuroncount = 0;
+var weightcount = 0;
+var weightrange = 1;
+var biasrange = 1;
 
-let learnrate = 0;
+var learnrate = 0;
 
 // Visuals
-let showneurons = "all";
-let showbiases = true;
-let showweights = true;
+var showneurons = "all";
+var showbiases = true;
+var showweights = true;
 
 
 
@@ -168,7 +168,7 @@ function Randomize() {
 
 function Create() {
   SetInputs()
-  Toggle("created","HeaderButton")
+  Toggle("edit","HeaderButton",1)
   let createbutton = document.getElementbyId("createbutton")
   createbutton.innerHTML = "Edit"
   createbutton.onclick = function() {
