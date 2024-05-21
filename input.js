@@ -14,7 +14,7 @@ function SetInputs() {
     complete++
     learnrate = Number(lr)
   }
-  if (wr !== undefined && wr.trin() !== "") {
+  if (wr !== undefined && wr.trim() !== "") {
     complete++
     weightrange = wr
   }
