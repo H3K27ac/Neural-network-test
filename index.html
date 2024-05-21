@@ -11,10 +11,11 @@
   <body onload="Load()">
     <script>
       function Load() {
+        SetInput()
       }
     </script>
     <div class="header">
-      <div id="edit">
+      <div id="edit" style="display: inline;">
         <button onClick="Toggle('structure')" class="Button HeaderButton">Structure</button>
         <button onClick="Toggle('parameters')" class="Button HeaderButton">Parameters</button>
         <button onClick="Toggle('data')" class="Button HeaderButton">Data</button>
