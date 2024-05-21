@@ -186,11 +186,13 @@ function Create() {
   SetInputs()
   if (createready) {
     FillColor("White")
-    Toggle("edit","HeaderButton",1)
+    document.getElementbyId("edit").style.display = "none"
+    document.getElementbyId("created").style.display = "inline"
     let createbutton = document.getElementbyId("createbutton")
     createbutton.innerHTML = "Edit"
     createbutton.onclick = function() {
-      Toggle("edit","HeaderButton")
+      document.getElementbyId("edit").style.display = "inline"
+      document.getElementbyId("created").style.display = "none"
       createbutton.innerHTML = "Create"
       createbutton.onclick = function() {Create()}
     }
