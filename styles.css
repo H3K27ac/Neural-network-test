@@ -22,6 +22,7 @@ body {
 .Header {
   height: 50px;
   width: 800px;
+  border: 1px solid white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -88,6 +89,7 @@ th, td {
 .MainDisplay {
   height: 100px;
   width: 800px;
+  border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,6 +99,7 @@ th, td {
 .Display {
   height: 50px;
   width: 800px;
+  border: 1px solid white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,6 +136,7 @@ th, td {
   position: relative;
   height: 600px;
   width: 800px;
+  border: 1px solid white;
   background-color: black;
   display: flex;
   flex-direction: row;
