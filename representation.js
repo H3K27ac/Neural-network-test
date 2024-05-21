@@ -21,7 +21,6 @@ var showbiases = true;
 var showweights = true;
 
 
-
 function DeleteGraph() {
   clearInterval(training);
   training = undefined;
