@@ -1,10 +1,37 @@
 
 function SetInputs() {
+  ChangeStructure()
   let container = document.getElementById("container")
+  let lr = document.getElementById("learnrate").value
+  let wr = document.getElementById("weightrange").value
+  let br = document.getElementById("biasrange").value
+  let complete = 0
+
+  if (lr === undefined || lr.trim() === "") {
+    complete++
+    learnrate = Number(lr)
+  }
+  if (wr === undefined || wr.trim() === "") {
+    complete++
+    weightrange = wr
+  }
+  if (br === undefined || br.trim() === "") {
+    complete++
+    biasrange = br
+  }
+
+  let display = document.getElementById("parameterstatus")
+  if (complete == 0) {
+    display.innerHTML = "Missing Parameters"
+    display.style.color = "Red"
+  } else if (complete == 3) {
+    display.innerHTML = "Parameters OK"
+    display.style.color = "Green"
+  } else {
+    display.innerHTML = "Incomplete Parameters (" + complete + "/3)"
+    display.style.color = "Yellow"
+  }
   
-  learnrate = Number(document.getElementById("learnrate").value)
-  weightrange = document.getElementById("weightrange").value
-  biasrange = document.getElementById("biasrange").value
 //  l1strength = document.getElementById("L1strength").value
 //  l2strength = document.getElementById("L2strength").value
  
@@ -37,6 +64,7 @@ function SetInputs() {
   document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Weights: " + weightcount
   document.getElementById("layercount").innerHTML = "Layers: " + layers
+  
 }
 
 function Toggle(id,c="Tab",invert=0) {
@@ -59,11 +87,17 @@ function Toggle(id,c="Tab",invert=0) {
 
 function ChangeStructure() {
   let structureinput = document.getElementById("structureinput").value
-  structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
-  layers = structure.length
-  document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
-  if (layers > 1) {
-    structure.push(0)
-    CreateGraph()
+  if (structureinput === undefined || structureinput.trim() === "") {
+    let display = document.getElementById("structurestatus")
+    display.innerHTML = "Missing Structure"
+    display.style.color = "Red"
+  } else {
+    structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+    layers = structure.length
+    document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
+    if (layers > 1) {
+      structure.push(0)
+      CreateGraph()
+    }
   }
 }
