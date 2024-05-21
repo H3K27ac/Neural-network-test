@@ -186,17 +186,17 @@ function Create() {
     SetInputs()
     if (createready) {
       FillColor("White")
-      let createbutton = document.getElementbyId("createbutton")
+      let createbutton = document.getElementById("createbutton")
       createbutton.innerHTML = "Edit"
-      document.getElementbyId("editbuttons").style.display = "none"
-      document.getElementbyId("createdbuttons").style.display = "inline"
+      document.getElementById("editbuttons").style.display = "none"
+      document.getElementById("createdbuttons").style.display = "inline"
       mode = "created"
     }
   } else {
-    let createbutton = document.getElementbyId("createbutton")
+    let createbutton = document.getElementById("createbutton")
     createbutton.innerHTML = "Create"
-    document.getElementbyId("editbuttons").style.display = "inline"
-    document.getElementbyId("createdbuttons").style.display = "none"
+    document.getElementById("editbuttons").style.display = "inline"
+    document.getElementById("createdbuttons").style.display = "none"
     mode = "edit"
   }
 }
