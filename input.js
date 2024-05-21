@@ -31,10 +31,16 @@ function SetInputs() {
     display.innerHTML = "Parameters OK"
     display.style.color = "Green"
     parametersready = true
-    if (structureready) createready = true
+    if (structureready) {
+      createready = true
+      FillColor("Green")
+    }
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)"
     display.style.color = "Yellow"
+  }
+  if (structureready && !createready) {
+    FillColor("Red")
   }
   
 //  l1strength = document.getElementById("L1strength").value
