@@ -108,7 +108,7 @@ th, td {
 
 .SubDisplay {
   height: 50px;
-  width: 200px;
+  width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,7 +116,7 @@ th, td {
 }
 
 .DisplayText {
-  font-size: 10px;
+  font-size: 25px;
   color: white;
 }
 
