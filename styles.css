@@ -16,11 +16,10 @@ body {
   width: 400px;
   border: 1px solid white;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 5px;
   margin: 0px auto;
-  display: none;
 }
 
 .Created {
@@ -94,8 +93,8 @@ th, td {
 
 .Button {
   font-size: 15px;
-  color: black;
-  background-color: lightgray;
+  color: white;
+  background-color: black;
   padding: 5px;
   border: 1px solid white;
   height: 40px;
