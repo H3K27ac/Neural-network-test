@@ -35,6 +35,9 @@ function SetInputs() {
     if (structureready) {
       createready = true
       FillColor("Green")
+      let display2 = document.getElementById("readystatus")
+      display2.innerHTML = "Ready for Creation"
+      display2.style.color = "Green"
     }
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)"
@@ -110,7 +113,7 @@ function ChangeStructure() {
       display.style.color = "Green"
       structureready = true
     } else {
-      display.innerHTML = "ERROR: Malformed structure"
+      display.innerHTML = "ERROR: Malformed Structure"
       display.style.color = "Red"
     }
   }
