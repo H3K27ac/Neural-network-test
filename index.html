@@ -11,7 +11,7 @@
   <body onload="Load()">
     <script>
       function Load() {
-        Toggle("edit","HeaderButton",0)
+        Toggle("edit","HeaderButton")
       }
     </script>
     <div class="header">
@@ -46,6 +46,9 @@
     <div id="inputfield"></div>
     <div id="main">
       <div class="MainDisplay">
+        <span class="DisplayText" id="structurestatus"></span>
+        <br>
+        <span class="DisplayText" id="parameterstatus"></span>
       </div>
       <div class="Display">
         <div class="SubDisplay"><span class="DisplayText" id="layercount"></span></div>
