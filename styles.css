@@ -88,7 +88,7 @@ th, td {
 }
 
 .MainDisplay {
-  height: 100px;
+  height: 80px;
   width: 800px;
   border: 1px solid white;
   display: flex;
@@ -117,7 +117,7 @@ th, td {
 }
 
 .DisplayText {
-  font-size: 25px;
+  font-size: 20px;
   color: white;
 }
 
@@ -175,6 +175,7 @@ th, td {
 }
 
 .NeuronValue {
+  font-family: 'Times New Roman', serif;
   font-size: 15px;
   color: white;
 }
