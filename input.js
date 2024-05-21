@@ -1,3 +1,4 @@
+var mode = "edit"
 var createready = false
 var parametersready = false
 var structureready = false
@@ -94,8 +95,8 @@ function Toggle(id,c="Tab") {
 
 function ChangeStructure() {
   let structureinput = document.getElementById("structureinput").value
+  let display = document.getElementById("structurestatus")
   if (structureinput === undefined || structureinput.trim() === "") {
-    let display = document.getElementById("structurestatus")
     display.innerHTML = "Missing Structure"
     display.style.color = "Red"
   } else {
@@ -105,10 +106,12 @@ function ChangeStructure() {
     if (layers > 1) {
       structure.push(0)
       CreateGraph()
-      let display = document.getElementById("structurestatus")
       display.innerHTML = "Structure OK"
       display.style.color = "Green"
       structureready = true
+    } else {
+      display.innerHTML = "ERROR: Malformed structure"
+      display.style.color = "Red"
     }
   }
 }
