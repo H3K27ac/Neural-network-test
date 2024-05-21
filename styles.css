@@ -12,7 +12,14 @@ body {
 }
 
 .Tab {
-  padding: 20px;
+  height: 200px;
+  width: 400px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 0px auto;
   display: none;
 }
 
