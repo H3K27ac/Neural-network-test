@@ -184,13 +184,16 @@ function Randomize() {
 
 function Create() {
   SetInputs()
-  Toggle("edit","HeaderButton",1)
-  let createbutton = document.getElementbyId("createbutton")
-  createbutton.innerHTML = "Edit"
-  createbutton.onclick = function() {
-    Toggle("edit","HeaderButton")
-    createbutton.innerHTML = "Create"
-    createbutton.onclick = function() {Create()}
+  if (createready) {
+    FillColor("White")
+    Toggle("edit","HeaderButton",1)
+    let createbutton = document.getElementbyId("createbutton")
+    createbutton.innerHTML = "Edit"
+    createbutton.onclick = function() {
+      Toggle("edit","HeaderButton")
+      createbutton.innerHTML = "Create"
+      createbutton.onclick = function() {Create()}
+    }
   }
 }
 
