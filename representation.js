@@ -134,22 +134,17 @@ function UpdateColor() {
 
 
 function FillColour(colour) {
-  let container = document.getElementById("container").children
-  let i2 = container.length
+  let elements = document.getElementsByClassName("Neuron")
+  let i2 = elements.length
   for (let i = 0; i < i2; i++) {
-    let element = container[i]
-    if (element.className == "Weight") {
-      element.style.backgroundColor = color
-    } else if (element.className == "Column") {
-      let column = element.children
-      let j2 = column.length
-      for (let j = 0; j < j2; j++) {
-        let element2 = column[j]
-        if (element2.className == "Neuron") {
-          element2.style.borderColor = color
-        }
-      }
-    }
+    let element = elements[i]
+    element.style.borderColor = color
+  }
+  elements = document.getElementsByClassName("Weight")
+  i2 = elements.length
+  for (let i = 0; i < i2; i++) {
+    let element = elements[i]
+    element.style.backgroundColor = color
   }
 }
 
