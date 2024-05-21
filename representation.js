@@ -167,72 +167,32 @@ function Randomize() {
 }
 
 
-function SetInputs() {
-  let container = document.getElementById("container")
-  
-  learnrate = Number(document.getElementById("learnrate").value)
-  weightrange = document.getElementById("weightrange").value
-  biasrange = document.getElementById("biasrange").value
-//  l1strength = document.getElementById("L1strength").value
-//  l2strength = document.getElementById("L2strength").value
- 
-  
-  for (let i=0; i<layers; i++) {
-    neuroncount += structure[i]
-    structure2.push(neuroncount)
-    if (i>0) { 
-      weightcount += structure[i] * structure[i-1]
-      structure3.push(weightcount)
-    }
-  }
-
-  if (neuroncount < 100) {
-    showweights = true
-    showbiases = true
-    showneurons = "all"
-  } else {
-    showweights = false
-    showbiases = false
-    showneurons = "output"
-  }
-
-  neurons = new Float32Array(neuroncount).fill(0)
-  neurons2 = new Float32Array(neuroncount+1).fill(0)
-  weights = new Float32Array(weightcount+1).fill(0)
-  biases = new Float32Array(neuroncount+1).fill(0)
-  targets = new Float32Array(structure[layers-1]).fill(0)
-  
-  document.getElementById("neuroncount").innerHTML = "Number of neurons: " + neuroncount
-  document.getElementById("weightcount").innerHTML = "Number of weights: " + weightcount
-  document.getElementById("layercount").innerHTML = "Number of layers: " + layers
-}
-
 function CreateGraph() {
   DeleteGraph()
   SetInputs()
   
-  for (let i=0; i<structure[0]; i++) {
-    let input = document.createElement("input")
-    input.className = "input"
-    input.id = "input " + i
-    document.getElementById("inputfield").appendChild(input)
-  }
+//  for (let i=0; i<structure[0]; i++) {
+//    let input = document.createElement("input")
+//    input.className = "Input"
+//    input.id = "input " + i
+//    document.getElementById("inputfield").appendChild(input)
+//  }
   
   for (let i=0; i<layers; i++) {
     let column;
     if (showneurons == "all") {
     column = document.createElement("div")
-    column.className = "column"
+    column.className = "Column"
     column.id = "column " + i
     }
     let j2 = structure[i]
     for (let j=0; j<j2; j++) {
       if (showneurons == "all" || i==layers-1) {
       let neuron = document.createElement("div")
-      neuron.className = "neuron"
+      neuron.className = "Neuron"
       neuron.id = "neuron " + i + "," + j
       let neuronvalue = document.createElement("span")
-      neuronvalue.className = "neuronvalue"
+      neuronvalue.className = "NeuronValue"
       neuronvalue.id = "neuronvalue " + i + "," + j
       neuron.appendChild(neuronvalue)
         if (showneurons == "all") {
@@ -255,7 +215,7 @@ function CreateGraph() {
       for (let k=0; k<k2; k++) {
         if (showweights) {
         let weight = document.createElement("div")
-        weight.className = "weight"
+        weight.className = "Weight"
         weight.id = "weight " + (i+1) + "," + j + "," + k
         let neuron1 = document.getElementById("neuron " + i + "," + k)
         let neuron2 = document.getElementById("neuron " + (i+1) + "," + j)
