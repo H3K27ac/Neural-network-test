@@ -37,7 +37,6 @@ function SetInputs() {
   document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount
   document.getElementById("weightcount").innerHTML = "Weights: " + weightcount
   document.getElementById("layercount").innerHTML = "Layers: " + layers
-  UpdateMainDisplay()
 }
 
 function Toggle(id,c="Tab",invert=0) {
