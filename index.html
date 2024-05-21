@@ -11,19 +11,19 @@
   <body onload="Load()">
     <script>
       function Load() {
-        Toggle("structure")
+        Toggle("structure","Tab","flex")
       }
     </script>
     <div class="header">
       <div id="editbuttons">
-        <button onClick="Toggle('structure')" class="Button HeaderButton">Structure</button>
-        <button onClick="Toggle('parameters')" class="Button HeaderButton">Parameters</button>
-        <button onClick="Toggle('data')" class="Button HeaderButton">Data</button>
+        <button onClick="Toggle('structure','Tab','flex')" class="Button">Structure</button>
+        <button onClick="Toggle('parameters','Tab','flex')" class="Button">Parameters</button>
+        <button onClick="Toggle('data','Tab','flex')" class="Button">Data</button>
       </div>
       <div id="createdbuttons">
-        <button onClick="ManualFF()" class="Button HeaderButton">Manual</button>
-        <button onClick="Randomize()" class="Button HeaderButton">Random</button>
-        <button onClick="ToggleTraining()" class="Button HeaderButton" id="training">Start training</button>
+        <button onClick="ManualFF()" class="Button">Manual</button>
+        <button onClick="Randomize()" class="Button">Random</button>
+        <button onClick="ToggleTraining()" class="Button" id="training">Start training</button>
       </div>
       <button onClick="Create()" class="Button" id="createbutton">Create</button>
     </div>
@@ -53,6 +53,8 @@
         <div id="editdisplay">
           <div><span class="DisplayText" id="structurestatus"></span></div>
           <div><span class="DisplayText" id="parameterstatus"></span></div>
+        </div>
+        <div id=createddisplay">
         </div>
       </div>
       <div class="Display">
