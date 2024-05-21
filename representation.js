@@ -132,6 +132,26 @@ function UpdateColor() {
 }
 }
 
+
+function FillColour(colour) {
+  let container = document.getElementById("container").children
+  let i2 = container.length
+  for (let i = 0; i < i2; i++) {
+    let element = container[i]
+    if (element.className == "Weight") {
+      element.style.backgroundColor = color
+    } else if (element.className == "Column") {
+      let column = element.children
+      let j2 = column.length
+      for (let j = 0; j < j2; j++) {
+        if (element.className == "Neuron") {
+          element.style.borderColor = color
+        }
+      }
+    }
+  }
+}
+
 function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     let j2 = structure[i]
