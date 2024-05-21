@@ -185,19 +185,19 @@ function Create() {
   if (mode == "edit") {
     SetInputs()
     if (createready) {
-      mode = "created"
       FillColor("White")
-      document.getElementbyId("editbuttons").style.display = "none"
-      document.getElementbyId("createdbuttons").style.display = "inline"
       let createbutton = document.getElementbyId("createbutton")
       createbutton.innerHTML = "Edit"
+      document.getElementbyId("editbuttons").style.display = "none"
+      document.getElementbyId("createdbuttons").style.display = "inline"
+      mode = "created"
     }
   } else {
-    mode = "edit"
-    document.getElementbyId("editbuttons").style.display = "inline"
-    document.getElementbyId("createdbuttons").style.display = "none"
     let createbutton = document.getElementbyId("createbutton")
     createbutton.innerHTML = "Create"
+    document.getElementbyId("editbuttons").style.display = "inline"
+    document.getElementbyId("createdbuttons").style.display = "none"
+    mode = "edit"
   }
 }
 
