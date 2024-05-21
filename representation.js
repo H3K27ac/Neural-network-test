@@ -166,10 +166,20 @@ function Randomize() {
   }
 }
 
+function Create() {
+  SetInputs()
+  Toggle("created","HeaderButton")
+  let createbutton = document.getElementbyId("createbutton")
+  createbutton.innerHTML = "Edit"
+  createbutton.onclick = function() {
+    Toggle("edit","HeaderButton")
+    createbutton.innerHTML = "Create"
+    createbutton.onclick = function() {Create()}
+  }
+}
 
 function CreateGraph() {
   DeleteGraph()
-  SetInputs()
   
 //  for (let i=0; i<structure[0]; i++) {
 //    let input = document.createElement("input")
