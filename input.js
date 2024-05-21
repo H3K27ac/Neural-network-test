@@ -40,16 +40,20 @@ function SetInputs() {
   UpdateMainDisplay()
 }
 
-function Toggle(id,c="Tab") {
+function Toggle(id,c="Tab",invert=0) {
   SetInputs()
   let tabs = document.getElementsByClassName(c) 
   let i2 = tabs.length
   for (let i = 0; i < i2; i++) {
     let tab = tabs[i]
     if (tab.id === id) {
-      tab.style.display = "block"
+      if (invert==0) {
+        tab.style.display = "block"
+      } else {tab.style.display = "none"}
     } else {
-      tab.style.display = "none"
+      if (invert==0) {
+        tab.style.display = "none"
+      } else {tab.style.display = "block"}
     }
   }
 }
