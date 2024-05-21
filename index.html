@@ -15,12 +15,16 @@
       }
     </script>
     <div class="header">
-      <button onClick="Toggle('structure')" class="Button HeaderButton" id="edit">Structure</button>
-      <button onClick="Toggle('parameters')" class="Button HeaderButton" id="edit">Parameters</button>
-      <button onClick="Toggle('data')" class="Button HeaderButton" id="edit">Data</button>
-      <button onClick="ManualFF()" class="Button HeaderButton">Manual</button>
-      <button onClick="Randomize()" class="Button HeaderButton">Random</button>
-      <button onClick="ToggleTraining()" class="Button HeaderButton" id="training">Start training</button>
+      <div id="edit">
+        <button onClick="Toggle('structure')" class="Button HeaderButton">Structure</button>
+        <button onClick="Toggle('parameters')" class="Button HeaderButton">Parameters</button>
+        <button onClick="Toggle('data')" class="Button HeaderButton">Data</button>
+      </div>
+      <div id="created">
+        <button onClick="ManualFF()" class="Button HeaderButton">Manual</button>
+        <button onClick="Randomize()" class="Button HeaderButton">Random</button>
+        <button onClick="ToggleTraining()" class="Button HeaderButton" id="training">Start training</button>
+      </div>
       <button onClick="Create()" class="Button" id="createbutton">Create</button>
     </div>
     <div class="Tab" id="structure">
