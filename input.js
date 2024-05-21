@@ -10,15 +10,15 @@ function SetInputs() {
   let br = document.getElementById("biasrange")
   let complete = 0
 
-  if (lr.value === undefined || lr.value === "") {
+  if (lr.value !== undefined && lr.trim().value !== "") {
     complete++
     learnrate = Number(lr.value)
   }
-  if (wr.value === undefined || wr.value === "") {
+  if (wr.value !== undefined || wr.trin().value !== "") {
     complete++
     weightrange = wr.value
   }
-  if (br.value === undefined || br.value === "") {
+  if (br.value !== undefined || br.trim().value !== "") {
     complete++
     biasrange = br.value
   }
