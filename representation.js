@@ -133,7 +133,7 @@ function UpdateColor() {
 }
 
 
-function FillColour(colour) {
+function FillColor(color) {
   let elements = document.getElementsByClassName("Neuron")
   let i2 = elements.length
   for (let i = 0; i < i2; i++) {
