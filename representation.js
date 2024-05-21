@@ -144,8 +144,9 @@ function FillColour(colour) {
       let column = element.children
       let j2 = column.length
       for (let j = 0; j < j2; j++) {
-        if (element.className == "Neuron") {
-          element.style.borderColor = color
+        let element2 = column[j]
+        if (element2.className == "Neuron") {
+          element2.style.borderColor = color
         }
       }
     }
