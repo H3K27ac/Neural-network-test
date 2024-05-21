@@ -182,19 +182,22 @@ function Randomize() {
 }
 
 function Create() {
-  SetInputs()
-  if (createready) {
-    FillColor("White")
-    document.getElementbyId("edit").style.display = "none"
-    document.getElementbyId("created").style.display = "inline"
-    let createbutton = document.getElementbyId("createbutton")
-    createbutton.innerHTML = "Edit"
-    createbutton.onclick = function() {
-      document.getElementbyId("edit").style.display = "inline"
-      document.getElementbyId("created").style.display = "none"
-      createbutton.innerHTML = "Create"
-      createbutton.onclick = function() {Create()}
+  if (mode == "edit") {
+    SetInputs()
+    if (createready) {
+      mode = "created"
+      FillColor("White")
+      document.getElementbyId("edit").style.display = "none"
+      document.getElementbyId("created").style.display = "inline"
+      let createbutton = document.getElementbyId("createbutton")
+      createbutton.innerHTML = "Edit"
     }
+  } else {
+    mode = "edit"
+    document.getElementbyId("edit").style.display = "inline"
+    document.getElementbyId("created").style.display = "none"
+    let createbutton = document.getElementbyId("createbutton")
+    createbutton.innerHTML = "Create"
   }
 }
 
