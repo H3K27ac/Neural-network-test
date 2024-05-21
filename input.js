@@ -78,20 +78,16 @@ function SetInputs() {
   
 }
 
-function Toggle(id,c="Tab",invert=0) {
+function Toggle(id,c="Tab") {
   SetInputs()
   let tabs = document.getElementsByClassName(c) 
   let i2 = tabs.length
   for (let i = 0; i < i2; i++) {
     let tab = tabs[i]
     if (tab.id === id) {
-      if (invert==0) {
-        tab.style.display = "inline"
-      } else {tab.style.display = "none"}
+      tab.style.display = "inline"
     } else {
-      if (invert==0) {
-        tab.style.display = "none"
-      } else {tab.style.display = "inline"}
+      tab.style.display = "none"
     }
   }
 }
