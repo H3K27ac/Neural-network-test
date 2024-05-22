@@ -216,11 +216,9 @@ function ChangeStructure() {
 
 function ToggleHelp(id) {
   let helpdiv = document.getElementById(id);
-  if (helpdiv.style.display == "none") {
-    currenthelpdiv = id;
-    helpdiv.style.display = "flex";
-    setTimeout(() => document.addEventListener("click", HideHelp), 1);
-  }
+  currenthelpdiv = id;
+  helpdiv.style.display = "flex";
+  setTimeout(() => document.addEventListener("click", HideHelp), 1)
 }
 
 function HideHelp(event) {
