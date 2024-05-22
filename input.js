@@ -1,120 +1,147 @@
-var mode = "edit"
-var createready = false
-var parametersready = false
-var structureready = false
+var mode = "edit";
+var createready = false;
+var parametersready = false;
+var structureready = false;
+var CurrentHelpDiv = "";
 
 function SetInputs() {
-  ChangeStructure()
-  let container = document.getElementById("container")
-  let lr = document.getElementById("learnrate").value
-  let wr = document.getElementById("weightrange").value
-  let br = document.getElementById("biasrange").value
-  let complete = 0
+  ChangeStructure();
+  let container = document.getElementById("container");
+  let lr = document.getElementById("learnrate").value;
+  let wr = document.getElementById("weightrange").value;
+  let br = document.getElementById("biasrange").value;
+  let complete = 0;
 
   if (lr !== undefined && lr.trim() !== "") {
-    complete++
-    learnrate = Number(lr)
+    complete++;
+    learnrate = Number(lr);
   }
   if (wr !== undefined && wr.trim() !== "") {
-    complete++
-    weightrange = wr
+    complete++;
+    weightrange = wr;
   }
   if (br !== undefined && br.trim() !== "") {
-    complete++
-    biasrange = br
+    complete++;
+    biasrange = br;
   }
 
-  let display = document.getElementById("parameterstatus")
+  let display = document.getElementById("parameterstatus");
   if (complete == 0) {
-    display.innerHTML = "Missing Parameters"
-    display.style.color = "Red"
+    display.innerHTML = "Missing Parameters";
+    display.style.color = "Red";
   } else if (complete == 3) {
-    display.innerHTML = "Parameters OK"
-    display.style.color = "Green"
-    parametersready = true
+    display.innerHTML = "Parameters OK";
+    display.style.color = "Green";
+    parametersready = true;
     if (structureready) {
-      createready = true
-      FillColor("Green")
-      let display2 = document.getElementById("readystatus")
-      display2.innerHTML = "Ready for Creation"
-      display2.style.color = "Green"
+      createready = true;
+      FillColor("Green");
+      let display2 = document.getElementById("readystatus");
+      display2.innerHTML = "Ready for Creation";
+      display2.style.color = "Green";
     }
   } else {
-    display.innerHTML = "Incomplete Parameters (" + complete + "/3)"
-    display.style.color = "Yellow"
+    display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
+    display.style.color = "Yellow";
   }
   if (structureready && !createready) {
-    FillColor("Red")
+    FillColor("Red");
   }
   
-//  l1strength = document.getElementById("L1strength").value
-//  l2strength = document.getElementById("L2strength").value
+//  l1strength = document.getElementById("L1strength").value;
+//  l2strength = document.getElementById("L2strength").value;
  
   
   for (let i=0; i<layers; i++) {
-    neuroncount += structure[i]
-    structure2.push(neuroncount)
+    neuroncount += structure[i];
+    structure2.push(neuroncount);
     if (i>0) { 
-      weightcount += structure[i] * structure[i-1]
-      structure3.push(weightcount)
+      weightcount += structure[i] * structure[i-1];
+      structure3.push(weightcount);
     }
   }
 
   if (neuroncount < 100) {
-    showweights = true
-    showbiases = true
-    showneurons = "all"
+    showweights = true;
+    showbiases = true;
+    showneurons = "all";
   } else {
-    showweights = false
-    showbiases = false
-    showneurons = "output"
+    showweights = false;
+    showbiases = false;
+    showneurons = "output";
   }
 
-  neurons = new Float32Array(neuroncount).fill(0)
-  neurons2 = new Float32Array(neuroncount+1).fill(0)
-  weights = new Float32Array(weightcount+1).fill(0)
-  biases = new Float32Array(neuroncount+1).fill(0)
-  targets = new Float32Array(structure[layers-1]).fill(0)
+  neurons = new Float32Array(neuroncount).fill(0);
+  neurons2 = new Float32Array(neuroncount+1).fill(0);
+  weights = new Float32Array(weightcount+1).fill(0);
+  biases = new Float32Array(neuroncount+1).fill(0);
+  targets = new Float32Array(structure[layers-1]).fill(0);
   
-  document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount
-  document.getElementById("weightcount").innerHTML = "Weights: " + weightcount
-  document.getElementById("layercount").innerHTML = "Layers: " + layers
+  document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount;
+  document.getElementById("weightcount").innerHTML = "Weights: " + weightcount;
+  document.getElementById("layercount").innerHTML = "Layers: " + layers;
   
 }
 
 function Toggle(id,c="Tab",type="inline") {
-  SetInputs()
-  let tabs = document.getElementsByClassName(c) 
-  let i2 = tabs.length
+  SetInputs();
+  let tabs = document.getElementsByClassName(c);
+  let i2 = tabs.length;
   for (let i = 0; i < i2; i++) {
-    let tab = tabs[i]
+    let tab = tabs[i];
     if (tab.id === id) {
-      tab.style.display = type
+      tab.style.display = type;
     } else {
-      tab.style.display = "none"
+      tab.style.display = "none";
     }
   }
 }
 
 function ChangeStructure() {
-  let structureinput = document.getElementById("structureinput").value
-  let display = document.getElementById("structurestatus")
+  let structureinput = document.getElementById("structureinput").value;
+  let display = document.getElementById("structurestatus");
   if (structureinput === undefined || structureinput.trim() === "") {
-    display.innerHTML = "Missing Structure"
-    display.style.color = "Red"
+    display.innerHTML = "Missing Structure";
+    display.style.color = "Red";
   } else {
     structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
-    layers = structure.length
-    document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure)
+    layers = structure.length;
+    document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
     if (layers > 1) {
-      structure.push(0)
-      CreateGraph()
-      display.innerHTML = "Structure OK"
-      display.style.color = "Green"
-      structureready = true
+      structure.push(0);
+      CreateGraph();
+      display.innerHTML = "Structure OK";
+      display.style.color = "Green";
+      structureready = true;
     } else {
-      display.innerHTML = "ERROR: Malformed Structure"
-      display.style.color = "Red"
+      display.innerHTML = "ERROR: Malformed Structure";
+      display.style.color = "Red";
     }
+  }
+}
+
+function ToggleHelp(id) {
+  if (CurrentHelpDiv !== "" && CurrentHelpDiv !== id) {
+    let PreviousHelpDiv = document.getElementById(CurrentHelpDiv);
+    PreviousHelpDiv.style.display = "none";
+    document.removeEventListener("click", HideHelp);
+  }
+  CurrentHelpDiv = id;
+  let HelpDiv = document.getElementById(id);
+  if (HelpDiv.style.display === "none") {
+    HelpDiv.style.display = "block";
+    document.addEventListener("click", HideHelp);
+  } else {
+    CurrentHelpDiv = "";
+    HelpDiv.style.display = "none";
+    document.removeEventListener("click", HideHelp);
+  }
+}
+
+function HideHelp(event) {
+  let HelpDiv = document.getElementById(CurrentHelpDiv);
+  if (!HelpDiv.contains(event.target)) {
+    HelpDiv.style.display = "none";
+    document.removeEventListener("click", HideHelp);
   }
 }
