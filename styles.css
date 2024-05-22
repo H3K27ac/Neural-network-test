@@ -75,9 +75,9 @@ body {
 }
 
 .HelpButton {
-  width: 20px;
-  height: 20px;
-  font-size: 8px;
+  width: 25px;
+  height: 25px;
+  font-size: 10px;
   color: white;
   background-color: black;
   border: 1px solid white;
@@ -85,6 +85,7 @@ body {
 }
 
 .HelpDivContainer {
+  display: inline;
   position: relative;
 }
 
@@ -95,12 +96,21 @@ body {
   justify-content: center;
   align-items: center;
   background-color: black;
+  color: white;
   top: 20px; 
   left: 20px;
   width: 200px;
   height: 200px;
   padding: 5px;
   border: 1px solid white;
+}
+
+.HelpTitle {
+  font-size: 25px;
+}
+
+.HelpText {
+  font-size: 15px;
 }
 
 th, td {
