@@ -7,6 +7,7 @@ var currenthelpdiv = "";
 function SetInputs() {
   ChangeStructure();
   let container = document.getElementById("container");
+  let createbutton = document.getElementById("createbutton");
   let lr = document.getElementById("learnrate").value;
   let wr = document.getElementById("weightrange").value;
   let br = document.getElementById("biasrange").value;
@@ -39,6 +40,8 @@ function SetInputs() {
       let display2 = document.getElementById("readystatus");
       display2.innerHTML = "Ready for Creation";
       display2.style.color = "Green";
+      createbutton.style.borderColor = "Green";
+      createbutton.style.color = "Green";
     }
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
@@ -50,8 +53,10 @@ function SetInputs() {
   
 //  l1strength = document.getElementById("L1strength").value;
 //  l2strength = document.getElementById("L2strength").value;
- 
-  
+  InitializeValues()
+}
+
+function InitializeValues() {
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
