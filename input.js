@@ -3,6 +3,7 @@ var createready = false;
 var parametersready = false;
 var structureready = false;
 var showstatus = true;
+var previousstructure = [];
 var currenthelpdiv;
 var currenttab;
 
@@ -86,7 +87,10 @@ function SetInputs() {
   InitializeValues();
   if (structureready) {
     structure.push(0);
-    CreateGraph();
+    if (structure != previousstructure) {
+      CreateGraph();
+      previousstructure = structure;
+    }
   }
   let container = document.getElementById("container");
   let createbutton = document.getElementById("createbutton");
