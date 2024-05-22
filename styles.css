@@ -161,7 +161,7 @@ th, td {
   width: 800px;
   border: 1px solid white;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 5px
   padding: 5px;
@@ -173,7 +173,7 @@ th, td {
   width: 800px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 5px;
   margin: 0px auto;
@@ -215,6 +215,7 @@ th, td {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 5px;
   margin: 0px auto;
 }
 
