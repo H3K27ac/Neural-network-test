@@ -57,6 +57,7 @@ header {
 .MainInput {
   height: 25px;
   width: 120px;
+  color: white;
   background-color: black;
   border: 1px solid white;
   border-radius: 0px;
@@ -68,6 +69,7 @@ header {
 .TableInput {
   width: 100px;
   height: 20px;
+  color: white;
   background-color: black;
   border: 1px solid white;
   border-radius: 0px;
