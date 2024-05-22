@@ -1,3 +1,33 @@
+class RecursiveTimer {
+  constructor() {
+    this.timerId = null;
+    this.isRunning = false;
+  }
+
+  start(callback, delay) {
+    if (this.isRunning) return;
+    
+    this.isRunning = true;
+
+    const tick = () => {
+      if (!this.isRunning) return;
+      
+      callback();
+
+      this.timerId = setTimeout(tick, delay);
+    };
+
+    tick();
+  }
+
+  stop() {
+    if (!this.isRunning) return;
+
+    clearTimeout(this.timerId);
+    this.timerId = null;
+    this.isRunning = false;
+  }
+}
 var training = new RecursiveTimer();
 var istraining = false;
 var updategraph;
@@ -185,37 +215,6 @@ function UpdateGraph() {
   document.getElementById("performance").innerHTML = performance.toFixed(2) + "ms";
 }
 
-
-class RecursiveTimer {
-  constructor() {
-    this.timerId = null;
-    this.isRunning = false;
-  }
-
-  start(callback, delay) {
-    if (this.isRunning) return;
-    
-    this.isRunning = true;
-
-    const tick = () => {
-      if (!this.isRunning) return;
-      
-      callback();
-
-      this.timerId = setTimeout(tick, delay);
-    };
-
-    tick();
-  }
-
-  stop() {
-    if (!this.isRunning) return;
-
-    clearTimeout(this.timerId);
-    this.timerId = null;
-    this.isRunning = false;
-  }
-}
 
 function ToggleTraining() {
   let trainbutton = document.getElementById("training");
