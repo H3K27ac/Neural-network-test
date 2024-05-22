@@ -7,6 +7,10 @@ body {
   color: white;
 }
 
+button {
+  font-family: 'Courier New', monospace;
+}
+
 .section {
   padding: 20px;
 }
