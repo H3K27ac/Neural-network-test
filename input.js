@@ -5,27 +5,17 @@ var structureready = false;
 var currenthelpdiv;
 
 function Quickset() {
-  let clicks = 0;
-  let comfirmtimeout;
   let quicksetbutton = document.getElementById("quickset");
-  return function() {
-    clicks++;
-    if (clicks === 1) {
-      quicksetbutton.innerHTML = "Comfirm?";
-      quicksetbutton.style.borderColor = "Lime";
-      quicksetbutton.style.color = "Lime";
-      comfirmtimeout = setTimeout(() => {
-        clicks = 0;
-      }, 1000);
-    } else {
-      quicksetbutton.innerHTML = "Quickset";
-      quicksetbutton.style.borderColor = "White";
-      quicksetbutton.style.color = "White";
-      clearTimeout(comfirmtimeout); 
-      Create(true);
-      clicks = 0;
-    }
-  };
+  if (quicksetbutton.classList.contains("clicked")) {
+    quicksetbutton.innerHTML = "Quickset";
+    Create(true);
+  } else {
+    quicksetbutton.innerHTML = "Comfirm?";
+    quicksetbutton.classList.add("clicked");
+    setTimeout(function() {
+      quicksetbutton.classList.remove("clicked");
+    }, 1000);
+  }
 }
 
 function Create(quickset=false) {
