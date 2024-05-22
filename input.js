@@ -24,6 +24,15 @@ function Create() {
       editdisplay.style.display = "none";
       createddisplay.style.display = "flex";
       mode = "created";
+    } else {
+      createbutton.innerHTML = "Not Ready";
+      createbutton.style.borderColor = "Red";
+      createbutton.style.color = "Red";
+      setTimeout(() => {
+        createbutton.innerHTML = "Create";
+        createbutton.style.borderColor = "White";
+        createbutton.style.color = "White";
+      },1000)
     }
   } else {
     createbutton.innerHTML = "Create";
