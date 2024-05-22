@@ -165,6 +165,28 @@ th, td {
   width: 120px;
 }
 
+.ToggleButton {
+  font-size: 15px;
+  color: lime;
+  background-color: black;
+  padding: 5px;
+  border: 1px solid lime;
+  height: 20px;
+  width: 120px;
+}
+
+.ToggleBar {
+  height: 25px;
+  width: 800px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  margin: 0px auto;
+}
+
 .MainDisplay {
   height: 80px;
   width: 800px;
