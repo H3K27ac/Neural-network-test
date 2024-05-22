@@ -221,7 +221,7 @@ function ToggleHelp(id) {
   let helpdiv = document.getElementById(id);
   if (helpdiv.style.display === "none") {
     currenthelpdiv = id;
-    helpdiv.style.display = "flex";
+    helpdiv.style.display = "inline";
     setTimeout(() => document.addEventListener("click", HideHelp), 1);
   } else {
     currenthelpdiv = undefined;
