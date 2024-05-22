@@ -31,7 +31,7 @@ function Create(quickset=false) {
       DeleteGraph();
       structure = [12,10,8,11,9];
       layers = 5;
-      document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
+      document.getElementById("structuredisplay").innerHTML = "Structure: [12,10,8,11,9]";
       structure.push(0);
       InitializeValues();
       CreateGraph();
@@ -43,7 +43,7 @@ function Create(quickset=false) {
       SetInputs();
     }
     if (createready) {
-      Toggle("closeall","Tab");
+      Toggle("closeall","Tab","inline",false);
       FillColor("White");
       createbutton.innerHTML = "Edit";
       createbutton.style.borderColor = "White";
@@ -181,8 +181,8 @@ function InitializeValues() {
   document.getElementById("layercount").innerHTML = "Layers: " + layers;
 }
 
-function Toggle(id,c="Tab",type="inline") {
-  SetInputs();
+function Toggle(id,c="Tab",type="inline",input=true) {
+  if (input) SetInputs();
   let tabs = document.getElementsByClassName(c);
   let i2 = tabs.length;
   for (let i = 0; i < i2; i++) {
