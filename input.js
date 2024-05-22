@@ -28,10 +28,11 @@ function Create(quickset=false) {
   let trainbutton = document.getElementById("training");
   if (mode == "edit") {
     if (quickset) {
+      DeleteGraph();
       structure = [12,10,8,11,9];
       layers = 5;
       document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
-      DeleteGraph();
+      structure.push(0);
       InitializeValues();
       CreateGraph();
       learnrate = 0.1;
