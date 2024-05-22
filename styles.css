@@ -171,12 +171,12 @@ th, td {
   background-color: black;
   padding: 5px;
   border: 1px solid lime;
-  height: 20px;
-  width: 120px;
+  height: 25px;
+  width: 200px;
 }
 
 .ToggleBar {
-  height: 25px;
+  height: 30px;
   width: 800px;
   border: 1px solid white;
   display: flex;
