@@ -225,7 +225,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(Backprop, 100);
+    training.start(Backprop, 1);
     istraining = true;
   }
 }
