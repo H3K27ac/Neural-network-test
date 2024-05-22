@@ -62,8 +62,7 @@ header {
   border: 1px solid white;
   border-radius: 0px;
   padding: 2px;
-  outline: none;
-  margin: 0px;
+  margin: 0px auto;
 }
 
 .TableInput {
@@ -74,8 +73,7 @@ header {
   border: 1px solid white;
   border-radius: 0px;
   padding: 2px;
-  outline: none;
-  margin: 0px;
+  margin: 0px auto;
 }
 
 .InputHeading {
