@@ -96,6 +96,9 @@ function SetInputs() {
 }
 
 function InitializeValues() {
+  neuroncount = 0;
+  weightcount = 0;
+
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
