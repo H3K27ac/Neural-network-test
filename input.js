@@ -110,10 +110,10 @@ function SetInputs() {
   let error = false;
   
   if (lr !== undefined && lr.trim() !== "") {
-    if (wr > 0) {
+    learnratedisplay.innerHTML = "Learning rate: " + lr;
+    if (lr > 0) {
       complete++;
       learnrate = Number(lr);
-      learnratedisplay.innerHTML = "Learning rate: " + learnrate;
       learnratedisplay.style.color = "White";
     } else {
       learnratedisplay.style.color = "Red";
@@ -121,10 +121,10 @@ function SetInputs() {
     }
   }
   if (wr !== undefined && wr.trim() !== "") {
+    weightdisplay.innerHTML = "Weight range: " + wr;
     if (wr > 0) {
       complete++;
       weightrange = wr;
-      weightdisplay.innerHTML = "Weight range: " + weightrange;
       weightdisplay.style.color = "White";
     } else {
       weightdisplay.style.color = "Red";
@@ -132,10 +132,10 @@ function SetInputs() {
     }
   }
   if (br !== undefined && br.trim() !== "") {
+    biasdisplay.innerHTML = "Bias range: " + br;
     if (br > 0) {
       complete++;
       biasrange = br;
-      biasdisplay.innerHTML = "Bias range: " + biasrange;
       biasdisplay.style.color = "White";
     } else {
       biasdisplay.style.color = "Red";
