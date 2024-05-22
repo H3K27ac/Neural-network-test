@@ -166,6 +166,8 @@ function SetInputs() {
     }
   }
   display3.innerHTML = "";
+  createbutton.style.borderColor = "White";
+  createbutton.style.color = "White";
   if (structureready) {
     if (parametersready) {
       createready = true;
