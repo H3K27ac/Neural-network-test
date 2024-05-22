@@ -191,18 +191,26 @@ class RecursiveTimer {
     this.timerId = null;
     this.isRunning = false;
   }
+
   start(callback, delay) {
     if (this.isRunning) return;
+    
     this.isRunning = true;
+
     const tick = () => {
       if (!this.isRunning) return;
+      
       callback();
+
       this.timerId = setTimeout(tick, delay);
     };
+
     tick();
   }
+
   stop() {
     if (!this.isRunning) return;
+
     clearTimeout(this.timerId);
     this.timerId = null;
     this.isRunning = false;
