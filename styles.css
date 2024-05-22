@@ -97,11 +97,12 @@ header {
 }
 
 .HelpDivContainer {
-  display: none;
+  display: inline;
   position: relative;
 }
 
 .HelpDiv {
+  display: none;
   position: absolute;
   flex-direction: column;
   justify-content: center;
