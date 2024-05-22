@@ -2,6 +2,7 @@ var mode = "edit";
 var createready = false;
 var parametersready = false;
 var structureready = false;
+var showstatus = true;
 var currenthelpdiv;
 
 function Quickset() {
@@ -235,18 +236,33 @@ function Toggle2(id,buttonid,text) {
     } else {
       id = "createddisplay";
     }
-  }
-  let element = document.getElementById(id);
-  if (element.style.display == "none") {
-    element.style.display = "flex";
-    button.innerHTML = "Hide " + text;
-    button.style.borderColor = "Lime";
-    button.style.color = "Lime";
+    let maindisp = document.getElementById(id);
+    if (showstatus) {
+      maindisp.style.display = "none";
+      button.innerHTML = "Show " + text;
+      button.style.borderColor = "Red";
+      button.style.color = "Red";
+      showstatus = false;
+    } else {
+      maindisp.style.display = "flex";
+      button.innerHTML = "Hide " + text;
+      button.style.borderColor = "Lime";
+      button.style.color = "Lime";
+      showstatus = true;
+    }
   } else {
-    element.style.display = "none";
-    button.innerHTML = "Show " + text;
-    button.style.borderColor = "Red";
-    button.style.color = "Red";
+    let element = document.getElementById(id);
+    if (element.style.display == "none") {
+      element.style.display = "flex";
+      button.innerHTML = "Hide " + text;
+      button.style.borderColor = "Lime";
+      button.style.color = "Lime";
+    } else {
+      element.style.display = "none";
+      button.innerHTML = "Show " + text;
+      button.style.borderColor = "Red";
+      button.style.color = "Red";
+    }
   }
 }
 
