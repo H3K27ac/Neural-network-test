@@ -24,7 +24,7 @@
           <button onClick="Quickset()" class="Button ComfirmButton" id="quickset">Quickset</button>
         </div>
         <div id="createdbuttons">
-          <button onClick="ManualFF()" class="Button">Manual</button>
+          <button onClick="Toggle('manualinput','Tab','flex',false)" class="Button">Manual</button>
           <button onClick="Randomize()" class="Button">Random</button>
           <button onClick="ToggleTraining()" class="Button" id="training">Start Train</button>
         </div>
@@ -68,6 +68,14 @@
       <section class="Tab" id="data">
       </section>
       <section class="Tab" id="manualinput">
+        <button onClick="ToggleHelp('manualinputhelp')" class="HelpButton">?</button>
+        <span>Input Data</span>
+        <input type="text" class="MainInput" id="inputdata">
+        <article class="HelpDivContainer"><div class="HelpDiv" id="manualinputhelp">
+            <span class="HelpTitle">Manual Input</span>
+            <span class="HelpText">Input data manually into the neural network. Example: 0.1,0.7,0.3,1 inputs 0.1 to the 1st input neuron, 0.7 to the 2nd input neuron...</span>
+        </div></article>
+        <button onClick="SubmitInputData()" class="Button" id="submitinputdata">Input</button>
       </section>
     <!--  <div id="inputfield"></div> -->
       <section class="ToggleBar">
