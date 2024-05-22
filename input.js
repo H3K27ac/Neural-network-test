@@ -218,17 +218,12 @@ function ToggleHelp(id) {
   if (currenthelpdiv !== undefined && currenthelpdiv !== id) {
     let previoushelpdiv = document.getElementById(currenthelpdiv);
     if (previoushelpdiv) previoushelpdiv.style.display = "none";
-    document.removeEventListener("click", HideHelp);
   }
   let helpdiv = document.getElementById(id);
-  if (helpdiv.style.display === "none") {
+  if (helpdiv.style.display == "none") {
     currenthelpdiv = id;
     helpdiv.style.display = "flex";
     setTimeout(() => document.addEventListener("click", HideHelp), 1);
-  } else {
-    currenthelpdiv = undefined;
-    helpdiv.style.display = "none";
-    document.removeEventListener("click", HideHelp);
   }
 }
 
