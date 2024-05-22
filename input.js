@@ -201,8 +201,8 @@ function Toggle(id,c="Tab",type="inline",input=true) {
   }
 }
 
-function Toggle2(id,button,text) {
-  let button = document.getElementById(button);
+function Toggle2(id,buttonid,text) {
+  let button = document.getElementById(buttonid);
   if (id == "MainDisplay") {
     if (mode == "edit") {
       id = "editdisplay";
