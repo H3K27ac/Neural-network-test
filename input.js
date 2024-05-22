@@ -43,6 +43,8 @@ function Create() {
 
 function SetInputs() {
   createready = false;
+  parametersready = false;
+  structureready = false;
   ChangeStructure();
   InitializeValues();
   if (structureready) {
@@ -83,6 +85,7 @@ function SetInputs() {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
     display.style.color = "Yellow";
   }
+  display3.innerHTML = "";
   if (structureready) {
     if (parametersready) {
       createready = true;
@@ -93,10 +96,7 @@ function SetInputs() {
       createbutton.style.color = "Lime";
     } else {
       FillColor("Red");
-      display3.innerHTML = "";
     }
-  } else {
-    display3.innerHTML = "";
   }
   
 //  l1strength = document.getElementById("L1strength").value;
