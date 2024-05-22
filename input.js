@@ -222,6 +222,7 @@ function Toggle(id,c="Tab",type="inline",input=true) {
     currenttab = id;
   } else {
     document.getElementById(id).style.display = "none";
+    currenttab = undefined;
   }
 }
 
