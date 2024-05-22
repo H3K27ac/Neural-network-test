@@ -10,34 +10,39 @@ function Create() {
   let createdbuttons = document.getElementById("createdbuttons");
   let editdisplay = document.getElementById("editdisplay");
   let createddisplay = document.getElementById("createddisplay");
+  let trainbutton = document.getElementById("training");
   if (mode == "edit") {
     SetInputs();
     if (createready) {
       Toggle("closeall","Tab");
       FillColor("White");
       createbutton.innerHTML = "Edit";
+      createbutton.style.borderColor = "White";
+      createbutton.style.color = "White";
       editbuttons.style.display = "none";
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
       createddisplay.style.display = "flex";
-      createbutton.style.borderColor = "White";
-      createbutton.style.color = "White";
       mode = "created";
     }
   } else {
     createbutton.innerHTML = "Create";
+    createbutton.style.borderColor = "White";
+    createbutton.style.color = "White";
     editbuttons.style.display = "inline";
     createdbuttons.style.display = "none";
     editdisplay.style.display = "flex";
     createddisplay.style.display = "none";
-    createbutton.style.borderColor = "White";
-    createbutton.style.color = "White";
+    trainbutton.innerHTML = "Start Train";
+    trainbutton.style.borderColor = "White";
+    trainbutton.style.color = "White";
     SetInputs();
     mode = "edit";
   }
 }
 
 function SetInputs() {
+  createready = false;
   ChangeStructure();
   InitializeValues();
   if (structureready) {
@@ -48,6 +53,7 @@ function SetInputs() {
   let createbutton = document.getElementById("createbutton");
   let display = document.getElementById("parameterstatus");
   let display2 = document.getElementById("structurestatus");
+  let display3 = document.getElementById("readystatus");
   let lr = document.getElementById("learnrate").value;
   let wr = document.getElementById("weightrange").value;
   let br = document.getElementById("biasrange").value;
@@ -81,14 +87,16 @@ function SetInputs() {
     if (parametersready) {
       createready = true;
       FillColor("Lime");
-      let display3 = document.getElementById("readystatus");
       display3.innerHTML = "Ready for Creation";
       display3.style.color = "Lime";
       createbutton.style.borderColor = "Lime";
       createbutton.style.color = "Lime";
     } else {
       FillColor("Red");
+      display3.innerHTML = "";
     }
+  } else {
+    display3.innerHTML = "";
   }
   
 //  l1strength = document.getElementById("L1strength").value;
