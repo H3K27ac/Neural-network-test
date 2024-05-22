@@ -1,18 +1,18 @@
-let training;
-let traincount;
-let hiddenactivation = "Sigmoid";
-let outputactivation = "Sigmoid";
-let gradient = 0.05;
-let costcache = [0];
-let activationcache = [0];
-let activationcache2 = [0];
+var training;
+var traincount;
+var hiddenactivation = "Sigmoid";
+var outputactivation = "Sigmoid";
+var gradient = 0.05;
+var costcache = [0];
+var activationcache = [0];
+var activationcache2 = [0];
 
 function Activation(input,i) {
   let activation;
   if (i == layers-2) {
-    activation = outputactivation
+    activation = outputactivation;
   } else {
-    activation = hiddenactivation
+    activation = hiddenactivation;
   }
   switch (activation) {
     case "Sigmoid":
@@ -33,9 +33,9 @@ function Activation(input,i) {
 function DerivativeActivation(input,i,actcache) {
   let activation;
   if (i == layers-1) {
-    activation = outputactivation
+    activation = outputactivation;
   } else {
-    activation = hiddenactivation
+    activation = hiddenactivation;
   }
   switch (activation) {
     case "Sigmoid":
@@ -59,50 +59,50 @@ function DerivativeActivation(input,i,actcache) {
 }
 
 function ManualFF() {
-  let i2 = structure[0]
+  let i2 = structure[0];
   for (let i=0; i<i2; i++) {
-    neurons[i] = Number(document.getElementById("input " + i).value)
+    neurons[i] = Number(document.getElementById("input " + i).value);
   }
-  FeedForward()
-  UpdateColor()
+  FeedForward();
+  UpdateColor();
 }
 
 function Testing100() {
-  RandomizeInput()
-  GeneralInference()
+  RandomizeInput();
+  GeneralInference();
 }
 
 
 function FeedForward() {
-  const t0 = performance.now()
+  const t0 = performance.now();
   let sum;
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
-      sum = 0
-      let index = structure3[i]+structure[i]*j+1
+      sum = 0;
+      let index = structure3[i]+structure[i]*j+1;
       let k2 = structure[i];
       for (let k=0; k<k2; k++) {
-        sum += weights[index+k] * neurons[structure2[i]+k]
+        sum += weights[index+k] * neurons[structure2[i]+k];
       }
-      sum += biases[structure2[i]+j+1]
-      let result = Activation(sum,i)
+      sum += biases[structure2[i]+j+1];
+      let result = Activation(sum,i);
    //   activationcache2[index2] = result
-      neurons2[structure2[i+1]+j] = sum
-      neurons[structure2[i+1]+j] = result
+      neurons2[structure2[i+1]+j] = sum;
+      neurons[structure2[i+1]+j] = result;
     }
   }
-  const t1 = performance.now()
-  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2)
+  const t1 = performance.now();
+  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2);
 }
 
 function Testing() {
   for (let i=0; i<layers; i++) {
     let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
-      let text = document.createElement("span")
+      let text = document.createElement("span");
       text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "," + batchbeta[i+1][j] + "(" + (i+1) + "," + j + ")"
-      document.getElementById("inputfield").appendChild(text)
+      document.getElementById("inputfield").appendChild(text);
     }
   }
 }
@@ -113,9 +113,9 @@ function Testing2() {
   for (let i=0; i<layers; i++) {
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
-      let text = document.createElement("span")
-      text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")"
-      document.getElementById("inputfield").appendChild(text)
+      let text = document.createElement("span");
+      text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")";
+      document.getElementById("inputfield").appendChild(text);
     }
   }
 }
@@ -124,12 +124,12 @@ function SetTarget() {
   let j2 = structure[0];
   let sum = 0;
   for (let j=0; j<j2; j++) {
-    sum += neurons[j]
+    sum += neurons[j];
   }
-  let target = sum / j2
+  let target = sum / j2;
   let i2 = structure[layers-1];
   for (let i=0; i<i2; i++) {
-      targets[i] = target
+      targets[i] = target;
   }
 }
 
@@ -141,7 +141,7 @@ function NeuronCost(i,j) {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
-      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k] // NeuronCost(i+1,k)
+      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; // NeuronCost(i+1,k)
     }
     return sum
   }
@@ -157,59 +157,61 @@ function BiasCost(i,j,actcache2) {
 
 
 function ResetCache() {
-  const t0 = performance.now()
+  const t0 = performance.now();
   costcache = Array(neuroncount).fill(0);
-  const t1 = performance.now()
-  document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2)
+  const t1 = performance.now();
+  document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2);
 }
 
 function Backprop() {
-  const t0 = performance.now()
+  const t0 = performance.now();
   costcache = new Float32Array(neuroncount).fill(0); // ResetCache()
   activationcache = new Float32Array(neuroncount).fill(0);
-  RandomizeInput()
-  FeedForward()
-  SetTarget()
+  RandomizeInput();
+  FeedForward();
+  SetTarget();
   let tempcache, actcache2, costcache2, weightvalue, error;
   for (let i=layers-1; i>0; i--) {
     let j2 = structure[i];
     let k2 = structure[i-1];
     for (let j=0; j<j2; j++) {
       costcache2 = NeuronCost(i,j);
-      actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]) 
-      tempcache = actcache2 * costcache2
-      costcache[structure2[i]+j] = costcache2
-      activationcache[structure2[i]+j] = actcache2
-      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)))
-      let index = structure3[i-1]+k2*j+1
+      actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]);
+      tempcache = actcache2 * costcache2;
+      costcache[structure2[i]+j] = costcache2;
+      activationcache[structure2[i]+j] = actcache2;
+      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)));
+      let index = structure3[i-1]+k2*j+1;
       for (let k=0; k<k2; k++) {
-        weightvalue = weights[index+k]
-        error = neurons[structure2[i-1]+k] * tempcache // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
-        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)))
+        weightvalue = weights[index+k];
+        error = neurons[structure2[i-1]+k] * tempcache; // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
+        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)));
       }
     }
   }
-  const t1 = performance.now()
-  UpdateColor()
-  traincount++
-  document.getElementById("trainingcount").innerHTML = traincount
-  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2)
+  const t1 = performance.now();
+  UpdateColor();
+  traincount++;
+  document.getElementById("trainingcount").innerHTML = traincount;
+  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2);
 }
 
 
 function ToggleTraining() {
   if (training) {
-    document.getElementById("training").innerHTML = "Start training"
+    document.getElementById("training").innerHTML = "Start training";
+    document.getElementById("trainingstatus").innerHTML = "";
     clearInterval(training);
     training = undefined;
   } else {
-    document.getElementById("training").innerHTML = "Stop training"
+    document.getElementById("training").innerHTML = "Stop training";
+    document.getElementById("trainingstatus").innerHTML = "Training...";
     training = setInterval(Backprop, 1);
   }
 }
 
 function Train100() {
   for (let i=0; i<100; i++) {
-    Backprop()
+    Backprop();
   }
 }
