@@ -30,7 +30,7 @@ var gradient = 0.05;
 var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
-var performance = 0;
+var averageperformance = 0;
 
 function Activation(input,i) {
   let activation;
@@ -198,13 +198,13 @@ function Backprop() {
   }
   const t1 = performance.now();
   traincount++;
-  performance = t1-t0;
+  averageperformance = t1-t0;
 }
 
 function UpdateGraph() {
   UpdateColor();
   document.getElementById("trainingcount").innerHTML = traincount;
-  document.getElementById("performance").innerHTML = performance.toFixed(2) + "ms";
+  document.getElementById("performance").innerHTML = averageperformance.toFixed(2) + "ms";
 }
 
 
