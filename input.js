@@ -123,14 +123,14 @@ function ChangeStructure() {
 function ToggleHelp(id) {
   if (currenthelpdiv !== "" && currenthelpdiv !== id) {
     let previoushelpdiv = document.getElementById(currenthelpdiv);
-    previoushelpdiv.style.display = "none";
+    if (previoushelpdiv) previoushelpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
   let helpdiv = document.getElementById(id);
   if (helpdiv.style.display === "none") {
     currenthelpdiv = id;
     helpdiv.style.display = "block";
-    document.addEventListener("click", HideHelp);
+    setTimeout(() => document.addEventListener("click", HideHelp), 0);
   } else {
     currenthelpdiv = "";
     helpdiv.style.display = "none";
