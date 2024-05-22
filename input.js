@@ -49,7 +49,10 @@ function Create(quickset=false) {
       SetInputs();
     }
     if (createready) {
-      Toggle("closeall","Tab","inline",false);
+      if (currenttab !== undefined) {
+        document.getElementById(id).style.display = "none";
+        currenttab = undefined;
+      }
       FillColor("White");
       createbutton.innerHTML = "Edit";
       createbutton.style.borderColor = "White";
