@@ -205,6 +205,7 @@ function Create() {
     createdbuttons.style.display = "none";
     editdisplay.style.display = "inline";
     createddisplay.style.display = "none";
+    SetInputs();
     mode = "edit";
   }
 }
