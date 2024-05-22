@@ -3,26 +3,18 @@ class RecursiveTimer {
     this.timerId = null;
     this.isRunning = false;
   }
-
   start(callback, delay) {
     if (this.isRunning) return;
-    
     this.isRunning = true;
-
     const tick = () => {
       if (!this.isRunning) return;
-      
       callback();
-
       this.timerId = setTimeout(tick, delay);
     };
-
     tick();
   }
-
   stop() {
     if (!this.isRunning) return;
-
     clearTimeout(this.timerId);
     this.timerId = null;
     this.isRunning = false;
@@ -224,16 +216,16 @@ function ToggleTraining() {
     trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "";
     training.stop();
-//    clearInterval(updategraph);
-  //  updategraph = undefined;
+    clearInterval(updategraph);
+    updategraph = undefined;
     istraining = false;
   } else {
     trainbutton.innerHTML = "Stop Train";
     trainbutton.style.borderColor = "Red";
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
-  //  updategraph = setInterval(UpdateGraph, 100);
-    training.start(UpdateGraph,100);
+    training.start(Backprop,1);
+    updategraph = setInterval(UpdateGraph, 100);
     istraining = true;
   }
 }
