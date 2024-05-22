@@ -103,34 +103,60 @@ function SetInputs() {
   let lr = document.getElementById("learnrate").value;
   let wr = document.getElementById("weightrange").value;
   let br = document.getElementById("biasrange").value;
+  let learnratedisplay = document.getElementById("learnratedisplay");
+  let weightdisplay = document.getElementById("weightrangedisplay");
+  let biasdisplay = document.getElementById("biasrangedisplay");
   let complete = 0;
+  let error = false;
   
   if (lr !== undefined && lr.trim() !== "") {
-    complete++;
-    learnrate = Number(lr);
-    document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
+    if (wr > 0) {
+      complete++;
+      learnrate = Number(lr);
+      learnratedisplay.innerHTML = "Learning rate: " + learnrate;
+      learnratedisplay.style.color = "White";
+    } else {
+      learnratedisplay.style.color = "Red";
+      error = true;
+    }
   }
   if (wr !== undefined && wr.trim() !== "") {
-    complete++;
-    weightrange = wr;
-    document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
+    if (wr > 0) {
+      complete++;
+      weightrange = wr;
+      weightdisplay.innerHTML = "Weight range: " + weightrange;
+      weightdisplay.style.color = "White";
+    } else {
+      weightdisplay.style.color = "Red";
+      error = true;
+    }
   }
   if (br !== undefined && br.trim() !== "") {
-    complete++;
-    biasrange = br;
-    document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
+    if (br > 0) {
+      complete++;
+      biasrange = br;
+      biasdisplay.innerHTML = "Bias range: " + biasrange;
+      biasdisplay.style.color = "White";
+    } else {
+      biasdisplay.style.color = "Red";
+      error = true;
+    }
   }
-
-  if (complete == 0) {
-    display.innerHTML = "Missing Parameters";
+  if (error) {
+    display.innerHTML = "ERROR: Invalid Parameters";
     display.style.color = "Red";
-  } else if (complete == 3) {
-    display.innerHTML = "Parameters OK";
-    display.style.color = "Lime";
-    parametersready = true;
   } else {
-    display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
-    display.style.color = "Yellow";
+    if (complete == 0) {
+      display.innerHTML = "Missing Parameters";
+      display.style.color = "Red";
+    } else if (complete == 3) {
+      display.innerHTML = "Parameters OK";
+      display.style.color = "Lime";
+      parametersready = true;
+    } else {
+      display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
+      display.style.color = "Yellow";
+    }
   }
   display3.innerHTML = "";
   if (structureready) {
@@ -227,6 +253,8 @@ function Toggle2(id,buttonid,text) {
 function ChangeStructure() {
   let structureinput = document.getElementById("structureinput").value;
   let display = document.getElementById("structurestatus");
+  let display2 = document.getElementById("structurecount");
+  display2.style.color = "White";
   if (structureinput === undefined || structureinput.trim() === "") {
     display.innerHTML = "Missing Structure";
     display.style.color = "Red";
@@ -241,6 +269,7 @@ function ChangeStructure() {
     } else {
       display.innerHTML = "ERROR: Malformed Structure";
       display.style.color = "Red";
+      display2.style.color = "Red";
     }
   }
 }
