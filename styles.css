@@ -109,7 +109,6 @@ header {
   background-color: black;
   color: white;
   width: 200px;
-  height: 150px;
   padding: 5px;
   border: 1px solid white;
 }
@@ -164,6 +163,7 @@ th, td {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px
   padding: 5px;
   margin: 0px auto;
 }
