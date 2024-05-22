@@ -39,7 +39,7 @@ function Create() {
 
 function SetInputs() {
   ChangeStructure();
-  InitializeValues()
+  InitializeValues();
   if (structureready) {
     structure.push(0);
     CreateGraph();
