@@ -215,10 +215,6 @@ function ChangeStructure() {
 }
 
 function ToggleHelp(id) {
-  if (currenthelpdiv !== undefined && currenthelpdiv !== id) {
-    let previoushelpdiv = document.getElementById(currenthelpdiv);
-    if (previoushelpdiv) previoushelpdiv.style.display = "none";
-  }
   let helpdiv = document.getElementById(id);
   if (helpdiv.style.display == "none") {
     currenthelpdiv = id;
