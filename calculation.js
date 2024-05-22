@@ -1,4 +1,5 @@
-var training;
+var training = new RecursiveTimer();
+var istraining = false;
 var updategraph;
 var traincount;
 var hiddenactivation = "Sigmoid";
@@ -185,24 +186,48 @@ function UpdateGraph() {
 }
 
 
+class RecursiveTimer {
+  constructor() {
+    this.timerId = null;
+    this.isRunning = false;
+  }
+  start(callback, delay) {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    const tick = () => {
+      if (!this.isRunning) return;
+      callback();
+      this.timerId = setTimeout(tick, delay);
+    };
+    tick();
+  }
+  stop() {
+    if (!this.isRunning) return;
+    clearTimeout(this.timerId);
+    this.timerId = null;
+    this.isRunning = false;
+  }
+}
+
 function ToggleTraining() {
   let trainbutton = document.getElementById("training");
-  if (training) {
+  if (istraining) {
     trainbutton.innerHTML = "Start Train";
     trainbutton.style.borderColor = "White";
     trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "";
-    clearInterval(training);
+    training.stop();
     clearInterval(updategraph);
-    training = undefined;
     updategraph = undefined;
+    istraining = false;
   } else {
     trainbutton.innerHTML = "Stop Train";
     trainbutton.style.borderColor = "Red";
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
-    training = setInterval(Backprop, 1);
+    training.start(Backprop,1);
     updategraph = setInterval(UpdateGraph, 100);
+    istraining = true;
   }
 }
 
