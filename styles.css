@@ -16,18 +16,10 @@ body {
   width: 400px;
   border: 1px solid white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 5px;
-  margin: 0px auto;
-}
-
-.SubTab {
-  height: 50px;
-  width: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0px auto;
 }
 
