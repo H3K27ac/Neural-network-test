@@ -1,14 +1,14 @@
 var training = new RecursiveTimer();
 var istraining = false;
 var updategraph;
-var traincount;
+var traincount = 0;
 var hiddenactivation = "Sigmoid";
 var outputactivation = "Sigmoid";
 var gradient = 0.05;
 var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
-var performance;
+var performance = 0;
 
 function Activation(input,i) {
   let activation;
@@ -225,8 +225,8 @@ function ToggleTraining() {
     trainbutton.style.borderColor = "Red";
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
-    training.start(Backprop,1);
     updategraph = setInterval(UpdateGraph, 100);
+    training.start(Backprop,1);
     istraining = true;
   }
 }
