@@ -198,13 +198,18 @@ function Backprop() {
 
 
 function ToggleTraining() {
+  let trainbutton = document.getElementById("training");
   if (training) {
-    document.getElementById("training").innerHTML = "Start training";
+    trainbutton.innerHTML = "Start Train";
+    trainbutton.style.borderColor = "Red";
+    trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "";
     clearInterval(training);
     training = undefined;
   } else {
-    document.getElementById("training").innerHTML = "Stop training";
+    trainbutton.innerHTML = "Stop Train";
+    trainbutton.style.borderColor = "White";
+    trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     training = setInterval(Backprop, 1);
   }
