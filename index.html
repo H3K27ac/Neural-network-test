@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script type="text/javascript" src="input.js"></script>
-    <script type="text/javascript" src="representation.js"></script>
-    <script type="text/javascript" src="calculation.js"></script>
-  </head>
-  <body onload="Load()">
-    <script>
+    <script defer type="text/javascript" src="input.js"></script>
+    <script defer type="text/javascript" src="representation.js"></script>
+    <script defer type="text/javascript" src="calculation.js"></script>
+    <script defer>
       function Load() {
         Toggle("structure","Tab","flex")
       }
     </script>
+  </head>
+  <body onload="Load()">
     <main>
       <header>
         <div id="editbuttons">
@@ -83,9 +83,9 @@
         </div>
       </section>
       <section class="Display">
-        <div class="SubDisplay"><span class="DisplayText" id="layercount"></span></div>
-        <div class="SubDisplay"><span class="DisplayText" id="neuroncount"></span></div>
-        <div class="SubDisplay"><span class="DisplayText" id="weightcount"></span></div>
+        <span class="DisplayText" id="layercount"></span>
+        <span class="DisplayText" id="neuroncount"></span>
+        <span class="DisplayText" id="weightcount"></span>
       </section>
       <span id="layers">0</span>
       <br>
