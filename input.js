@@ -73,21 +73,22 @@ function SetInputs() {
     display.innerHTML = "Parameters OK";
     display.style.color = "Lime";
     parametersready = true;
-    if (structureready) {
-      createready = true;
-      FillColor("Lime");
-      let display2 = document.getElementById("readystatus");
-      display2.innerHTML = "Ready for Creation";
-      display2.style.color = "Lime";
-      createbutton.style.borderColor = "Lime";
-      createbutton.style.color = "Lime";
-    }
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
     display.style.color = "Yellow";
   }
-  if (structureready && !createready) {
-    FillColor("Red");
+  if (structureready) {
+    if (parametersready) {
+      createready = true;
+      FillColor("Lime");
+      let display3 = document.getElementById("readystatus");
+      display3.innerHTML = "Ready for Creation";
+      display3.style.color = "Lime";
+      createbutton.style.borderColor = "Lime";
+      createbutton.style.color = "Lime";
+    } else {
+      FillColor("Red");
+    }
   }
   
 //  l1strength = document.getElementById("L1strength").value;
@@ -98,7 +99,9 @@ function SetInputs() {
 function InitializeValues() {
   neuroncount = 0;
   weightcount = 0;
-
+  structure2 = [0];
+  structure3 = [0];
+  
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
