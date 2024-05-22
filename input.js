@@ -4,6 +4,26 @@ var parametersready = false;
 var structureready = false;
 var currenthelpdiv;
 
+function Quickset() {
+  let clicks = 0;
+  let comfirmtimeout;
+  let quicksetbutton = document.getElementById("quickset");
+  return function() {
+    clicks++;
+    if (clicks === 1) {
+      quicksetbutton.innerHTML = "Comfirm?";
+      comfirmtimeout = setTimeout(() => {
+        clicks = 0;
+      }, 500);
+    } else {
+      quicksetbutton.innerHTML = "Quickset";
+      clearTimeout(comfirmtimeout); 
+      Create(true);
+      clicks = 0;
+    }
+  };
+}
+
 function Create(quickset=false) {
   let createbutton = document.getElementById("createbutton");
   let editbuttons = document.getElementById("editbuttons");
@@ -17,7 +37,7 @@ function Create(quickset=false) {
       layers = 5;
       document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
       InitializeValues();
-      CreateGraph
+      CreateGraph();
       learnrate = 0.1;
       weightrange = 1;
       biasrange = 1;
