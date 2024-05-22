@@ -201,15 +201,15 @@ function ToggleTraining() {
   let trainbutton = document.getElementById("training");
   if (training) {
     trainbutton.innerHTML = "Start Train";
-    trainbutton.style.borderColor = "Red";
-    trainbutton.style.color = "Red";
+    trainbutton.style.borderColor = "White";
+    trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "";
     clearInterval(training);
     training = undefined;
   } else {
     trainbutton.innerHTML = "Stop Train";
-    trainbutton.style.borderColor = "White";
-    trainbutton.style.color = "White";
+    trainbutton.style.borderColor = "Red";
+    trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     training = setInterval(Backprop, 1);
   }
