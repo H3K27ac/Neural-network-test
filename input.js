@@ -211,16 +211,16 @@ function Toggle2(id,button,text) {
     }
   }
   let element = document.getElementById(id);
-  if (element.style.display == "flex") {
-    element.style.display = "none";
-    button.innerHTML = "Show " + text;
-    button.style.borderColor = "Red";
-    button.style.color = "Red";
-  } else {
+  if (element.style.display == "none") {
     element.style.display = "flex";
     button.innerHTML = "Hide " + text;
     button.style.borderColor = "Lime";
     button.style.color = "Lime";
+  } else {
+    element.style.display = "none";
+    button.innerHTML = "Show " + text;
+    button.style.borderColor = "Red";
+    button.style.color = "Red";
   }
 }
 
