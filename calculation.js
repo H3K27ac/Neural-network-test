@@ -217,15 +217,15 @@ function ToggleTraining() {
     trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "";
     training.stop();
-    clearInterval(updategraph);
-    updategraph = undefined;
+ //   clearInterval(updategraph);
+ //   updategraph = undefined;
     istraining = false;
   } else {
     trainbutton.innerHTML = "Stop Train";
     trainbutton.style.borderColor = "Red";
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
-    updategraph = setInterval(UpdateGraph, 100);
+ //   updategraph = setInterval(UpdateGraph, 100);
     training.start(Backprop,1);
     istraining = true;
   }
