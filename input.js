@@ -73,6 +73,7 @@ function Create(quickset=false) {
     trainbutton.innerHTML = "Start Train";
     trainbutton.style.borderColor = "White";
     trainbutton.style.color = "White";
+    SetInputs();
     mode = "edit";
   }
 }
@@ -81,12 +82,12 @@ function SetInputs() {
   createready = false;
   parametersready = false;
   structureready = false;
-  DeleteGraph();
   ChangeStructure();
   InitializeValues();
   if (structureready) {
     structure.push(0);
     if (structure != previousstructure) {
+      DeleteGraph();
       CreateGraph();
       previousstructure = structure;
     }
