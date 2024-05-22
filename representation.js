@@ -25,15 +25,6 @@ function DeleteGraph() {
   clearInterval(training);
   training = undefined;
   traincount = 0;
-  weights = [0];
-  neurons = [];
-  neurons2 = [];
-  biases = [0];
-  structure2 = [0];
-  structure3 = [0];
-  targets = [];
-  neuroncount = 0;
-  weightcount = 0;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
