@@ -22,9 +22,11 @@ var showweights = true;
 
 
 function DeleteGraph() {
-  clearInterval(training);
-  training = undefined;
+  training.stop();
+  clearInterval(updategraph);
+  updategraph = undefined;
   traincount = 0;
+  istraining = false;
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
