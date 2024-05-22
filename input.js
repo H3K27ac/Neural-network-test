@@ -73,7 +73,6 @@ function Create(quickset=false) {
     trainbutton.innerHTML = "Start Train";
     trainbutton.style.borderColor = "White";
     trainbutton.style.color = "White";
-    SetInputs();
     mode = "edit";
   }
 }
