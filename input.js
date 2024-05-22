@@ -31,13 +31,16 @@ function Create(quickset=false) {
       DeleteGraph();
       structure = [12,10,8,11,9];
       layers = 5;
-      document.getElementById("structuredisplay").innerHTML = "Structure: [12,10,8,11,9]";
+      document.getElementById("structurecount").innerHTML = "Structure: [12,10,8,11,9]";
       structure.push(0);
       InitializeValues();
       CreateGraph();
       learnrate = 0.1;
       weightrange = 1;
       biasrange = 1;
+      document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
+      document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
+      document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
       createready = true;
     } else {
       SetInputs();
@@ -105,14 +108,17 @@ function SetInputs() {
   if (lr !== undefined && lr.trim() !== "") {
     complete++;
     learnrate = Number(lr);
+    document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
   }
   if (wr !== undefined && wr.trim() !== "") {
     complete++;
     weightrange = wr;
+    document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
   }
   if (br !== undefined && br.trim() !== "") {
     complete++;
     biasrange = br;
+    document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
   }
 
   if (complete == 0) {
@@ -204,7 +210,7 @@ function ChangeStructure() {
   } else {
     structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
     layers = structure.length;
-    document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
+    document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
     if (layers > 1) {
       display.innerHTML = "Structure OK";
       display.style.color = "Lime";
