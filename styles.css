@@ -114,7 +114,7 @@ header {
 }
 
 .HelpTitle {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .HelpText {
@@ -150,7 +150,7 @@ th, td {
 }
 
 .MainDisplay {
-  height: 80px;
+  height: 100px;
   width: 800px;
   border: 1px solid white;
   margin: 0px auto;
@@ -163,7 +163,7 @@ th, td {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 20px;
   padding: 5px;
   margin: 0px auto;
 }
@@ -173,7 +173,7 @@ th, td {
   width: 800px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   gap: 5px;
   margin: 0px auto;
