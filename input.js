@@ -303,15 +303,19 @@ function Warn(id,text,text2,bypassmode=true) {
 }
 
 function SubmitInputData() {
-  let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseFloat(item));
-  if (inputdata.length == structure[0]) {
-    for (let i=0; i<structure[0]; i++) {
-      neurons[i] = inputdata[i];
+  if (!istraining) {
+    let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseFloat(item));
+    if (inputdata.length == structure[0]) {
+      for (let i=0; i<structure[0]; i++) {
+        neurons[i] = inputdata[i];
+      }
+      FeedForward();
+      UpdateColor();
+    } else {
+      Warn("submitinputdata","Input","ERROR");
     }
-    FeedForward();
-    UpdateColor();
   } else {
-    Warn("submitinputdata","Input","ERROR");
+    Warn("submitinputdata","Input","TRAIN");
   }
 }
 
