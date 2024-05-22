@@ -38,10 +38,10 @@ function DeleteGraph() {
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
   }
-  let field = document.getElementById("inputfield");
-  while (field.hasChildNodes()) {
-      field.removeChild(field.firstChild);
-  }
+ // let field = document.getElementById("inputfield");
+//  while (field.hasChildNodes()) {
+//      field.removeChild(field.firstChild);
+//  }
 }
 
 function Color(value,type) {
