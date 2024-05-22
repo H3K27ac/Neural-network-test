@@ -41,6 +41,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 5px;
   margin: 0px auto;
 }
 
@@ -87,7 +88,7 @@ header {
 .HelpButton {
   width: 20px;
   height: 20px;
-  font-size: 5px;
+  font-size: 8px;
   color: white;
   background-color: black;
   border: 1px solid white;
