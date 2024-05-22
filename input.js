@@ -2,12 +2,44 @@ var mode = "edit";
 var createready = false;
 var parametersready = false;
 var structureready = false;
-var currenthelpdiv = "";
+var currenthelpdiv;
+
+function Create() {
+  let createbutton = document.getElementById("createbutton");
+  let editbuttons = document.getElementById("editbuttons");
+  let createdbuttons = document.getElementById("createdbuttons");
+  let editdisplay = document.getElementById("editdisplay");
+  let createddisplay = document.getElementById("createddisplay");
+  if (mode == "edit") {
+    SetInputs();
+    if (createready) {
+      Toggle("closeall","Tab");
+      FillColor("White");
+      createbutton.innerHTML = "Edit";
+      editbuttons.style.display = "none";
+      createdbuttons.style.display = "inline";
+      editdisplay.style.display = "none";
+      createddisplay.style.display = "inline";
+      mode = "created";
+    }
+  } else {
+    createbutton.innerHTML = "Create";
+    editbuttons.style.display = "inline";
+    createdbuttons.style.display = "none";
+    editdisplay.style.display = "inline";
+    createddisplay.style.display = "none";
+    createbutton.style.borderColor = "White";
+    createbutton.style.color = "White";
+    SetInputs();
+    mode = "edit";
+  }
+}
 
 function SetInputs() {
   ChangeStructure();
   let container = document.getElementById("container");
   let createbutton = document.getElementById("createbutton");
+  let display = document.getElementById("parameterstatus");
   let lr = document.getElementById("learnrate").value;
   let wr = document.getElementById("weightrange").value;
   let br = document.getElementById("biasrange").value;
@@ -26,7 +58,6 @@ function SetInputs() {
     biasrange = br;
   }
 
-  let display = document.getElementById("parameterstatus");
   if (complete == 0) {
     display.innerHTML = "Missing Parameters";
     display.style.color = "Red";
@@ -126,7 +157,7 @@ function ChangeStructure() {
 }
 
 function ToggleHelp(id) {
-  if (currenthelpdiv !== "" && currenthelpdiv !== id) {
+  if (currenthelpdiv !== undefined && currenthelpdiv !== id) {
     let previoushelpdiv = document.getElementById(currenthelpdiv);
     if (previoushelpdiv) previoushelpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
@@ -137,7 +168,7 @@ function ToggleHelp(id) {
     helpdiv.style.display = "flex";
     setTimeout(() => document.addEventListener("click", HideHelp), 0);
   } else {
-    currenthelpdiv = "";
+    currenthelpdiv = undefined;
     helpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
