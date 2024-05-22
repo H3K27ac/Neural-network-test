@@ -65,16 +65,16 @@ function SetInputs() {
     display.style.color = "Red";
   } else if (complete == 3) {
     display.innerHTML = "Parameters OK";
-    display.style.color = "Green";
+    display.style.color = "Lime";
     parametersready = true;
     if (structureready) {
       createready = true;
-      FillColor("Green");
+      FillColor("Lime");
       let display2 = document.getElementById("readystatus");
       display2.innerHTML = "Ready for Creation";
-      display2.style.color = "Green";
-      createbutton.style.borderColor = "Green";
-      createbutton.style.color = "Green";
+      display2.style.color = "Lime";
+      createbutton.style.borderColor = "Lime";
+      createbutton.style.color = "Lime";
     }
   } else {
     display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
@@ -149,7 +149,7 @@ function ChangeStructure() {
       structure.push(0);
       CreateGraph();
       display.innerHTML = "Structure OK";
-      display.style.color = "Green";
+      display.style.color = "Lime";
       structureready = true;
     } else {
       display.innerHTML = "ERROR: Malformed Structure";
