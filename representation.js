@@ -196,14 +196,14 @@ function Create() {
       editbuttons.style.display = "none";
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
-      createddisplay.style.display = "inline";
+      createddisplay.style.display = "block";
       mode = "created";
     }
   } else {
     createbutton.innerHTML = "Create";
     editbuttons.style.display = "inline";
     createdbuttons.style.display = "none";
-    editdisplay.style.display = "inline";
+    editdisplay.style.display = "block";
     createddisplay.style.display = "none";
     SetInputs();
     mode = "edit";
