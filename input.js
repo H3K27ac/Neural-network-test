@@ -215,10 +215,12 @@ function ChangeStructure() {
 }
 
 function ToggleHelp(id) {
-  let helpdiv = document.getElementById(id);
-  currenthelpdiv = id;
-  helpdiv.style.display = "flex";
-  setTimeout(() => document.addEventListener("click", HideHelp), 1)
+  if (currenthelpdiv !== id) {
+    let helpdiv = document.getElementById(id);
+    currenthelpdiv = id;
+    helpdiv.style.display = "flex";
+    setTimeout(() => document.addEventListener("click", HideHelp), 1)
+  }
 }
 
 function HideHelp(event) {
