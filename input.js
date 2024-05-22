@@ -202,9 +202,10 @@ function Toggle(id,c="Tab",type="inline",input=true) {
 }
 
 function Toggle2(id,id2) {
+//  let button = document.getElementById(button);
   let element = document.getElementById(id);
   if (element.style.display == "flex") {
-    element.style.display = "none;
+    element.style.display = "none";
   } else {
     element.style.display = "flex";
   }
