@@ -4,6 +4,7 @@ var parametersready = false;
 var structureready = false;
 var showstatus = true;
 var currenthelpdiv;
+var currenttab;
 
 function Quickset() {
   let quicksetbutton = document.getElementById("quickset");
@@ -207,15 +208,20 @@ function InitializeValues() {
 
 function Toggle(id,c="Tab",type="inline",input=true) {
   if (input) SetInputs();
-  let tabs = document.getElementsByClassName(c);
-  let i2 = tabs.length;
-  for (let i = 0; i < i2; i++) {
-    let tab = tabs[i];
-    if (tab.id === id) {
-      tab.style.display = type;
-    } else {
-      tab.style.display = "none";
+  if (currenttab !== id) {
+    let tabs = document.getElementsByClassName(c);
+    let i2 = tabs.length;
+    for (let i = 0; i < i2; i++) {
+      let tab = tabs[i];
+      if (tab.id === id) {
+        tab.style.display = type;
+      } else {
+        tab.style.display = "none";
+      }
     }
+    currenttab = id;
+  } else {
+    document.getElementById(id).style.display = "none";
   }
 }
 
