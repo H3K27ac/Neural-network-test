@@ -13,6 +13,7 @@ function Quickset() {
     quicksetbutton.innerHTML = "Comfirm?";
     quicksetbutton.classList.add("clicked");
     setTimeout(function() {
+      quicksetbutton.innerHTML = "Quickset";
       quicksetbutton.classList.remove("clicked");
     }, 1000);
   }
@@ -82,6 +83,7 @@ function SetInputs() {
   createready = false;
   parametersready = false;
   structureready = false;
+  DeleteGraph();
   ChangeStructure();
   InitializeValues();
   if (structureready) {
