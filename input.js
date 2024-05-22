@@ -31,6 +31,7 @@ function Create(quickset=false) {
       structure = [12,10,8,11,9];
       layers = 5;
       document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
+      DeleteGraph();
       InitializeValues();
       CreateGraph();
       learnrate = 0.1;
