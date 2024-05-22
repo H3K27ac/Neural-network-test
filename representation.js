@@ -177,7 +177,6 @@ function Randomize() {
 }
 
 function CreateGraph() {
-  DeleteGraph();
   
 //  for (let i=0; i<structure[0]; i++) {
 //    let input = document.createElement("input")
