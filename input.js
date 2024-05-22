@@ -55,9 +55,11 @@ function Create(quickset=false) {
       createbutton.style.borderColor = "Red";
       createbutton.style.color = "Red";
       setTimeout(() => {
-        createbutton.innerHTML = "Create";
-        createbutton.style.borderColor = "White";
-        createbutton.style.color = "White";
+        if (mode == "edit") {
+          createbutton.innerHTML = "Create";
+          createbutton.style.borderColor = "White";
+          createbutton.style.color = "White";
+        }
       },800)
     }
   } else {
@@ -233,5 +235,6 @@ function HideHelp(event) {
   if (!helpdiv.contains(event.target)) {
     helpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
+    currenthelpdiv = undefined;
   }
 }
