@@ -19,7 +19,7 @@ function Create() {
       editbuttons.style.display = "none";
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
-      createddisplay.style.display = "block";
+      createddisplay.style.display = "flex";
       createbutton.style.borderColor = "White";
       createbutton.style.color = "White";
       mode = "created";
@@ -28,7 +28,7 @@ function Create() {
     createbutton.innerHTML = "Create";
     editbuttons.style.display = "inline";
     createdbuttons.style.display = "none";
-    editdisplay.style.display = "block";
+    editdisplay.style.display = "flex";
     createddisplay.style.display = "none";
     createbutton.style.borderColor = "White";
     createbutton.style.color = "White";
