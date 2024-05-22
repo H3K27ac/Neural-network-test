@@ -79,6 +79,13 @@ function Create(quickset=false) {
 }
 
 function SetInputs() {
+  if (istraining) {
+    training.stop();
+    clearInterval(updategraph);
+    updategraph = undefined;
+    istraining = false;
+  }
+  traincount = 0;
   createready = false;
   parametersready = false;
   structureready = false;
