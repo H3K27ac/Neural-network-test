@@ -1,4 +1,5 @@
 var training;
+var updategraph;
 var traincount;
 var hiddenactivation = "Sigmoid";
 var outputactivation = "Sigmoid";
@@ -6,6 +7,7 @@ var gradient = 0.05;
 var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
+var performance;
 
 function Activation(input,i) {
   let activation;
@@ -74,7 +76,6 @@ function Testing100() {
 
 
 function FeedForward() {
-  const t0 = performance.now();
   let sum;
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
@@ -92,24 +93,10 @@ function FeedForward() {
       neurons[structure2[i+1]+j] = result;
     }
   }
-  const t1 = performance.now();
-  document.getElementById("performance1").innerHTML = (t1-t0).toFixed(2);
 }
+
 
 function Testing() {
-  for (let i=0; i<layers; i++) {
-    let j2 = structure[i+1];
-    for (let j=0; j<j2; j++) {
-      let text = document.createElement("span");
-      text.innerHTML = batchmean[i+1][j] + "," + batchvar[i+1][j] + "," + batchgamma[i+1][j] + "," + batchbeta[i+1][j] + "(" + (i+1) + "," + j + ")"
-      document.getElementById("inputfield").appendChild(text);
-    }
-  }
-}
-
-
-
-function Testing2() {
   for (let i=0; i<layers; i++) {
     let j2 = structure[i];
     for (let j=0; j<j2; j++) {
@@ -157,10 +144,7 @@ function BiasCost(i,j,actcache2) {
 
 
 function ResetCache() {
-  const t0 = performance.now();
   costcache = Array(neuroncount).fill(0);
-  const t1 = performance.now();
-  document.getElementById("performance2").innerHTML = (t1-t0).toFixed(2);
 }
 
 function Backprop() {
@@ -190,10 +174,14 @@ function Backprop() {
     }
   }
   const t1 = performance.now();
-  UpdateColor();
   traincount++;
+  performance = t1-t0;
+}
+
+function UpdateGraph() {
+  UpdateColor();
   document.getElementById("trainingcount").innerHTML = traincount;
-  document.getElementById("performance3").innerHTML = (t1-t0).toFixed(2);
+  document.getElementById("performance").innerHTML = performance.toFixed(2) + "ms";
 }
 
 
@@ -205,13 +193,16 @@ function ToggleTraining() {
     trainbutton.style.color = "White";
     document.getElementById("trainingstatus").innerHTML = "";
     clearInterval(training);
+    clearInterval(updategraph);
     training = undefined;
+    updategraph = undefined;
   } else {
     trainbutton.innerHTML = "Stop Train";
     trainbutton.style.borderColor = "Red";
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     training = setInterval(Backprop, 1);
+    updategraph = setInterval(UpdateGraph, 100);
   }
 }
 
