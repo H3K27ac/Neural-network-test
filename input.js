@@ -126,9 +126,9 @@ function ToggleHelp(id) {
     previoushelpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
-  currenthelpdiv = id;
   let helpdiv = document.getElementById(id);
   if (helpdiv.style.display === "none") {
+    currenthelpdiv = id;
     helpdiv.style.display = "block";
     document.addEventListener("click", HideHelp);
   } else {
