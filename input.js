@@ -215,7 +215,7 @@ function ChangeStructure() {
 }
 
 function ToggleHelp(id) {
-  if (currenthelpdiv !== id && currenthelpdiv !== undefined) {
+  if (currenthelpdiv !== id && currenthelpdiv === undefined) {
     let helpdiv = document.getElementById(id);
     currenthelpdiv = id;
     helpdiv.style.display = "flex";
