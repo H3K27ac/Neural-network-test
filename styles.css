@@ -141,6 +141,16 @@ th, td {
   display: none;
 }
 
+.ComfirmButton {
+  border-color: white;
+  color: white;
+}
+
+.ComfirmButton.clicked {
+  border-color: lime;
+  color: lime;
+}
+
 .Button {
   font-size: 15px;
   color: white;
