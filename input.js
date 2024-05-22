@@ -201,15 +201,27 @@ function Toggle(id,c="Tab",type="inline",input=true) {
   }
 }
 
-function Toggle2(id,id2) {
-//  let button = document.getElementById(button);
+function Toggle2(id,button,text) {
+  let button = document.getElementById(button);
+  if (id == "MainDisplay") {
+    if (mode == "edit") {
+      id = "editdisplay";
+    } else {
+      id = "createddisplay";
+    }
+  }
   let element = document.getElementById(id);
   if (element.style.display == "flex") {
     element.style.display = "none";
+    button.innerHTML = "Show " + text;
+    button.style.borderColor = "Red";
+    button.style.color = "Red";
   } else {
     element.style.display = "flex";
+    button.innerHTML = "Hide " + text;
+    button.style.borderColor = "Lime";
+    button.style.color = "Lime";
   }
-  if (id2) Toggle2(id2);
 }
 
 function ChangeStructure() {
