@@ -12,11 +12,15 @@ function Quickset() {
     clicks++;
     if (clicks === 1) {
       quicksetbutton.innerHTML = "Comfirm?";
+      quicksetbutton.style.borderColor = "Lime";
+      quicksetbutton.style.color = "Lime";
       comfirmtimeout = setTimeout(() => {
         clicks = 0;
-      }, 500);
+      }, 1000);
     } else {
       quicksetbutton.innerHTML = "Quickset";
+      quicksetbutton.style.borderColor = "White";
+      quicksetbutton.style.color = "White";
       clearTimeout(comfirmtimeout); 
       Create(true);
       clicks = 0;
@@ -64,7 +68,7 @@ function Create(quickset=false) {
         createbutton.innerHTML = "Create";
         createbutton.style.borderColor = "White";
         createbutton.style.color = "White";
-      },1000)
+      },800)
     }
   } else {
     createbutton.innerHTML = "Create";
