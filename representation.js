@@ -216,7 +216,6 @@ function CreateGraph() {
       }
     }
     if (showneurons == "all") {
-      document.getElementById("layers").innerHTML = "notworking";
       container.appendChild(column);
     }
   }
