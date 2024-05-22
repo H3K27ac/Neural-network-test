@@ -303,7 +303,7 @@ function Warn(id,text,text2,bypassmode=true) {
 }
 
 function SubmitInputData() {
-  let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseFloat(item));
   if (inputdata.length == structure[0]) {
     for (let i=0; i<structure[0]; i++) {
       neurons[i] = inputdata[i];
