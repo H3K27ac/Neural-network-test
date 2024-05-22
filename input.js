@@ -2,7 +2,7 @@ var mode = "edit";
 var createready = false;
 var parametersready = false;
 var structureready = false;
-var CurrentHelpDiv = "";
+var currenthelpdiv = "";
 
 function SetInputs() {
   ChangeStructure();
@@ -121,27 +121,27 @@ function ChangeStructure() {
 }
 
 function ToggleHelp(id) {
-  if (CurrentHelpDiv !== "" && CurrentHelpDiv !== id) {
-    let PreviousHelpDiv = document.getElementById(CurrentHelpDiv);
-    PreviousHelpDiv.style.display = "none";
+  if (currenthelpdiv !== "" && currenthelpdiv !== id) {
+    let previoushelpdiv = document.getElementById(currenthelpdiv);
+    previoushelpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
-  CurrentHelpDiv = id;
-  let HelpDiv = document.getElementById(id);
-  if (HelpDiv.style.display === "none") {
-    HelpDiv.style.display = "block";
+  currenthelpdiv = id;
+  let helpdiv = document.getElementById(id);
+  if (helpdiv.style.display === "none") {
+    helpdiv.style.display = "block";
     document.addEventListener("click", HideHelp);
   } else {
-    CurrentHelpDiv = "";
-    HelpDiv.style.display = "none";
+    currenthelpdiv = "";
+    helpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
 }
 
 function HideHelp(event) {
-  let HelpDiv = document.getElementById(CurrentHelpDiv);
-  if (!HelpDiv.contains(event.target)) {
-    HelpDiv.style.display = "none";
+  let helpdiv = document.getElementById(currenthelpdiv);
+  if (!helpdiv.contains(event.target)) {
+    helpdiv.style.display = "none";
     document.removeEventListener("click", HideHelp);
   }
 }
