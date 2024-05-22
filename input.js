@@ -50,7 +50,7 @@ function Create(quickset=false) {
     }
     if (createready) {
       if (currenttab !== undefined) {
-        document.getElementById(id).style.display = "none";
+        document.getElementById(currenttab).style.display = "none";
         currenttab = undefined;
       }
       FillColor("White");
