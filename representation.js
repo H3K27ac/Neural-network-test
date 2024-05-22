@@ -182,27 +182,29 @@ function Randomize() {
 }
 
 function Create() {
+  let createbutton = document.getElementById("createbutton");
+  let editbuttons = document.getElementById("editbuttons");
+  let createdbuttons = document.getElementById("createdbuttons");
+  let editdisplay = document.getElementById("editdisplay");
+  let createddisplay = document.getElementById("createddisplay");
   if (mode == "edit") {
     SetInputs();
     if (createready) {
       Toggle("closeall","Tab");
       FillColor("White");
-      let createbutton = document.getElementById("createbutton");
       createbutton.innerHTML = "Edit";
-      document.getElementById("editbuttons").style.display = "none";
-      document.getElementById("createdbuttons").style.display = "inline";
-      document.getElementById("editdisplay").style.display = "none";
-      document.getElementById("createddisplay").style.display = "inline";
+      editbuttons.style.display = "none";
+      createdbuttons.style.display = "inline";
+      editdisplay.style.display = "none";
+      createddisplay.style.display = "inline";
       mode = "created";
     }
   } else {
-    Toggle("structure","Tab","flex");
-    let createbutton = document.getElementById("createbutton");
     createbutton.innerHTML = "Create";
-    document.getElementById("editbuttons").style.display = "inline";
-    document.getElementById("createdbuttons").style.display = "none";
-    document.getElementById("editdisplay").style.display = "inline";
-    document.getElementById("createddisplay").style.display = "none";
+    editbuttons.style.display = "inline";
+    createdbuttons.style.display = "none";
+    editdisplay.style.display = "inline";
+    createddisplay.style.display = "none";
     mode = "edit";
   }
 }
