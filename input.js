@@ -58,7 +58,7 @@ function Create(quickset=false) {
       if (showstatus) createddisplay.style.display = "flex";
       mode = "created";
     } else {
-      Warn("createbutton","Create","Not Ready")
+      Warn("createbutton","Create","Not Ready",false);
     }
   } else {
     createbutton.innerHTML = "Create";
@@ -281,13 +281,13 @@ function ChangeStructure() {
   }
 }
 
-function Warn(id,text,text2) {
+function Warn(id,text,text2,bypassmode=true) {
   let element = document.getElementById(id);
   element.innerHTML = text2;
   element.style.borderColor = "Red";
   element.style.color = "Red";
   setTimeout(() => {
-    if (mode == "edit") {
+    if (mode == "edit" || bypassmode) {
       element.innerHTML = text;
       element.style.borderColor = "White";
       element.style.color = "White";
@@ -296,12 +296,13 @@ function Warn(id,text,text2) {
 }
 
 function SubmitInputData() {
-  let inputdata = document.getElementById("inputdata").valuereplace(/[{}]/g, '').split(',').map(item => parseInt(item));
+  let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
   if (inputdata.length == structure[0]) {
     for (let i=0; i<structure[0]; i++) {
       neurons[i] = inputdata[i];
     }
     FeedForward();
+    UpdateColor();
   } else {
     Warn("submitinputdata","Input","ERROR");
   }
