@@ -85,9 +85,9 @@ header {
 }
 
 .HelpButton {
-  width: 25px;
-  height: 25px;
-  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  font-size: 5px;
   color: white;
   background-color: black;
   border: 1px solid white;
@@ -150,9 +150,14 @@ th, td {
 }
 
 .MainDisplay {
-  height: 100px;
+  height: 80px;
   width: 800px;
   border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   margin: 0px auto;
 }
 
@@ -165,17 +170,6 @@ th, td {
   align-items: center;
   gap: 20px;
   padding: 5px;
-  margin: 0px auto;
-}
-
-.MainSubDisplay {
-  height: 80px;
-  width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
   margin: 0px auto;
 }
 
