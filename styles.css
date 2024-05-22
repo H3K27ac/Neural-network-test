@@ -109,6 +109,7 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   background-color: black;
   color: white;
   top: 20px; 
@@ -159,10 +160,6 @@ th, td {
   height: 80px;
   width: 800px;
   border: 1px solid white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
   margin: 0px auto;
 }
 
@@ -174,6 +171,17 @@ th, td {
   justify-content: center;
   align-items: center;
   padding: 5px;
+  margin: 0px auto;
+}
+
+.MainSubDisplay {
+  height: 80px;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   margin: 0px auto;
 }
 
