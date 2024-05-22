@@ -39,6 +39,11 @@ function Create() {
 
 function SetInputs() {
   ChangeStructure();
+  InitializeValues()
+  if (structureready) {
+    structure.push(0);
+    CreateGraph();
+  }
   let container = document.getElementById("container");
   let createbutton = document.getElementById("createbutton");
   let display = document.getElementById("parameterstatus");
@@ -47,15 +52,6 @@ function SetInputs() {
   let wr = document.getElementById("weightrange").value;
   let br = document.getElementById("biasrange").value;
   let complete = 0;
-
-  if (layers > 1) {
-    display2.innerHTML = "Structure OK";
-    display2.style.color = "Lime";
-    structureready = true;
-  } else {
-    display2.innerHTML = "ERROR: Malformed Structure";
-    display2.style.color = "Red";
-  }
   
   if (lr !== undefined && lr.trim() !== "") {
     complete++;
@@ -96,12 +92,7 @@ function SetInputs() {
   
 //  l1strength = document.getElementById("L1strength").value;
 //  l2strength = document.getElementById("L2strength").value;
-  InitializeValues()
 
-  if (structureready) {
-    structure.push(0);
-    CreateGraph();
-  }
 }
 
 function InitializeValues() {
@@ -159,6 +150,14 @@ function ChangeStructure() {
     structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
     layers = structure.length;
     document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
+    if (layers > 1) {
+      display.innerHTML = "Structure OK";
+      display.style.color = "Lime";
+      structureready = true;
+    } else {
+      display.innerHTML = "ERROR: Malformed Structure";
+      display.style.color = "Red";
+    }
   }
 }
 
