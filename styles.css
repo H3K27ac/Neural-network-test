@@ -41,8 +41,8 @@ header {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  padding: 20px;
+  gap: 20px;
+  padding: 5px;
   margin: 0px auto;
 }
 
