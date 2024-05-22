@@ -201,6 +201,16 @@ function Toggle(id,c="Tab",type="inline",input=true) {
   }
 }
 
+function Toggle2(id,id2) {
+  let element = document.getElementById(id);
+  if (element.style.display == "flex") {
+    element.style.display = "none;
+  } else {
+    element.style.display = "flex";
+  }
+  if (id2) Toggle2(id2);
+}
+
 function ChangeStructure() {
   let structureinput = document.getElementById("structureinput").value;
   let display = document.getElementById("structurestatus");
