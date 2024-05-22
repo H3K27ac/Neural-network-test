@@ -129,7 +129,7 @@ function ToggleHelp(id) {
   let helpdiv = document.getElementById(id);
   if (helpdiv.style.display === "none") {
     currenthelpdiv = id;
-    helpdiv.style.display = "block";
+    helpdiv.style.display = "flex";
     setTimeout(() => document.addEventListener("click", HideHelp), 0);
   } else {
     currenthelpdiv = "";
