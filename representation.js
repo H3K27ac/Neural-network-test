@@ -51,23 +51,23 @@ function Color(value,type) {
   let blue;
   switch (type) {
     case "weight":
-      valuerange = weightrange
+      valuerange = weightrange;
       break;
     case "bias":
-      valuerange = biasrange
+      valuerange = biasrange;
       break;
     default:
       break;
   }
   if (type == "batchgamma") {
     if (value == 1) return `rgb(255, 255, 255)`
-    let value2 = Math.log(value) / Math.log(valuerange)
+    let value2 = Math.log(value) / Math.log(valuerange);
     red = value2 > 0 ? 255 : Math.round(255 * (1 + value2));
     green = Math.round(255 * (1 - Math.abs(value2)));
     blue = value2 > 0 ? Math.round(255 * (1 - value2)) : 255;
   } else {
     if (value == 0) return `rgb(255, 255, 255)`
-    let value3 = value / valuerange
+    let value3 = value / valuerange;
     red = value > 0 ? 255 : Math.round(255 * (1 + value3));
     green = Math.round(255 * (1 - Math.abs(value3)));
     blue = value > 0 ? Math.round(255 * (1 - value3)) : 255;
@@ -82,48 +82,48 @@ function Color2(value) {
 
 function UpdateColor() {
   if (showneurons == "output") {
-    let i2 = structure[layers-1]
+    let i2 = structure[layers-1];
     for (let i=0; i<i2; i++) {
-      neuronvalue = neurons[structure2[layers-1]+i].toFixed(2)
-      let neuron = document.getElementById("neuron " + (layers-1) + "," + i)
-      neuron.style.backgroundColor = Color2(neuronvalue)
-      let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i)
-      neuronvaluetext.innerHTML = neuronvalue
+      neuronvalue = neurons[structure2[layers-1]+i].toFixed(2);
+      let neuron = document.getElementById("neuron " + (layers-1) + "," + i);
+      neuron.style.backgroundColor = Color2(neuronvalue);
+      let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i);
+      neuronvaluetext.innerHTML = neuronvalue;
       if (neuronvalue > 0.5) {
-        neuronvaluetext.style.color = `rgb(0,0,0)`
+        neuronvaluetext.style.color = `rgb(0,0,0)`;
       } else {
-        neuronvaluetext.style.color = `rgb(255,255,255)`
+        neuronvaluetext.style.color = `rgb(255,255,255)`;
       }
     }
   } else {
   for (let i=0; i<layers; i++) {
-    let j2 = structure[i]
+    let j2 = structure[i];
     for (let j=0; j<j2; j++) {
       let neuronvalue;
-      neuronvalue = neurons[structure2[i]+j].toFixed(2)
-      let neuron = document.getElementById("neuron " + i + "," + j)
-      neuron.style.backgroundColor = Color2(neuronvalue)
-      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j)
-      neuronvaluetext.innerHTML = neuronvalue
+      neuronvalue = neurons[structure2[i]+j].toFixed(2);
+      let neuron = document.getElementById("neuron " + i + "," + j);
+      neuron.style.backgroundColor = Color2(neuronvalue);
+      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j);
+      neuronvaluetext.innerHTML = neuronvalue;
       if (neuronvalue > 0.5) {
-        neuronvaluetext.style.color = `rgb(0,0,0)`
+        neuronvaluetext.style.color = `rgb(0,0,0)`;
       } else {
-        neuronvaluetext.style.color = `rgb(255,255,255)`
+        neuronvaluetext.style.color = `rgb(255,255,255)`;
       }
     }
-    let j3 = structure[i+1]
+    let j3 = structure[i+1];
     for (let j=0; j<j3; j++) { 
       if (showbiases) {
-      let biasvalue = biases[structure2[i+1]+j+1].toFixed(2)
-      let neuron = document.getElementById("neuron " + (i+1) + "," + j)
-      neuron.style.borderColor = Color(biasvalue,"bias")
+      let biasvalue = biases[structure2[i+1]+j+1].toFixed(2);
+      let neuron = document.getElementById("neuron " + (i+1) + "," + j);
+      neuron.style.borderColor = Color(biasvalue,"bias");
       }
       if (showweights) {
-        let index = structure3[i]+structure[i]*j+1
+        let index = structure3[i]+structure[i]*j+1;
       for (let k=0; k<j2; k++) {
-        let weightvalue = weights[index+k].toFixed(2)
-        let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k)
-        weight.style.backgroundColor = Color(weightvalue,"weight")
+        let weightvalue = weights[index+k].toFixed(2);
+        let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k);
+        weight.style.backgroundColor = Color(weightvalue,"weight");
       }
       }
     }
@@ -133,32 +133,32 @@ function UpdateColor() {
 
 
 function FillColor(color) {
-  let elements = document.getElementsByClassName("Neuron")
-  let i2 = elements.length
+  let elements = document.getElementsByClassName("Neuron");
+  let i2 = elements.length;
   for (let i = 0; i < i2; i++) {
-    let element = elements[i]
-    element.style.borderColor = color
+    let element = elements[i];
+    element.style.borderColor = color;
   }
-  elements = document.getElementsByClassName("Weight")
-  i2 = elements.length
+  elements = document.getElementsByClassName("Weight");
+  i2 = elements.length;
   for (let i = 0; i < i2; i++) {
-    let element = elements[i]
-    element.style.backgroundColor = color
+    let element = elements[i];
+    element.style.backgroundColor = color;
   }
 }
 
 function ClearNeurons() {
   for (let i=1; i<layers; i++) {
-    let j2 = structure[i]
+    let j2 = structure[i];
     for (let j=0; j<j2; j++) {
-      neurons[i][j] = 0
+      neurons[i][j] = 0;
     }
   }
 }
 
 
 function RandomizeInput() {
-  let j2 = structure[0]
+  let j2 = structure[0];
   for (let j=0; j<j2; j++) {
       neurons[j] = Math.random();
   }
@@ -173,7 +173,7 @@ function Randomize() {
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
       biases[structure2[i+1]+j] = (Math.random() * 2 - 1) * biasrange;
-      let index = structure3[i]+structure[i]*j+1
+      let index = structure3[i]+structure[i]*j+1;
       for (let k=0; k<structure[i]; k++) {
         weights[index+k] = (Math.random() * 2 - 1) * weightrange;
       }
@@ -183,21 +183,27 @@ function Randomize() {
 
 function Create() {
   if (mode == "edit") {
-    SetInputs()
+    SetInputs();
     if (createready) {
-      FillColor("White")
-      let createbutton = document.getElementById("createbutton")
-      createbutton.innerHTML = "Edit"
-      document.getElementById("editbuttons").style.display = "none"
-      document.getElementById("createdbuttons").style.display = "inline"
-      mode = "created"
+      Toggle("closeall","Tab");
+      FillColor("White");
+      let createbutton = document.getElementById("createbutton");
+      createbutton.innerHTML = "Edit";
+      document.getElementById("editbuttons").style.display = "none";
+      document.getElementById("createdbuttons").style.display = "inline";
+      document.getElementById("editdisplay").style.display = "none";
+      document.getElementById("createddisplay").style.display = "inline";
+      mode = "created";
     }
   } else {
-    let createbutton = document.getElementById("createbutton")
-    createbutton.innerHTML = "Create"
-    document.getElementById("editbuttons").style.display = "inline"
-    document.getElementById("createdbuttons").style.display = "none"
-    mode = "edit"
+    Toggle("structure","Tab","flex");
+    let createbutton = document.getElementById("createbutton");
+    createbutton.innerHTML = "Create";
+    document.getElementById("editbuttons").style.display = "inline";
+    document.getElementById("createdbuttons").style.display = "none";
+    document.getElementById("editdisplay").style.display = "inline";
+    document.getElementById("createddisplay").style.display = "none";
+    mode = "edit";
   }
 }
 
