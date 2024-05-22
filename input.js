@@ -55,7 +55,7 @@ function Create(quickset=false) {
       editbuttons.style.display = "none";
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
-      createddisplay.style.display = "flex";
+      if (showstatus) createddisplay.style.display = "flex";
       mode = "created";
     } else {
       createbutton.innerHTML = "Not Ready";
@@ -75,7 +75,7 @@ function Create(quickset=false) {
     createbutton.style.color = "White";
     editbuttons.style.display = "inline";
     createdbuttons.style.display = "none";
-    editdisplay.style.display = "flex";
+    if (showstatus) editdisplay.style.display = "flex";
     createddisplay.style.display = "none";
     trainbutton.innerHTML = "Start Train";
     trainbutton.style.borderColor = "White";
