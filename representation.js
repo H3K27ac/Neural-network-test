@@ -181,37 +181,8 @@ function Randomize() {
   }
 }
 
-function Create() {
-  let createbutton = document.getElementById("createbutton");
-  let editbuttons = document.getElementById("editbuttons");
-  let createdbuttons = document.getElementById("createdbuttons");
-  let editdisplay = document.getElementById("editdisplay");
-  let createddisplay = document.getElementById("createddisplay");
-  if (mode == "edit") {
-    SetInputs();
-    if (createready) {
-      Toggle("closeall","Tab");
-      FillColor("White");
-      createbutton.innerHTML = "Edit";
-      editbuttons.style.display = "none";
-      createdbuttons.style.display = "inline";
-      editdisplay.style.display = "none";
-      createddisplay.style.display = "inline";
-      mode = "created";
-    }
-  } else {
-    createbutton.innerHTML = "Create";
-    editbuttons.style.display = "inline";
-    createdbuttons.style.display = "none";
-    editdisplay.style.display = "inline";
-    createddisplay.style.display = "none";
-    SetInputs();
-    mode = "edit";
-  }
-}
-
 function CreateGraph() {
-  DeleteGraph()
+  DeleteGraph();
   
 //  for (let i=0; i<structure[0]; i++) {
 //    let input = document.createElement("input")
@@ -223,44 +194,44 @@ function CreateGraph() {
   for (let i=0; i<layers; i++) {
     let column;
     if (showneurons == "all") {
-    column = document.createElement("div")
-    column.className = "Column"
-    column.id = "column " + i
+    column = document.createElement("div");
+    column.className = "Column";
+    column.id = "column " + i;
     }
-    let j2 = structure[i]
+    let j2 = structure[i];
     for (let j=0; j<j2; j++) {
       if (showneurons == "all" || i==layers-1) {
-      let neuron = document.createElement("div")
-      neuron.className = "Neuron"
-      neuron.id = "neuron " + i + "," + j
-      let neuronvalue = document.createElement("span")
-      neuronvalue.className = "NeuronValue"
-      neuronvalue.id = "neuronvalue " + i + "," + j
-      neuron.appendChild(neuronvalue)
+      let neuron = document.createElement("div");
+      neuron.className = "Neuron";
+      neuron.id = "neuron " + i + "," + j;
+      let neuronvalue = document.createElement("span");
+      neuronvalue.className = "NeuronValue";
+      neuronvalue.id = "neuronvalue " + i + "," + j;
+      neuron.appendChild(neuronvalue);
         if (showneurons == "all") {
-          column.appendChild(neuron)
+          column.appendChild(neuron);
         } else {
-          container.appendChild(neuron)
+          container.appendChild(neuron);
         }
       }
     }
     if (showneurons == "all") {
-      document.getElementById("layers").innerHTML = "notworking"
-      container.appendChild(column)
+      document.getElementById("layers").innerHTML = "notworking";
+      container.appendChild(column);
     }
   }
   
   for (let i=0; i<layers-1; i++) {
-    let j2 = structure[i+1]
+    let j2 = structure[i+1];
     for (let j=0; j<j2; j++) {
-      let k2 = structure[i]
+      let k2 = structure[i];
       for (let k=0; k<k2; k++) {
         if (showweights) {
-        let weight = document.createElement("div")
-        weight.className = "Weight"
-        weight.id = "weight " + (i+1) + "," + j + "," + k
-        let neuron1 = document.getElementById("neuron " + i + "," + k)
-        let neuron2 = document.getElementById("neuron " + (i+1) + "," + j)
+        let weight = document.createElement("div");
+        weight.className = "Weight";
+        weight.id = "weight " + (i+1) + "," + j + "," + k;
+        let neuron1 = document.getElementById("neuron " + i + "," + k);
+        let neuron2 = document.getElementById("neuron " + (i+1) + "," + j);
         const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
         const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
         const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
@@ -275,7 +246,7 @@ function CreateGraph() {
         weight.style.transform = `rotate(${angle}rad)`;
         weight.style.left = centerX - (length / 2) + "px";
         weight.style.top = centerY + "px";
-        document.getElementById("container").appendChild(weight)
+        document.getElementById("container").appendChild(weight);
         }
       }
     }
