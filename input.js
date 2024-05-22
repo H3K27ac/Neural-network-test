@@ -4,7 +4,7 @@ var parametersready = false;
 var structureready = false;
 var currenthelpdiv;
 
-function Create() {
+function Create(quickset=false) {
   let createbutton = document.getElementById("createbutton");
   let editbuttons = document.getElementById("editbuttons");
   let createdbuttons = document.getElementById("createdbuttons");
@@ -12,7 +12,19 @@ function Create() {
   let createddisplay = document.getElementById("createddisplay");
   let trainbutton = document.getElementById("training");
   if (mode == "edit") {
-    SetInputs();
+    if (quickset) {
+      structure = [12,10,8,11,9];
+      layers = 5;
+      document.getElementById("structuredisplay").innerHTML = "Structure: " + JSON.stringify(structure);
+      InitializeValues();
+      CreateGraph
+      learnrate = 0.1;
+      weightrange = 1;
+      biasrange = 1;
+      createready = true;
+    } else {
+      SetInputs();
+    }
     if (createready) {
       Toggle("closeall","Tab");
       FillColor("White");
