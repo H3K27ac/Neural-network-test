@@ -32,13 +32,19 @@
         <button onClick="ToggleHelp('structurehelp')" class="HelpButton">?</button>
         <span>Structure</span>
         <input type="text" class="MainInput" id="structureinput">
-        <div class="HelpDiv" id="structurehelp"><span>Help information</span></div>
+        <div class="HelpDivContainer"><div class="HelpDiv" id="structurehelp">
+          <span>Help information</span>
+        </div></div>
       </div>
     </div>
     <div class="Tab" id="parameters">
       <div class="SubTab">
+        <button onClick="ToggleHelp('learnratehelp')" class="HelpButton">?</button>
         <span>Learning rate</span>
         <input type="number" class="TableInput" id="learnrate">
+        <div class="HelpDivContainer"><div class="HelpDiv" id="learnratehelp">
+          <span>Help information</span>
+        </div></div>
       </div>
       <div class="SubTab">
         <span>Weight range</span>
