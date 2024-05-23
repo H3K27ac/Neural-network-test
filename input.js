@@ -7,7 +7,7 @@ var previousstructure = [];
 var currenthelpdiv;
 var currenttab;
 
-function Confirm(id,func,text,para) {
+function Confirm(id,func,text,para,modes=true) {
   let button = document.getElementById(id);
   if (button.classList.contains("clicked")) {
     button.innerHTML = text;
@@ -16,7 +16,7 @@ function Confirm(id,func,text,para) {
     button.innerHTML = "Confirm?";
     button.classList.add("clicked");
     setTimeout(function() {
-      button.innerHTML = text;
+      if (modes == true || mode == modes) button.innerHTML = text;
       button.classList.remove("clicked");
     }, 1000);
   }
@@ -66,7 +66,7 @@ function Create(quickset=false) {
       Warn("createbutton","Create","Not Ready",false);
     }
   } else {
-    Confirm("createbutton",ToggleEdit,"Edit");
+    Confirm("createbutton",ToggleEdit,"Edit",,"created");
   }
 }
 
