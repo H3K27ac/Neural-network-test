@@ -209,32 +209,33 @@ function CreateGraph() {
   
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
-    for (let j=0; j<j2; j++) {
-      let k2 = structure[i];
-      for (let k=0; k<k2; k++) {
-        if (showweights) {
-        let weight = document.createElement("div");
-        weight.className = "Weight";
-        weight.id = "weight " + (i+1) + "," + j + "," + k;
-        let neuron1 = document.getElementById("neuron " + i + "," + k);
-        let neuron2 = document.getElementById("neuron " + (i+1) + "," + j);
-        const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
-        const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
-        const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-        const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
-
-        const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-        const angle = Math.atan2(y2 - y1, x2 - x1);
-        const centerX = (x1 + x2) / 2;
-        const centerY = (y1 + y2) / 2;
-
-        weight.style.width = length + "px";
-        weight.style.transform = `rotate(${angle}rad)`;
-        weight.style.left = centerX - (length / 2) + "px";
-        weight.style.top = centerY + "px";
-        document.getElementById("container").appendChild(weight);
-        }
+    let k2 = structure[i];
+    if (hideneurons[i+1]) {
+      for (let j=0; j<5; j++) {
+        HandleCreateWeight(i,j,k2)
       }
+      for (let j=j2-5; j<j2; j++) {
+        HandleCreateWeight(i,j,k2)
+      }
+    } else {
+      for (let j=0; j<j2; j++) {
+        HandleCreateWeight(i,j,k2)
+      }
+    }
+  }
+}
+
+let HandleCreateWeight(i,j,k2) {
+  if (hideneurons[i]) {
+    for (let k=0; k<5; k++) {
+      CreateWeight(i,j,k);
+    }
+    for (let k=k2-5; k<k2; k++) {
+      CreateWeight(i,j,k);
+    }
+  } else {
+    for (let k=0; k<k2; k++) {
+      CreateWeight(i,j,k);
     }
   }
 }
@@ -247,6 +248,29 @@ function CreateNeuron(i,j) {
   neuronvalue.className = "NeuronValue";
   neuronvalue.id = "neuronvalue " + i + "," + j;
   neuron.appendChild(neuronvalue);
-  return neuron
+  return neuron;
+}
+
+function CreateWeight(i,j,k) {
+  let weight = document.createElement("div");
+  weight.className = "Weight";
+  weight.id = "weight " + (i+1) + "," + j + "," + k;
+  let neuron1 = document.getElementById("neuron " + i + "," + k);
+  let neuron2 = document.getElementById("neuron " + (i+1) + "," + j);
+  const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
+  const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
+  const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
+  const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
+
+  const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  const centerX = (x1 + x2) / 2;
+  const centerY = (y1 + y2) / 2;
+
+  weight.style.width = length + "px";
+  weight.style.transform = `rotate(${angle}rad)`;
+  weight.style.left = centerX - (length / 2) + "px";
+  weight.style.top = centerY + "px";
+  document.getElementById("container").appendChild(weight);
 }
 
