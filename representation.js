@@ -172,13 +172,6 @@ function Randomize() {
 
 function CreateGraph() {
   
-//  for (let i=0; i<structure[0]; i++) {
-//    let input = document.createElement("input")
-//    input.className = "Input"
-//    input.id = "input " + i
-//    document.getElementById("inputfield").appendChild(input)
-//  }
-  
   for (let i=0; i<layers; i++) {
     let column;
     if (showneurons == "all") {
@@ -225,7 +218,7 @@ function CreateGraph() {
   }
 }
 
-let HandleCreateWeight(i,j,k2) {
+function HandleCreateWeight(i,j,k2) {
   if (hideneurons[i]) {
     for (let k=0; k<5; k++) {
       CreateWeight(i,j,k);
