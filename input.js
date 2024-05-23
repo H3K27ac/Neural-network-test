@@ -191,24 +191,20 @@ function InitializeValues() {
   weightcount = 0;
   structure2 = [0];
   structure3 = [0];
+  hideneurons = [];
   
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
+    if (structure[i]>20) {
+      hideneurons.push(true);
+    } else {
+      hideneurons.push(false);
+    }
     if (i>0) { 
       weightcount += structure[i] * structure[i-1];
       structure3.push(weightcount);
     }
-  }
-
-  if (neuroncount < 100) {
-    showweights = true;
-    showbiases = true;
-    showneurons = "all";
-  } else {
-    showweights = false;
-    showbiases = false;
-    showneurons = "output";
   }
 
   neurons = new Float32Array(neuroncount).fill(0);
