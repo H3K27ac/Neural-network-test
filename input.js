@@ -196,7 +196,7 @@ function InitializeValues() {
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
-    if (structure[i]>20) {
+    if (structure[i]>12) {
       hideneurons.push(true);
     } else {
       hideneurons.push(false);
