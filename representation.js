@@ -211,11 +211,14 @@ function CreateGraph() {
       for (let j=0; j<5; j++) {
         column.appendChild(CreateNeuron(i,j));
       }
-      let hidetext = document.createElement("span")
+      let hidetextdiv = document.createElement("div");
+      let hidetext = document.createElement("span");
+      hidetextdiv.className = "HideTextDiv";
       hidetext.className = "HideText";
       hidetext.id = "hidetext " + i;
       hidetext.innerHTML = j2 - 10;
-      column.appendChild(hidetext);
+      hidetextdiv.appendChild(hidetext);
+      column.appendChild(hidetextdiv);
       for (let j=j2-5; j<j2; j++) {
         column.appendChild(CreateNeuron(i,j));
       }
@@ -232,14 +235,14 @@ function CreateGraph() {
     let k2 = structure[i];
     if (hideneurons[i+1]) {
       for (let j=0; j<5; j++) {
-        HandleCreateWeight(i,j,k2)
+        HandleCreateWeight(i,j,k2);
       }
       for (let j=j2-5; j<j2; j++) {
-        HandleCreateWeight(i,j,k2)
+        HandleCreateWeight(i,j,k2);
       }
     } else {
       for (let j=0; j<j2; j++) {
-        HandleCreateWeight(i,j,k2)
+        HandleCreateWeight(i,j,k2);
       }
     }
   }
