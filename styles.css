@@ -144,12 +144,12 @@ th, td {
   display: none;
 }
 
-.ComfirmButton {
+.ConfirmButton {
   border-color: white;
   color: white;
 }
 
-.ComfirmButton.clicked {
+.ConfirmButton.clicked {
   border-color: lime;
   color: lime;
 }
@@ -308,7 +308,7 @@ th, td {
 }
 
 .HideTextDiv {
-  padding: 18px;
+  padding: 13px;
 }
 
 .HideText {
