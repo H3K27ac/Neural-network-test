@@ -7,7 +7,7 @@ body {
   color: white;
 }
 
-button {
+button, input {
   font-family: 'Courier New', monospace;
 }
 
@@ -92,10 +92,11 @@ header {
 .HelpButton {
   width: 20px;
   height: 20px;
-  font-size: 8px;
+  font-size: 10px;
   color: white;
   background-color: black;
   border: 1px solid white;
+  text-align: center;
   border-radius: 50%;
 }
 
