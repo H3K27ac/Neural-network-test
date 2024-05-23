@@ -307,6 +307,11 @@ th, td {
   color: white;
 }
 
+.HideText {
+  border: 1px solid white;
+  padding: 2px;
+}
+
 .Weight {
   position: absolute;
   border: 0px solid white;
