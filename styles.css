@@ -307,6 +307,10 @@ th, td {
   color: white;
 }
 
+.HideTextDiv {
+  padding: 18px;
+}
+
 .HideText {
   border: 1px solid white;
   padding: 2px;
