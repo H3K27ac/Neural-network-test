@@ -21,14 +21,14 @@
           <button onClick="Toggle('structure','Tab','flex')" class="Button">Structure</button>
           <button onClick="Toggle('parameters','Tab','flex')" class="Button">Parameters</button>
           <button onClick="Toggle('data','Tab','flex')" class="Button">Data</button>
-          <button onClick="Quickset()" class="Button ComfirmButton" id="quickset">Quickset</button>
+          <button onClick="Confirm('quickset',Create,'Quickset',true)" class="Button ConfirmButton" id="quickset">Quickset</button>
         </div>
         <div id="createdbuttons">
           <button onClick="Toggle('manualinput','Tab','flex',false)" class="Button">Manual</button>
           <button onClick="Randomize()" class="Button">Random</button>
           <button onClick="ToggleTraining()" class="Button" id="training">Start Train</button>
         </div>
-        <button onClick="Create()" class="Button ComfirmButton" id="createbutton">Create</button>
+        <button onClick="Create()" class="Button ConfirmButton" id="createbutton">Create</button>
       </header>
       <section class="Tab" id="structure">
         <div class="SubTab">
