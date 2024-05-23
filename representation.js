@@ -69,55 +69,82 @@ function Color2(value) {
   return `rgb(${brightness}, ${brightness}, ${brightness})`;
 }
 
-function UpdateColor() {
-  if (showneurons == "output") {
-    let i2 = structure[layers-1];
-    for (let i=0; i<i2; i++) {
-      neuronvalue = neurons[structure2[layers-1]+i].toFixed(2);
-      let neuron = document.getElementById("neuron " + (layers-1) + "," + i);
-      neuron.style.backgroundColor = Color2(neuronvalue);
-      let neuronvaluetext = document.getElementById("neuronvalue " + (layers-1) + "," + i);
-      neuronvaluetext.innerHTML = neuronvalue;
-      if (neuronvalue > 0.5) {
-        neuronvaluetext.style.color = `rgb(0,0,0)`;
-      } else {
-        neuronvaluetext.style.color = `rgb(255,255,255)`;
-      }
+function UpdateNeuron(i,j) {
+  let neuronvalue;
+  neuronvalue = neurons[structure2[i]+j].toFixed(2);
+  let neuron = document.getElementById("neuron " + i + "," + j);
+  neuron.style.backgroundColor = Color2(neuronvalue);
+  let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j);
+  neuronvaluetext.innerHTML = neuronvalue;
+  if (neuronvalue > 0.5) {
+    neuronvaluetext.style.color = `rgb(0,0,0)`;
+  } else {
+    neuronvaluetext.style.color = `rgb(255,255,255)`;
+  }
+}
+
+function UpdateBiases(i,j) {
+  if (showbiases) {
+    let biasvalue = biases[structure2[i+1]+j+1].toFixed(2);
+    let neuron = document.getElementById("neuron " + (i+1) + "," + j);
+    neuron.style.borderColor = Color(biasvalue,"bias");
+  }
+}
+
+function UpdateWeights(i,j,j2) {
+  let index = structure3[i]+structure[i]*j+1;
+  if (hideneurons[i]) {
+    for (let k=0; k<5; k++) {
+      let weightvalue = weights[index+k].toFixed(2);
+      let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k);
+      weight.style.backgroundColor = Color(weightvalue,"weight");
+    }
+    for (let k=j2-5; k<j2; k++) {
+      let weightvalue = weights[index+k].toFixed(2);
+      let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k);
+      weight.style.backgroundColor = Color(weightvalue,"weight");
     }
   } else {
-  for (let i=0; i<layers; i++) {
-    let j2 = structure[i];
-    for (let j=0; j<j2; j++) {
-      let neuronvalue;
-      neuronvalue = neurons[structure2[i]+j].toFixed(2);
-      let neuron = document.getElementById("neuron " + i + "," + j);
-      neuron.style.backgroundColor = Color2(neuronvalue);
-      let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j);
-      neuronvaluetext.innerHTML = neuronvalue;
-      if (neuronvalue > 0.5) {
-        neuronvaluetext.style.color = `rgb(0,0,0)`;
-      } else {
-        neuronvaluetext.style.color = `rgb(255,255,255)`;
-      }
-    }
-    let j3 = structure[i+1];
-    for (let j=0; j<j3; j++) { 
-      if (showbiases) {
-      let biasvalue = biases[structure2[i+1]+j+1].toFixed(2);
-      let neuron = document.getElementById("neuron " + (i+1) + "," + j);
-      neuron.style.borderColor = Color(biasvalue,"bias");
-      }
-      if (showweights) {
-        let index = structure3[i]+structure[i]*j+1;
-      for (let k=0; k<j2; k++) {
-        let weightvalue = weights[index+k].toFixed(2);
-        let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k);
-        weight.style.backgroundColor = Color(weightvalue,"weight");
-      }
-      }
+    for (let k=0; k<j2; k++) {
+      let weightvalue = weights[index+k].toFixed(2);
+      let weight = document.getElementById("weight " + (i+1) + "," + j + "," + k);
+      weight.style.backgroundColor = Color(weightvalue,"weight");
     }
   }
 }
+
+function UpdateColor() {
+  for (let i=0; i<layers; i++) {
+    let j2 = structure[i];
+    let j3 = structure[i+1];
+    if (hideneurons[i]) {
+      for (let j=0; j<5; j++) {
+        UpdateNeuron(i,j);
+      }
+      for (let j=j2-5; j<j2; j++) {
+        UpdateNeuron(i,j);
+      }
+    } else {
+      for (let j=0; j<j2; j++) {
+        UpdateNeuron(i,j);
+      }
+    }
+    if (hideneurons[i+1]) {
+      for (let j=0; j<5; j++) {
+        UpdateBiases(i,j);
+        UpdateWeights(i,j,j2);
+      }
+      for (let j=j3-5; j<j3; j++) {
+        UpdateBiases(i,j);
+        UpdateWeights(i,j,j2);
+      }
+    } else {
+      for (let j=0; j<j3; j++) {
+        UpdateBiases(i,j);
+        UpdateWeights(i,j,j2);
+      }
+    }
+  }
 }
 
 
