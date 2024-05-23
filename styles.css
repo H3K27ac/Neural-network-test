@@ -90,13 +90,12 @@ header {
 }
 
 .HelpButton {
-  width: 20px;
-  height: 20px;
-  font-size: 10px;
+  width: 15px;
+  height: 15px;
+  font-size: 5px;
   color: white;
   background-color: black;
   border: 1px solid white;
-  text-align: center;
   border-radius: 50%;
 }
 
