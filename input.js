@@ -7,17 +7,17 @@ var previousstructure = [];
 var currenthelpdiv;
 var currenttab;
 
-function Quickset() {
-  let quicksetbutton = document.getElementById("quickset");
-  if (quicksetbutton.classList.contains("clicked")) {
-    quicksetbutton.innerHTML = "Quickset";
-    Create(true);
+function Confirm(id,func,text,para) {
+  let button = document.getElementById(id);
+  if (button.classList.contains("clicked")) {
+    button.innerHTML = text;
+    func(para);
   } else {
-    quicksetbutton.innerHTML = "Comfirm?";
-    quicksetbutton.classList.add("clicked");
+    button.innerHTML = "Confirm?";
+    button.classList.add("clicked");
     setTimeout(function() {
-      quicksetbutton.innerHTML = "Quickset";
-      quicksetbutton.classList.remove("clicked");
+      button.innerHTML = text;
+      button.classList.remove("clicked");
     }, 1000);
   }
 }
@@ -66,19 +66,29 @@ function Create(quickset=false) {
       Warn("createbutton","Create","Not Ready",false);
     }
   } else {
-    createbutton.innerHTML = "Create";
-    createbutton.style.borderColor = "White";
-    createbutton.style.color = "White";
-    editbuttons.style.display = "inline";
-    createdbuttons.style.display = "none";
-    if (showstatus) editdisplay.style.display = "flex";
-    createddisplay.style.display = "none";
-    trainbutton.innerHTML = "Start Train";
-    trainbutton.style.borderColor = "White";
-    trainbutton.style.color = "White";
-    SetInputs();
-    mode = "edit";
+    Confirm("createbutton",ToggleEdit,"Edit");
   }
+}
+
+function ToggleEdit() {
+  let createbutton = document.getElementById("createbutton");
+  let editbuttons = document.getElementById("editbuttons");
+  let createdbuttons = document.getElementById("createdbuttons");
+  let editdisplay = document.getElementById("editdisplay");
+  let createddisplay = document.getElementById("createddisplay");
+  let trainbutton = document.getElementById("training");
+  createbutton.innerHTML = "Create";
+  createbutton.style.borderColor = "White";
+  createbutton.style.color = "White";
+  editbuttons.style.display = "inline";
+  createdbuttons.style.display = "none";
+  if (showstatus) editdisplay.style.display = "flex";
+  createddisplay.style.display = "none";
+  trainbutton.innerHTML = "Start Train";
+  trainbutton.style.borderColor = "White";
+  trainbutton.style.color = "White";
+  SetInputs();
+  mode = "edit";
 }
 
 function SetInputs() {
