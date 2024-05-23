@@ -66,7 +66,7 @@ function Create(quickset=false) {
       Warn("createbutton","Create","Not Ready",false);
     }
   } else {
-    Confirm("createbutton",ToggleEdit,"Edit",,"created");
+    Confirm("createbutton",ToggleEdit,"Edit",undefined,"created");
   }
 }
 
