@@ -269,11 +269,10 @@ th, td {
   border: 10px;
 }
 
-.TargetColumn {
+.LastColumn {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 10px;
 }
 
 .Dots {

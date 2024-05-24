@@ -180,6 +180,13 @@ function FillColor(color) {
   }
 }
 
+function DeleteElements(classname) {
+    const elements = document.getElementsByClassName(classname);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
+}
+
 function ClearNeurons() {
   for (let i=1; i<layers; i++) {
     let j2 = structure[i];
@@ -218,13 +225,20 @@ function CreateGraph() {
   
   for (let i=0; i<layers+1; i++) {
     let column;
+    let column2;
     column = document.createElement("div");
     column.className = "Column";
     column.id = "column " + i;
     let j2 = structure[i];
+    if (i==layers-1) {
+      column2 = document.createElement("div");
+      column2.className = "LastColumn";
+      column2.id = "lastcolumn";
+    }
     if (i==layers) {
       j2 = structure[i-1];
-      column.className = "TargetColumn";
+      column2 = document.getElementById("lastcolumn");
+      column.id = "targetcolumn";
       if (!showtargets) column.style.display = "none";
     }
     if (hideneurons[i]) {
@@ -259,9 +273,20 @@ function CreateGraph() {
         }
       }
     }
-    container.appendChild(column);
+    if (i==layers) {
+      column2.appendChild(column);
+    } else if (i==layers-1) {
+      column2.appendChild(column);
+      container.appendChild(column2);
+    } else {
+      container.appendChild(column);
+    }
   }
   
+  CreateWeights();
+}
+
+function CreateWeights() {
   for (let i=0; i<layers-1; i++) {
     let j2 = structure[i+1];
     let k2 = structure[i];

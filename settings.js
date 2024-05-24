@@ -15,9 +15,20 @@ function SettingsToggle(id,text,func) {
 }
 
 function ToggleTargets() {
+  let targetcolumn = document.getElementById("targetcolumn");
   if (showtargets) {
+    if (mode=="created") {
+      targetcolumn.style.display = "none";
+      DeleteElements("Weight");
+      CreateWeights();
+    }
     showtargets = false;
   } else {
+    if (mode=="created") {
+      targetcolumn.style.display = "flex";
+    }
     showtargets = true;
+    DeleteElements("Weight");
+    CreateWeights();
   }
 }
