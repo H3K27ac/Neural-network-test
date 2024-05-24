@@ -21,6 +21,7 @@ function ToggleTargets() {
       targetcolumn.style.display = "none";
       DeleteElements("Weight");
       CreateWeights();
+      UpdateColor();
     }
     showtargets = false;
   } else {
@@ -30,5 +31,6 @@ function ToggleTargets() {
     showtargets = true;
     DeleteElements("Weight");
     CreateWeights();
+    UpdateColor();
   }
 }
