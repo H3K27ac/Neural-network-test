@@ -69,6 +69,20 @@ function Color2(value) {
   return `rgb(${brightness}, ${brightness}, ${brightness})`;
 }
 
+function UpdateTarget(i) {
+  let targetvalue;
+  targetvalue = targets[i].toFixed(2);
+  let target = document.getElementById("target " + i);
+  target.style.backgroundColor = Color2(targetvalue);
+  let targetvaluetext = document.getElementById("targetvalue " + i);
+  targetvaluetext.innerHTML = targetvalue;
+  if (targetvalue > 0.5) {
+    targetvaluetext.style.color = `rgb(0,0,0)`;
+  } else {
+    targetvaluetext.style.color = `rgb(255,255,255)`;
+  }
+}
+
 function UpdateNeuron(i,j) {
   let neuronvalue;
   neuronvalue = neurons[structure2[i]+j].toFixed(2);
@@ -120,13 +134,16 @@ function UpdateColor() {
     if (hideneurons[i]) {
       for (let j=0; j<5; j++) {
         UpdateNeuron(i,j);
+        if (i==layers-1 && showtargets) UpdateTarget(j);
       }
       for (let j=j2-5; j<j2; j++) {
         UpdateNeuron(i,j);
+        if (i==layers-1 && showtargets) UpdateTarget(j);
       }
     } else {
       for (let j=0; j<j2; j++) {
         UpdateNeuron(i,j);
+        if (i==layers-1 && showtargets) UpdateTarget(j);
       }
     }
     if (hideneurons[i+1]) {
@@ -199,17 +216,24 @@ function Randomize() {
 
 function CreateGraph() {
   
-  for (let i=0; i<layers; i++) {
+  for (let i=0; i<layers+1; i++) {
     let column;
-    if (showneurons == "all") {
     column = document.createElement("div");
     column.className = "Column";
     column.id = "column " + i;
-    }
     let j2 = structure[i];
+    if (i==layers) {
+      j2 = structure[i-1];
+      column.className = "TargetColumn";
+      if (!showtargets) column.style.display = "none";
+    }
     if (hideneurons[i]) {
       for (let j=0; j<5; j++) {
-        column.appendChild(CreateNeuron(i,j));
+        if (i==layers) {
+          column.appendChild(CreateTarget(j));
+        } else {
+          column.appendChild(CreateNeuron(i,j));
+        }
       }
       let hidetextdiv = document.createElement("div");
       let hidetext = document.createElement("span");
@@ -220,11 +244,19 @@ function CreateGraph() {
       hidetextdiv.appendChild(hidetext);
       column.appendChild(hidetextdiv);
       for (let j=j2-5; j<j2; j++) {
-        column.appendChild(CreateNeuron(i,j));
+        if (i==layers) {
+          column.appendChild(CreateTarget(j));
+        } else {
+          column.appendChild(CreateNeuron(i,j));
+        }
       }
     } else {
       for (let j=0; j<j2; j++) {
-        column.appendChild(CreateNeuron(i,j));
+        if (i==layers) {
+          column.appendChild(CreateTarget(j));
+        } else {
+          column.appendChild(CreateNeuron(i,j));
+        }
       }
     }
     container.appendChild(column);
@@ -261,6 +293,17 @@ function HandleCreateWeight(i,j,k2) {
       CreateWeight(i,j,k);
     }
   }
+}
+
+function CreateTarget(i) {
+  let target = document.createElement("div");
+  target.className = "Neuron";
+  target.id = "target " + i;
+  let targetvalue = document.createElement("span");
+  targetvalue.className = "NeuronValue";
+  targetvalue.id = "targetvalue " + i;
+  target.appendChild(targetvalue);
+  return target;
 }
 
 function CreateNeuron(i,j) {

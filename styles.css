@@ -154,6 +154,16 @@ th, td {
   color: lime;
 }
 
+.SettingsToggle.off {
+  border-color: red;
+  color: red;
+}
+
+.SettingsToggle.on {
+  border-color: lime;
+  color: lime;
+}
+
 .Button {
   font-size: 15px;
   color: white;
@@ -257,6 +267,13 @@ th, td {
   align-items: center;
   gap: 2px;
   border: 10px;
+}
+
+.TargetColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
 }
 
 .Dots {

@@ -8,6 +8,7 @@
     <script defer type="text/javascript" src="input.js"></script>
     <script defer type="text/javascript" src="representation.js"></script>
     <script defer type="text/javascript" src="calculation.js"></script>
+    <script defer type="text/javascript" src="settings.js"></script>
     <script defer>
       function Load() {
         Toggle("structure","Tab","flex",true)
@@ -29,6 +30,7 @@
           <button onclick="ToggleTraining()" class="Button" id="training">Start Train</button>
         </div>
         <button onclick="Create()" class="Button ConfirmButton" id="createbutton">Create</button>
+        <button onclick="Toggle('settings','Tab','flex',false)" class="Button">Settings</button>
       </header>
       <section class="Tab" id="structure">
         <div class="SubTab">
@@ -78,6 +80,11 @@
           </div></article>
         </div>
         <button onclick="SubmitInputData()" class="Button" id="submitinputdata">Input</button>
+      </section>
+      <section class="Tab" id="settings">
+        <div class="SubTab">
+          <button onclick="SettingsToggle('showtargets','Targets',ToggleTargets)" class="Button SettingsToggle" id="showtargets">Show Targets</button>
+        </div>
       </section>
     <!--  <div id="inputfield"></div> -->
       <section class="ToggleBar">
