@@ -27,10 +27,10 @@ function ToggleTargets() {
   } else {
     if (mode=="created") {
       targetcolumn.style.display = "flex";
+      DeleteElements("Weight");
+      CreateWeights();
+      UpdateColor();
     }
     showtargets = true;
-    DeleteElements("Weight");
-    CreateWeights();
-    UpdateColor();
   }
 }
