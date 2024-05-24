@@ -323,10 +323,10 @@ function HandleCreateWeight(i,j,k2) {
 function CreateTarget(i) {
   let target = document.createElement("div");
   target.className = "Neuron";
-  target.id = "target " + i;
+  target.id = `target ${i}`;
   let targetvalue = document.createElement("span");
   targetvalue.className = "NeuronValue";
-  targetvalue.id = "targetvalue " + i;
+  targetvalue.id = `targetvalue ${i}`;
   target.appendChild(targetvalue);
   return target;
 }
@@ -334,34 +334,40 @@ function CreateTarget(i) {
 function CreateNeuron(i,j) {
   let neuron = document.createElement("div");
   neuron.className = "Neuron";
-  neuron.id = "neuron " + i + "," + j;
+  neuron.id = `neuron ${i},${j}`;
   let neuronvalue = document.createElement("span");
   neuronvalue.className = "NeuronValue";
-  neuronvalue.id = "neuronvalue " + i + "," + j;
+  neuronvalue.id = `neuronvalue ${i},${j}`;
   neuron.appendChild(neuronvalue);
   return neuron;
 }
 
 function CreateWeight(i,j,k) {
-  let weight = document.createElement("div");
+  const container = document.getElementById("container")
+  const weight = document.createElement("div");
   weight.className = "Weight";
-  weight.id = "weight " + (i+1) + "," + j + "," + k;
-  let neuron1 = document.getElementById("neuron " + i + "," + k);
-  let neuron2 = document.getElementById("neuron " + (i+1) + "," + j);
-  const x1 = neuron1.offsetLeft + neuron1.offsetWidth / 2;
-  const y1 = neuron1.offsetTop + neuron1.offsetHeight / 2;
-  const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-  const y2 = neuron2.offsetTop + neuron2.offsetHeight / 2;
+  weight.id = `weight ${i + 1},${j},${k}`;
 
-  const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+  const neuron1 = document.getElementById(`neuron ${i},${k}`);
+  const neuron2 = document.getElementById(`neuron ${i + 1},${j}`);
+
+  const getCenterCoordinates = (element) => ({
+    x: element.offsetLeft + element.offsetWidth / 2,
+    y: element.offsetTop + element.offsetHeight / 2,
+  });
+
+  const { x: x1, y: y1 } = getCenterCoordinates(neuron1);
+  const { x: x2, y: y2 } = getCenterCoordinates(neuron2);
+
+  const length = Math.hypot(x2 - x1, y2 - y1);
   const angle = Math.atan2(y2 - y1, x2 - x1);
   const centerX = (x1 + x2) / 2;
   const centerY = (y1 + y2) / 2;
 
-  weight.style.width = length + "px";
+  weight.style.width = `${length}px`;
   weight.style.transform = `rotate(${angle}rad)`;
-  weight.style.left = centerX - (length / 2) + "px";
-  weight.style.top = centerY + "px";
-  document.getElementById("container").appendChild(weight);
+  weight.style.left = `${centerX - length / 2}px`;
+  weight.style.top = `${centerY}px`;
+  container.appendChild(weight);
 }
 
