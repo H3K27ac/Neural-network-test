@@ -24,7 +24,7 @@ function Confirm(id,func,text,para,modes=true) {
   }
 }
 
-function QuickSet() {
+function Quickset() {
   DeleteGraph();
   structure = [12,10,8,11,9];
   layers = 5;
@@ -50,7 +50,7 @@ function Create(quickset=false) {
   let trainbutton = document.getElementById("training");
   if (mode == "edit") {
     if (quickset) {
-      Quickset()
+      Quickset();
     } else {
       SetInputs();
     }
@@ -96,6 +96,7 @@ function ToggleEdit() {
   SetInputs();
   mode = "edit";
 }
+
 
 function ChangeStructure(update=true) {
   SetStructure();
@@ -196,7 +197,7 @@ function SetInputs() {
   ChangeStructure(false);
   parameterscomplete = 0;
   parametererror = false;
-  SetParameter("learnrate","learnratedisplay","Learning rate",false);
+  SetParameter("learnrate","learnratedisplay","Learning Rate",false);
   SetParameter("weightrange","weightrangedisplay","Weight Range",false);
   SetParameter("biasrange","biasrangedisplay","Bias Range",false);
   UpdateStatus();
@@ -237,7 +238,7 @@ function InitializeValues() {
   document.getElementById("layercount").innerHTML = "Layers: " + layers;
 }
 
-function Toggle(id,c="Tab",type="inline",input=true) {
+function Toggle(id,c="Tab",type="inline",input=false) {
   if (input) SetInputs();
   if (currenttab !== id) {
     let tabs = document.getElementsByClassName(c);
