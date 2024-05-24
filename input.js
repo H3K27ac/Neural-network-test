@@ -3,6 +3,8 @@ var createready = false;
 var parametersready = false;
 var structureready = false;
 var showstatus = true;
+var parametererror = false;
+var parameterscomplete = 0;
 var previousstructure = [];
 var currenthelpdiv;
 var currenttab;
@@ -22,6 +24,23 @@ function Confirm(id,func,text,para,modes=true) {
   }
 }
 
+function QuickSet() {
+  DeleteGraph();
+  structure = [12,10,8,11,9];
+  layers = 5;
+  document.getElementById("structurecount").innerHTML = "Structure: [12,10,8,11,9]";
+  structure.push(0);
+  InitializeValues();
+  CreateGraph();
+  learnrate = 0.1;
+  weightrange = 1;
+  biasrange = 1;
+  document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
+  document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
+  document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
+  createready = true;
+}
+
 function Create(quickset=false) {
   let createbutton = document.getElementById("createbutton");
   let editbuttons = document.getElementById("editbuttons");
@@ -31,20 +50,7 @@ function Create(quickset=false) {
   let trainbutton = document.getElementById("training");
   if (mode == "edit") {
     if (quickset) {
-      DeleteGraph();
-      structure = [12,10,8,11,9];
-      layers = 5;
-      document.getElementById("structurecount").innerHTML = "Structure: [12,10,8,11,9]";
-      structure.push(0);
-      InitializeValues();
-      CreateGraph();
-      learnrate = 0.1;
-      weightrange = 1;
-      biasrange = 1;
-      document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
-      document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
-      document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
-      createready = true;
+      Quickset()
     } else {
       SetInputs();
     }
@@ -91,18 +97,8 @@ function ToggleEdit() {
   mode = "edit";
 }
 
-function SetInputs() {
-  if (istraining) {
-    training.stop();
-    clearInterval(updategraph);
-    updategraph = undefined;
-    istraining = false;
-  }
-  traincount = 0;
-  createready = false;
-  parametersready = false;
-  structureready = false;
-  ChangeStructure();
+function ChangeStructure(update=true) {
+  SetStructure();
   InitializeValues();
   if (structureready) {
     structure.push(0);
@@ -112,67 +108,61 @@ function SetInputs() {
       previousstructure = structure;
     }
   }
-  let container = document.getElementById("container");
+  if (update) UpdateStatus();
+}
+
+function SetParameter(inputid,id,text,update=true) {
+  let input = document.getElementById(inputid).value;
+  let display = document.getElementById(id);
+  if (input !== undefined && input.trim() !== "") {
+    display.innerHTML = text + ": " + input;
+    if (input > 0) {
+      parameterscomplete++;
+      switch (inputid) {
+        case "learnrate":
+          learnrate = Number(input);
+          break;
+        case "weightrange":
+          weightrange = Number(input);
+          break;
+        case "biasrange":
+          biasrange = Number(input);
+          break;
+        default:
+          break;
+      }
+      display.style.color = "White";
+    } else {
+      display.style.color = "Red";
+      parametererror = true;
+    }
+  }
+  if (update) UpdateStatus();
+}
+
+function UpdateStatus() {
   let createbutton = document.getElementById("createbutton");
   let display = document.getElementById("parameterstatus");
   let display2 = document.getElementById("structurestatus");
   let display3 = document.getElementById("readystatus");
-  let lr = document.getElementById("learnrate").value;
-  let wr = document.getElementById("weightrange").value;
-  let br = document.getElementById("biasrange").value;
-  let learnratedisplay = document.getElementById("learnratedisplay");
-  let weightdisplay = document.getElementById("weightrangedisplay");
-  let biasdisplay = document.getElementById("biasrangedisplay");
-  let complete = 0;
-  let error = false;
-  
-  if (lr !== undefined && lr.trim() !== "") {
-    learnratedisplay.innerHTML = "Learning rate: " + lr;
-    if (lr > 0) {
-      complete++;
-      learnrate = Number(lr);
-      learnratedisplay.style.color = "White";
-    } else {
-      learnratedisplay.style.color = "Red";
-      error = true;
-    }
-  }
-  if (wr !== undefined && wr.trim() !== "") {
-    weightdisplay.innerHTML = "Weight range: " + wr;
-    if (wr > 0) {
-      complete++;
-      weightrange = wr;
-      weightdisplay.style.color = "White";
-    } else {
-      weightdisplay.style.color = "Red";
-      error = true;
-    }
-  }
-  if (br !== undefined && br.trim() !== "") {
-    biasdisplay.innerHTML = "Bias range: " + br;
-    if (br > 0) {
-      complete++;
-      biasrange = br;
-      biasdisplay.style.color = "White";
-    } else {
-      biasdisplay.style.color = "Red";
-      error = true;
-    }
-  }
-  if (error) {
+  if (parametererror) {
     display.innerHTML = "ERROR: Invalid Parameters";
     display.style.color = "Red";
   } else {
-    if (complete == 0) {
-      display.innerHTML = "Missing Parameters";
-      display.style.color = "Red";
-    } else if (complete == 3) {
-      display.innerHTML = "Parameters OK";
-      display.style.color = "Lime";
-      parametersready = true;
-    } else {
-      display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
-      display.style.color = "Yellow";
+    switch (parameterscomplete) {
+      case 0:
+        display.innerHTML = "Missing Parameters";
+        display.style.color = "Red";
+        break;
+      case 3:
+        display.innerHTML = "Parameters OK";
+        display.style.color = "Lime";
+        parametersready = true;
+        break;
+      default:
+        display.innerHTML = "Incomplete Parameters (" + parameterscomplete + "/3)";
+        display.style.color = "Yellow";
+        break;
     }
   }
   display3.innerHTML = "";
@@ -190,7 +180,26 @@ function SetInputs() {
       FillColor("Red");
     }
   }
-  
+}
+
+function SetInputs() {
+  if (istraining) {
+    training.stop();
+    clearInterval(updategraph);
+    updategraph = undefined;
+    istraining = false;
+  }
+  traincount = 0;
+  createready = false;
+  parametersready = false;
+  structureready = false;
+  ChangeStructure(false);
+  parameterscomplete = 0;
+  parametererror = false;
+  SetParameter("learnrate","learnratedisplay","Learning rate",false);
+  SetParameter("weightrange","weightrangedisplay","Weight Range",false);
+  SetParameter("biasrange","biasrangedisplay","Bias Range",false);
+  UpdateStatus();
 //  l1strength = document.getElementById("L1strength").value;
 //  l2strength = document.getElementById("L2strength").value;
 
@@ -286,7 +295,7 @@ function Toggle2(id,buttonid,text) {
   }
 }
 
-function ChangeStructure() {
+function SetStructure() {
   let structureinput = document.getElementById("structureinput").value;
   let display = document.getElementById("structurestatus");
   let display2 = document.getElementById("structurecount");
