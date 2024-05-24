@@ -1,325 +1,360 @@
-let layertypes = ["connectedlayer","activationlayer","dropoutlayer","batchnormlayer","layernorm","weightnorm"];
-let layernames = ["Fully connected layer","Activation layer","Dropout layer","Batch normalisation","Layer normalisation","Weight normalisation"];
-let layercolor = ["white","lightgray","lightgreen","lightblue","blue","mediumslateblue"];
-let modifytypes = [[],[],["dropoutlayer","dropconnect"],["batchnormlayer","batchrenorm","batchkalman","decorbatchnorm"],["layernorm","instancenorm","groupnorm"],["weightnorm","weightstand"]];
-let modifynames = [[],[],["Dropout layer","Dropconnect layer"],["Batch normalisation","Batch renormalisation","Batch Kalman normalisation","Decorrelated batch normalisation"],["Layer normalisation","Instance normalisation","Group normalisation"],["Weight normalisation","Weight Standardisation"]];
-let modifynames2 = [[],[],["DL","DCL"],["BN","BRN","BKN","DBN"],["LN","IN","GN"],["WN","WS"]];
-let modifycolor = [[],[],["lightgreen","chartreuse"],["lightblue","deepskyblue","cornflowerblue","lightskyblue"],["blue","steelblue","darkcyan"],["mediumslateblue","slateblue"]];
-let layerorder = [];
+var mode = "edit";
+var createready = false;
+var parametersready = false;
+var structureready = false;
+var showstatus = true;
+var previousstructure = [];
+var currenthelpdiv;
+var currenttab;
 
+function Confirm(id,func,text,para,modes=true) {
+  let button = document.getElementById(id);
+  if (button.classList.contains("clicked")) {
+    button.innerHTML = text;
+    func(para);
+  } else {
+    button.innerHTML = "Confirm?";
+    button.classList.add("clicked");
+    setTimeout(function() {
+      if (modes == true || mode == modes) button.innerHTML = text;
+      button.classList.remove("clicked");
+    }, 1000);
+  }
+}
 
-function ReplenishLayers() {
-  for (let i=0; i<layertypes.length; i++) {
-    if (document.getElementById(layertypes[i] + "incontainer") == null) {
-      let container = document.getElementById("layercontainer");
-      let layer = document.createElement("div");
-      let layertext = document.createElement("span");
-      layer.className = "layerincontainer"
-      layer.id = layertypes[i] + "incontainer"
-      layer.style.backgroundColor = layercolor[i]
-      layertext.className = "layertext"
-      layertext.innerHTML = layernames[i]
-      layer.appendChild(layertext)
-      let j2 = modifytypes[i].length
-      if (j2 != 0) {
-        let modifylayercontainer = document.createElement("div");
-        modifylayercontainer.className = "modifylayercontainer"
-        for (let j=0; j<j2; j++) {
-          let modifylayer = document.createElement("button");
-          let modifylayertext = document.createElement("span");
-          modifylayer.className = "modifylayer"
-          modifylayertext.className = "modifylayertext"
-          modifylayer.style.backgroundColor = modifycolor[i][j]
-          modifylayertext.innerHTML = modifynames2[i][j]
-          modifylayer.appendChild(modifylayertext)
-          modifylayercontainer.appendChild(modifylayer)
-        }
-        layer.appendChild(modifylayercontainer)
+function Create(quickset=false) {
+  let createbutton = document.getElementById("createbutton");
+  let editbuttons = document.getElementById("editbuttons");
+  let createdbuttons = document.getElementById("createdbuttons");
+  let editdisplay = document.getElementById("editdisplay");
+  let createddisplay = document.getElementById("createddisplay");
+  let trainbutton = document.getElementById("training");
+  if (mode == "edit") {
+    if (quickset) {
+      DeleteGraph();
+      structure = [12,10,8,11,9];
+      layers = 5;
+      document.getElementById("structurecount").innerHTML = "Structure: [12,10,8,11,9]";
+      structure.push(0);
+      InitializeValues();
+      CreateGraph();
+      learnrate = 0.1;
+      weightrange = 1;
+      biasrange = 1;
+      document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
+      document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
+      document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
+      createready = true;
+    } else {
+      SetInputs();
+    }
+    if (createready) {
+      if (currenttab !== undefined) {
+        document.getElementById(currenttab).style.display = "none";
+        currenttab = undefined;
       }
-      container.appendChild(layer);
-      MakeDraggable(i)
+      FillColor("White");
+      createbutton.innerHTML = "Edit";
+      createbutton.style.borderColor = "White";
+      createbutton.style.color = "White";
+      editbuttons.style.display = "none";
+      createdbuttons.style.display = "inline";
+      editdisplay.style.display = "none";
+      if (showstatus) createddisplay.style.display = "flex";
+      mode = "created";
+    } else {
+      Warn("createbutton","Create","Not Ready",false);
+    }
+  } else {
+    Confirm("createbutton",ToggleEdit,"Edit",undefined,"created");
+  }
+}
+
+function ToggleEdit() {
+  let createbutton = document.getElementById("createbutton");
+  let editbuttons = document.getElementById("editbuttons");
+  let createdbuttons = document.getElementById("createdbuttons");
+  let editdisplay = document.getElementById("editdisplay");
+  let createddisplay = document.getElementById("createddisplay");
+  let trainbutton = document.getElementById("training");
+  createbutton.innerHTML = "Create";
+  createbutton.style.borderColor = "White";
+  createbutton.style.color = "White";
+  editbuttons.style.display = "inline";
+  createdbuttons.style.display = "none";
+  if (showstatus) editdisplay.style.display = "flex";
+  createddisplay.style.display = "none";
+  trainbutton.innerHTML = "Start Train";
+  trainbutton.style.borderColor = "White";
+  trainbutton.style.color = "White";
+  SetInputs();
+  mode = "edit";
+}
+
+function SetInputs() {
+  if (istraining) {
+    training.stop();
+    clearInterval(updategraph);
+    updategraph = undefined;
+    istraining = false;
+  }
+  traincount = 0;
+  createready = false;
+  parametersready = false;
+  structureready = false;
+  ChangeStructure();
+  InitializeValues();
+  if (structureready) {
+    structure.push(0);
+    if (structure != previousstructure) {
+      DeleteGraph();
+      CreateGraph();
+      previousstructure = structure;
     }
   }
-  UpdateContainerWidth();
-}
-
-function UpdateContainerWidth() {
-  let container = document.getElementById("layercontainer");
-  let children = container.children;
-  let width = 0;
-  let i2 = children.length;
-  for (let i=0; i<i2; i++) {
-    width += children[i].offsetWidth;
+  let container = document.getElementById("container");
+  let createbutton = document.getElementById("createbutton");
+  let display = document.getElementById("parameterstatus");
+  let display2 = document.getElementById("structurestatus");
+  let display3 = document.getElementById("readystatus");
+  let lr = document.getElementById("learnrate").value;
+  let wr = document.getElementById("weightrange").value;
+  let br = document.getElementById("biasrange").value;
+  let learnratedisplay = document.getElementById("learnratedisplay");
+  let weightdisplay = document.getElementById("weightrangedisplay");
+  let biasdisplay = document.getElementById("biasrangedisplay");
+  let complete = 0;
+  let error = false;
+  
+  if (lr !== undefined && lr.trim() !== "") {
+    learnratedisplay.innerHTML = "Learning rate: " + lr;
+    if (lr > 0) {
+      complete++;
+      learnrate = Number(lr);
+      learnratedisplay.style.color = "White";
+    } else {
+      learnratedisplay.style.color = "Red";
+      error = true;
+    }
   }
-  width += 10
-  container.style.width = width + 'px'
-}
-
-function CreateLayers() {
-  let container = document.getElementById("inputcontainer");
-  let neuron = document.createElement("div")
-  let neuron2 = document.createElement("div")
-  let weight = document.createElement("div")
-  let neuronvalue = document.createElement("span")
-  neuronvalue.className = "neuronvalue"
-  neuronvalue.innerHTML = "In"
-  let neuronvalue2 = document.createElement("span")
-  neuronvalue2.className = "neuronvalue"
-  neuronvalue2.innerHTML = "Out"
-  neuron.className = "neuron"
-  neuron.id = "neuron"
-  neuron2.className = "neuron"
-  neuron2.id = "neuron2"
-  weight.className = "weight"
-  weight.id = "weight"
-  neuron.appendChild(neuronvalue)
-  neuron2.appendChild(neuronvalue2)
-  container.appendChild(neuron)
-  container.appendChild(neuron2)
-  const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
-  const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-  const length = x2 - x1;
-  const centerX = (x1 + x2) / 2;
-  weight.style.width = length + "px";
-  weight.style.left = centerX - (length / 2) + "px";
-  container.appendChild(weight)
-}
-
-function MakeDraggable(i) {
-  let object = document.getElementById(layertypes[i] + "incontainer")
-  let layercontainer = document.getElementById("layercontainer")
-  let isDragging = false;
-  let isSnapped = false;
-  let originalPosition = { x: 0, y: 0 };
-  let closestObject;
-  let ghostleft = 0;
-  let ghosttop = 0;
-  let leftofobj = true
-  let minDistance = Number.MAX_SAFE_INTEGER;
-
-  object.addEventListener('mousedown', handleMouseDown);
-  object.addEventListener('touchstart', handleTouchStart);
-
-    function handleMouseDown(event) {
-      isDragging = true;
-      originalPosition.x = event.clientX - object.offsetLeft;
-      originalPosition.y = event.clientY - object.offsetTop;
-
-      handleGhost()
-
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+  if (wr !== undefined && wr.trim() !== "") {
+    weightdisplay.innerHTML = "Weight range: " + wr;
+    if (wr > 0) {
+      complete++;
+      weightrange = wr;
+      weightdisplay.style.color = "White";
+    } else {
+      weightdisplay.style.color = "Red";
+      error = true;
     }
-
-    function handleTouchStart(event) {
-      event.preventDefault()
-      isDragging = true;
-      originalPosition.x = event.touches[0].clientX - object.offsetLeft;
-      originalPosition.y = event.touches[0].clientY - object.offsetTop;
-
-      handleGhost()
-      
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
+  }
+  if (br !== undefined && br.trim() !== "") {
+    biasdisplay.innerHTML = "Bias range: " + br;
+    if (br > 0) {
+      complete++;
+      biasrange = br;
+      biasdisplay.style.color = "White";
+    } else {
+      biasdisplay.style.color = "Red";
+      error = true;
     }
-
-    function handleMouseMove(event) {
-        if (isDragging == true) {
-          let ghost = document.getElementById(layertypes[i] + "ghost")
-          ghost.style.left = (event.clientX - originalPosition.x) + 'px';
-          ghost.style.top = (event.clientY - originalPosition.y) + 'px';
-
-          isSnapped = false;
-
-          handleSnap();
-        }
+  }
+  if (error) {
+    display.innerHTML = "ERROR: Invalid Parameters";
+    display.style.color = "Red";
+  } else {
+    if (complete == 0) {
+      display.innerHTML = "Missing Parameters";
+      display.style.color = "Red";
+    } else if (complete == 3) {
+      display.innerHTML = "Parameters OK";
+      display.style.color = "Lime";
+      parametersready = true;
+    } else {
+      display.innerHTML = "Incomplete Parameters (" + complete + "/3)";
+      display.style.color = "Yellow";
     }
-
-    function handleTouchMove(event) {
-        event.preventDefault()
-        ghostleft = event.touches[0].clientX - originalPosition.x;
-        ghosttop = event.touches[0].clientY - originalPosition.y;
-        if (isDragging && isSnapped == false) {
-          let ghost = document.getElementById(layertypes[i] + "ghost")
-          ghost.style.left = ghostleft + 'px';
-          ghost.style.top = ghosttop + 'px';
-        }
-        handleSnap();
+  }
+  display3.innerHTML = "";
+  createbutton.style.borderColor = "White";
+  createbutton.style.color = "White";
+  if (structureready) {
+    if (parametersready) {
+      createready = true;
+      FillColor("Lime");
+      display3.innerHTML = "Ready for Creation";
+      display3.style.color = "Lime";
+      createbutton.style.borderColor = "Lime";
+      createbutton.style.color = "Lime";
+    } else {
+      FillColor("Red");
     }
-
-    function handleMouseUp() {
-      isDragging = false;
-      
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      let ghost = document.getElementById(layertypes[i] + "ghost");
-      
-        if (isSnapped) {
-            // Object is snapped, remove the ghost and add the object
-            if (ghost) {
-                ghost.remove();
-            }
-        } else {
-            // Object is not snapped, remove the ghost
-
-            if (ghost) {
-                ghost.remove();
-            }
-        }
-    }
-
-    function handleTouchEnd() {
-      isDragging = false;
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-      let ghost = document.getElementById(layertypes[i] + "ghost");
-      let container = document.getElementById("inputcontainer");
-      document.getElementById("layers").innerHTML = "end"
-        if (isSnapped) {
-            // Object is snapped, remove the ghost and add the object
-          if (ghost) {
-                ghost.remove();
-            }
-          let newobject = document.createElement("div");
-          let layertext = document.createElement("span");
-          let deletelayer = document.createElement("button");
-          let j2 = modifytypes[i].length
-          if (j2 != 0) {
-          let modifylayercontainer = document.createElement("div");
-          modifylayercontainer.className = "modifylayercontainer"
-          for (let j=0; j<j2; j++) {
-            let modifylayer = document.createElement("button");
-            let modifylayertext = document.createElement("span");
-            modifylayer.className = "modifylayer"
-            modifylayertext.className = "modifylayertext"
-            modifylayer.style.backgroundColor = modifycolor[i][j]
-            modifylayertext.innerHTML = modifynames2[i][j]
-            modifylayer.onclick = function() {
-              let index;
-              let m2 = container.children.length
-              for (let m=0; m<m2; m++) {
-                if (container.children[m] === newobject) {
-                  index = m;
-                }
-              }
-              layerorder[index-2] = modifytypes[i][j]
-              layertext.innerHTML = modifynames[i][j]
-              newobject.style.backgroundColor = modifycolor[i][j]
-            }
-              modifylayer.appendChild(modifylayertext)
-              modifylayercontainer.appendChild(modifylayer)
-          }
-          newobject.appendChild(modifylayercontainer)
-          }
-          newobject.className = "layerincontainer"
-          newobject.style.backgroundColor = layercolor[i]
-          layertext.className = "layertext"
-          layertext.innerHTML = layernames[i]
-          deletelayer.className = "deletelayer"
-          deletelayer.onclick = function() {
-            let index;
-            let m2 = container.children.length
-              for (let m=0; m<m2; m++) {
-                if (container.children[m] === newobject) {
-                  index = m;
-                }
-              }
-            newobject.remove()
-            layerorder.splice(index-2,1)
-            document.getElementById("layers").innerHTML = "index done"
-          };
-          newobject.appendChild(layertext)
-          newobject.appendChild(deletelayer)
-          if (layerorder.length == 0) {
-            container.insertBefore(newobject,container.children[layerorder.length+2])
-            layerorder.push(layertypes[i])
-          } else {
-            newobject.id = "layer " + closestObject
-            document.getElementById("layers").innerHTML = "insert" 
-            container.insertBefore(newobject,container.children[closestObject+2]);
-            layerorder.splice(closestObject,0,layertypes[i])
-          }
-          isSnapped = false;
-          document.getElementById("layers").innerHTML = JSON.stringify(layerorder)
-        } else {
-            // Object is not snapped, remove the ghost
-            if (ghost) {
-                ghost.remove();
-            }
-        }
-    }
-
-  function handleGhost() {
-    let layer = document.createElement("div");
-    let layertext = document.createElement("span");
-    layer.className = "layerghost"
-    layer.id = layertypes[i] + "ghost"
-    layer.style.backgroundColor = layercolor[i]
-    layertext.className = "layertext"
-    layertext.innerHTML = layernames[i]
-    layer.appendChild(layertext)
-    layercontainer.appendChild(layer)
   }
   
-  function handleSnap() {
-    let container = document.getElementById("inputcontainer")
-    let ghost = document.getElementById(layertypes[i] + "ghost");
-    let neuron = document.getElementById("neuron")
-   // let neuron2 = document.getElementById("neuron2")
-   // const x1 = neuron.offsetLeft + neuron.offsetWidth / 2;
-   // const x2 = neuron2.offsetLeft + neuron2.offsetWidth / 2;
-    const height = -((2 * neuron.offsetTop) + (3 * neuron.offsetHeight)) / 4
-  //    const x3 = (x1 + x2)/(layerorder.length+2) - (x1 * (layerorder.length+2));
-    if (!isSnapped) {
-    if (Math.abs(ghosttop-height) < 50) {
-      isSnapped = true
-      ghost.style.left = 0 + "px";
-      ghost.style.top = 0 + "px";
-      ghost.style.position = "relative";
-      ghost.style.opacity = 0.8;
-      if (layerorder.length == 0) {
-        document.getElementById("layers").innerHTML = "set"
-        container.insertBefore(ghost,container.children[layerorder.length+2])
-   //       ghost.style.left = x3
-   //       ghost.style.top = height
+//  l1strength = document.getElementById("L1strength").value;
+//  l2strength = document.getElementById("L2strength").value;
+
+}
+
+function InitializeValues() {
+  neuroncount = 0;
+  weightcount = 0;
+  structure2 = [0];
+  structure3 = [0];
+  hideneurons = [];
+  
+  for (let i=0; i<layers; i++) {
+    neuroncount += structure[i];
+    structure2.push(neuroncount);
+    if (structure[i]>12) {
+      hideneurons.push(true);
+    } else {
+      hideneurons.push(false);
+    }
+    if (i>0) { 
+      weightcount += structure[i] * structure[i-1];
+      structure3.push(weightcount);
+    }
+  }
+
+  neurons = new Float32Array(neuroncount).fill(0);
+  neurons2 = new Float32Array(neuroncount+1).fill(0);
+  weights = new Float32Array(weightcount+1).fill(0);
+  biases = new Float32Array(neuroncount+1).fill(0);
+  targets = new Float32Array(structure[layers-1]).fill(0);
+  
+  document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount;
+  document.getElementById("weightcount").innerHTML = "Weights: " + weightcount;
+  document.getElementById("layercount").innerHTML = "Layers: " + layers;
+}
+
+function Toggle(id,c="Tab",type="inline",input=true) {
+  if (input) SetInputs();
+  if (currenttab !== id) {
+    let tabs = document.getElementsByClassName(c);
+    let i2 = tabs.length;
+    for (let i = 0; i < i2; i++) {
+      let tab = tabs[i];
+      if (tab.id === id) {
+        tab.style.display = type;
       } else {
-        closestObject = 0
-        minDistance = Number.MAX_SAFE_INTEGER;
-        for (let n=0; n<layerorder.length; n++) {
-          const obj = container.children[n+2]
-          const distance = Math.abs(ghostleft - obj.offsetLeft);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestObject = n;
-          }
-        }
-        if (ghostleft > container.children[closestObject+2].offsetLeft) {
-          closestObject += 1
-          leftofobj = false
-        } else {
-          leftofobj = true
-        }
-          container.insertBefore(ghost,container.children[closestObject+2]);
-        }
+        tab.style.display = "none";
       }
-      } else {
-      if (Math.abs(ghosttop-height) > 50) {
-        isSnapped = false;
-        ghost.remove()
-        handleGhost()
-        ghost.style.left = ghostleft + 'px';
-        ghost.style.top = ghosttop + 'px';
-      } else {
-        if ((!leftofobj && ghostleft < container.children[closestObject+3].offsetLeft)||(leftofobj && ghostleft > container.children[closestObject+3].offsetLeft)) {
-          isSnapped = false;
-          ghost.remove()
-          handleGhost()
-          ghost.style.left = ghostleft + 'px';
-          ghost.style.top = ghosttop + 'px';
-        }
-      }
+    }
+    currenttab = id;
+  } else {
+    document.getElementById(id).style.display = "none";
+    currenttab = undefined;
+  }
+}
+
+function Toggle2(id,buttonid,text) {
+  let button = document.getElementById(buttonid);
+  if (id == "MainDisplay") {
+    if (mode == "edit") {
+      id = "editdisplay";
+    } else {
+      id = "createddisplay";
+    }
+    let maindisp = document.getElementById(id);
+    if (showstatus) {
+      maindisp.style.display = "none";
+      button.innerHTML = "Show " + text;
+      button.style.borderColor = "Red";
+      button.style.color = "Red";
+      showstatus = false;
+    } else {
+      maindisp.style.display = "flex";
+      button.innerHTML = "Hide " + text;
+      button.style.borderColor = "Lime";
+      button.style.color = "Lime";
+      showstatus = true;
+    }
+  } else {
+    let element = document.getElementById(id);
+    if (element.style.display == "none") {
+      element.style.display = "flex";
+      button.innerHTML = "Hide " + text;
+      button.style.borderColor = "Lime";
+      button.style.color = "Lime";
+    } else {
+      element.style.display = "none";
+      button.innerHTML = "Show " + text;
+      button.style.borderColor = "Red";
+      button.style.color = "Red";
     }
   }
 }
 
+function ChangeStructure() {
+  let structureinput = document.getElementById("structureinput").value;
+  let display = document.getElementById("structurestatus");
+  let display2 = document.getElementById("structurecount");
+  display2.style.color = "White";
+  if (structureinput === undefined || structureinput.trim() === "") {
+    display.innerHTML = "Missing Structure";
+    display.style.color = "Red";
+  } else {
+    structure = structureinput.replace(/[{}]/g, '').split(',').map(item => parseInt(item));
+    layers = structure.length;
+    document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
+    if (layers > 1) {
+      display.innerHTML = "Structure OK";
+      display.style.color = "Lime";
+      structureready = true;
+    } else {
+      display.innerHTML = "ERROR: Malformed Structure";
+      display.style.color = "Red";
+      display2.style.color = "Red";
+    }
+  }
+}
 
+function Warn(id,text,text2,bypassmode=true) {
+  let element = document.getElementById(id);
+  element.innerHTML = text2;
+  element.style.borderColor = "Red";
+  element.style.color = "Red";
+  setTimeout(() => {
+    if (mode == "edit" || bypassmode) {
+      element.innerHTML = text;
+      element.style.borderColor = "White";
+      element.style.color = "White";
+    }
+  },800)
+}
+
+function SubmitInputData() {
+  if (!istraining) {
+    let inputdata = document.getElementById("inputdata").value.replace(/[{}]/g, '').split(',').map(item => parseFloat(item));
+    if (inputdata.length == structure[0]) {
+      for (let i=0; i<structure[0]; i++) {
+        neurons[i] = inputdata[i];
+      }
+      FeedForward();
+      UpdateColor();
+    } else {
+      Warn("submitinputdata","Input","ERROR");
+    }
+  } else {
+    Warn("submitinputdata","Input","TRAIN");
+  }
+}
+
+function ToggleHelp(id) {
+  if (currenthelpdiv !== id && currenthelpdiv === undefined) {
+    let helpdiv = document.getElementById(id);
+    currenthelpdiv = id;
+    helpdiv.style.display = "flex";
+    setTimeout(() => document.addEventListener("click", HideHelp), 1)
+  }
+}
+
+function HideHelp(event) {
+  let helpdiv = document.getElementById(currenthelpdiv);
+  if (!helpdiv.contains(event.target)) {
+    helpdiv.style.display = "none";
+    document.removeEventListener("click", HideHelp);
+    currenthelpdiv = undefined;
+  }
+}
