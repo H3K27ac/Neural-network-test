@@ -185,7 +185,7 @@ function Backprop() {
   averageperformance = t1 - t0;
 }
 
-function Backprop() {
+function ParallelBackprop() {
   const t0 = performance.now();
 
   // Reset caches
@@ -201,26 +201,23 @@ function Backprop() {
   for (let i = layers - 1; i > 0; i--) {
     const tasks = [];
     const chunkSize = Math.ceil(structure[i] / numWorkers);
-    const outputs;
-    if (i=layers-1) {
-      outputs = neurons.slice(structure2[i]);
-    }
+    const outputs = neurons.slice(structure2[layers-1]);
     
     for (let j = 0; j < numWorkers; j++) {
-      const startneuron = j * chunkSize;
-      const endneuron = Math.min(startLayer + chunkSize, structure[i]);
+      const start = j * chunkSize;
+      const end = Math.min(start + chunkSize, structure[i]);
       
       const workerData = {
         i,
-        startneuron,
-        endneuron,
+        start,
+        end,
         structure,
         structure2,
         structure3,
         neurons2: neurons2.slice(structure2[i],structure2[i+1]),
         neurons: neurons.slice(structure2[i-1],structure2[i]),
         actcache: neurons.slice(structure2[i],structure2[i+1]),
-        outputs: outputs,
+        outputs,
         weights: weights.slice(structure3[i],structure3[i+1]),
         targets,
         costcache,
@@ -238,102 +235,34 @@ function Backprop() {
       }));
     }
     Promise.all(tasks).then((results) => {
-      const weightErrors = new Float32Array(weights.length).fill(0);
-      const biasErrors = new Float32Array(biases.length).fill(0);
+      const weightErrors = new Float32Array(weightcount+1).fill(0);
+      const biasErrors = new Float32Array(neuroncount+1).fill(0);
 
       results.forEach((result) => {
-        const { localWeightErrors, localBiasErrors } = result;
+        const { costcache, activationcache, localWeightErrors, localBiasErrors } = result;
 
-        for (let i = 0; i < weightErrors.length; i++) {
-          weightErrors[i] += localWeightErrors[i];
+        for (let j = structure3[i]; j < structure3[i+1]; j++) {
+          weightErrors[j] += localWeightErrors[j];
         }
 
-        for (let i = 0; i < biasErrors.length; i++) {
-          biasErrors[i] += localBiasErrors[i];
+        for (let j = structure2[i]; j < structure2[i+1]; j++) {
+          biasErrors[j] += localBiasErrors[j];
         }
       });
 
-      for (let i = 0; i < weights.length; i++) {
-        weights[i] = Math.min(weightrange, Math.max(-weightrange, weights[i] - weightErrors[i]));
+      for (let j = structure3[i]; j < structure3[i+1]; j++) {
+        weights[j] = Math.min(weightrange, Math.max(-weightrange, weights[j] - weightErrors[j]));
       }
 
-      for (let i = 0; i < biases.length; i++) {
-        biases[i] = Math.min(biasrange, Math.max(-biasrange, biases[i] - biasErrors[i]));
+      for (let j = structure2[i]; j < structure2[i+1]; j++) {
+        biases[j] = Math.min(biasrange, Math.max(-biasrange, biases[j] - biasErrors[j]));
       }
-    }
+    });
   }
 
   const t1 = performance.now();
   traincount++;
   averageperformance = t1 - t0;
-}
-
-function ParallelBackprop() {
-  const t0 = performance.now();
-
-  // Reset caches
-  costcache.fill(0);
-  activationcache.fill(0);
-  
-  const tasks = [];
-  const chunkSize = Math.ceil(layers / numWorkers);
-
-  for (let i = 0; i < numWorkers; i++) {
-    
-    const workerData = {
-      structure,
-      structure2,
-      structure3,
-      neurons2,
-      neurons,
-      biases,
-      weights,
-      targets,
-      costcache,
-      activationcache,
-      biasrange,
-      weightrange,
-      learnrate,
-      layers
-    };
-
-    tasks.push(new Promise((resolve) => {
-      workers[i].onmessage = (e) => {
-        resolve(e.data);
-      };
-      workers[i].postMessage(workerData);
-    }));
-    console.log("test");
-  }
-  
-  Promise.all(tasks).then((results) => {
-    const weightErrors = new Float32Array(weights.length).fill(0);
-    const biasErrors = new Float32Array(biases.length).fill(0);
-
-    results.forEach((result) => {
-      const { localWeightErrors, localBiasErrors } = result;
-
-      for (let i = 0; i < weightErrors.length; i++) {
-        weightErrors[i] += localWeightErrors[i];
-      }
-
-      for (let i = 0; i < biasErrors.length; i++) {
-        biasErrors[i] += localBiasErrors[i];
-      }
-    });
-
-    for (let i = 0; i < weights.length; i++) {
-      weights[i] = Math.min(weightrange, Math.max(-weightrange, weights[i] - weightErrors[i]));
-    }
-
-    for (let i = 0; i < biases.length; i++) {
-      biases[i] = Math.min(biasrange, Math.max(-biasrange, biases[i] - biasErrors[i]));
-    }
-
-    const t1 = performance.now();
-    traincount++;
-    averageperformance = t1 - t0;
-  });
 }
 
 

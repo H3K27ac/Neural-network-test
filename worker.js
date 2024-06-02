@@ -4,26 +4,25 @@ importScripts('shared.js');
 
 
 self.onmessage = function(e) {
-  const { structure, structure2, structure3, neurons2, neurons, biases, weights, targets, costcache, activationcache, biasrange, weightrange, learnrate, layers } = e.data;
+  const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, neuroncount, weightcount, learnrate } = e.data;
 
   const localWeightErrors = new Float32Array(weightcount+1).fill(0);
   const localBiasErrors = new Float32Array(neuroncount+1).fill(0);
   const j2 = structure[i];
   const k2 = structure[i - 1];
 
-  for (let j = 0; j < j2; j++) {
-    const neuronIndex = j;
+  for (let j = start; j < end; j++) {
+    const neuronIndex = structure2[i] + j;
 
     costcache2 = ParallelNeuronCost(i, j);
     actcache2 = DerivativeActivation(neurons2[j], i, actcache[j]);
     tempcache = actcache2 * costcache2;
 
-    costcache[structure2[i] + j] = costcache2;
-    activationcache[structure2[i] + j] = actcache2;
+    costcache[neuronIndex] = costcache2;
+    activationcache[neuronIndex] = actcache2;
 
     // Update biases with clamping
-    const biasIndex = j + 1;
-    localBiasErrors[biasIndex] += learnrate * tempcache;
+    localBiasErrors[neuronIndex + 1] += learnrate * tempcache;
 
     const weightStartIndex = structure3[i - 1] + k2 * j + 1;
 
@@ -35,6 +34,6 @@ self.onmessage = function(e) {
     }
   }
 
-  self.postMessage({ localWeightErrors, localBiasErrors });
+  self.postMessage({ costcache, activationcache, localWeightErrors, localBiasErrors });
 };
 
