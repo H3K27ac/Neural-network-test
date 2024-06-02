@@ -67,7 +67,7 @@ self.onmessage = function(e) {
       localWeightErrors[weightIndex] += learnrate * error;
     }
   }
-
+  
   self.postMessage({ localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
 };
 

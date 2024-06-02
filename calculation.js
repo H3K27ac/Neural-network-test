@@ -8,7 +8,7 @@ class RecursiveTimer {
     this.isRunning = true;
     const tick = () => {
       if (!this.isRunning) return;
-      callback();
+      if (!isbusy) callback();
       this.timerId = setTimeout(tick, delay);
     };
     tick();
@@ -22,6 +22,7 @@ class RecursiveTimer {
 }
 var training = new RecursiveTimer();
 var istraining = false;
+var isbusy = false;
 var updategraph;
 var traincount = 0;
 var hiddenactivation = "Sigmoid";
@@ -275,7 +276,7 @@ function ParallelBackprop() {
         workers[j].postMessage(workerData);
       }));
     }
-    
+  
     Promise.all(tasks).then((results) => {
       
       const weightErrors = new Float32Array(weightcount+1).fill(0);
@@ -310,8 +311,8 @@ function ParallelBackprop() {
   }
 
   const t1 = performance.now();
-  traincount++;
-  averageperformance = t1 - t0;
+  traincount += numWorkers;
+  averageperformance = (t1 - t0) / numWorkers;
 }
 
 
@@ -339,7 +340,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 1);
+    training.start(ParallelBackprop, 0);
     istraining = true;
   }
 }
