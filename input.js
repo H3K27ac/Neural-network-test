@@ -232,6 +232,8 @@ function InitializeValues() {
   weights = new Float32Array(weightcount+1).fill(0);
   biases = new Float32Array(neuroncount+1).fill(0);
   targets = new Float32Array(structure[layers-1]).fill(0);
+  costcache = new Float32Array(neuroncount).fill(0);
+  activationcache = new Float32Array(neuroncount).fill(0);
   
   document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount;
   document.getElementById("weightcount").innerHTML = "Weights: " + weightcount;
