@@ -226,6 +226,8 @@ function InitializeValues() {
       structure3.push(weightcount);
     }
   }
+  structure2.push(neuroncount+1);
+  structure3.push(weightcount+1);
 
   neurons = new Float32Array(neuroncount).fill(0);
   neurons2 = new Float32Array(neuroncount+1).fill(0);

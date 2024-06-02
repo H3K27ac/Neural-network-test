@@ -37,29 +37,6 @@ for (let i = 0; i < numWorkers; i++) {
   workers.push(new Worker('worker.js'));
 }
 
-function Activation(input,i) {
-  let activation;
-  if (i == layers-2) {
-    activation = outputactivation;
-  } else {
-    activation = hiddenactivation;
-  }
-  switch (activation) {
-    case "Sigmoid":
-      return 1 / (1 + Math.exp(-1 * input))
-    case "ReLU": 
-      return Math.max(0,input)
-    case "Leaky ReLU":
-      if (input > 0) {
-        return input
-      } else {
-        return gradient * input
-      }
-    default:
-      break;
-  }
-}
-
 
 
 function ManualFF() {
@@ -77,7 +54,49 @@ function Testing100() {
 }
 
 
+function Activation(input,i) {
+  let activation;
+  activation = "Sigmoid";
+  if (i == layers-2) {
+   // activation = outputactivation;
+  } else {
+   // activation = hiddenactivation;
+  }
+  switch (activation) {
+    case "Sigmoid":
+      return 1 / (1 + Math.exp(-1 * input))
+    case "ReLU": 
+      return Math.max(0,input)
+    case "Leaky ReLU":
+      if (input > 0) {
+        return input
+      } else {
+        return gradient * input
+      }
+    default:
+      break;
+  }
+}
 
+function FeedForward() {
+  let sum;
+  for (let i=0; i<layers-1; i++) {
+    let j2 = structure[i+1];
+    for (let j=0; j<j2; j++) {
+      sum = 0;
+      let index = structure3[i]+structure[i]*j+1;
+      let k2 = structure[i];
+      for (let k=0; k<k2; k++) {
+        sum += weights[index+k] * neurons[structure2[i]+k];
+      }
+      sum += biases[structure2[i]+j+1];
+      let result = Activation(sum,i);
+   //   activationcache2[index2] = result
+      neurons2[structure2[i+1]+j] = sum;
+      neurons[structure2[i+1]+j] = result;
+    }
+  }
+}
 
 
 function Testing() {
@@ -91,7 +110,18 @@ function Testing() {
   }
 }
 
-
+function SetTarget() {
+  let j2 = structure[0];
+  let sum = 0;
+  for (let j=0; j<j2; j++) {
+    sum += neurons[j];
+  }
+  let target = sum / j2;
+  let i2 = structure[layers-1];
+  for (let i=0; i<i2; i++) {
+      targets[i] = target;
+  }
+}
 
 function WeightCost(i,j,k,actcache2) {
   return neurons[i-1][k] * actcache2 * costcache[i][j]
@@ -155,7 +185,90 @@ function Backprop() {
   averageperformance = t1 - t0;
 }
 
-function ParallelBackprop(callback) {
+function Backprop() {
+  const t0 = performance.now();
+
+  // Reset caches
+  costcache.fill(0);
+  activationcache.fill(0);
+
+  RandomizeInput();
+  FeedForward();
+  SetTarget();
+
+  let tempcache, actcache2, costcache2, weightvalue, error;
+
+  for (let i = layers - 1; i > 0; i--) {
+    const tasks = [];
+    const chunkSize = Math.ceil(structure[i] / numWorkers);
+    const outputs;
+    if (i=layers-1) {
+      outputs = neurons.slice(structure2[i]);
+    }
+    
+    for (let j = 0; j < numWorkers; j++) {
+      const startneuron = j * chunkSize;
+      const endneuron = Math.min(startLayer + chunkSize, structure[i]);
+      
+      const workerData = {
+        i,
+        startneuron,
+        endneuron,
+        structure,
+        structure2,
+        structure3,
+        neurons2: neurons2.slice(structure2[i],structure2[i+1]),
+        neurons: neurons.slice(structure2[i-1],structure2[i]),
+        actcache: neurons.slice(structure2[i],structure2[i+1]),
+        outputs: outputs,
+        weights: weights.slice(structure3[i],structure3[i+1]),
+        targets,
+        costcache,
+        activationcache,
+        neuroncount,
+        weightcount,
+        learnrate
+      };
+
+      tasks.push(new Promise((resolve) => {
+        workers[j].onmessage = (e) => {
+          resolve(e.data);
+        };
+        workers[j].postMessage(workerData);
+      }));
+    }
+    Promise.all(tasks).then((results) => {
+      const weightErrors = new Float32Array(weights.length).fill(0);
+      const biasErrors = new Float32Array(biases.length).fill(0);
+
+      results.forEach((result) => {
+        const { localWeightErrors, localBiasErrors } = result;
+
+        for (let i = 0; i < weightErrors.length; i++) {
+          weightErrors[i] += localWeightErrors[i];
+        }
+
+        for (let i = 0; i < biasErrors.length; i++) {
+          biasErrors[i] += localBiasErrors[i];
+        }
+      });
+
+      for (let i = 0; i < weights.length; i++) {
+        weights[i] = Math.min(weightrange, Math.max(-weightrange, weights[i] - weightErrors[i]));
+      }
+
+      for (let i = 0; i < biases.length; i++) {
+        biases[i] = Math.min(biasrange, Math.max(-biasrange, biases[i] - biasErrors[i]));
+      }
+    }
+  }
+
+  const t1 = performance.now();
+  traincount++;
+  averageperformance = t1 - t0;
+}
+
+function ParallelBackprop() {
   const t0 = performance.now();
 
   // Reset caches
@@ -163,6 +276,7 @@ function ParallelBackprop(callback) {
   activationcache.fill(0);
   
   const tasks = [];
+  const chunkSize = Math.ceil(layers / numWorkers);
 
   for (let i = 0; i < numWorkers; i++) {
     
@@ -189,8 +303,9 @@ function ParallelBackprop(callback) {
       };
       workers[i].postMessage(workerData);
     }));
+    console.log("test");
   }
-
+  
   Promise.all(tasks).then((results) => {
     const weightErrors = new Float32Array(weights.length).fill(0);
     const biasErrors = new Float32Array(biases.length).fill(0);
@@ -218,8 +333,6 @@ function ParallelBackprop(callback) {
     const t1 = performance.now();
     traincount++;
     averageperformance = t1 - t0;
-
-    if (callback) callback();
   });
 }
 

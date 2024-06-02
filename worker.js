@@ -1,37 +1,37 @@
 
 importScripts('shared.js');
 
+
+
 self.onmessage = function(e) {
   const { structure, structure2, structure3, neurons2, neurons, biases, weights, targets, costcache, activationcache, biasrange, weightrange, learnrate, layers } = e.data;
 
-  RandomizeInput();
-  FeedForward();
-  SetTarget();
-  
-  const localWeightErrors = new Float32Array(weights.length).fill(0);
-  const localBiasErrors = new Float32Array(biases.length).fill(0);
+  const localWeightErrors = new Float32Array(weightcount+1).fill(0);
+  const localBiasErrors = new Float32Array(neuroncount+1).fill(0);
+  const j2 = structure[i];
+  const k2 = structure[i - 1];
 
-  for (let i = layers - 1; i > 0; i--) {
-    const j2 = structure[i];
-    const k2 = structure[i - 1];
+  for (let j = 0; j < j2; j++) {
+    const neuronIndex = j;
 
-    for (let j = 0; j < j2; j++) {
-      const neuronIndex = structure2[i] + j;
+    costcache2 = ParallelNeuronCost(i, j);
+    actcache2 = DerivativeActivation(neurons2[j], i, actcache[j]);
+    tempcache = actcache2 * costcache2;
 
-      const costcache2 = NeuronCost(i, j);
-      const actcache2 = DerivativeActivation(neurons2[neuronIndex], i, neurons[neuronIndex]);
-      const tempcache = actcache2 * costcache2;
+    costcache[structure2[i] + j] = costcache2;
+    activationcache[structure2[i] + j] = actcache2;
 
-      const biasIndex = neuronIndex + 1;
-      localBiasErrors[biasIndex] += learnrate * tempcache;
+    // Update biases with clamping
+    const biasIndex = j + 1;
+    localBiasErrors[biasIndex] += learnrate * tempcache;
 
-      const weightStartIndex = structure3[i - 1] + k2 * j + 1;
+    const weightStartIndex = structure3[i - 1] + k2 * j + 1;
 
-      for (let k = 0; k < k2; k++) {
-        const weightIndex = weightStartIndex + k;
-        const error = neurons[structure2[i - 1] + k] * tempcache;
-        localWeightErrors[weightIndex] += learnrate * error;
-      }
+    for (let k = 0; k < k2; k++) {
+      const weightIndex = weightStartIndex + k;
+      error = neurons[k] * tempcache;
+
+      localWeightErrors[weightIndex] += learnrate * error;
     }
   }
 
