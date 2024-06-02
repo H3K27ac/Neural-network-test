@@ -78,6 +78,35 @@ function Activation(input,i) {
   }
 }
 
+function DerivativeActivation(input,i,actcache) {
+  let activation;
+  activation = "Sigmoid";
+  if (i == layers-1) {
+   // activation = outputactivation;
+  } else {
+   // activation = hiddenactivation;
+  }
+  switch (activation) {
+    case "Sigmoid":
+      // let result = Activation(input)
+      return actcache * (1 - actcache)
+    case "ReLU": 
+      if (input > 0) {
+        return 1
+      } else {
+        return 0 // Derivative is undefined at 0
+      }
+      case "Leaky ReLU":
+      if (input > 0) {
+        return 1
+      } else {
+        return gradient
+      }
+    default:
+      break;
+  }
+}
+
 function FeedForward() {
   let sum;
   for (let i=0; i<layers-1; i++) {
@@ -120,6 +149,19 @@ function SetTarget() {
   let i2 = structure[layers-1];
   for (let i=0; i<i2; i++) {
       targets[i] = target;
+  }
+}
+
+function NeuronCost(i,j) {
+  if (i == layers-1) {
+    return 2 * (neurons[structure2[i]+j] - targets[j])
+  } else {
+    let sum = 0;
+    let k2 = structure[i+1];
+    for (let k=0; k<k2; k++) {
+      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; // NeuronCost(i+1,k)
+    }
+    return sum
   }
 }
 
@@ -222,7 +264,8 @@ function ParallelBackprop() {
         activationcache,
         neuroncount,
         weightcount,
-        learnrate
+        learnrate,
+        layers
       };
 
       tasks.push(new Promise((resolve) => {
@@ -232,7 +275,9 @@ function ParallelBackprop() {
         workers[j].postMessage(workerData);
       }));
     }
+    
     Promise.all(tasks).then((results) => {
+      
       const weightErrors = new Float32Array(weightcount+1).fill(0);
       const biasErrors = new Float32Array(neuroncount+1).fill(0);
       const globalcostcache = new Float32Array(neuroncount+1).fill(0);
@@ -294,7 +339,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 1000);
+    training.start(ParallelBackprop, 1);
     istraining = true;
   }
 }

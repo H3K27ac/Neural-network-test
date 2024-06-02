@@ -1,9 +1,28 @@
 
-importScripts('shared.js');
+function ParallelNeuronCost(i,j) {
+  if (i == layers-1) {
+    return 2 * (outputs[j] - targets[j])
+  } else {
+    let sum = 0;
+    let k2 = structure[i+1];
+    for (let k=0; k<k2; k++) {
+      sum += weights[structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; 
+    }
+    return sum
+  }
+}
+
+
+function DerivativeActivation(actcache) {
+  return actcache * (1 - actcache)
+}
+
+
+
 
 
 self.onmessage = function(e) {
-  const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, neuroncount, weightcount, learnrate } = e.data;
+  const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, neuroncount, weightcount, learnrate, layers } = e.data;
 
   const localWeightErrors = new Float32Array(weightcount+1).fill(0);
   const localBiasErrors = new Float32Array(neuroncount+1).fill(0);
@@ -12,13 +31,25 @@ self.onmessage = function(e) {
   const j2 = structure[i];
   const k2 = structure[i - 1];
   
-  let tempcache, actcache2, costcache2, weightvalue, error;
+  let tempcache, actcache2, costcache2, error;
   
   for (let j = start; j < end; j++) {
     const neuronIndex = structure2[i] + j;
 
-    costcache2 = ParallelNeuronCost(i, j);
-    actcache2 = DerivativeActivation(neurons2[j], i, actcache[j]);
+
+    if (i == layers-1) {
+      costcache2 = 2 * (outputs[j] - targets[j]);
+    } else {
+      let sum = 0;
+      let k2 = structure[i+1];
+      for (let k=0; k<k2; k++) {
+        sum += weights[structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; 
+      }
+      costcache2 = sum;
+    }
+    
+    actcache2 = DerivativeActivation(actcache[j]);
+    
     tempcache = actcache2 * costcache2;
 
     localcostcache[neuronIndex] = costcache2;
