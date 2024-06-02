@@ -230,11 +230,11 @@ function Backprop() {
 
 function ParallelBackprop() {
   const t0 = performance.now();
-  
+
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
-
+  
   RandomizeInput();
   FeedForward();
   SetTarget();
@@ -279,35 +279,20 @@ function ParallelBackprop() {
   
     Promise.all(tasks).then((results) => {
       
-      const weightErrors = new Float32Array(weightcount+1).fill(0);
-      const biasErrors = new Float32Array(neuroncount+1).fill(0);
-      const globalcostcache = new Float32Array(neuroncount+1).fill(0);
-      const globalactcache = new Float32Array(neuroncount+1).fill(0);
-      
       results.forEach((result) => {
-        const { localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
+        const { start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
         
-        console.log(JSON.stringify(result))
-        for (let j = structure3[i]+1; j < structure3[i+1]+1; j++) {
-          weightErrors[j] += localWeightErrors[j];
+        for (let j = structure[i]*start; j < structure[i]*end; j++) {
+          weights[structure3[i]+j+1] = Math.min(weightrange, Math.max(-weightrange, weights[j] - localWeightErrors[j]));
         }
-
-        for (let j = structure2[i]+1; j < structure2[i+1]+1; j++) {
-          biasErrors[j] += localBiasErrors[j];
-          globalcostcache[j] += localcostcache[j];
-          globalactcache[j] += localactivationcache[j];
+        
+        for (let j = start; j < end; j++) {
+          biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(-biasrange, biases[j] - localBiasErrors[j]));
+          costcache[structure2[i]+j+1] = localcostcache[j];
+          activationcache[structure2[i]+j+1] = localactivationcache[j];
         }
+        console.log(JSON.stringify(biases))
       });
-
-      for (let j = structure3[i]+1; j < structure3[i+1]+1; j++) {
-        weights[j] = Math.min(weightrange, Math.max(-weightrange, weights[j] - weightErrors[j]));
-      }
-
-      for (let j = structure2[i]+1; j < structure2[i+1]+1; j++) {
-        biases[j] = Math.min(biasrange, Math.max(-biasrange, biases[j] - biasErrors[j]));
-        costcache[j] = globalcostcache[j];
-        activationcache[j] = globalactcache[j];
-      }
     });
   }
 

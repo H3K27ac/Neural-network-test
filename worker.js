@@ -24,17 +24,17 @@ function DerivativeActivation(actcache) {
 self.onmessage = function(e) {
   const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, neuroncount, weightcount, learnrate, layers } = e.data;
 
-  const localWeightErrors = new Float32Array(weightcount+1).fill(0);
-  const localBiasErrors = new Float32Array(neuroncount+1).fill(0);
-  const localcostcache = new Float32Array(neuroncount+1).fill(0);
-  const localactivationcache = new Float32Array(neuroncount+1).fill(0);
+  const localWeightErrors = new Float32Array(structure[i]*structure[i-1]).fill(0);
+  const localBiasErrors = new Float32Array(structure[i]).fill(0);
+  const localcostcache = new Float32Array(structure[i]).fill(0);
+  const localactivationcache = new Float32Array(structure[i]).fill(0);
   const j2 = structure[i];
   const k2 = structure[i - 1];
   
   let tempcache, actcache2, costcache2, error;
   
   for (let j = start; j < end; j++) {
-    const neuronIndex = structure2[i] + j;
+
 
 
     if (i == layers-1) {
@@ -52,13 +52,13 @@ self.onmessage = function(e) {
     
     tempcache = actcache2 * costcache2;
 
-    localcostcache[neuronIndex] = costcache2;
-    localactivationcache[neuronIndex] = actcache2;
+    localcostcache[j] = costcache2;
+    localactivationcache[j] = actcache2;
 
     // Update biases with clamping
-    localBiasErrors[neuronIndex + 1] += learnrate * tempcache;
+    localBiasErrors[j] += learnrate * tempcache;
 
-    const weightStartIndex = structure3[i - 1] + k2 * j + 1;
+    const weightStartIndex = k2 * j;
 
     for (let k = 0; k < k2; k++) {
       const weightIndex = weightStartIndex + k;
@@ -68,6 +68,6 @@ self.onmessage = function(e) {
     }
   }
   
-  self.postMessage({ localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
+  self.postMessage({ start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
 };
 
