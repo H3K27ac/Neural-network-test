@@ -21,6 +21,7 @@ class RecursiveTimer {
   }
 }
 var training = new RecursiveTimer();
+var lock = false;
 var istraining = false;
 var updategraph;
 var traincount = 0;
@@ -229,8 +230,10 @@ function Backprop() {
 }
 
 function ParallelBackprop() {
+  if (lock) return;
+  lock = true;
   const t0 = performance.now();
-
+  
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
@@ -291,14 +294,13 @@ function ParallelBackprop() {
           costcache[structure2[i]+j+1] = localcostcache[j];
           activationcache[structure2[i]+j+1] = localactivationcache[j];
         }
-        console.log(JSON.stringify(biases))
       });
+      lock = false;
+      const t1 = performance.now();
+      traincount += numWorkers;
+      averageperformance = (t1 - t0) / numWorkers;
     });
   }
-
-  const t1 = performance.now();
-  traincount += numWorkers;
-  averageperformance = (t1 - t0) / numWorkers;
 }
 
 
@@ -326,7 +328,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 1);
+    training.start(ParallelBackprop, 100);
     istraining = true;
   }
 }
