@@ -172,33 +172,51 @@ function ResetCache() {
 
 function Backprop() {
   const t0 = performance.now();
-  costcache = new Float32Array(neuroncount).fill(0); // ResetCache()
-  activationcache = new Float32Array(neuroncount).fill(0);
+
+  // Reset caches
+  costcache.fill(0);
+  activationcache.fill(0);
+
   RandomizeInput();
   FeedForward();
   SetTarget();
+
   let tempcache, actcache2, costcache2, weightvalue, error;
-  for (let i=layers-1; i>0; i--) {
-    let j2 = structure[i];
-    let k2 = structure[i-1];
-    for (let j=0; j<j2; j++) {
-      costcache2 = NeuronCost(i,j);
-      actcache2 = DerivativeActivation(neurons2[structure2[i]+j],i,neurons[structure2[i]+j]);
+
+  for (let i = layers - 1; i > 0; i--) {
+    const j2 = structure[i];
+    const k2 = structure[i - 1];
+
+    for (let j = 0; j < j2; j++) {
+      const neuronIndex = structure2[i] + j;
+      
+      costcache2 = NeuronCost(i, j);
+      actcache2 = DerivativeActivation(neurons2[neuronIndex], i, neurons[neuronIndex]);
       tempcache = actcache2 * costcache2;
-      costcache[structure2[i]+j] = costcache2;
-      activationcache[structure2[i]+j] = actcache2;
-      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(biasrange * -1, biases[structure2[i]+j+1] - (learnrate * tempcache)));
-      let index = structure3[i-1]+k2*j+1;
-      for (let k=0; k<k2; k++) {
-        weightvalue = weights[index+k];
-        error = neurons[structure2[i-1]+k] * tempcache; // (l1strength * Math.abs(weightvalue)) + (l2strength * (weightvalue ** 2))
-        weights[index+k] = Math.min(weightrange, Math.max(weightrange * -1, weightvalue - (learnrate * error)));
+
+      costcache[neuronIndex] = costcache2;
+      activationcache[neuronIndex] = actcache2;
+
+      // Update biases with clamping
+      const biasIndex = neuronIndex + 1;
+      biases[biasIndex] = Math.min(biasrange, Math.max(-biasrange, biases[biasIndex] - learnrate * tempcache));
+
+      const weightStartIndex = structure3[i - 1] + k2 * j + 1;
+
+      for (let k = 0; k < k2; k++) {
+        const weightIndex = weightStartIndex + k;
+        weightvalue = weights[weightIndex];
+        error = neurons[structure2[i - 1] + k] * tempcache;
+
+        // Update weights with clamping
+        weights[weightIndex] = Math.min(weightrange, Math.max(-weightrange, weightvalue - learnrate * error));
       }
     }
   }
+
   const t1 = performance.now();
   traincount++;
-  averageperformance = t1-t0;
+  averageperformance = t1 - t0;
 }
 
 function UpdateGraph() {
