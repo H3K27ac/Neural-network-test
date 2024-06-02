@@ -77,25 +77,7 @@ function Testing100() {
 }
 
 
-function FeedForward() {
-  let sum;
-  for (let i=0; i<layers-1; i++) {
-    let j2 = structure[i+1];
-    for (let j=0; j<j2; j++) {
-      sum = 0;
-      let index = structure3[i]+structure[i]*j+1;
-      let k2 = structure[i];
-      for (let k=0; k<k2; k++) {
-        sum += weights[index+k] * neurons[structure2[i]+k];
-      }
-      sum += biases[structure2[i]+j+1];
-      let result = Activation(sum,i);
-   //   activationcache2[index2] = result
-      neurons2[structure2[i+1]+j] = sum;
-      neurons[structure2[i+1]+j] = result;
-    }
-  }
-}
+
 
 
 function Testing() {
@@ -106,19 +88,6 @@ function Testing() {
       text.innerHTML = neurons[i][j] + "," + neurons2[i][j] + "(" + i + "," + j + ")";
       document.getElementById("inputfield").appendChild(text);
     }
-  }
-}
-
-function SetTarget() {
-  let j2 = structure[0];
-  let sum = 0;
-  for (let j=0; j<j2; j++) {
-    sum += neurons[j];
-  }
-  let target = sum / j2;
-  let i2 = structure[layers-1];
-  for (let i=0; i<i2; i++) {
-      targets[i] = target;
   }
 }
 
@@ -192,34 +161,26 @@ function ParallelBackprop(callback) {
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
-
-  RandomizeInput();
-  FeedForward();
-  SetTarget();
-
+  
   const tasks = [];
-  const layerChunkSize = Math.ceil((layers - 1) / numWorkers);
 
   for (let i = 0; i < numWorkers; i++) {
-    const start = Math.max(1, (layers - 1) - (i + 1) * layerChunkSize);
-    const end = (layers - 1) - i * layerChunkSize;
-
+    
     const workerData = {
-      data: {
-        structure,
-        structure2,
-        structure3,
-        neurons2,
-        neurons,
-        biases,
-        weights,
-        biasrange,
-        weightrange,
-        learnrate,
-        layers
-      },
-      start,
-      end
+      structure,
+      structure2,
+      structure3,
+      neurons2,
+      neurons,
+      biases,
+      weights,
+      targets,
+      costcache,
+      activationcache,
+      biasrange,
+      weightrange,
+      learnrate,
+      layers
     };
 
     tasks.push(new Promise((resolve) => {

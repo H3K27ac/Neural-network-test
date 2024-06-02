@@ -2,13 +2,16 @@
 importScripts('shared.js');
 
 self.onmessage = function(e) {
-  const { data, start, end } = e.data;
-  const { structure, structure2, structure3, neurons2, neurons, biases, weights, biasrange, weightrange, learnrate, layers } = data;
+  const { structure, structure2, structure3, neurons2, neurons, biases, weights, targets, costcache, activationcache, biasrange, weightrange, learnrate, layers } = e.data;
 
+  RandomizeInput();
+  FeedForward();
+  SetTarget();
+  
   const localWeightErrors = new Float32Array(weights.length).fill(0);
   const localBiasErrors = new Float32Array(biases.length).fill(0);
 
-  for (let i = start; i < end; i++) {
+  for (let i = layers - 1; i > 0; i--) {
     const j2 = structure[i];
     const k2 = structure[i - 1];
 

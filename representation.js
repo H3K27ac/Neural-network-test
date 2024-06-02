@@ -197,12 +197,7 @@ function ClearNeurons() {
 }
 
 
-function RandomizeInput() {
-  let j2 = structure[0];
-  for (let j=0; j<j2; j++) {
-      neurons[j] = Math.random();
-  }
-}
+
 
 
 
