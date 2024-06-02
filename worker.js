@@ -48,7 +48,7 @@ self.onmessage = function(e) {
       costcache2 = sum;
     }
     
-    actcache2 = DerivativeActivation(actcache[j]);
+    actcache2 = actcache[j] * (1 - actcache[j]);
     
     tempcache = actcache2 * costcache2;
 

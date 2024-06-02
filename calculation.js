@@ -8,12 +8,8 @@ class RecursiveTimer {
     this.isRunning = true;
     const tick = () => {
       if (!this.isRunning) return;
-      if (tasks.length == 0) {
-        callback();
-        this.timerId = setTimeout(tick, delay);
-      } else {
-        setTimeout(tick, 1);
-      }
+      callback();
+      this.timerId = setTimeout(tick, delay);
     };
     tick();
   }
@@ -234,7 +230,7 @@ function Backprop() {
 
 function ParallelBackprop() {
   const t0 = performance.now();
-
+  
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
@@ -263,7 +259,7 @@ function ParallelBackprop() {
         neurons: neurons.slice(structure2[i-1],structure2[i]),
         actcache: neurons.slice(structure2[i],structure2[i+1]),
         outputs,
-        weights: weights.slice(structure3[i],structure3[i+1]),
+        weights: weights.slice(structure3[i],structure3[i+1]+1),
         targets,
         costcache,
         activationcache,
@@ -290,28 +286,28 @@ function ParallelBackprop() {
       
       results.forEach((result) => {
         const { localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
-
-        for (let j = structure3[i]; j < structure3[i+1]; j++) {
+        
+        console.log(JSON.stringify(result))
+        for (let j = structure3[i]+1; j < structure3[i+1]+1; j++) {
           weightErrors[j] += localWeightErrors[j];
         }
 
-        for (let j = structure2[i]; j < structure2[i+1]; j++) {
+        for (let j = structure2[i]+1; j < structure2[i+1]+1; j++) {
           biasErrors[j] += localBiasErrors[j];
-          costcache[j] += localcostcache[j];
-          activationcache[j] += localactivationcache[j];
+          globalcostcache[j] += localcostcache[j];
+          globalactcache[j] += localactivationcache[j];
         }
       });
 
-      for (let j = structure3[i]; j < structure3[i+1]; j++) {
+      for (let j = structure3[i]+1; j < structure3[i+1]+1; j++) {
         weights[j] = Math.min(weightrange, Math.max(-weightrange, weights[j] - weightErrors[j]));
       }
 
-      for (let j = structure2[i]; j < structure2[i+1]; j++) {
+      for (let j = structure2[i]+1; j < structure2[i+1]+1; j++) {
         biases[j] = Math.min(biasrange, Math.max(-biasrange, biases[j] - biasErrors[j]));
         costcache[j] = globalcostcache[j];
         activationcache[j] = globalactcache[j];
       }
-      tasks = [];
     });
   }
 
@@ -345,7 +341,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 0);
+    training.start(ParallelBackprop, 1);
     istraining = true;
   }
 }

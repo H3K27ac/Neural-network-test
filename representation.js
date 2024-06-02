@@ -48,6 +48,7 @@ function Color(value,type) {
     default:
       break;
   }
+  if (value == "NaN") return `rgb(0, 255, 0)`
   if (type == "batchgamma") {
     if (value == 1) return `rgb(255, 255, 255)`
     let value2 = Math.log(value) / Math.log(valuerange);
