@@ -328,7 +328,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 100);
+    training.start(ParallelBackprop, 0);
     istraining = true;
   }
 }
