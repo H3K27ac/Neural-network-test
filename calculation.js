@@ -8,8 +8,12 @@ class RecursiveTimer {
     this.isRunning = true;
     const tick = () => {
       if (!this.isRunning) return;
-      if (!isbusy) callback();
-      this.timerId = setTimeout(tick, delay);
+      if (tasks.length == 0) {
+        callback();
+        this.timerId = setTimeout(tick, delay);
+      } else {
+        setTimeout(tick, 1);
+      }
     };
     tick();
   }
@@ -22,7 +26,6 @@ class RecursiveTimer {
 }
 var training = new RecursiveTimer();
 var istraining = false;
-var isbusy = false;
 var updategraph;
 var traincount = 0;
 var hiddenactivation = "Sigmoid";
@@ -34,6 +37,7 @@ var activationcache2 = [0];
 var averageperformance = 0;
 const numWorkers = navigator.hardwareConcurrency || 4; // Number of logical processors
 const workers = [];
+var tasks = [];
 for (let i = 0; i < numWorkers; i++) {
   workers.push(new Worker('worker.js'));
 }
@@ -241,7 +245,7 @@ function ParallelBackprop() {
 
   const outputs = neurons.slice(structure2[layers-1]);
   for (let i = layers - 1; i > 0; i--) {
-    const tasks = [];
+    tasks = [];
     const chunkSize = Math.ceil(structure[i] / numWorkers);
     
     for (let j = 0; j < numWorkers; j++) {
@@ -307,6 +311,7 @@ function ParallelBackprop() {
         costcache[j] = globalcostcache[j];
         activationcache[j] = globalactcache[j];
       }
+      tasks = [];
     });
   }
 
