@@ -196,12 +196,10 @@ function ParallelBackprop() {
   FeedForward();
   SetTarget();
 
-  let tempcache, actcache2, costcache2, weightvalue, error;
-
+  const outputs = neurons.slice(structure2[layers-1]);
   for (let i = layers - 1; i > 0; i--) {
     const tasks = [];
     const chunkSize = Math.ceil(structure[i] / numWorkers);
-    const outputs = neurons.slice(structure2[layers-1]);
     
     for (let j = 0; j < numWorkers; j++) {
       const start = j * chunkSize;
@@ -237,9 +235,11 @@ function ParallelBackprop() {
     Promise.all(tasks).then((results) => {
       const weightErrors = new Float32Array(weightcount+1).fill(0);
       const biasErrors = new Float32Array(neuroncount+1).fill(0);
-
+      const globalcostcache = new Float32Array(neuroncount+1).fill(0);
+      const globalactcache = new Float32Array(neuroncount+1).fill(0);
+      
       results.forEach((result) => {
-        const { costcache, activationcache, localWeightErrors, localBiasErrors } = result;
+        const { localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
 
         for (let j = structure3[i]; j < structure3[i+1]; j++) {
           weightErrors[j] += localWeightErrors[j];
@@ -247,6 +247,8 @@ function ParallelBackprop() {
 
         for (let j = structure2[i]; j < structure2[i+1]; j++) {
           biasErrors[j] += localBiasErrors[j];
+          costcache[j] += localcostcache[j];
+          activationcache[j] += localactivationcache[j];
         }
       });
 
@@ -256,6 +258,8 @@ function ParallelBackprop() {
 
       for (let j = structure2[i]; j < structure2[i+1]; j++) {
         biases[j] = Math.min(biasrange, Math.max(-biasrange, biases[j] - biasErrors[j]));
+        costcache[j] = globalcostcache[j];
+        activationcache[j] = globalactcache[j];
       }
     });
   }
@@ -290,7 +294,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 0);
+    training.start(ParallelBackprop, 1000);
     istraining = true;
   }
 }
