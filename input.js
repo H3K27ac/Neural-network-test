@@ -226,6 +226,7 @@ function InitializeValues() {
       structure3.push(weightcount);
     }
   }
+  hideneurons.push(hideneurons[layers-1]);
   structure2.push(neuroncount+1);
   structure3.push(weightcount+1);
 

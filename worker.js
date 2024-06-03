@@ -41,7 +41,7 @@ self.onmessage = function(e) {
       let sum = 0;
       let k2 = structure[i+1];
       for (let k=0; k<k2; k++) {
-        sum += weights[structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; 
+        sum += weights[structure[i]*k+j] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; 
       }
       costcache2 = sum;
     }

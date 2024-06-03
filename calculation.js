@@ -235,17 +235,16 @@ function ParallelBackprop() {
   lock = true;
   try {
     const t0 = performance.now();
-    console.log(weights)
+    
     // Reset caches
     costcache.fill(0);
     activationcache.fill(0);
-
+    console.log(neurons);
     RandomizeInput();
     FeedForward();
     SetTarget();
 
     const outputs = neurons.slice(structure2[layers - 1]);
-
     for (let i = layers - 1; i > 0; i--) {
       ParallelLayer(i, outputs);
     }
@@ -258,13 +257,13 @@ function ParallelBackprop() {
   }
 }
 
-async function ParallelLayer(i,outputs) {
+function ParallelLayer(i,outputs) {
   tasks = [];
   const chunkSize = Math.ceil(structure[i] / numWorkers);
   for (let j = 0; j < numWorkers; j++) {
     const start = j * chunkSize;
     const end = Math.min(start + chunkSize, structure[i]);
-      
+    
     const workerData = {
       i,
       start,
@@ -276,14 +275,14 @@ async function ParallelLayer(i,outputs) {
       neurons: neurons.slice(structure2[i-1],structure2[i]),
       actcache: neurons.slice(structure2[i],structure2[i+1]),
       outputs,
-      weights: weights.slice(structure3[i],structure3[i+1]+1),
+      weights: weights.slice(structure3[i],structure3[i+1]),
       targets,
       costcache,
       activationcache,
       learnrate,
       layers
     };
-
+    
     tasks.push(new Promise((resolve) => {
       workers[j].onmessage = (e) => {
         resolve(e.data);
@@ -291,25 +290,26 @@ async function ParallelLayer(i,outputs) {
       workers[j].postMessage(workerData);
     }));
   }
+  ProcessResults()
+}
 
+async function ProcessResults() {
   const results = await Promise.all(tasks);
-  
+
   results.forEach((result) => {
     const { i, start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
-    
+
     for (let j = structure[i]*start; j < structure[i]*end; j++) {
-      weights[structure3[i]+j+1] = Math.min(weightrange, Math.max(-weightrange, weights[j] - localWeightErrors[j]));
+      weights[structure3[i-1]+j+1] = Math.min(weightrange, Math.max(-weightrange, weights[structure3[i-1]+j+1] - localWeightErrors[j]));
     }
 
     for (let j = start; j < end; j++) {
-      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(-biasrange, biases[j] - localBiasErrors[j]));
+      biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(-biasrange, biases[structure2[i]+j+1] - localBiasErrors[j]));
       costcache[structure2[i]+j+1] = localcostcache[j];
       activationcache[structure2[i]+j+1] = localactivationcache[j];
     }
   });
 }
-
-
 
 function UpdateGraph() {
   UpdateColor();
