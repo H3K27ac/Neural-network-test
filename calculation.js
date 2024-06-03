@@ -233,17 +233,17 @@ function Backprop() {
 function ParallelBackprop() {
   if (lock) return;
   lock = true;
-  try {
+ // try {
     const t0 = performance.now();
-    
+  
     // Reset caches
-    costcache.fill(0);
-    activationcache.fill(0);
-    console.log(neurons);
+    costcache = costcache.fill(0);
+    activationcache = activationcache.fill(0);
+  
     RandomizeInput();
     FeedForward();
-    SetTarget();
-
+    SetTarget()
+  
     const outputs = neurons.slice(structure2[layers - 1]);
     for (let i = layers - 1; i > 0; i--) {
       ParallelLayer(i, outputs);
@@ -252,9 +252,9 @@ function ParallelBackprop() {
     const t1 = performance.now();
     traincount += numWorkers;
     averageperformance = (t1 - t0) / numWorkers;
-  } finally {
+  //} finally {
     lock = false;
-  }
+ // }
 }
 
 function ParallelLayer(i,outputs) {
@@ -335,7 +335,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(ParallelBackprop, 0);
+    training.start(Backprop, 0);
     istraining = true;
   }
 }
