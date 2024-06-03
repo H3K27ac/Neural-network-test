@@ -22,7 +22,7 @@ function DerivativeActivation(actcache) {
 
 
 self.onmessage = function(e) {
-  const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, neuroncount, weightcount, learnrate, layers } = e.data;
+  const { i, start, end, structure, structure2, structure3, neurons2, neurons, actcache, outputs, weights, targets, costcache, activationcache, learnrate, layers } = e.data;
 
   const localWeightErrors = new Float32Array(structure[i]*structure[i-1]).fill(0);
   const localBiasErrors = new Float32Array(structure[i]).fill(0);
@@ -34,8 +34,6 @@ self.onmessage = function(e) {
   let tempcache, actcache2, costcache2, error;
   
   for (let j = start; j < end; j++) {
-
-
 
     if (i == layers-1) {
       costcache2 = 2 * (outputs[j] - targets[j]);
@@ -68,6 +66,6 @@ self.onmessage = function(e) {
     }
   }
   
-  self.postMessage({ start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
+  self.postMessage({ i, start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
 };
 
