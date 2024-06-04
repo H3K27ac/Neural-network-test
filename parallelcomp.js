@@ -1,6 +1,13 @@
 
 // Still not working
 
+const numWorkers = navigator.hardwareConcurrency || 4; // Number of logical processors
+const workers = [];
+var tasks = [];
+for (let i = 0; i < numWorkers; i++) {
+  workers.push(new Worker('worker.js'));
+}
+
 function ParallelBackprop() {
   if (lock) return;
   lock = true;

@@ -32,15 +32,14 @@ var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
-const numWorkers = navigator.hardwareConcurrency || 4; // Number of logical processors
-const workers = [];
-var tasks = [];
-var currentlayer = 0;
-for (let i = 0; i < numWorkers; i++) {
-  workers.push(new Worker('worker.js'));
+
+/*
+function Decompress(data) {
+  const ds = new DecompressionStream('gzip');
+  const decompressionStream = data.stream().pipeThrough(ds);
+  return new Response(decompressionStream).data();
 }
-
-
+*/
 
 function ManualFF() {
   let i2 = structure[0];
