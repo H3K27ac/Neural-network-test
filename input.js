@@ -94,7 +94,7 @@ function Create(quickset=false,imp=false) {
         CreatePixels();
         CreateDrawPixels();
         drawcontainer.style.display = "flex";
-      } else {
+      } else if (dataset != "MNIST") {
         drawcontainer.style.display = "none";
       }
       mode = "created";
