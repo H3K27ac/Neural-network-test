@@ -58,6 +58,7 @@ function ConvertToUInt8(floatArray,range) {
 
 function UpdateUserData() {
   userdata = {
+    traincount,
     structure,
     learnrate,
     weightrange,
@@ -68,6 +69,7 @@ function UpdateUserData() {
 }
 
 function UpdateFromData() {
+  traincount = userdata.traincount;
   structure = userdata.structure;
   layers = structure.length-1;
   learnrate = userdata.learnrate;
@@ -80,6 +82,10 @@ function UpdateFromData() {
 }
 
 function Export() {
+  if (mode=="edit") {
+    Warn("exportbutton","Export","Editing");
+    return;
+  }
   let button = document.getElementById("exportbutton");
   UpdateUserData();
   try {
