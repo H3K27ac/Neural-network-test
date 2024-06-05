@@ -208,24 +208,26 @@ function ResetCache() {
 }
 
 async function SetDataset() {
-  if (images == undefined || labels == undefined) {
-    await LoadMNIST();
-  }
   targets.fill(0);
-  /*
-  if (images == undefined || labels == undefined) {
-    RandomizeInput();
-    SetTarget();
-  }
-  */
-  if (dataset == "MNIST") {
-    const imageIndex = Math.floor(Math.random() * (images.length - 784 + 1));
-    const imageSubset = images.subarray(imageIndex, imageIndex + 784);
-    const labelIndex = Math.floor(Math.random() * labels.length);
-    targets[labels[labelIndex]] = 1;
-    imageSubset.forEach((value, index) => {
-      neurons[index] = value / 255;
-    })
+  switch (dataset) {
+    case "MNIST":
+      if (images == undefined || labels == undefined) {
+        await LoadMNIST();
+      }
+      const imageIndex = Math.floor(Math.random() * (images.length - 784 + 1));
+      const imageSubset = images.subarray(imageIndex, imageIndex + 784);
+      const labelIndex = Math.floor(Math.random() * labels.length);
+      targets[labels[labelIndex]] = 1;
+      imageSubset.forEach((value, index) => {
+        neurons[index] = value / 255;
+      })
+      break;
+    case "Average":
+      RandomizeInput();
+      SetTarget();
+      break;
+    default:
+    break
   }
   Backprop();
 }
