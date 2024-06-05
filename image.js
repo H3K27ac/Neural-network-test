@@ -101,7 +101,11 @@ drawingContainer.addEventListener('touchmove', (event) => {
 document.addEventListener('touchend', EndDraw);
 document.addEventListener('touchcancel', EndDraw);
 
-
+function SubmitDrawing() {
+  for (let i=0; i<structure[0]; i++) {
+    neurons[i] = drawingPixels[i];
+  }
+}
 
 /*
 const convertButton = document.getElementById('convert-button');

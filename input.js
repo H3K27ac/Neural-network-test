@@ -63,6 +63,8 @@ function Create(quickset=false,imp=false) {
   let editdisplay = document.getElementById("editdisplay");
   let createddisplay = document.getElementById("createddisplay");
   let trainbutton = document.getElementById("training");
+  let manualinputdiv = document.getElementById("manualinputdiv");
+  let drawcontainer = document.getElementById('drawingdiv');
   if (imp) {
     mode = "edit";
     HandleImport();
@@ -91,6 +93,10 @@ function Create(quickset=false,imp=false) {
         Toggle2('imagedisplay','imagetoggle','Image')
         CreatePixels();
         CreateDrawPixels();
+        manualinputdiv.style.display = "none";
+        drawcontainer.style.display = "flex";
+      } else {
+        drawcontainer.style.display = "none";
       }
       mode = "created";
     } else {
@@ -108,6 +114,8 @@ function ToggleEdit() {
   let editdisplay = document.getElementById("editdisplay");
   let createddisplay = document.getElementById("createddisplay");
   let trainbutton = document.getElementById("training");
+  let manualinputdiv = document.getElementById("manualinputdiv");
+  let drawcontainer = document.getElementById('drawingdiv');
   createbutton.innerHTML = "Create";
   createbutton.style.borderColor = "White";
   createbutton.style.color = "White";
@@ -118,6 +126,8 @@ function ToggleEdit() {
   trainbutton.innerHTML = "Start Train";
   trainbutton.style.borderColor = "White";
   trainbutton.style.color = "White";
+  manualinputdiv.style.display = "block";
+  drawcontainer.style.display = "none";
   SetInputs();
   mode = "edit";
 }

@@ -361,6 +361,14 @@ th, td {
   gap: 0px;
 }
 
+#drawingdiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+}
+
 .Pixel, .DrawPixel {
   width: 5px;
   height: 5px;

@@ -92,20 +92,21 @@
         </div>
       </section>
       <section class="Tab" id="manualinput">
-        <div class="SubTab">
+        <div class="SubTab" id="manualinputdiv">
           <button onclick="ToggleHelp('manualinputhelp')" class="HelpButton">?</button>
           <span>Input Data</span>
           <input type="text" class="MainInput" id="inputdata">
+          <button onclick="SubmitInputData()" class="Button" id="submitinputdata">Input</button>
           <article class="HelpDivContainer"><div class="HelpDiv" id="manualinputhelp">
               <span class="HelpTitle">Manual Input</span>
               <span class="HelpText">Input data manually into the neural network. Example: 0.1,0.7,0.3,1 inputs 0.1 to the 1st input neuron, 0.7 to the 2nd input neuron...</span>
           </div></article>
         </div>
-        <div class="SubTab">
+        <div class="SubTab" id="drawingdiv">
           <div id="drawing-container"></div>
           <button onclick="ClearPixels()" class="Button" id="clearpixels">Clear</button>
+          <button onclick="SubmitDrawing()" class="Button" id="submitdrawing">Input</button>
         </div>
-        <button onclick="SubmitInputData()" class="Button" id="submitinputdata">Input</button>
       </section>
       <section class="Tab" id="settings">
         <div class="SubTab">
