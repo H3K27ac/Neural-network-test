@@ -26,6 +26,17 @@ function Confirm(id,func,text,para,modes=true) {
   }
 }
 
+function HandleImport() {
+  DeleteGraph();
+  document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
+  InitializeValues(true);
+  CreateGraph();
+  UpdateColor();
+  document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
+  document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
+  document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
+}
+
 function Quickset() {
   DeleteGraph();
   structure = [784,16,16,10];
@@ -43,7 +54,7 @@ function Quickset() {
   createready = true;
 }
 
-function Create(quickset=false) {
+function Create(quickset=false,imp=false) {
   let createbutton = document.getElementById("createbutton");
   let editbuttons = document.getElementById("editbuttons");
   let createdbuttons = document.getElementById("createdbuttons");
@@ -53,8 +64,10 @@ function Create(quickset=false) {
   if (mode == "edit") {
     if (quickset) {
       Quickset();
-    } else {
+    } else if (!imp) {
       SetInputs();
+    } else {
+      HandleImport();
     }
     if (createready) {
       if (currenttab !== undefined) {
@@ -211,7 +224,7 @@ function SetInputs() {
 
 }
 
-function InitializeValues() {
+function InitializeValues(imp=false) {
   neuroncount = 0;
   weightcount = 0;
   structure2 = [0];
@@ -237,8 +250,10 @@ function InitializeValues() {
 
   neurons = new Float32Array(neuroncount).fill(0);
   neurons2 = new Float32Array(neuroncount+1).fill(0);
-  weights = new Float32Array(weightcount+1).fill(0);
-  biases = new Float32Array(neuroncount+1).fill(0);
+  if (!imp) {
+    weights = new Float32Array(weightcount+1).fill(0);
+    biases = new Float32Array(neuroncount+1).fill(0);
+  }
   targets = new Float32Array(structure[layers-1]).fill(0);
   costcache = new Float32Array(neuroncount).fill(0);
   activationcache = new Float32Array(neuroncount).fill(0);
