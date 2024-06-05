@@ -303,7 +303,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(SetDataset, 100);
+    training.start(SetDataset, 500);
     istraining = true;
   }
 }
