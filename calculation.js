@@ -213,8 +213,9 @@ async function SetDataset() {
   switch (dataset) {
     case "MNIST":
       const randomNum = Math.random();
-      const imageIndex = Math.floor(randomNum * (images.length-783));
-      const imageSubset = images.subarray(imageIndex, imageIndex + 784);
+      
+      const imageIndex = Math.floor(randomNum * 60000)*784;
+      const imageSubset = images.subarray(imageIndex, Math.min(imageIndex + 783, array.length - 1)+1);
       const labelIndex = Math.floor(randomNum * labels.length);
       targets[labels[labelIndex]] = 1;
       imageSubset.forEach((value, index) => {
