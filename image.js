@@ -16,7 +16,7 @@ function CreateDrawPixels() {
   const container = document.getElementById('drawing-container');
   for (let i = 0; i < structure[0]; i++) {
     const pixel = document.createElement('div');
-    pixel.className = "DrawPixel ";
+    pixel.className = "DrawPixel";
     pixel.id = "drawpixel " + i;
     container.appendChild(pixel);
   }

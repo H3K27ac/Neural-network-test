@@ -369,11 +369,14 @@ th, td {
   gap: 10px;
 }
 
-.Pixel, .DrawPixel {
+.Pixel {
   width: 5px;
   height: 5px;
 }
 
 .DrawPixel {
-  cursor: pointer;
+  width: 5px;
+  height: 5px;
 }
+
+
