@@ -33,13 +33,19 @@ var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
 
-/*
-function Decompress(data) {
-  const ds = new DecompressionStream('gzip');
-  const decompressionStream = data.stream().pipeThrough(ds);
-  return new Response(decompressionStream).data();
+async function LoadMNIST() {
+  if (!LoadMNIST.cachedData) {
+    const response = await fetch("train-images-idx3-ubyte");
+    const arrayBuffer = await response.arrayBuffer();
+    LoadMNIST.cachedData = new Uint8Array(arrayBuffer).slice(16);
+  }
+
+  const data = LoadMNIST.cachedData;
+
+  const startIndex = Math.floor(Math.random() * (data.length - 784 + 1));
+  const subset = data.subarray(startIndex, startIndex + 784);
 }
-*/
+LoadMNIST();
 
 function ManualFF() {
   let i2 = structure[0];
