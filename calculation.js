@@ -34,7 +34,7 @@ var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
 var dataset = "MNIST";
-let images, labels;
+let images, labels, label, predictedlabel;
 
 const dataCache = {};
 
@@ -217,7 +217,8 @@ async function SetDataset() {
       const imageIndex = Math.floor(randomNum * 60000)*784;
       const imageSubset = images.subarray(imageIndex, Math.min(imageIndex + 784, 47040000));
       const labelIndex = Math.floor(randomNum * labels.length);
-      targets[labels[labelIndex]] = 1;
+      label = labels[labelIndex];
+      targets[label] = 1;
       imageSubset.forEach((value, index) => {
         neurons[index] = value / 255;
       })
@@ -279,8 +280,33 @@ function Backprop() {
   averageperformance = t1 - t0;
 }
 
+function PredictedLabel() {
+  let max = 0;
+  const i2 = structure2[layers]
+  for (let i = structure2[layers-1]; i < i2; i++) {
+    if (neurons[i] > neurons[max]) {
+      max = i;
+    }
+  }
+  predictedlabel = max - structure2[layers-1];
+}
+
 function UpdateGraph() {
   if (showcontainer) UpdateColor();
+  if (dataset == "MNIST" && showimage) {
+    UpdatePixels();
+    PredictedLabel();
+    document.getElementById("labeltext").innerHTML = label;
+    document.getElementById("predictedtext").innerHTML = predictedlabel;
+    const correctlabel = document.getElementById("correctlabel");
+    if (label == predictedlabel) {
+      correctlabel.innerHTML = "Correct";
+      correctlabel.style.color = "Lime";
+    } else {
+      correctlabel.innerHTML = "Incorrect";
+      correctlabel.style.color = "Red";
+    }
+  }
   document.getElementById("trainingcount").innerHTML = traincount;
   document.getElementById("performance").innerHTML = averageperformance.toFixed(2) + "ms";
 }

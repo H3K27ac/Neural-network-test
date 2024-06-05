@@ -175,13 +175,13 @@ th, td {
 }
 
 .ToggleButton {
-  font-size: 15px;
+  font-size: 12px;
   color: lime;
   background-color: black;
   padding: 5px;
   border: 1px solid lime;
   height: 25px;
-  width: 200px;
+  width: 100px;
 }
 
 .ToggleBar {
@@ -205,6 +205,19 @@ th, td {
   justify-content: center;
   align-items: center;
   gap: 5px;
+  padding: 5px;
+  margin: 0px auto;
+}
+
+.ImageDisplay {
+  height: 200px;
+  width: 800px;
+  border: 1px solid white;
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   padding: 5px;
   margin: 0px auto;
 }
@@ -342,3 +355,17 @@ th, td {
   height: 1px;
   z-index: 1;
 }
+
+#pixel-container {
+  display: grid;
+  grid-template-columns: repeat(28, 5px);
+  grid-template-rows: repeat(28, 5px);
+  border: 1px solid white;
+  gap: 0px;
+}
+
+.Pixel {
+  width: 5px;
+  height: 5px;
+}
+

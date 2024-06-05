@@ -4,6 +4,7 @@ var parametersready = false;
 var structureready = false;
 var showstatus = true;
 var showcontainer = true;
+var showimage = false;
 var parametererror = false;
 var parameterscomplete = 0;
 var previousstructure = [];
@@ -87,6 +88,9 @@ function Create(quickset=false,imp=false) {
       if (showstatus) createddisplay.style.display = "flex";
       if (dataset == "MNIST" && (images == undefined || labels == undefined)) {
         LoadMNIST();
+        showimage = true;
+        document.getElementById("imagedisplay").style.display = "flex";
+        CreatePixels();
       }
       mode = "created";
     } else {
@@ -297,31 +301,42 @@ function Toggle2(id,buttonid,text) {
     let maindisp = document.getElementById(id);
     if (showstatus) {
       maindisp.style.display = "none";
-      button.innerHTML = "Show " + text;
+      button.innerHTML = "S " + text;
       button.style.borderColor = "Red";
       button.style.color = "Red";
       showstatus = false;
     } else {
       maindisp.style.display = "flex";
-      button.innerHTML = "Hide " + text;
+      button.innerHTML = "H " + text;
       button.style.borderColor = "Lime";
       button.style.color = "Lime";
       showstatus = true;
     }
   } else {
     let element = document.getElementById(id);
+    let boolean = true;
     if (element.style.display == "none") {
-      if (id == "container") showcontainer = true;
+      boolean = true;
       element.style.display = "flex";
-      button.innerHTML = "Hide " + text;
+      button.innerHTML = "H " + text;
       button.style.borderColor = "Lime";
       button.style.color = "Lime";
     } else {
-      if (id == "container") showcontainer = false;
+      boolean = false;
       element.style.display = "none";
-      button.innerHTML = "Show " + text;
+      button.innerHTML = "S " + text;
       button.style.borderColor = "Red";
       button.style.color = "Red";
+    }
+    switch (id) {
+      case "container":
+        showcontainer = boolean;
+        break;
+      case "image":
+        showimage = boolean;
+        break;
+      default:
+        break;
     }
   }
 }
