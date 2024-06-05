@@ -213,7 +213,7 @@ th, td {
   height: 200px;
   width: 800px;
   border: 1px solid white;
-  display: none;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -353,7 +353,7 @@ th, td {
   z-index: 1;
 }
 
-#pixel-container {
+#pixel-container, #drawing-container {
   display: grid;
   grid-template-columns: repeat(28, 5px);
   grid-template-rows: repeat(28, 5px);
@@ -361,8 +361,11 @@ th, td {
   gap: 0px;
 }
 
-.Pixel {
+.Pixel, .DrawPixel {
   width: 5px;
   height: 5px;
 }
 
+.DrawPixel {
+  cursor: pointer;
+}

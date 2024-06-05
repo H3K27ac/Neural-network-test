@@ -14,6 +14,7 @@
       function Load() {
         Toggle("structure","Tab","flex",true);
         SettingsToggle('showtargets','Targets',ToggleTargets);
+        Toggle2('imagedisplay','imagetoggle','Image');
       }
     </script>
   </head>
@@ -99,6 +100,10 @@
               <span class="HelpTitle">Manual Input</span>
               <span class="HelpText">Input data manually into the neural network. Example: 0.1,0.7,0.3,1 inputs 0.1 to the 1st input neuron, 0.7 to the 2nd input neuron...</span>
           </div></article>
+        </div>
+        <div class="SubTab">
+          <div id="drawing-container"></div>
+          <button onclick="ClearPixels()" class="Button" id="clearpixels">Clear</button>
         </div>
         <button onclick="SubmitInputData()" class="Button" id="submitinputdata">Input</button>
       </section>

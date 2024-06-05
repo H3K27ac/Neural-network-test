@@ -91,6 +91,7 @@ function Create(quickset=false,imp=false) {
         showimage = true;
         document.getElementById("imagedisplay").style.display = "flex";
         CreatePixels();
+        CreateDrawPixels();
       }
       mode = "created";
     } else {
