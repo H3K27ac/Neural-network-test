@@ -35,6 +35,7 @@ var activationcache2 = [0];
 var averageperformance = 0;
 var dataset = "MNIST";
 let images, labels, label, predictedlabel;
+let datasetready = false;
 
 const dataCache = {};
 
@@ -71,6 +72,8 @@ async function LoadMNIST() {
           break;
     }
   });
+  datasetready = true;
+  document.getElementById("trainingstatus").innerHTML = "Dataset Ready";
 }
 
 
@@ -325,13 +328,17 @@ function ToggleTraining() {
    // training.stop();
     istraining = false;
   } else {
-    trainbutton.innerHTML = "Stop Train";
-    trainbutton.style.borderColor = "Red";
-    trainbutton.style.color = "Red";
-    document.getElementById("trainingstatus").innerHTML = "Training...";
-    updategraph = setInterval(UpdateGraph, 100);
-    training = setInterval(SetDataset, 1);
-    istraining = true;
+    if (datasetready) {
+      trainbutton.innerHTML = "Stop Train";
+      trainbutton.style.borderColor = "Red";
+      trainbutton.style.color = "Red";
+      document.getElementById("trainingstatus").innerHTML = "Training...";
+      updategraph = setInterval(UpdateGraph, 100);
+      training = setInterval(SetDataset, 1);
+      istraining = true;
+    } else {
+      Warn("training","Start Train","Dataset NR");
+    }
   }
 }
 
