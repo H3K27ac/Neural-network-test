@@ -65,14 +65,14 @@ function Draw(event) {
   const mouseX = Math.floor((event.clientX - rect.left) / 5);
   const mouseY = Math.floor((event.clientY - rect.top) / 5);
 
-  for (let y = mouseY-2; y < mouseY+2; y++) {
+  for (let y = mouseY-1; y < mouseY+1; y++) {
     if (y>0 && y<28) {
-    for (let x = mouseX-2; x < mouseX+2; x++) {
+    for (let x = mouseX-1; x < mouseX+1; x++) {
       if (x>0 && x<28) {
       const index = y * 28 + x;
       const distance = Math.hypot(x - mouseX, y - mouseY);
       const maxDistance = 2; 
-      drawingPixels[index] = Math.max(0, drawingPixels[index] + (255 - (distance / maxDistance) * 255));
+      drawingPixels[index] = Math.floor(Math.max(0, drawingPixels[index] + (255 - (distance / maxDistance) * 255)));
       UpdateDrawPixel(index, drawingPixels[index]);
       }
     }
@@ -103,10 +103,11 @@ document.addEventListener('touchcancel', EndDraw);
 
 function SubmitDrawing() {
   for (let i=0; i<structure[0]; i++) {
-    neurons[i] = drawingPixels[i];
+    neurons[i] = drawingPixels[i] / 255;
   }
+  targets.fill(0)
   FeedForward();
-  UpdateGraph();
+  UpdateGraph(false);
 }
 
 /*

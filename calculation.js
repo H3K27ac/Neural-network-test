@@ -298,32 +298,39 @@ function PredictedLabel() {
   }
 }
 
-function UpdateGraph() {
+function UpdateGraph(updatelabel=true) {
   if (showcontainer) UpdateColor();
   if (dataset == "MNIST" && showimage) {
     UpdatePixels();
     PredictedLabel();
-    document.getElementById("labeltext").innerHTML = label;
     document.getElementById("predictedtext").innerHTML = predictedlabel;
     const correctlabel = document.getElementById("correctlabel");
-    if (label == predictedlabel) {
-      correctlabel.innerHTML = "Correct";
-      correctlabel.style.color = "Lime";
-      previousattempt.push(1);
+    if (updatelabel) {
+      document.getElementById("labeltext").innerHTML = label;
+      if (label == predictedlabel) {
+        correctlabel.innerHTML = "Correct";
+        correctlabel.style.color = "Lime";
+        previousattempt.push(1);
+      } else {
+        correctlabel.innerHTML = "Incorrect";
+        correctlabel.style.color = "Red";
+        previousattempt.push(0);
+      }
+      if (previousattempt.length > 50) {
+        previousattempt.shift();
+      };
+      let sum = 0;
+      for (let i = 0; i < previousattempt.length; i++) {
+        sum += previousattempt[i];
+      }
+      sma = sum / previousattempt.length * 100;
+      document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
     } else {
-      correctlabel.innerHTML = "Incorrect";
-      correctlabel.style.color = "Red";
-      previousattempt.push(0);
+      correctlabel.innerHTML = "-";
+      correctlabel.style.color = "White";
+      document.getElementById("smatext").innerHTML = "-";
+      document.getElementById("labeltext").innerHTML = "-";
     }
-    if (previousattempt.length > 50) {
-      previousattempt.shift();
-    };
-    let sum = 0;
-    for (let i = 0; i < previousattempt.length; i++) {
-      sum += previousattempt[i];
-    }
-    sma = sum / previousattempt.length * 100;
-    document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
   }
   if (dataset == "MNIST") {
     document.getElementById("trainingcount").innerHTML = traincount + " (" + (traincount/60000).toFixed(2) + " Epochs)";
