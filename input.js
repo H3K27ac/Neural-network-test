@@ -88,8 +88,7 @@ function Create(quickset=false,imp=false) {
       if (showstatus) createddisplay.style.display = "flex";
       if (dataset == "MNIST" && (images == undefined || labels == undefined)) {
         LoadMNIST();
-        showimage = true;
-        document.getElementById("imagedisplay").style.display = "flex";
+        Toggle2('imagedisplay','imagetoggle','Image')
         CreatePixels();
         CreateDrawPixels();
       }

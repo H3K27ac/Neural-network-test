@@ -49,12 +49,6 @@ function ClearPixels() {
   UpdateDrawingPixels();
 }
 
-function GetBrightness(speed) {
-  // Speed to brightness 
-  const brightness = Math.max(0, Math.min(255, Math.round(speed * 1000)));
-  return brightness;
-}
-
 function StartDraw(event) {
   isDrawing = true;
   Draw(event);
@@ -68,17 +62,20 @@ function Draw(event) {
   if (!isDrawing) return;
 
   const rect = drawingContainer.getBoundingClientRect();
-  const mouseX = (event.clientX - rect.left) / 5;
-  const mouseY = (event.clientY - rect.top) / 5;
+  const mouseX = Math.floor((event.clientX - rect.left) / 5);
+  const mouseY = Math.floor((event.clientY - rect.top) / 5);
 
-  for (let y = 0; y < 28; y++) {
-    for (let x = 0; x < 28; x++) {
+  for (let y = mouseY-2; y < mouseY+2; y++) {
+    if (y>0 && y<28) {
+    for (let x = mouseX-2; x < mouseX+2; x++) {
+      if (x>0 && x<28) {
       const index = y * 28 + x;
-      const distance = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow(y - mouseY, 2));
-      const maxDistance = 10; // Adjust this value for the range of brightness you desire
-      const brightness = Math.max(0, 255 - (distance / maxDistance) * 255);
-      drawingPixels[index] = brightness;
-      UpdateDrawPixel(index, brightness);
+      const distance = Math.hypot(x - mouseX, y - mouseY);
+      const maxDistance = 2; 
+      drawingPixels[index] = Math.max(0, drawingPixels[index] + (255 - (distance / maxDistance) * 255));
+      UpdateDrawPixel(index, drawingPixels[index]);
+      }
+    }
     }
   }
 }
