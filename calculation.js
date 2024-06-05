@@ -325,7 +325,11 @@ function UpdateGraph() {
     sma = sum / previousattempt.length * 100;
     document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
   }
-  document.getElementById("trainingcount").innerHTML = traincount;
+  if (dataset == "MNIST") {
+    document.getElementById("trainingcount").innerHTML = traincount + " (" + (traincount/60000).toFixed(2) + " Epochs)";
+  } else {
+    document.getElementById("trainingcount").innerHTML = traincount;
+  }
   document.getElementById("performance").innerHTML = averageperformance.toFixed(2) + "ms";
 }
 
@@ -347,7 +351,7 @@ function ToggleTraining() {
       trainbutton.innerHTML = "Stop Train";
       trainbutton.style.borderColor = "Red";
       trainbutton.style.color = "Red";
-      document.getElementById("trainingstatus").innerHTML = "Training...";
+      document.getElementById("trainingstatus").innerHTML = "Training on " + dataset ;
       updategraph = setInterval(UpdateGraph, 100);
       training = setInterval(SetDataset, 1);
       istraining = true;
