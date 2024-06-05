@@ -36,14 +36,31 @@ function ToggleTargets() {
   }
 }
 
+function ConvertToFloat(uint8Array) {
+  let floatArray = new Float32Array(uint8Array.length);
+  for (let i = 0; i < uint8Array.length; i++) {
+    floatArray[i] = uint8Array[i] / 255; // [0, 255]
+  }
+  return floatArray;
+}
+
+function ConvertToUInt8(floatArray) {
+  let uint8Array = new Uint8Array(floatArray.length);
+  for (let i = 0; i < floatArray.length; i++) {
+    uint8Array[i] = Math.floor(floatArray[i] * 255); // [0, 1]
+  }
+  return uint8Array;
+}
+
+
 function UpdateUserData() {
   userdata = {
     structure,
     learnrate,
     weightrange,
     biasrange,
-    weights,
-    biases
+    weights: ConvertToUInt8(weights),
+    biases: ConvertToUInt8(biases)
   }
 }
 
@@ -53,17 +70,21 @@ function UpdateFromData() {
   learnrate = userdata.learnrate;
   weightrange = userdata.weightrange;
   biasrange = userdata.biasrange;
-  weights = userdata.weights;
-  biases = userdata.biases;
+  weights = ConvertToFloat(userdata.weights);
+  biases = ConvertToFloat(userdata.biases);
   Create(false,true);
 }
 
 function Export() {
   let button = document.getElementById("exportbutton");
   UpdateUserData();
-  console.log(userdata);
   try {
-    const json = JSON.stringify(userdata);
+    const json = JSON.stringify(userdata, (key, value) => {
+      if (ArrayBuffer.isView(value)) {
+        return Array.from(value);
+      }
+      return value;
+    });
     const base64 = btoa(json);
     if (navigator.clipboard) {
       navigator.clipboard.writeText(base64)
@@ -87,6 +108,7 @@ function Export() {
   }
 }
 
+
 function Import() {
   let base64 = document.getElementById("importdata").value;
   try {
@@ -98,6 +120,5 @@ function Import() {
     return null;
   }
 }
-
 
 

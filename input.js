@@ -29,12 +29,13 @@ function Confirm(id,func,text,para,modes=true) {
 function HandleImport() {
   DeleteGraph();
   document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
+  structure.push(0);
   InitializeValues(true);
   CreateGraph();
-  UpdateColor();
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
+  createready = true;
 }
 
 function Quickset() {
@@ -61,14 +62,16 @@ function Create(quickset=false,imp=false) {
   let editdisplay = document.getElementById("editdisplay");
   let createddisplay = document.getElementById("createddisplay");
   let trainbutton = document.getElementById("training");
+  if (imp) {
+    mode = "edit";
+    HandleImport();
+  }
   if (mode == "edit") {
     if (quickset) {
       Quickset();
     } else if (!imp) {
       SetInputs();
-    } else {
-      HandleImport();
-    }
+    } 
     if (createready) {
       if (currenttab !== undefined) {
         document.getElementById(currenttab).style.display = "none";
