@@ -105,6 +105,8 @@ function SubmitDrawing() {
   for (let i=0; i<structure[0]; i++) {
     neurons[i] = drawingPixels[i];
   }
+  FeedForward();
+  UpdateGraph();
 }
 
 /*
