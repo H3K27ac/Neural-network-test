@@ -36,6 +36,8 @@ var averageperformance = 0;
 var dataset = "MNIST";
 let images, labels, label, predictedlabel;
 let datasetready = false;
+var sma = 0;
+var previousattempt = [];
 
 const dataCache = {};
 
@@ -305,10 +307,21 @@ function UpdateGraph() {
     if (label == predictedlabel) {
       correctlabel.innerHTML = "Correct";
       correctlabel.style.color = "Lime";
+      previousattempt.push(1);
     } else {
       correctlabel.innerHTML = "Incorrect";
       correctlabel.style.color = "Red";
+      previousattempt.push(0);
     }
+    if (previousattempt.length > 20) {
+      previousattempt.shift();
+    };
+    let sum = 0;
+    for (let i = 0; i < previousattempt.length; i++) {
+      sum += previousattempt[i];
+    }
+    sma = sum / previousattempt.length * 100;
+    document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
   }
   document.getElementById("trainingcount").innerHTML = traincount;
   document.getElementById("performance").innerHTML = averageperformance.toFixed(2) + "ms";

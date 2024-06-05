@@ -215,7 +215,7 @@ th, td {
   border: 1px solid white;
   display: none;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
   padding: 5px;
@@ -235,11 +235,8 @@ th, td {
 }
 
 .SubDisplay {
-  height: 50px;
+  height: 150px;
   width: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 0px auto;
 }
 
