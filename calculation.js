@@ -20,7 +20,8 @@ class RecursiveTimer {
     this.isRunning = false;
   }
 }
-var training = new RecursiveTimer();
+var training 
+//var training = new RecursiveTimer();
 var istraining = false;
 var lock = false;
 var updategraph;
@@ -37,7 +38,7 @@ let images, labels;
 
 const dataCache = {};
 
-async function LoadData(name,slice) {
+async function LoadData(name,slice,chunk) {
   if (dataCache[name]) {
     return dataCache[name];
   }
@@ -51,9 +52,9 @@ async function LoadData(name,slice) {
 }
 
 async function LoadMNIST() {
-  const files = [["train-images-idx3-ubyte",16],["train-labels-idx1-ubyte",8]];
+  const files = [["train-images-idx3-ubyte",16,784],["train-labels-idx1-ubyte",8,1]];
   const dataPromises = files.map(function(file) {
-    return LoadData(file[0], file[1]);
+    return LoadData(file[0], file[1], file[2]);
   });
   
   const dataArray = await Promise.all(dataPromises);
@@ -280,7 +281,7 @@ function Backprop() {
 }
 
 function UpdateGraph() {
-  UpdateColor();
+  if (showcontainer) UpdateColor();
   document.getElementById("trainingcount").innerHTML = traincount;
   document.getElementById("performance").innerHTML = averageperformance.toFixed(2) + "ms";
 }
@@ -295,7 +296,8 @@ function ToggleTraining() {
     document.getElementById("trainingstatus").innerHTML = "";
     clearInterval(updategraph);
     updategraph = undefined;
-    training.stop();
+    clearInterval(training);
+   // training.stop();
     istraining = false;
   } else {
     trainbutton.innerHTML = "Stop Train";
@@ -303,7 +305,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(SetDataset, 500);
+    training = setInterval(SetDataset, 500);
     istraining = true;
   }
 }

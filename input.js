@@ -3,6 +3,7 @@ var createready = false;
 var parametersready = false;
 var structureready = false;
 var showstatus = true;
+var showcontainer = true;
 var parametererror = false;
 var parameterscomplete = 0;
 var previousstructure = [];
@@ -289,11 +290,13 @@ function Toggle2(id,buttonid,text) {
   } else {
     let element = document.getElementById(id);
     if (element.style.display == "none") {
+      if (id == "container") showcontainer = true;
       element.style.display = "flex";
       button.innerHTML = "Hide " + text;
       button.style.borderColor = "Lime";
       button.style.color = "Lime";
     } else {
+      if (id == "container") showcontainer = false;
       element.style.display = "none";
       button.innerHTML = "Show " + text;
       button.style.borderColor = "Red";
