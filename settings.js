@@ -36,22 +36,25 @@ function ToggleTargets() {
   }
 }
 
-function ConvertToFloat(uint8Array) {
-  let floatArray = new Float32Array(uint8Array.length);
-  for (let i = 0; i < uint8Array.length; i++) {
-    floatArray[i] = uint8Array[i] / 255; // [0, 255]
-  }
-  return floatArray;
+function ConvertToFloat(uint8Array,range) {
+    var floatArray = new Float32Array(uint8Array.length);
+    var scaleFactor = 2 * range / 255; 
+    for (var i = 0; i < uint8Array.length; i++) {
+        var unscaledValue = uint8Array[i] * scaleFactor - range;
+        floatArray[i] = unscaledValue;
+    }
+    return floatArray;
 }
 
-function ConvertToUInt8(floatArray) {
-  let uint8Array = new Uint8Array(floatArray.length);
-  for (let i = 0; i < floatArray.length; i++) {
-    uint8Array[i] = Math.floor(floatArray[i] * 255); // [0, 1]
+function ConvertToUInt8(floatArray,range) {
+  var uint8Array = new Uint8Array(floatArray.length);
+  var scaleFactor = 255 / (2 * range); 
+  for (var i = 0; i < floatArray.length; i++) {
+    var scaledValue = (floatArray[i] + range) * scaleFactor;
+    uint8Array[i] = Math.round(scaledValue);
   }
   return uint8Array;
 }
-
 
 function UpdateUserData() {
   userdata = {
@@ -59,8 +62,8 @@ function UpdateUserData() {
     learnrate,
     weightrange,
     biasrange,
-    weights: ConvertToUInt8(weights),
-    biases: ConvertToUInt8(biases)
+    weights: ConvertToUInt8(weights,weightrange),
+    biases: ConvertToUInt8(biases,biasrange)
   }
 }
 
@@ -70,8 +73,9 @@ function UpdateFromData() {
   learnrate = userdata.learnrate;
   weightrange = userdata.weightrange;
   biasrange = userdata.biasrange;
-  weights = ConvertToFloat(userdata.weights);
-  biases = ConvertToFloat(userdata.biases);
+  weights = ConvertToFloat(userdata.weights,weightrange);
+  biases = ConvertToFloat(userdata.biases,biasrange);
+  console.log(weights);
   Create(false,true);
 }
 
@@ -116,7 +120,7 @@ function Import() {
     userdata = JSON.parse(json);
     UpdateFromData();
   } catch (error) {
-    Warn("importbutton","Import","Error");
+    console.log(error);
     return null;
   }
 }
