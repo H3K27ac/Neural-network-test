@@ -21,7 +21,7 @@ main {
 }
 
 .Tab {
-  width: 400px;
+  width: 600px;
   border: 1px solid white;
   display: flex;
   flex-direction: column;

@@ -398,7 +398,7 @@ function SubmitInputData() {
 
 function SelectDataset(data,buttonid) {
   let button = document.getElementById(buttonid);
-  if (data == "mnist" && (structure[0] != 784 || structure[layers-1] != 10)) {
+  if (data == "MNIST" && (structure[0] != 784 || structure[layers-1] != 10)) {
     ToggleHelp("mnisthelp");
     return;
   }
@@ -411,6 +411,23 @@ function SelectDataset(data,buttonid) {
     previousbutton.style.borderColor = "White";
   }
   previousdataset = buttonid;
+}
+
+function SelectAct(act,buttonid,layer) {
+  let buttons = document.getElementsByClassName(layer + "Act");
+  let i2 = buttons.length;
+  for (let i = 0; i < i2; i++) {
+    let button = buttons[i];
+    if (button.id === buttonid) {
+      if (layer == "Hidden") hiddenactivation = act;
+      if (layer == "Output") outputactivation = act;
+      button.style.color = "Lime";
+      button.style.borderColor = "Lime";
+    } else {
+      button.style.color = "White";
+      button.style.borderColor = "White";
+    }
+  }
 }
 
 function ToggleHelp(id) {

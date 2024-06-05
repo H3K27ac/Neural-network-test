@@ -91,17 +91,16 @@ function ManualFF() {
 
 function Activation(input,i) {
   let activation;
-  activation = "Sigmoid";
-  if (i == layers-2) {
-   // activation = outputactivation;
+  if (i == layers-1) {
+    activation = outputactivation;
   } else {
-   // activation = hiddenactivation;
+    activation = hiddenactivation;
   }
   switch (activation) {
     case "Sigmoid":
       return 1 / (1 + Math.exp(-1 * input))
     case "ReLU": 
-      return Math.max(0,input)
+      return Math.min(1,Math.max(0,input))
     case "Leaky ReLU":
       if (input > 0) {
         return input
@@ -115,11 +114,10 @@ function Activation(input,i) {
 
 function DerivativeActivation(input,i,actcache) {
   let activation;
-  activation = "Sigmoid";
   if (i == layers-1) {
-   // activation = outputactivation;
+    activation = outputactivation;
   } else {
-   // activation = hiddenactivation;
+    activation = hiddenactivation;
   }
   switch (activation) {
     case "Sigmoid":
@@ -293,7 +291,11 @@ function PredictedLabel() {
       max = i;
     }
   }
-  predictedlabel = max - structure2[layers-1];
+  if (max == 0) {
+    predictedlabel = 0;
+  } else {
+    predictedlabel = max - structure2[layers-1];
+  }
 }
 
 function UpdateGraph() {
@@ -341,7 +343,7 @@ function ToggleTraining() {
    // training.stop();
     istraining = false;
   } else {
-    if (datasetready) {
+    if (datasetready || dataset != "mnist") {
       trainbutton.innerHTML = "Stop Train";
       trainbutton.style.borderColor = "Red";
       trainbutton.style.color = "Red";

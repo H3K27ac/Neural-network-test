@@ -44,6 +44,16 @@
             <span class="HelpText">Example: 6,5,3,4 is a neural network of 4 layers, the input layer has 6 neurons, the 1st hidden layer has 5 neurons... (At least 2 layers required)</span>
           </div></article>
         </div>
+        <div class="SubTab">
+          <span>Hidden Activation</span>
+          <button onclick="SelectAct('Sigmoid','sigmoidhidden','Hidden')" class="Button HiddenAct" id="sigmoidhidden">Sigmoid</button>
+          <button onclick="SelectAct('ReLU','reluhidden','Hidden')" class="Button HiddenAct" id="reluhidden">ReLU</button>
+        </div>
+        <div class="SubTab">
+          <span>Output Activation</span>
+          <button onclick="SelectAct('Sigmoid','sigmoidoutput','Output')" class="Button OutputAct" id="sigmoidoutput">Sigmoid</button>
+          <button onclick="SelectAct('ReLU','reluoutput','Output')" class="Button OutputAct" id="reluoutput">ReLU</button>
+        </div>
       </section>
       <section class="Tab" id="parameters">
         <div class="SubTab">
@@ -72,7 +82,7 @@
       <section class="Tab" id="data">
         <span>Select Dataset</span>
         <div class="SubTab">
-          <button onclick="SelectDataset('mnist','mnistbutton')" class="Button" id="mnistbutton">MNIST</button>
+          <button onclick="SelectDataset('MNIST','mnistbutton')" class="Button" id="mnistbutton">MNIST</button>
           <article class="HelpDivContainer"><div class="HelpDiv" id="mnisthelp">
               <span class="HelpTitle">MNIST Dataset</span>
               <span class="HelpText">Requirements: 784 input neurons, 10 output neurons</span>
