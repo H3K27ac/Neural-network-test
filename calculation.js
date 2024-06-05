@@ -313,7 +313,7 @@ function UpdateGraph() {
       correctlabel.style.color = "Red";
       previousattempt.push(0);
     }
-    if (previousattempt.length > 20) {
+    if (previousattempt.length > 50) {
       previousattempt.shift();
     };
     let sum = 0;

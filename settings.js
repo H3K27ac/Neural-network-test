@@ -5,11 +5,11 @@ function SettingsToggle(id,text,func) {
   func();
   let button = document.getElementById(id);
   if (button.classList.contains("on")) {
-    button.innerHTML = "Show " + text;
+    button.innerHTML = "S " + text;
     button.classList.remove("on");
     button.classList.add("off");
   } else {
-    button.innerHTML = "Hide " + text;
+    button.innerHTML = "H " + text;
     button.classList.remove("off");
     button.classList.add("on");
   }

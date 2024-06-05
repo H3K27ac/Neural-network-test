@@ -398,6 +398,10 @@ function SubmitInputData() {
 
 function SelectDataset(data,buttonid) {
   let button = document.getElementById(buttonid);
+  if (data == "mnist" && (structure[0] != 784 || structure[layers-1] != 10)) {
+    ToggleHelp("mnisthelp");
+    return;
+  }
   dataset = data
   button.style.color = "Lime";
   button.style.borderColor = "Lime";

@@ -12,7 +12,8 @@
     <script defer type="text/javascript" src="settings.js"></script>
     <script defer>
       function Load() {
-        Toggle("structure","Tab","flex",true)
+        Toggle("structure","Tab","flex",true);
+        SettingsToggle('showtargets','Targets',ToggleTargets);
       }
     </script>
   </head>
@@ -71,7 +72,11 @@
       <section class="Tab" id="data">
         <span>Select Dataset</span>
         <div class="SubTab">
-          <button onclick="SelectDataset('MNIST','mnistbutton')" class="Button" id="mnistbutton">MNIST</button>
+          <button onclick="SelectDataset('mnist','mnistbutton')" class="Button" id="mnistbutton">MNIST</button>
+          <article class="HelpDivContainer"><div class="HelpDiv" id="mnisthelp">
+              <span class="HelpTitle">MNIST Dataset</span>
+              <span class="HelpText">Requirements: 784 input neurons, 10 output neurons</span>
+          </div></article>
           <button onclick="SelectDataset('Average','averagebutton')" class="Button" id="averagebutton">Average</button>
         </div>
       </section>
@@ -89,7 +94,7 @@
       </section>
       <section class="Tab" id="settings">
         <div class="SubTab">
-          <button onclick="SettingsToggle('showtargets','Targets',ToggleTargets)" class="Button SettingsToggle" id="showtargets">Show Targets</button>
+          <button onclick="SettingsToggle('showtargets','Targets',ToggleTargets)" class="Button SettingsToggle" id="showtargets">S Targets</button>
         </div>
         <div class="SubTab">
           <button onclick="Export()" class="Button" id="exportbutton">Export</button>
@@ -135,7 +140,7 @@
         <div class="SubDisplay"><span>Label</span><br><span id="labeltext">-</span></div>
         <div class="SubDisplay"><span>Predicted</span><br><span id="predictedtext">-</span></div>
         <div class="SubDisplay"><span>Correct?</span><br><span id="correctlabel">-</span></div>
-        <div class="SubDisplay"><span>SMA</span><br><span id="smatext">-</span></div>
+        <div class="SubDisplay"><span>SMA (50)</span><br><span id="smatext">-</span></div>
       </section>
     </main>
   </body>
