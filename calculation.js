@@ -32,19 +32,48 @@ var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
+var dataset = "MNIST";
+
+const dataCache = {};
+
+async function LoadData(name,slice) {
+  if (dataCache[name]) {
+    return dataCache[name];
+  }
+  
+  const response = await fetch(name);
+  const arrayBuffer = await response.arrayBuffer();
+  const data = new Uint8Array(arrayBuffer).slice(slice);
+  dataCache[name] = data;
+
+  return data;
+}
 
 async function LoadMNIST() {
-  if (!LoadMNIST.cachedData) {
-    const response = await fetch("train-images-idx3-ubyte");
-    const arrayBuffer = await response.arrayBuffer();
-    LoadMNIST.cachedData = new Uint8Array(arrayBuffer).slice(16);
-  }
+  const files = [["train-images-idx3-ubyte",16]];
+  const dataPromises = files.map(function(file) {
+    return LoadData(file[0], file[1]);
+  });
+  
+  const dataArray = await Promise.all(dataPromises);
+  
+  let images;
 
-  const data = LoadMNIST.cachedData;
+  dataArray.forEach((data, index) => {
+    switch (index) {
+      case "train-images-idx3-ubyte":
+          images = data;
+          break;
+      default:
+          break;
+    }
+  });
 
   const startIndex = Math.floor(Math.random() * (data.length - 784 + 1));
   const subset = data.subarray(startIndex, startIndex + 784);
+ // BackProp();
 }
+
 LoadMNIST();
 
 function ManualFF() {
@@ -187,6 +216,8 @@ function Backprop() {
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
+
+  //if ()
 
   RandomizeInput();
   FeedForward();

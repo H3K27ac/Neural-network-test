@@ -75,7 +75,7 @@ async function ProcessResults() {
   const results = await Promise.all(tasks);
 
   results.forEach((result) => {
-    const { i, start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors } = result;
+    const { i, start, end, localCostCache, localActCache, localWeightErrors, localBiasErrors } = result;
 
     for (let j = structure[i]*start; j < structure[i]*end; j++) {
       weights[structure3[i-1]+j+1] = Math.min(weightrange, Math.max(-weightrange, weights[structure3[i-1]+j+1] - localWeightErrors[j]));
@@ -83,8 +83,8 @@ async function ProcessResults() {
 
     for (let j = start; j < end; j++) {
       biases[structure2[i]+j+1] = Math.min(biasrange, Math.max(-biasrange, biases[structure2[i]+j+1] - localBiasErrors[j]));
-      costcache[structure2[i]+j+1] = localcostcache[j];
-      activationcache[structure2[i]+j+1] = localactivationcache[j];
+      costcache[structure2[i]+j+1] = localCostCache[j];
+      activationcache[structure2[i]+j+1] = localActCache[j];
     }
   });
 }

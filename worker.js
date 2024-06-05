@@ -26,8 +26,8 @@ self.onmessage = function(e) {
 
   const localWeightErrors = new Float32Array(structure[i]*structure[i-1]).fill(0);
   const localBiasErrors = new Float32Array(structure[i]).fill(0);
-  const localcostcache = new Float32Array(structure[i]).fill(0);
-  const localactivationcache = new Float32Array(structure[i]).fill(0);
+  const localCostCache = new Float32Array(structure[i]).fill(0);
+  const localActCache = new Float32Array(structure[i]).fill(0);
   const j2 = structure[i];
   const k2 = structure[i - 1];
   
@@ -50,8 +50,8 @@ self.onmessage = function(e) {
     
     tempcache = actcache2 * costcache2;
 
-    localcostcache[j] = costcache2;
-    localactivationcache[j] = actcache2;
+    localCostCache[j] = costcache2;
+    localActCache[j] = actcache2;
 
     // Update biases with clamping
     localBiasErrors[j] += learnrate * tempcache;
@@ -66,6 +66,6 @@ self.onmessage = function(e) {
     }
   }
   
-  self.postMessage({ i, start, end, localcostcache, localactivationcache, localWeightErrors, localBiasErrors });
+  self.postMessage({ i, start, end, localCostCache, localActCache, localWeightErrors, localBiasErrors });
 };
 
