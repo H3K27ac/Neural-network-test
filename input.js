@@ -362,7 +362,7 @@ function SelectDataset(data,buttonid) {
   dataset = data
   button.style.color = "Lime";
   button.style.borderColor = "Lime";
-  if (previousdataset) {
+  if (previousdataset && previousdataset != buttonid) {
     let previousbutton = document.getElementById(previousdataset);
     previousbutton.style.color = "White";
     previousbutton.style.borderColor = "White";
