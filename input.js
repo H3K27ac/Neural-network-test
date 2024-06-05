@@ -6,6 +6,7 @@ var showstatus = true;
 var parametererror = false;
 var parameterscomplete = 0;
 var previousstructure = [];
+var previousdataset;
 var currenthelpdiv;
 var currenttab;
 
@@ -26,9 +27,9 @@ function Confirm(id,func,text,para,modes=true) {
 
 function Quickset() {
   DeleteGraph();
-  structure = [12,10,8,11,9];
-  layers = 5;
-  document.getElementById("structurecount").innerHTML = "Structure: [12,10,8,11,9]";
+  structure = [784,16,16,10];
+  layers = 4;
+  document.getElementById("structurecount").innerHTML = "Structure: [784,16,16,10]";
   structure.push(0);
   InitializeValues();
   CreateGraph();
@@ -356,6 +357,19 @@ function SubmitInputData() {
   }
 }
 
+function SelectDataset(data,buttonid) {
+  let button = document.getElementById(buttonid);
+  dataset = data
+  button.style.color = "Lime";
+  button.style.borderColor = "Lime";
+  if (previousdataset) {
+    let previousbutton = document.getElementById(previousdataset);
+    previousbutton.style.color = "White";
+    previousbutton.style.borderColor = "White";
+  }
+  previousdataset = buttonid;
+}
+
 function ToggleHelp(id) {
   if (currenthelpdiv !== id && currenthelpdiv === undefined) {
     let helpdiv = document.getElementById(id);
@@ -373,3 +387,5 @@ function HideHelp(event) {
     currenthelpdiv = undefined;
   }
 }
+
+

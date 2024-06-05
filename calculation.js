@@ -33,6 +33,7 @@ var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
 var dataset = "MNIST";
+let images, labels;
 
 const dataCache = {};
 
@@ -50,31 +51,27 @@ async function LoadData(name,slice) {
 }
 
 async function LoadMNIST() {
-  const files = [["train-images-idx3-ubyte",16]];
+  const files = [["train-images-idx3-ubyte",16],["train-labels-idx1-ubyte",8]];
   const dataPromises = files.map(function(file) {
     return LoadData(file[0], file[1]);
   });
   
   const dataArray = await Promise.all(dataPromises);
   
-  let images;
-
   dataArray.forEach((data, index) => {
     switch (index) {
-      case "train-images-idx3-ubyte":
+      case 0:
           images = data;
+          break;
+      case 1:
+          labels = data;
           break;
       default:
           break;
     }
   });
-
-  const startIndex = Math.floor(Math.random() * (data.length - 784 + 1));
-  const subset = data.subarray(startIndex, startIndex + 784);
- // BackProp();
 }
 
-LoadMNIST();
 
 function ManualFF() {
   let i2 = structure[0];
@@ -210,18 +207,37 @@ function ResetCache() {
   costcache = Array(neuroncount).fill(0);
 }
 
+async function SetDataset() {
+  if (images == undefined || labels == undefined) {
+    await LoadMNIST();
+  }
+  targets.fill(0);
+  /*
+  if (images == undefined || labels == undefined) {
+    RandomizeInput();
+    SetTarget();
+  }
+  */
+  if (dataset == "MNIST") {
+    const imageIndex = Math.floor(Math.random() * (images.length - 784 + 1));
+    const imageSubset = images.subarray(imageIndex, imageIndex + 784);
+    const labelIndex = Math.floor(Math.random() * labels.length);
+    targets[labels[labelIndex]] = 1;
+    imageSubset.forEach((value, index) => {
+      neurons[index] = value / 255;
+    })
+  }
+  Backprop();
+}
+
 function Backprop() {
   const t0 = performance.now();
-
+  
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
 
-  //if ()
-
-  RandomizeInput();
   FeedForward();
-  SetTarget();
 
   let tempcache, actcache2, costcache2, weightvalue, error;
 
@@ -285,7 +301,7 @@ function ToggleTraining() {
     trainbutton.style.color = "Red";
     document.getElementById("trainingstatus").innerHTML = "Training...";
     updategraph = setInterval(UpdateGraph, 100);
-    training.start(Backprop, 0);
+    training.start(SetDataset, 100);
     istraining = true;
   }
 }
