@@ -212,9 +212,6 @@ async function SetDataset() {
   targets.fill(0);
   switch (dataset) {
     case "MNIST":
-      if (images == undefined || labels == undefined) {
-        await LoadMNIST();
-      }
       const imageIndex = Math.floor(Math.random() * (images.length - 784 + 1));
       const imageSubset = images.subarray(imageIndex, imageIndex + 784);
       const labelIndex = Math.floor(Math.random() * labels.length);

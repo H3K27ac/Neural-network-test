@@ -40,6 +40,9 @@ function Quickset() {
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
+  if (dataset =="MNIST" && (images == undefined || labels == undefined)) {
+    LoadMNIST();
+  }
   createready = true;
 }
 
@@ -69,6 +72,9 @@ function Create(quickset=false) {
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
       if (showstatus) createddisplay.style.display = "flex";
+      if (dataset =="MNIST" && (images == undefined || labels == undefined)) {
+        LoadMNIST();
+      }
       mode = "created";
     } else {
       Warn("createbutton","Create","Not Ready",false);
