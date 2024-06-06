@@ -16,6 +16,7 @@
         Toggle("structure","Tab","flex",true);
         SettingsToggle('showtargets','Targets',ToggleTargets);
         Toggle2('imagedisplay','imagetoggle','Image');
+        CreateActivationBtns();
       }
     </script>
   </head>
@@ -52,18 +53,11 @@
           <button onclick="SelectLayer('hidden')" class="Button SelectLayerButton" id="selecthidden">Hidden</button>
           <button onclick="SelectLayer('output')" class="Button SelectLayerButton" id="selectoutput">Output</button>
         </div>
-        <div class="SubTab">
-          <button onclick="SelectAct('None','nonebutton',None,DxNone)" class="ActivationButton" id="nonebutton">None</button>
-          <button onclick="SelectAct('Sigmoid','sigmoidbutton',Sigmoid,DxSigmoid)" class="ActivationButton" id="sigmoidbutton">Sigmoid</button>
-          <button onclick="SelectAct('ReLU','relubutton',ReLU,DxReLU)" class="ActivationButton" id="relubutton">ReLU</button>
-          <button onclick="SelectAct('Tanh','tanhbutton',Tanh,DxTanh)" class="ActivationButton" id="tanhbutton">Tanh</button>
-          <button onclick="SelectAct('TanhShrink','tanhshrinkbutton',TanhShrink,DxTanhShrink)" class="ActivationButton" id="tanhshrinkbutton">Tanh Shrink</button>
-          <button onclick="SelectAct('SoftSign','softsignbutton',SoftSign,DxSoftSign)" class="ActivationButton" id="softsignbutton">SoftSign</button>
-          <button onclick="SelectAct('Swish','swishbutton',Swish,DxSwish)" class="ActivationButton" id="swishbutton">Swish</button>
-          <div style="display: none">
-            <span class="Indicator2" id="hiddenindicator">H</span>
-            <span class="Indicator" id="outputindicator">O</span>
-          </div>
+        <div style="display: none">
+          <span class="Indicator2" id="hiddenindicator">H</span>
+          <span class="Indicator" id="outputindicator">O</span>
+        </div>
+        <div class="SubTab" id="activationcontainer">
         </div>
         <div class="graph-container">
           <canvas id="graph"></canvas>

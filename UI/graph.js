@@ -136,9 +136,9 @@ function SelectLayer(layer) {
   }
 }
 
-function SelectAct(act,buttonid,func,dxfunc) {
+function SelectAct(act,buttonid,func,dxfunc,draw=true) {
   let button = document.getElementById(buttonid);
-  drawGraph(func);
+  if (draw) drawGraph(func);
   currentgraph = func;
   if (currentlayer == "hidden") {
     let indicator = document.getElementById("hiddenindicator")
@@ -168,60 +168,22 @@ function getDefaultDxFunc(act) {
 }
 
 function CreateActivationBtns() {
+  let container = document.getElementById("activationcontainer");
   for (let i = 0; i < actFunctions.length; i++) {
+    let act = actFunctions[i];
     let button = document.createElement("button");
     button.className = "ActivationButton";
-    button.id = actFunctions[i].toLowerCase() + "button";
-    button.innerHTML = actFunctions[i];
+    button.id = act.toLowerCase() + "button";
+    button.innerHTML = act;
     button.onclick = function () {
-      SelectAct(actFunctions[i],actFunctions[i].toLowerCase() + "button",window[actFunctions[i]],window["Dx" + actFunctions[i]]);
-    });
+      SelectAct(act,act.toLowerCase() + "button",window[act],window["Dx" + act]);
+    }
+    container.appendChild(button);
   }
 }
 
 function ImportActivation(act) {
-//  let buttonid, func, dxfunc;
-  SelectAct(act,act.toLowerCase() + "button",window[act],window["Dx" + act]);
-  /*
-  switch (act) {
-    case "None":
-      buttonid = "nonebutton";
-      func = None;
-      dxfunc = DxNone;
-      break;
-    case "Sigmoid":
-      buttonid = "sigmoidbutton";
-      func = Sigmoid;
-      dxfunc = DxSigmoid;
-      break;
-    case "ReLU":
-      buttonid = "relubutton";
-      func = ReLU;
-      dxfunc = DxReLU;
-      break;
-    case "Tanh":
-      buttonid = "tanhbutton";
-      func = Tanh;
-      dxfunc = DxTanh;
-      break;
-    case "TanhShrink":
-      buttonid = "tanhshrinkbutton";
-      func = TanhShrink;
-      dxfunc = DxTanhShrink;
-      break;
-    case "SoftSign":
-      buttonid = "softsignbutton";
-      func = SoftSign;
-      dxfunc = DxSoftSign;
-      break;
-    case "Swish":
-      buttonid = "swishbutton";
-      func = Swish;
-      dxfunc = DxSwish;
-      break;
-  }
-  SelectAct(act,buttonid,func,dxfunc);
-  */
+  SelectAct(act,act.toLowerCase() + "button",window[act],window["Dx" + act],false);
 }
 
 let actFunctions = ["None","Sigmoid","ReLU","Tanh","TanhShrink","SoftSign","Swish"];
