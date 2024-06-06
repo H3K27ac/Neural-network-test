@@ -40,7 +40,6 @@ function HandleImport() {
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
-  dataset = "MNIST";
   createready = true;
 }
 

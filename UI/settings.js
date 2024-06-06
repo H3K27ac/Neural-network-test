@@ -58,7 +58,8 @@ function ConvertToUInt8(floatArray,range) {
 
 function UpdateUserData() {
   userdata = {
-    version: "0.0",
+    version: "0.1",
+    dataset,
     traincount,
     structure,
     learnrate,
@@ -73,6 +74,11 @@ function UpdateUserData() {
 
 function UpdateFromData() {
   const version = userdata.version;
+  if (version == "0.1") {
+    dataset = userdata.dataset;
+  } else {
+    dataset = "MNIST";
+  }
   traincount = userdata.traincount;
   structure = userdata.structure;
   layers = structure.length;
@@ -83,7 +89,10 @@ function UpdateFromData() {
   outputactivation = userdata.outputactivation;
   weights = ConvertToFloat(userdata.weights,weightrange);
   biases = ConvertToFloat(userdata.biases,biasrange);
-  console.log(weights);
+  currentlayer = "hidden";
+  ImportActivation(hiddenactivation);
+  currentlayer = "output";
+  ImportActivation(outputactivation);
   Create(false,true);
 }
 

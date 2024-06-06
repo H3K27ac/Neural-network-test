@@ -155,7 +155,42 @@ function SelectAct(act,buttonid,func,dxfunc) {
   }
 }
 
-
+function ImportActivation(act) {
+  let buttonid, func, dxfunc;
+  switch (act) {
+    case "None":
+      buttonid = "nonebutton";
+      func = None;
+      dxfunc = DxNone;
+      break;
+    case "Sigmoid":
+      buttonid = "sigmoidbutton";
+      func = Sigmoid;
+      dxfunc = DxSigmoid;
+      break;
+    case "ReLU":
+      buttonid = "relubutton";
+      func = ReLU;
+      dxfunc = DxReLU;
+      break;
+    case "Tanh":
+      buttonid = "tanhbutton";
+      func = Tanh;
+      dxfunc = DxTanh;
+      break;
+    case "SoftSign":
+      buttonid = "softsignbutton";
+      func = SoftSign;
+      dxfunc = DxSoftSign;
+      break;
+    case "Swish":
+      buttonid = "swishbutton";
+      func = Swish;
+      dxfunc = DxSwish;
+      break;
+  }
+  SelectAct(act,buttonid,func,dxfunc);
+}
 
 function Sigmoid(x) {
   return 1 / (1 + Math.exp(-1 * x));
