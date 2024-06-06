@@ -129,7 +129,7 @@ function DerivativeActivationSum(input,i,actcache,sum) {
 function FeedForward() {
   let sum, sum2;
   for (let i=0; i<layers-1; i++) {
-    if ((i == layers-1 && outputactivation == "Softmax") || (i < layers-1 && hiddenactivation == "Softmax")) {
+    if ((i+1 == layers-1 && outputactivation == "Softmax") || (i+1 != layers-1 && hiddenactivation == "Softmax")) {
       FeedForwardWithSum(i);
     } else {
       FeedForward2(i);
@@ -202,7 +202,8 @@ function NeuronCost(i,j) {
   if (i == layers-1) {
     if (cost == "MSE") return 2 * (neurons[structure2[i]+j] - targets[j]);
     let predicted = neurons[structure2[i] + j];
-    return - (targets[j] * Math.log(predicted) + (1 - targets[j]) * Math.log(1 - predicted));
+    predicted = Math.max(Math.min(predicted, 0.999999), 0.000001);
+    return -targets[j] * Math.log(predicted);
   } else {
     let sum = 0;
     let k2 = structure[i+1];
