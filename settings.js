@@ -75,7 +75,7 @@ function UpdateFromData() {
   const version = userdata.version;
   traincount = userdata.traincount;
   structure = userdata.structure;
-  layers = structure.length-1;
+  layers = structure.length;
   learnrate = userdata.learnrate;
   weightrange = userdata.weightrange;
   biasrange = userdata.biasrange;
