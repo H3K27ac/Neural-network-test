@@ -30,6 +30,8 @@ var hiddenactivation = "Sigmoid";
 var outputactivation = "Sigmoid";
 var hiddenfunc;
 var outputfunc;
+var dxhiddenfunc;
+var dxoutputfunc;
 var gradient = 0.05;
 var costcache = [0];
 var activationcache = [0];
@@ -100,24 +102,10 @@ function Activation(input,i) {
 }
 
 function DerivativeActivation(input,i,actcache) {
-  let activation;
   if (i == layers-1) {
-    activation = outputactivation;
+    return dxoutputfunc(input,actcache);
   } else {
-    activation = hiddenactivation;
-  }
-  switch (activation) {
-    case "Sigmoid":
-      // let result = Activation(input)
-      return actcache * (1 - actcache)
-    case "ReLU": 
-      if (input > 0) {
-        return 1
-      } else {
-        return 0 // Derivative is undefined at 0
-      }
-    default:
-      break;
+    return dxhiddenfunc(input,actcache);
   }
 }
 
@@ -133,7 +121,7 @@ function FeedForward() {
         sum += weights[index+k] * neurons[structure2[i]+k];
       }
       sum += biases[structure2[i]+j+1];
-      let result = Activation(sum,i);
+      let result = Math.min(1,Math.max(0,Activation(sum,i)));
    //   activationcache2[index2] = result
       neurons2[structure2[i+1]+j] = sum;
       neurons[structure2[i+1]+j] = result;

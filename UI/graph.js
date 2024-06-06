@@ -110,7 +110,7 @@ function SelectLayer(layer) {
   }
 }
 
-function SelectAct(act,buttonid,func) {
+function SelectAct(act,buttonid,func,dxfunc) {
   let button = document.getElementById(buttonid);
   drawGraph(func);
   currentgraph = func;
@@ -119,11 +119,13 @@ function SelectAct(act,buttonid,func) {
     button.appendChild(indicator);
     hiddenactivation = act;
     hiddenfunc = func;
+    dxhiddenfunc = dxfunc;
   } else if (currentlayer == "output") {
     let indicator = document.getElementById("outputindicator")
     button.appendChild(indicator);
     outputactivation = act;
     outputfunc = func;
+    dxoutputfunc = dxfunc;
   }
 }
 
@@ -133,22 +135,46 @@ function Sigmoid(x) {
   return 1 / (1 + Math.exp(-1 * x));
 }
 
+function DxSigmoid(x,actcache) {
+  return actcache * (1 - actcache)
+}
+
 function ReLU(x) {
   return Math.max(0, x);
+}
+
+function DxReLU(x) {
+  return x > 0 ? 1 : 0;
 }
 
 function Tanh(x) {
   return Math.tanh(x);
 }
 
+function DxTanh(x,actcache) {
+  return 1 - Math.pow(actcache, 2);
+}
+
 function SoftSign(x) {
   return x / (1 + Math.abs(x));
+}
+
+function DxSoftSign(x) {
+  return 1 / (1 + Math.abs(x)) ** 2;
 }
 
 function Swish(x) {
   return x * Sigmoid(x);
 }
 
+function DxSwish(x,actcache) {
+  return actcache + Sigmoid(x) * (1 - actcache);
+}
+
 function None(x) {
   return x;
+}
+
+function DxNone(x) {
+  return 1;
 }
