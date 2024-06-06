@@ -91,13 +91,15 @@ function Create(quickset=false,imp=false) {
       createdbuttons.style.display = "inline";
       editdisplay.style.display = "none";
       if (showstatus) createddisplay.style.display = "flex";
-      if (dataset == "MNIST" && (images == undefined || labels == undefined)) {
-        LoadMNIST();
-        Toggle2('imagedisplay','imagetoggle','Image')
-        CreatePixels();
-        CreateDrawPixels();
+      if (dataset == "MNIST") {
+        if (images == undefined || labels == undefined) {
+          LoadMNIST();
+          Toggle2('imagedisplay','imagetoggle','Image')
+          CreatePixels();
+          CreateDrawPixels();
+        }
         drawcontainer.style.display = "flex";
-      } else if (dataset != "MNIST") {
+      } else {
         drawcontainer.style.display = "none";
       }
       document.getElementById("graphtab").style.display = "none";
