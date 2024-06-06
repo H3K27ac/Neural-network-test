@@ -58,17 +58,36 @@ function ConvertToUInt8(floatArray,range) {
 
 function UpdateUserData() {
   userdata = {
+    version: "0.0",
     traincount,
     structure,
     learnrate,
     weightrange,
     biasrange,
+    hiddenactivation,
+    outputactivation,
     weights: ConvertToUInt8(weights,weightrange),
     biases: ConvertToUInt8(biases,biasrange)
   }
 }
 
 function UpdateFromData() {
+  const version = userdata.version;
+  traincount = userdata.traincount;
+  structure = userdata.structure;
+  layers = structure.length-1;
+  learnrate = userdata.learnrate;
+  weightrange = userdata.weightrange;
+  biasrange = userdata.biasrange;
+  hiddenactivation = userdata.hiddenactivation;
+  outputactivation = userdata.outputactivation;
+  weights = ConvertToFloat(userdata.weights,weightrange);
+  biases = ConvertToFloat(userdata.biases,biasrange);
+  console.log(weights);
+  Create(false,true);
+}
+
+function UpdateFromDataOld() {
   traincount = userdata.traincount;
   structure = userdata.structure;
   layers = structure.length-1;
@@ -119,12 +138,16 @@ function Export() {
 }
 
 
-function Import() {
+function Import(old=false) {
   let base64 = document.getElementById("importdata").value;
   try {
     const json = atob(base64);
     userdata = JSON.parse(json);
-    UpdateFromData();
+    if (old) {
+      UpdateFromDataOld();
+    } else {
+      UpdateFromData();
+    }
   } catch (error) {
     console.log(error);
     return null;
