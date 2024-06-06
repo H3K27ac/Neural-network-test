@@ -101,6 +101,14 @@ function Activation(input,i) {
   }
 }
 
+function ActivationSum(input,i,sum) {
+    if (i == layers-1) {
+      return outputfunc(input,sum);
+    } else {
+      return hiddenfunc(input,sum);
+    }
+  }
+
 function DerivativeActivation(input,i,actcache) {
   if (i == layers-1) {
     return dxoutputfunc(input,actcache);
@@ -109,23 +117,58 @@ function DerivativeActivation(input,i,actcache) {
   }
 }
 
+function DerivativeActivationSum(input,i,actcache,sum) {
+  if (i == layers-1) {
+    return dxoutputfunc(input,sum,actcache);
+  } else {
+    return dxhiddenfunc(input,sum,actcache);
+  }
+}
+
 function FeedForward() {
-  let sum;
+  let sum, sum2;
   for (let i=0; i<layers-1; i++) {
-    let j2 = structure[i+1];
-    for (let j=0; j<j2; j++) {
-      sum = 0;
-      let index = structure3[i]+structure[i]*j+1;
-      let k2 = structure[i];
-      for (let k=0; k<k2; k++) {
-        sum += weights[index+k] * neurons[structure2[i]+k];
-      }
-      sum += biases[structure2[i]+j+1];
-      let result = Math.min(1,Math.max(0,Activation(sum,i)));
-   //   activationcache2[index2] = result
-      neurons2[structure2[i+1]+j] = sum;
-      neurons[structure2[i+1]+j] = result;
+    if ((i == layers-1 && outputactivation == "Softmax") || (i < layers-1 && hiddenactivation == "Softmax")) {
+      FeedForwardWithSum(i);
+    } else {
+      FeedForward2(i);
+    } 
+  }
+}
+
+function FeedForward2(i) {
+  let j2 = structure[i+1];
+  for (let j=0; j<j2; j++) {
+    sum = 0;
+    let index = structure3[i]+structure[i]*j+1;
+    let k2 = structure[i];
+    for (let k=0; k<k2; k++) {
+      sum += weights[index+k] * neurons[structure2[i]+k];
     }
+    sum += biases[structure2[i]+j+1];
+    let result = Math.min(1,Math.max(0,Activation(sum,i)));
+    neurons2[structure2[i+1]+j] = sum;
+    neurons[structure2[i+1]+j] = result;
+  }
+}
+
+function FeedForwardWithSum(i) {
+  let j2 = structure[i+1];
+  sum2 = 0;
+  for (let j=0; j<j2; j++) {
+    sum = 0;
+    let index = structure3[i]+structure[i]*j+1;
+    let k2 = structure[i];
+    for (let k=0; k<k2; k++) {
+      sum += weights[index+k] * neurons[structure2[i]+k];
+    }
+    sum += biases[structure2[i]+j+1];
+    neurons2[structure2[i+1]+j] = sum;
+    sum2 += Math.exp(sum);
+  }
+  for (let j=0; j<j2; j++) {
+    let result = Math.min(1,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i,sum2)));
+    neurons[structure2[i+1]+j] = result;
   }
 }
 

@@ -148,9 +148,9 @@ function SetAct(act,func,dxfunc) {
   }
 }
 
-function SelectAct(act,buttonid,func,dxfunc) {
+function SelectAct(act,buttonid,func,dxfunc,draw=true) {
   let button = document.getElementById(buttonid);
-  drawGraph(func);
+  if (draw) drawGraph(func);
   currentgraph = func;
   if (currentlayer == "hidden") {
     let indicator = document.getElementById("hiddenindicator")
@@ -198,7 +198,7 @@ function ImportActivation(act) {
   SetAct(act,window[act],window["Dx" + act]);
 }
 
-let actFunctions = ["None","Sigmoid","ReLU","Tanh","TanhShrink","SoftSign","Swish"];
+let actFunctions = ["None","Sigmoid","ReLU","Tanh","TanhShrink","Softmax","SoftSign","Swish"];
 
 function Sigmoid(x) {
   return 1 / (1 + Math.exp(-1 * x));
@@ -230,6 +230,14 @@ function TanhShrink(x) {
 
 function DxTanhShrink(x,actcache) {
   return 2 - Math.pow(actcache, 2);
+}
+
+function Softmax(x,sum) {
+  return Math.exp(x) / sum;
+}
+
+function DxSoftmax(x,actcache) {
+  return actcache * (1 - actcache);
 }
 
 function SoftSign(x) {

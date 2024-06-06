@@ -74,11 +74,7 @@ function UpdateUserData() {
 
 function UpdateFromData() {
   const version = userdata.version;
-  if (version == "0.1") {
-    dataset = userdata.dataset;
-  } else {
-    dataset = "MNIST";
-  }
+  dataset = userdata.dataset;
   traincount = userdata.traincount;
   structure = userdata.structure;
   layers = structure.length;
