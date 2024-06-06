@@ -1,5 +1,6 @@
 const canvas = document.getElementById('graph');
 const ctx = canvas.getContext('2d');
+var currentgraph;
 var graphscale = 50;
 const tickLength = 10;
 const tickSpacing = 250/4;
@@ -81,12 +82,73 @@ var scaleoutput = document.getElementById("scalevalue");
 
 scaleslider.oninput = function() {
   graphscale = this.value;
-  drawGraph(sigmoid);
+  if (currentgraph) drawGraph(currentgraph);
   scaleoutput.innerHTML = this.value;
 }
 
-function sigmoid(x) {
-  return 1 / (1 + Math.exp(-1 * x));
+let currentlayer = "none";
+
+function SelectLayer(layer) {
+  let button, button2;
+  if (layer == "hidden") {
+    button = document.getElementById("selecthidden");
+    button2 = document.getElementById("selectoutput");
+  } else {
+    button = document.getElementById("selectoutput");
+    button2 = document.getElementById("selecthidden");
+  }
+  if (layer != currentlayer) {
+    currentlayer = layer;
+    button.style.color = "Lime";
+    button.style.borderColor = "Lime";
+    button2.style.color = "White";
+    button2.style.borderColor = "White";
+  } else {
+    currentlayer = "none";
+    button.style.color = "White";
+    button.style.borderColor = "White";
+  }
+}
+
+function SelectAct(act,buttonid,func) {
+  let button = document.getElementById(buttonid);
+  drawGraph(func);
+  currentgraph = func;
+  if (currentlayer == "hidden") {
+    let indicator = document.getElementById("hiddenindicator")
+    button.appendChild(indicator);
+    hiddenactivation = act;
+    hiddenfunc = func;
+  } else if (currentlayer == "output") {
+    let indicator = document.getElementById("outputindicator")
+    button.appendChild(indicator);
+    outputactivation = act;
+    outputfunc = func;
+  }
 }
 
 
+
+function Sigmoid(x) {
+  return 1 / (1 + Math.exp(-1 * x));
+}
+
+function ReLU(x) {
+  return Math.max(0, x);
+}
+
+function Tanh(x) {
+  return Math.tanh(x);
+}
+
+function SoftSign(x) {
+  return x / (1 + Math.abs(x));
+}
+
+function Swish(x) {
+  return x * Sigmoid(x);
+}
+
+function None(x) {
+  return x;
+}

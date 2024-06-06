@@ -46,24 +46,30 @@
             <span class="HelpText">Example: 6,5,3,4 is a neural network of 4 layers, the input layer has 6 neurons, the 1st hidden layer has 5 neurons... (At least 2 layers required)</span>
           </div></article>
         </div>
-        <div class="SubTab">
-          <span>Hidden Activation</span>
-          <button onclick="SelectAct('Sigmoid','sigmoidhidden','Hidden')" class="Button HiddenAct" id="sigmoidhidden">Sigmoid</button>
-          <button onclick="SelectAct('ReLU','reluhidden','Hidden')" class="Button HiddenAct" id="reluhidden">ReLU</button>
-        </div>
-        <div class="SubTab">
-          <span>Output Activation</span>
-          <button onclick="SelectAct('Sigmoid','sigmoidoutput','Output')" class="Button OutputAct" id="sigmoidoutput">Sigmoid</button>
-          <button onclick="SelectAct('ReLU','reluoutput','Output')" class="Button OutputAct" id="reluoutput">ReLU</button>
-        </div>
       </section>
       <section class="Tab" id="graphtab">
+        <div class="SubTab">
+          <button onclick="SelectLayer('hidden')" class="Button SelectLayerButton" id="selecthidden">Hidden</button>
+          <button onclick="SelectLayer('output')" class="Button SelectLayerButton" id="selectoutput">Output</button>
+        </div>
+        <div class="SubTab">
+          <button onclick="SelectAct('None','nonebutton',None)" class="ActivationButton" id="nonebutton">None</button>
+          <button onclick="SelectAct('Sigmoid','sigmoidbutton',Sigmoid)" class="ActivationButton" id="sigmoidbutton">Sigmoid</button>
+          <button onclick="SelectAct('ReLU','relubutton',ReLU)" class="ActivationButton" id="relubutton">ReLU</button>
+          <button onclick="SelectAct('Tanh','tanhbutton',Tanh)" class="ActivationButton" id="tanhbutton">Tanh</button>
+          <button onclick="SelectAct('SoftSign','softsignbutton',SoftSign)" class="ActivationButton" id="softsignbutton">SoftSign</button>
+          <button onclick="SelectAct('Swish','swishbutton',Swish)" class="ActivationButton" id="swishbutton">Swish</button>
+          <div style="display: none">
+            <span class="Indicator2" id="hiddenindicator">H</span>
+            <span class="Indicator" id="outputindicator">O</span>
+          </div>
+        </div>
         <div class="graph-container">
           <canvas id="graph"></canvas>
         </div>
         <div class="slider-container">
           <input type="range" min="10" max="100" value="50" id="scaleslider">
-          <p>Value: <span id="scalevalue">50</span></p>
+          <p>Scale: <span id="scalevalue">50</span></p>
         </div>
       </section>
       <section class="Tab" id="parameters">

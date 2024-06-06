@@ -101,6 +101,7 @@ function Create(quickset=false,imp=false) {
       } else if (dataset != "MNIST") {
         drawcontainer.style.display = "none";
       }
+      document.getElementById("graphtab").style.display = "none";
       mode = "created";
     } else {
       Warn("createbutton","Create","Not Ready",false);
@@ -428,23 +429,6 @@ function SelectDataset(data,buttonid) {
     previousbutton.style.borderColor = "White";
   }
   previousdataset = buttonid;
-}
-
-function SelectAct(act,buttonid,layer) {
-  let buttons = document.getElementsByClassName(layer + "Act");
-  let i2 = buttons.length;
-  for (let i = 0; i < i2; i++) {
-    let button = buttons[i];
-    if (button.id === buttonid) {
-      if (layer == "Hidden") hiddenactivation = act;
-      if (layer == "Output") outputactivation = act;
-      button.style.color = "Lime";
-      button.style.borderColor = "Lime";
-    } else {
-      button.style.color = "White";
-      button.style.borderColor = "White";
-    }
-  }
 }
 
 function ToggleHelp(id) {

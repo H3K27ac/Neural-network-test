@@ -28,6 +28,8 @@ var updategraph;
 var traincount = 0;
 var hiddenactivation = "Sigmoid";
 var outputactivation = "Sigmoid";
+var hiddenfunc;
+var outputfunc;
 var gradient = 0.05;
 var costcache = [0];
 var activationcache = [0];
@@ -90,25 +92,10 @@ function ManualFF() {
 
 
 function Activation(input,i) {
-  let activation;
   if (i == layers-1) {
-    activation = outputactivation;
+    return outputfunc(input);
   } else {
-    activation = hiddenactivation;
-  }
-  switch (activation) {
-    case "Sigmoid":
-      return 1 / (1 + Math.exp(-1 * input))
-    case "ReLU": 
-      return Math.min(1,Math.max(0,input))
-    case "Leaky ReLU":
-      if (input > 0) {
-        return input
-      } else {
-        return gradient * input
-      }
-    default:
-      break;
+    return hiddenfunc(input);
   }
 }
 
@@ -128,12 +115,6 @@ function DerivativeActivation(input,i,actcache) {
         return 1
       } else {
         return 0 // Derivative is undefined at 0
-      }
-      case "Leaky ReLU":
-      if (input > 0) {
-        return 1
-      } else {
-        return gradient
       }
     default:
       break;
