@@ -409,6 +409,11 @@ function SelectDataset(data,buttonid) {
     ToggleHelp("mnisthelp");
     return;
   }
+  if (data == "MNIST") {
+    document.getElementById("imagetoggle").style.display = "block";
+  } else {
+    document.getElementById("imagetoggle").style.display = "none";
+  }
   dataset = data
   button.style.color = "Lime";
   button.style.borderColor = "Lime";
