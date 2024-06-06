@@ -354,7 +354,7 @@ function ToggleTraining() {
    // training.stop();
     istraining = false;
   } else {
-    if (datasetready || dataset != "mnist") {
+    if (datasetready || dataset != "MNIST") {
       trainbutton.innerHTML = "Stop Train";
       trainbutton.style.borderColor = "Red";
       trainbutton.style.color = "Red";
