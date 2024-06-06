@@ -87,19 +87,6 @@ function UpdateFromData() {
   Create(false,true);
 }
 
-function UpdateFromDataOld() {
-  traincount = userdata.traincount;
-  structure = userdata.structure;
-  layers = structure.length-1;
-  learnrate = userdata.learnrate;
-  weightrange = userdata.weightrange;
-  biasrange = userdata.biasrange;
-  weights = ConvertToFloat(userdata.weights,weightrange);
-  biases = ConvertToFloat(userdata.biases,biasrange);
-  console.log(weights);
-  Create(false,true);
-}
-
 function Export() {
   if (mode=="edit") {
     Warn("exportbutton","Export","Editing");
@@ -138,16 +125,12 @@ function Export() {
 }
 
 
-function Import(old=false) {
+function Import() {
   let base64 = document.getElementById("importdata").value;
   try {
     const json = atob(base64);
     userdata = JSON.parse(json);
-    if (old) {
-      UpdateFromDataOld();
-    } else {
-      UpdateFromData();
-    }
+    UpdateFromData();
   } catch (error) {
     console.log(error);
     return null;

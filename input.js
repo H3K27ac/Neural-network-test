@@ -29,6 +29,10 @@ function Confirm(id,func,text,para,modes=true) {
 
 function HandleImport() {
   DeleteGraph();
+  while (structure[layers-1] == 0) {
+    structure.pop();
+    layers--;
+  }
   document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
   structure.push(0);
   InitializeValues(true);
