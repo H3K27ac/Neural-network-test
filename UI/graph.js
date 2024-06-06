@@ -75,17 +75,18 @@ function drawGraph(func) {
 }
 
 
+
 var scaleslider = document.getElementById("scaleslider");
 var scaleoutput = document.getElementById("scalevalue");
 
 scaleslider.oninput = function() {
   graphscale = this.value;
-  drawGraph(testfunc);
+  drawGraph(sigmoid);
   scaleoutput.innerHTML = this.value;
 }
 
-function testfunc(x) {
-  return Math.sin(x);
+function sigmoid(x) {
+  return 1 / (1 + Math.exp(-1 * x));
 }
 
-drawGraph(testfunc);
+
