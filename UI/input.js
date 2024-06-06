@@ -102,6 +102,7 @@ function Create(quickset=false,imp=false) {
         drawcontainer.style.display = "none";
       }
       document.getElementById("graphtab").style.display = "none";
+      clearGraph();
       mode = "created";
     } else {
       Warn("createbutton","Create","Not Ready",false);
