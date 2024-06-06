@@ -57,6 +57,7 @@ function Quickset() {
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
+  dataset = "MNIST"
   hiddenactivation = "Sigmoid";
   outputactivation = "Sigmoid";
   currentlayer = "hidden";
@@ -233,9 +234,10 @@ function UpdateStatus() {
 
 function SetInputs() {
   if (istraining) {
-    training.stop();
+    clearInterval(training);
     clearInterval(updategraph);
     updategraph = undefined;
+    training = undefined;
     istraining = false;
   }
   traincount = 0;

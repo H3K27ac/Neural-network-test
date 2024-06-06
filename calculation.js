@@ -38,7 +38,7 @@ var costcache = [0];
 var activationcache = [0];
 var activationcache2 = [0];
 var averageperformance = 0;
-var dataset = "MNIST";
+var dataset = "Average";
 let images, labels, label, predictedlabel;
 let datasetready = false;
 var sma = 0;
@@ -103,12 +103,12 @@ function Activation(input,i) {
 }
 
 function ActivationSum(input,i,sum) {
-    if (i == layers-1) {
-      return outputfunc(input,sum);
-    } else {
-      return hiddenfunc(input,sum);
-    }
+  if (i == layers-1) {
+    return outputfunc(input,sum);
+  } else {
+    return hiddenfunc(input,sum);
   }
+}
 
 function DerivativeActivation(input,i,actcache) {
   if (i == layers-1) {
@@ -127,7 +127,6 @@ function DerivativeActivationSum(input,i,actcache,sum) {
 }
 
 function FeedForward() {
-  let sum, sum2;
   for (let i=0; i<layers-1; i++) {
     if ((i+1 == layers-1 && outputactivation == "Softmax") || (i+1 != layers-1 && hiddenactivation == "Softmax")) {
       FeedForwardWithSum(i);
@@ -139,6 +138,7 @@ function FeedForward() {
 
 function FeedForward2(i) {
   let j2 = structure[i+1];
+  let sum;
   for (let j=0; j<j2; j++) {
     sum = 0;
     let index = structure3[i]+structure[i]*j+1;
@@ -147,7 +147,7 @@ function FeedForward2(i) {
       sum += weights[index+k] * neurons[structure2[i]+k];
     }
     sum += biases[structure2[i]+j+1];
-    let result = Math.min(neuronrange,Math.max(0,Activation(sum,i)));
+    let result = Math.min(neuronrange,Math.max(0,Activation(sum,i+1)));
     neurons2[structure2[i+1]+j] = sum;
     neurons[structure2[i+1]+j] = result;
   }
@@ -155,7 +155,8 @@ function FeedForward2(i) {
 
 function FeedForwardWithSum(i) {
   let j2 = structure[i+1];
-  sum2 = 0;
+  let sum2 = 0;
+  let sum;
   for (let j=0; j<j2; j++) {
     sum = 0;
     let index = structure3[i]+structure[i]*j+1;
@@ -168,7 +169,7 @@ function FeedForwardWithSum(i) {
     sum2 += Math.exp(sum);
   }
   for (let j=0; j<j2; j++) {
-    let result = Math.min(neuronrange,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i,sum2)));
+    let result = Math.min(neuronrange,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i+1,sum2)));
     neurons[structure2[i+1]+j] = result;
   }
 }
