@@ -75,7 +75,7 @@ function drawGraph(func) {
 
     const label = ((canvas.height / 2 - y) / graphscale).toFixed(2);
     ctx.fillStyle = 'White';
-    //    ctx.font = '12px Arial';
+      //  ctx.font = '12px Arial';
     ctx.fillText(label, canvas.width / 2 + 10, y + 5);
   }
 
@@ -102,7 +102,6 @@ function drawGraph(func) {
 }
 
 
-
 var scaleslider = document.getElementById("scaleslider");
 var scaleoutput = document.getElementById("scalevalue");
 
@@ -113,6 +112,34 @@ scaleslider.oninput = function() {
 }
 
 let currentlayer = "none";
+
+function SelectCost(costfunc) {
+  let button, button2;
+  if (costfunc == "MSE") {
+    button = document.getElementById("selectmse");
+    button2 = document.getElementById("selectcrossentropy");
+  } else {
+    button = document.getElementById("selectcrossentropy");
+    button2 = document.getElementById("selectmse");
+  }
+  cost = costfunc;
+  button.style.color = "Lime";
+  button.style.borderColor = "Lime";
+  button2.style.color = "White";
+  button2.style.borderColor = "White";
+}
+
+function SetAct(act,func,dxfunc) {
+  if (currentlayer == "hidden") {
+    hiddenactivation = act;
+    hiddenfunc = func;
+    dxhiddenfunc = dxfunc;
+  } else if (currentlayer == "output") {
+    outputactivation = act;
+    outputfunc = func;
+    dxoutputfunc = dxfunc;
+  }
+}
 
 function SelectLayer(layer) {
   let button, button2;
@@ -133,18 +160,6 @@ function SelectLayer(layer) {
     currentlayer = "none";
     button.style.color = "White";
     button.style.borderColor = "White";
-  }
-}
-
-function SetAct(act,func,dxfunc) {
-  if (currentlayer == "hidden") {
-    hiddenactivation = act;
-    hiddenfunc = func;
-    dxhiddenfunc = dxfunc;
-  } else if (currentlayer == "output") {
-    outputactivation = act;
-    outputfunc = func;
-    dxoutputfunc = dxfunc;
   }
 }
 

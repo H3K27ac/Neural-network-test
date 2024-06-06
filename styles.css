@@ -116,6 +116,7 @@ header {
   width: 300px;
   padding: 5px;
   border: 1px solid white;
+  z-index: 1;
 }
 
 .HelpTitle {

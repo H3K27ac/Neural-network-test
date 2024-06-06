@@ -26,6 +26,7 @@ var istraining = false;
 var lock = false;
 var updategraph;
 var traincount = 0;
+var cost = "MSE"
 var hiddenactivation = "Sigmoid";
 var outputactivation = "Sigmoid";
 var hiddenfunc;
@@ -199,7 +200,9 @@ function SetTarget() {
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
-    return 2 * (neurons[structure2[i]+j] - targets[j])
+    if (cost == "MSE") return 2 * (neurons[structure2[i]+j] - targets[j]);
+    let predicted = neurons[structure2[i] + j];
+    return - (targets[j] * Math.log(predicted) + (1 - targets[j]) * Math.log(1 - predicted));
   } else {
     let sum = 0;
     let k2 = structure[i+1];

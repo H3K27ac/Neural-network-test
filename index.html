@@ -50,8 +50,13 @@
       </section>
       <section class="Tab" id="graphtab">
         <div class="SubTab">
-          <button onclick="SelectLayer('hidden')" class="Button SelectLayerButton" id="selecthidden">Hidden</button>
-          <button onclick="SelectLayer('output')" class="Button SelectLayerButton" id="selectoutput">Output</button>
+          <button onclick="ToggleHelp('activationhelp')" class="HelpButton">?</button>
+          <article class="HelpDivContainer"><div class="HelpDiv" id="activationhelp">
+              <span class="HelpTitle">Activation Function</span>
+              <span class="HelpText">Select hidden/output layer and assign an activation function to the layer.</span>
+          </div></article>
+          <button onclick="SelectLayer('hidden')" class="Button SelectLayerButton" id="selecthidden">Hidden (H)</button>
+          <button onclick="SelectLayer('output')" class="Button SelectLayerButton" id="selectoutput">Output (O)</button>
         </div>
         <div style="display: none">
           <span class="Indicator2" id="hiddenindicator">H</span>
@@ -89,6 +94,11 @@
             <span class="HelpTitle">Bias Range</span>
             <span class="HelpText">Biases in the interval [-x,x] (Clipped if out of interval)</span>
           </div></article>
+        </div>
+        <div class="SubTab">
+          <span>Cost/Lost</span>
+          <button onclick="SelectCost('MSE')" class="Button" id="selectmse">MSE</button>
+          <button onclick="SelectCost('Cross-Entropy')" class="Button" id="selectcrossentropy">Cross-Entropy</button>
         </div>
       </section>
       <section class="Tab" id="data">
