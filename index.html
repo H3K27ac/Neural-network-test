@@ -78,6 +78,15 @@
           <input onchange="SetParameter('learnrate','learnratedisplay','Learning rate')" type="number" class="TableInput" id="learnrate">
         </div>
         <div class="SubTab">
+          <button onclick="ToggleHelp('neuronrangehelp')" class="HelpButton">?</button>
+          <span>Neuron range</span>
+          <input onchange="SetParameter('neuronrange','neuronrangedisplay','Neuron Range')" type="number" class="TableInput" id="neuronrange">
+          <article class="HelpDivContainer"><div class="HelpDiv" id="neuronrangehelp">
+            <span class="HelpTitle">Neuron Range</span>
+            <span class="HelpText">Neurons in the interval [0,x] (Clipped if out of interval)</span>
+          </div></article>
+        </div>
+        <div class="SubTab">
           <button onclick="ToggleHelp('weightrangehelp')" class="HelpButton">?</button>
           <span>Weight range</span>
           <input onchange="SetParameter('weightrange','weightrangedisplay','Weight Range')" type="number" class="TableInput" id="weightrange">
@@ -98,7 +107,7 @@
         <div class="SubTab">
           <span>Cost/Lost</span>
           <button onclick="SelectCost('MSE')" class="Button" id="selectmse">MSE</button>
-          <button onclick="SelectCost('Cross-Entropy')" class="Button" id="selectcrossentropy">Cross-Entropy</button>
+          <button onclick="SelectCost('Cross-Entropy')" class="Button" id="selectcrossentropy">CrossEntropy</button>
         </div>
       </section>
       <section class="Tab" id="data">
@@ -167,6 +176,7 @@
       </section>
       <section class="Display" id="parameterdisplay">
         <span class="DisplayText" id="learnratedisplay"></span>
+        <span class="DisplayText" id="neuronrangedisplay"></span>
         <span class="DisplayText" id="weightrangedisplay"></span>
         <span class="DisplayText" id="biasrangedisplay"></span>
       </section>

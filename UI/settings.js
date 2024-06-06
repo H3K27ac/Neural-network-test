@@ -58,13 +58,15 @@ function ConvertToUInt8(floatArray,range) {
 
 function UpdateUserData() {
   userdata = {
-    version: "0.1",
+    version: "0.2",
     dataset,
     traincount,
     structure,
     learnrate,
+    neuronrange,
     weightrange,
     biasrange,
+    cost,
     hiddenactivation,
     outputactivation,
     weights: ConvertToUInt8(weights,weightrange),
@@ -81,6 +83,13 @@ function UpdateFromData() {
   learnrate = userdata.learnrate;
   weightrange = userdata.weightrange;
   biasrange = userdata.biasrange;
+  if (version=="0.2") {
+    cost = userdata.cost;
+    neuronrange = userdata.neuronrange;
+  } else {
+    cost = "MSE";
+    neuronrange = 1;
+  }
   hiddenactivation = userdata.hiddenactivation;
   outputactivation = userdata.outputactivation;
   weights = ConvertToFloat(userdata.weights,weightrange);

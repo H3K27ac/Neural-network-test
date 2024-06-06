@@ -10,6 +10,7 @@ var layers = 0;
 
 var neuroncount = 0;
 var weightcount = 0;
+var neuronrange = 1;
 var weightrange = 1;
 var biasrange = 1;
 
@@ -66,7 +67,7 @@ function Color(value,type) {
 }
 
 function Color2(value) {
-  let brightness = Math.round(255 * value);
+  let brightness = Math.round(255 * value/neuronrange);
   return `rgb(${brightness}, ${brightness}, ${brightness})`;
 }
 
@@ -77,7 +78,7 @@ function UpdateTarget(i) {
   target.style.backgroundColor = Color2(targetvalue);
   let targetvaluetext = document.getElementById("targetvalue " + i);
   targetvaluetext.innerHTML = targetvalue;
-  if (targetvalue > 0.5) {
+  if (targetvalue > neuronrange/2) {
     targetvaluetext.style.color = `rgb(0,0,0)`;
   } else {
     targetvaluetext.style.color = `rgb(255,255,255)`;
@@ -91,7 +92,7 @@ function UpdateNeuron(i,j) {
   neuron.style.backgroundColor = Color2(neuronvalue);
   let neuronvaluetext = document.getElementById("neuronvalue " + i + "," + j);
   neuronvaluetext.innerHTML = neuronvalue;
-  if (neuronvalue > 0.5) {
+  if (neuronvalue > neuronrange/2) {
     neuronvaluetext.style.color = `rgb(0,0,0)`;
   } else {
     neuronvaluetext.style.color = `rgb(255,255,255)`;
@@ -202,7 +203,7 @@ function ClearNeurons() {
 function RandomizeInput() {
   let j2 = structure[0];
   for (let j=0; j<j2; j++) {
-      neurons[j] = Math.random();
+      neurons[j] = Math.random() * neuronrange;
   }
 }
 

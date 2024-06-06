@@ -168,6 +168,9 @@ function SetParameter(inputid,id,text,update=true) {
         case "learnrate":
           learnrate = Number(input);
           break;
+        case "neuronrange":
+          neuronrange = Number(input);
+          break;
         case "weightrange":
           weightrange = Number(input);
           break;
@@ -200,13 +203,13 @@ function UpdateStatus() {
         display.innerHTML = "Missing Parameters";
         display.style.color = "Red";
         break;
-      case 3:
+      case 4:
         display.innerHTML = "Parameters OK";
         display.style.color = "Lime";
         parametersready = true;
         break;
       default:
-        display.innerHTML = "Incomplete Parameters (" + parameterscomplete + "/3)";
+        display.innerHTML = "Incomplete Parameters (" + parameterscomplete + "/4)";
         display.style.color = "Yellow";
         break;
     }
@@ -243,6 +246,7 @@ function SetInputs() {
   parameterscomplete = 0;
   parametererror = false;
   SetParameter("learnrate","learnratedisplay","Learning Rate",false);
+  SetParameter("neuronrange","neuronrangedisplay","Neuron Range",false);
   SetParameter("weightrange","weightrangedisplay","Weight Range",false);
   SetParameter("biasrange","biasrangedisplay","Bias Range",false);
   UpdateStatus();

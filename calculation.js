@@ -147,7 +147,7 @@ function FeedForward2(i) {
       sum += weights[index+k] * neurons[structure2[i]+k];
     }
     sum += biases[structure2[i]+j+1];
-    let result = Math.min(1,Math.max(0,Activation(sum,i)));
+    let result = Math.min(neuronrange,Math.max(0,Activation(sum,i)));
     neurons2[structure2[i+1]+j] = sum;
     neurons[structure2[i+1]+j] = result;
   }
@@ -168,7 +168,7 @@ function FeedForwardWithSum(i) {
     sum2 += Math.exp(sum);
   }
   for (let j=0; j<j2; j++) {
-    let result = Math.min(1,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i,sum2)));
+    let result = Math.min(neuronrange,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i,sum2)));
     neurons[structure2[i+1]+j] = result;
   }
 }
