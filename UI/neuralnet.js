@@ -22,7 +22,7 @@ var showweights = true;
 var hideneurons = [];
 
 
-function DeleteGraph() {
+function DeleteNN() {
   let graph = document.getElementById("container");
   while (graph.hasChildNodes()) {
       graph.removeChild(graph.firstChild);
@@ -223,8 +223,8 @@ function Randomize() {
   }
 }
 
-function CreateGraph() {
-  
+function DrawNN() {
+
   for (let i=0; i<layers+1; i++) {
     let column;
     let column2;
@@ -284,7 +284,7 @@ function CreateGraph() {
       container.appendChild(column);
     }
   }
-  
+
   CreateWeights();
 }
 

@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script defer type="text/javascript" src="input.js"></script>
-    <script defer type="text/javascript" src="representation.js"></script>
     <script defer type="text/javascript" src="calculation.js"></script>
-    <script defer type="text/javascript" src="image.js"></script>
-    <script defer type="text/javascript" src="settings.js"></script>
+    <script defer type="text/javascript" src="UI/input.js"></script>
+    <script defer type="text/javascript" src="UI/neuralnet.js"></script>
+    <script defer type="text/javascript" src="UI/image.js"></script>
+    <script defer type="text/javascript" src="UI/graph.js"></script>
+    <script defer type="text/javascript" src="UI/settings.js"></script>
     <script defer>
       function Load() {
         Toggle("structure","Tab","flex",true);
@@ -54,6 +55,15 @@
           <span>Output Activation</span>
           <button onclick="SelectAct('Sigmoid','sigmoidoutput','Output')" class="Button OutputAct" id="sigmoidoutput">Sigmoid</button>
           <button onclick="SelectAct('ReLU','reluoutput','Output')" class="Button OutputAct" id="reluoutput">ReLU</button>
+        </div>
+      </section>
+      <section class="Tab" id="graphtab">
+        <div class="graph-container">
+          <canvas id="graph"></canvas>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="10" max="100" value="50" id="scaleslider">
+          <p>Value: <span id="scalevalue">50</span></p>
         </div>
       </section>
       <section class="Tab" id="parameters">

@@ -28,7 +28,7 @@ function Confirm(id,func,text,para,modes=true) {
 }
 
 function HandleImport() {
-  DeleteGraph();
+  DeleteNN();
   while (structure[layers-1] == 0) {
     structure.pop();
     layers--;
@@ -36,7 +36,7 @@ function HandleImport() {
   document.getElementById("structurecount").innerHTML = "Structure: " + JSON.stringify(structure);
   structure.push(0);
   InitializeValues(true);
-  CreateGraph();
+  DrawNN();
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: " + learnrate;
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: " + weightrange;
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: " + biasrange;
@@ -45,13 +45,13 @@ function HandleImport() {
 }
 
 function Quickset() {
-  DeleteGraph();
+  DeleteNN();
   structure = [784,16,16,10];
   layers = 4;
   document.getElementById("structurecount").innerHTML = "Structure: [784,16,16,10]";
   structure.push(0);
   InitializeValues();
-  CreateGraph();
+  DrawNN();
   learnrate = 0.1;
   weightrange = 1;
   biasrange = 1;
@@ -140,8 +140,8 @@ function ChangeStructure(update=true) {
   if (structureready) {
     structure.push(0);
     if (structure != previousstructure) {
-      DeleteGraph();
-      CreateGraph();
+      DeleteNN();
+      DrawNN();
       previousstructure = structure;
     }
   }
@@ -248,7 +248,7 @@ function InitializeValues(imp=false) {
   structure2 = [0];
   structure3 = [0];
   hideneurons = [];
-  
+
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
@@ -275,7 +275,7 @@ function InitializeValues(imp=false) {
   targets = new Float32Array(structure[layers-1]).fill(0);
   costcache = new Float32Array(neuroncount).fill(0);
   activationcache = new Float32Array(neuroncount).fill(0);
-  
+
   document.getElementById("neuroncount").innerHTML = "Neurons: " + neuroncount;
   document.getElementById("weightcount").innerHTML = "Weights: " + weightcount;
   document.getElementById("layercount").innerHTML = "Layers: " + layers;
@@ -293,6 +293,7 @@ function Toggle(id,c="Tab",type="inline",input=false) {
       } else {
         tab.style.display = "none";
       }
+      if (id == "structure" && tab.id == "graphtab") tab.style.display = type;
     }
     currenttab = id;
   } else {

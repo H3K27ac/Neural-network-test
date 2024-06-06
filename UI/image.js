@@ -1,7 +1,4 @@
 
-
-
-
 function CreatePixels() {
   const container = document.getElementById('pixel-container');
   for (let i = 0; i < structure[0]; i++) {
@@ -118,9 +115,3 @@ function SubmitDrawing() {
   UpdateGraph(false);
 }
 
-/*
-const convertButton = document.getElementById('convert-button');
-convertButton.addEventListener('click', () => {
-    console.log('Drawn Pixels Array:', drawingPixels);
-});
-*/
