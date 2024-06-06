@@ -155,8 +155,34 @@ function SelectAct(act,buttonid,func,dxfunc) {
   }
 }
 
+function getDefaultButtonId(act) {
+  return act.toLowerCase() + "button";
+}
+
+function getDefaultFunc(act) {
+  return window[act];
+}
+
+function getDefaultDxFunc(act) {
+  return window["Dx" + act];
+}
+
+function CreateActivationBtns() {
+  for (let i = 0; i < actFunctions.length; i++) {
+    let button = document.createElement("button");
+    button.className = "ActivationButton";
+    button.id = actFunctions[i].toLowerCase() + "button";
+    button.innerHTML = actFunctions[i];
+    button.onclick = function () {
+      SelectAct(actFunctions[i],actFunctions[i].toLowerCase() + "button",window[actFunctions[i]],window["Dx" + actFunctions[i]]);
+    });
+  }
+}
+
 function ImportActivation(act) {
-  let buttonid, func, dxfunc;
+//  let buttonid, func, dxfunc;
+  SelectAct(act,act.toLowerCase() + "button",window[act],window["Dx" + act]);
+  /*
   switch (act) {
     case "None":
       buttonid = "nonebutton";
@@ -195,7 +221,10 @@ function ImportActivation(act) {
       break;
   }
   SelectAct(act,buttonid,func,dxfunc);
+  */
 }
+
+let actFunctions = ["None","Sigmoid","ReLU","Tanh","TanhShrink","SoftSign","Swish"];
 
 function Sigmoid(x) {
   return 1 / (1 + Math.exp(-1 * x));
