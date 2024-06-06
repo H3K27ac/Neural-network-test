@@ -178,6 +178,11 @@ function ImportActivation(act) {
       func = Tanh;
       dxfunc = DxTanh;
       break;
+    case "TanhShrink":
+      buttonid = "tanhshrinkbutton";
+      func = TanhShrink;
+      dxfunc = DxTanhShrink;
+      break;
     case "SoftSign":
       buttonid = "softsignbutton";
       func = SoftSign;
@@ -214,6 +219,14 @@ function Tanh(x) {
 
 function DxTanh(x,actcache) {
   return 1 - Math.pow(actcache, 2);
+}
+
+function TanhShrink(x) {
+  return x - Math.tanh(x);
+}
+
+function DxTanhShrink(x,actcache) {
+  return 2 - Math.pow(actcache, 2);
 }
 
 function SoftSign(x) {
