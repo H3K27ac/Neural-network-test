@@ -20,6 +20,9 @@ function CreateDrawPixels() {
     pixel.id = "drawpixel " + i;
     container.appendChild(pixel);
   }
+  drawPixels = Array.from({ length: 28 * 28 }, (_, index) =>
+    document.getElementById("drawpixel " + index)
+  );
 }
 
 function UpdatePixels() {
@@ -41,6 +44,7 @@ function UpdateDrawingPixels() {
 // Drawing images
 const drawingContainer = document.getElementById('drawing-container');
 const drawingPixels = new Array(784).fill(0); 
+let drawPixels; 
 
 let isDrawing = false;
 
@@ -65,26 +69,30 @@ function Draw(event) {
   const mouseX = Math.floor((event.clientX - rect.left) / 5);
   const mouseY = Math.floor((event.clientY - rect.top) / 5);
 
-  for (let y = mouseY-1; y < mouseY+1; y++) {
-    if (y>0 && y<28) {
-    for (let x = mouseX-1; x < mouseX+1; x++) {
-      if (x>0 && x<28) {
-      const index = y * 28 + x;
-      const distance = Math.hypot(x - mouseX, y - mouseY);
-      const maxDistance = 2; 
-      drawingPixels[index] = Math.floor(Math.max(0, drawingPixels[index] + (255 - (distance / maxDistance) * 255)));
-      UpdateDrawPixel(index, drawingPixels[index]);
+  const maxDistance = 1.414; // This is not the maximum, it just looks better
+
+  const startX = Math.max(0, mouseX - 1);
+  const endX = Math.min(27, mouseX + 1);
+  const startY = Math.max(0, mouseY - 1);
+  const endY = Math.min(27, mouseY + 1);
+
+  for (let y = startY; y <= endY; y++) {
+    for (let x = startX; x <= endX; x++) {
+      if (x === mouseX || y === mouseY) { // Only update orthogonal adjacent pixels
+        const index = y * 28 + x;
+        const distance = x == mouseX && y == mouseY ? 0 : 1; // Manhattan distance
+        const brightness = 255 - (distance / maxDistance) * 255;
+        drawingPixels[index] = Math.floor(Math.min(255, Math.max(0, drawingPixels[index] + brightness)));
+        UpdateDrawPixel(index, drawingPixels[index]);
       }
-    }
     }
   }
 }
 
-
 function UpdateDrawPixel(index, brightness) {
-  const pixel = document.getElementById("drawpixel " + index);
-  pixel.style.backgroundColor = `rgb(${brightness}, ${brightness}, ${brightness})`;
+  drawPixels[index].style.backgroundColor = `rgb(${brightness}, ${brightness}, ${brightness})`;
 }
+
 
 drawingContainer.addEventListener('mousedown', (event) => StartDraw(event));
 drawingContainer.addEventListener('mousemove', (event) => Draw(event));
