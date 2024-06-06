@@ -136,9 +136,21 @@ function SelectLayer(layer) {
   }
 }
 
-function SelectAct(act,buttonid,func,dxfunc,draw=true) {
+function SetAct(act,func,dxfunc) {
+  if (currentlayer == "hidden") {
+    hiddenactivation = act;
+    hiddenfunc = func;
+    dxhiddenfunc = dxfunc;
+  } else if (currentlayer == "output") {
+    outputactivation = act;
+    outputfunc = func;
+    dxoutputfunc = dxfunc;
+  }
+}
+
+function SelectAct(act,buttonid,func,dxfunc) {
   let button = document.getElementById(buttonid);
-  if (draw) drawGraph(func);
+  drawGraph(func);
   currentgraph = func;
   if (currentlayer == "hidden") {
     let indicator = document.getElementById("hiddenindicator")
@@ -183,7 +195,7 @@ function CreateActivationBtns() {
 }
 
 function ImportActivation(act) {
-  SelectAct(act,act.toLowerCase() + "button",window[act],window["Dx" + act],false);
+  SetAct(act,window[act],window["Dx" + act]);
 }
 
 let actFunctions = ["None","Sigmoid","ReLU","Tanh","TanhShrink","SoftSign","Swish"];

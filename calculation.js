@@ -254,13 +254,15 @@ function Backprop() {
 
 function PredictedLabel() {
   let max = 0;
+  let maxValue = 0;
   const i2 = structure2[layers]
   for (let i = structure2[layers-1]; i < i2; i++) {
-    if (neurons[i] > neurons[max]) {
+    if (neurons[i] > maxValue) {
       max = i;
+      maxValue = neurons[i];
     }
   }
-  if (max == 0) {
+  if (maxValue == 0) {
     predictedlabel = 0;
   } else {
     predictedlabel = max - structure2[layers-1];

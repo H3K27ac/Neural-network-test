@@ -57,6 +57,12 @@ function Quickset() {
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
+  hiddenactivation = "Sigmoid";
+  outputactivation = "Sigmoid";
+  currentlayer = "hidden";
+  SetAct(hiddenactivation,window[hiddenactivation],window["Dx" + hiddenactivation]);
+  currentlayer = "output";
+  SetAct(outputactivation,window[outputactivation],window["Dx" + outputactivation]);
   createready = true;
 }
 
