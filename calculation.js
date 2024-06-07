@@ -42,6 +42,8 @@ var dataset = "Average";
 let images, labels, label, predictedlabel;
 let datasetready = false;
 var sma = 0;
+var ca = 0;
+var samplecount = 0;
 var previousattempt = [];
 
 const dataCache = {};
@@ -80,7 +82,9 @@ async function LoadMNIST() {
     }
   });
   datasetready = true;
-  document.getElementById("trainingstatus").innerHTML = "Dataset Ready";
+  let trainingstatus = document.getElementById("trainingstatus");
+  trainingstatus.innerHTML = "Dataset Ready";
+  trainingstatus.style.color = "White";
 }
 
 
@@ -312,10 +316,12 @@ function UpdateGraph(updatelabel=true) {
     const correctlabel = document.getElementById("correctlabel");
     if (updatelabel) {
       document.getElementById("labeltext").innerHTML = label;
+      let currentattempt = 0;
       if (label == predictedlabel) {
         correctlabel.innerHTML = "Correct";
         correctlabel.style.color = "Lime";
         previousattempt.push(1);
+        currentattempt = 1;
       } else {
         correctlabel.innerHTML = "Incorrect";
         correctlabel.style.color = "Red";
@@ -329,12 +335,16 @@ function UpdateGraph(updatelabel=true) {
         sum += previousattempt[i];
       }
       sma = sum / previousattempt.length * 100;
+      ca = (currentattempt + samplecount * ca) / (samplecount + 1);
       document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
+      document.getElementById("catext").innerHTML = (100*ca).toFixed(2) + "%";
+      samplecount++;
     } else {
       correctlabel.innerHTML = "-";
       correctlabel.style.color = "White";
       document.getElementById("smatext").innerHTML = "-";
       document.getElementById("labeltext").innerHTML = "-";
+      document.getElementById("catext").innerHTML = "-";
     }
   }
   if (dataset == "MNIST") {

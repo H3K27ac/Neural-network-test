@@ -75,6 +75,7 @@ function Create(quickset=false,imp=false) {
   let createddisplay = document.getElementById("createddisplay");
   let trainbutton = document.getElementById("training");
   let drawcontainer = document.getElementById('drawingdiv');
+  let trainstatus = document.getElementById("trainingstatus");
   if (imp) {
     mode = "edit";
     HandleImport();
@@ -100,8 +101,10 @@ function Create(quickset=false,imp=false) {
       if (showstatus) createddisplay.style.display = "flex";
       if (dataset == "MNIST") {
         if (images == undefined || labels == undefined) {
+          trainingstatus.style.color = "Red"
+          trainingstatus.innerHTML = "Wait for Dataset";
           LoadMNIST();
-          Toggle2('imagedisplay','imagetoggle','Image')
+          if (!showimage) Toggle2('imagedisplay','imagetoggle','Image');
           CreatePixels();
           CreateDrawPixels();
         }
