@@ -3,11 +3,11 @@ const ctx = canvas.getContext('2d');
 var currentgraph;
 var graphscale = 50;
 const tickLength = 10;
-const tickSpacing = 250/4;
+const tickSpacing = 50;
 
-// Set canvas size
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
+
 
 function clearGraph() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -63,7 +63,7 @@ function drawGraph(func) {
 
     const label = ((x - canvas.width / 2) / graphscale).toFixed(2);
     ctx.fillStyle = 'White';
-    ctx.fillText(label, x - 5, canvas.height / 2 + 20);
+    ctx.fillText(label, x - 5, canvas.height / 2 + 15);
   }
 
   for (let y = tickSpacing; y < canvas.height; y += tickSpacing) {
