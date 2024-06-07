@@ -43,7 +43,7 @@ let images, labels, label, predictedlabel;
 let datasetready = false;
 var sma = 0;
 var ca = 0;
-var samplecount = 0;
+var numerator = 0;
 var previousattempt = [];
 
 const dataCache = {};
@@ -327,24 +327,21 @@ function UpdateGraph(updatelabel=true) {
         correctlabel.style.color = "Red";
         previousattempt.push(0);
       }
-      if (previousattempt.length > 50) {
+      if (previousattempt.length > 51) {
         previousattempt.shift();
       };
+      let length = previousattempt.length-1;
       let sum = 0;
-      for (let i = 0; i < previousattempt.length; i++) {
+      for (let i = 0; i < length; i++) {
         sum += previousattempt[i];
       }
-      sma = sum / previousattempt.length * 100;
-      ca = (currentattempt + samplecount * ca) / (samplecount + 1);
-      document.getElementById("smatext").innerHTML = sma.toFixed(2) + "%";
-      document.getElementById("catext").innerHTML = (100*ca).toFixed(2) + "%";
-      samplecount++;
+      sma = (sum + currentattempt) / (length+1);
+      document.getElementById("smatext").innerHTML = (100*sma).toFixed(2) + "%";
     } else {
       correctlabel.innerHTML = "-";
       correctlabel.style.color = "White";
       document.getElementById("smatext").innerHTML = "-";
       document.getElementById("labeltext").innerHTML = "-";
-      document.getElementById("catext").innerHTML = "-";
     }
   }
   if (dataset == "MNIST") {

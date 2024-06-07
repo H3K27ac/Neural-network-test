@@ -235,10 +235,22 @@ th, td {
 }
 
 .ImageSubDisplay {
-  height: 200px;
+  height: 100px;
   width: 600px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  margin: 0px auto;
+}
+
+.ImageColumnDisplay {
+  height: 200px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
