@@ -165,7 +165,13 @@ function SelectLayer(layer) {
 
 function SelectAct(act,buttonid,func,dxfunc,draw=true) {
   let button = document.getElementById(buttonid);
-  if (draw) drawGraph(func);
+  if (draw) {
+    if (act == "Softmax") {
+      clearGraph();
+    } else {
+      drawGraph(func);
+    }
+  }
   currentgraph = func;
   if (currentlayer == "hidden") {
     let indicator = document.getElementById("hiddenindicator")
