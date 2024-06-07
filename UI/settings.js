@@ -101,12 +101,12 @@ function UpdateFromData() {
   Create(false,true);
 }
 
+
 function Export() {
-  if (mode=="edit") {
-    Warn("exportbutton","Export","Editing");
+  if (mode == "edit") {
+    Warn("exportbutton", "Export", "Editing");
     return;
   }
-  let button = document.getElementById("exportbutton");
   UpdateUserData();
   try {
     const json = JSON.stringify(userdata, (key, value) => {
@@ -116,39 +116,38 @@ function Export() {
       return value;
     });
     const base64 = btoa(json);
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(base64)
-        .then(() => {
-          button.style.color = "Lime";
-          button.style.borderColor = "Lime";
-          button.innerHTML = "Exported";
-          setTimeout(function() {
-            button.style.color = "White";
-            button.style.borderColor = "White";
-            button.innerHTML = "Export";
-          }, 1000);
-        })
-        .catch((error) => {
-          //
-        });
-    }
+
+    const blob = new Blob([base64], { type: 'text/plain' });
+
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = 'NeuralNetwork.txt';
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   } catch (error) {
-    Warn("exportbutton","Export","Error");
-    return null;
+    Warn("exportbutton", "Export", "Error");
+    console.error(error);
   }
 }
 
 
 function Import() {
-  let base64 = document.getElementById("importdata").value;
-  try {
-    const json = atob(base64);
-    userdata = JSON.parse(json);
-    UpdateFromData();
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  const fileInput = document.getElementById('importfile');
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const base64 = event.target.result.split(',')[1];
+    try {
+      const json = atob(base64);
+      userdata = JSON.parse(json);
+      UpdateFromData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 

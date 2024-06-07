@@ -146,8 +146,11 @@
           <button onclick="Export()" class="Button" id="exportbutton">Export</button>
         </div>
         <div class="SubTab">
-          <input type="text" class="Input" id="importdata">
-          <button onclick="Import()" class="Button">Import</button>
+          <span>Import File</span>
+          <label for="importfile" class="Button">
+            <span>Choose File</span>
+          </label>
+          <input type="file" id="importfile" onchange="Import()" style="display: none;">
         </div>
       </section>
     <!--  <div id="inputfield"></div> -->
