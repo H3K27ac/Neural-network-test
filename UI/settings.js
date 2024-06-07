@@ -83,13 +83,8 @@ function UpdateFromData() {
   learnrate = userdata.learnrate;
   weightrange = userdata.weightrange;
   biasrange = userdata.biasrange;
-  if (version=="0.2") {
-    cost = userdata.cost;
-    neuronrange = userdata.neuronrange;
-  } else {
-    cost = "MSE";
-    neuronrange = 1;
-  }
+  cost = userdata.cost;
+  neuronrange = userdata.neuronrange;
   hiddenactivation = userdata.hiddenactivation;
   outputactivation = userdata.outputactivation;
   weights = ConvertToFloat(userdata.weights,weightrange);
@@ -133,13 +128,19 @@ function Export() {
 }
 
 
+
 function Import() {
   const fileInput = document.getElementById('importfile');
   const file = fileInput.files[0];
+  if (!file) {
+    console.error("No file selected.");
+    return;
+  }
   const reader = new FileReader();
+
   reader.onload = function(event) {
-    const base64 = event.target.result.split(',')[1];
     try {
+      const base64 = event.target.result; //.split(',')[1];
       const json = atob(base64);
       userdata = JSON.parse(json);
       UpdateFromData();
@@ -147,7 +148,8 @@ function Import() {
       console.error(error);
     }
   };
-  reader.readAsDataURL(file);
+
+  reader.readAsText(file);
 }
 
 
