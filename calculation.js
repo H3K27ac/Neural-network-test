@@ -201,10 +201,7 @@ function SetTarget() {
 
 function NeuronCost(i,j) {
   if (i == layers-1) {
-    if (cost == "MSE") return 2 * (neurons[structure2[i]+j] - targets[j]);
-    let predicted = neurons[structure2[i] + j];
-    predicted = Math.max(Math.min(predicted, 0.999999), 0.000001);
-    return targets[j] * Math.log(predicted);
+    return 2 * (neurons[structure2[i]+j] - targets[j]);
   } else {
     let sum = 0;
     let k2 = structure[i+1];
