@@ -146,9 +146,9 @@ function FeedForward2(i) {
     for (let k=0; k<k2; k++) {
       sum += weights[index+k] * neurons[structure2[i]+k];
     }
-    sum += biases[structure2[i]+j+1];
+    sum += biases[structure2[i+1]-structure[0]+j+1];
     let result = Math.min(neuronrange,Math.max(0,Activation(sum,i+1)));
-    neurons2[structure2[i+1]+j] = sum;
+    neurons2[structure2[i+1]-structure[0]+j] = sum;
     neurons[structure2[i+1]+j] = result;
   }
 }
@@ -164,12 +164,12 @@ function FeedForwardWithSum(i) {
     for (let k=0; k<k2; k++) {
       sum += weights[index+k] * neurons[structure2[i]+k];
     }
-    sum += biases[structure2[i]+j+1];
-    neurons2[structure2[i+1]+j] = sum;
+    sum += biases[structure2[i+1]-structure[0]+j+1];
+    neurons2[structure2[i+1]-structure[0]+j] = sum;
     sum2 += Math.exp(sum);
   }
   for (let j=0; j<j2; j++) {
-    let result = Math.min(neuronrange,Math.max(0,ActivationSum(neurons2[structure2[i+1]+j],i+1,sum2)));
+    let result = Math.min(neuronrange,Math.max(0,ActivationSum(neurons2[structure2[i+1]-structure[0]+j],i+1,sum2)));
     neurons[structure2[i+1]+j] = result;
   }
 }
@@ -206,24 +206,12 @@ function NeuronCost(i,j) {
     let sum = 0;
     let k2 = structure[i+1];
     for (let k=0; k<k2; k++) {
-      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]+k] * costcache[structure2[i+1]+k]; // NeuronCost(i+1,k)
+      sum += weights[structure3[i]+structure[i]*k+j+1] * activationcache[structure2[i+1]-structure[0]+k] * costcache[structure2[i+1]-structure[0]+k]; // NeuronCost(i+1,k)
     }
     return sum
   }
 }
 
-function WeightCost(i,j,k,actcache2) {
-  return neurons[i-1][k] * actcache2 * costcache[i][j]
-}
-
-function BiasCost(i,j,actcache2) {
-  return actcache2 * costcache[i][j]
-}
-
-
-function ResetCache() {
-  costcache = Array(neuroncount).fill(0);
-}
 
 async function SetDataset() {
   targets.fill(0);
@@ -269,14 +257,14 @@ function Backprop() {
       const neuronIndex = structure2[i] + j;
       
       costcache2 = NeuronCost(i, j);
-      actcache2 = DerivativeActivation(neurons2[neuronIndex], i, neurons[neuronIndex]);
+      actcache2 = DerivativeActivation(neurons2[neuronIndex-structure[0]], i, neurons[neuronIndex]);
       tempcache = actcache2 * costcache2;
-
-      costcache[neuronIndex] = costcache2;
-      activationcache[neuronIndex] = actcache2;
+      
+      costcache[neuronIndex-structure[0]] = costcache2;
+      activationcache[neuronIndex-structure[0]] = actcache2;
 
       // Update biases with clamping
-      const biasIndex = neuronIndex + 1;
+      const biasIndex = structure2[i+1] - structure[0] + j + 1;
       biases[biasIndex] = Math.min(biasrange, Math.max(-biasrange, biases[biasIndex] - learnrate * tempcache));
 
       const weightStartIndex = structure3[i - 1] + k2 * j + 1;
