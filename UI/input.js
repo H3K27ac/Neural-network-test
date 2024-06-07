@@ -261,12 +261,14 @@ function InitializeValues(imp=false) {
   neuroncount = 0;
   weightcount = 0;
   structure2 = [0];
+  structure2b = [0];
   structure3 = [0];
   hideneurons = [];
 
   for (let i=0; i<layers; i++) {
     neuroncount += structure[i];
     structure2.push(neuroncount);
+    if (i!=0) structure2b.push(neuroncount-structure[0]);
     if (structure[i]>12) {
       hideneurons.push(true);
     } else {
@@ -279,6 +281,7 @@ function InitializeValues(imp=false) {
   }
   hideneurons.push(hideneurons[layers-1]);
   structure2.push(neuroncount+1);
+  structure2b.push(neuroncount-structure[0]+1);
   structure3.push(weightcount+1);
 
   neurons = new Float32Array(neuroncount).fill(0);
