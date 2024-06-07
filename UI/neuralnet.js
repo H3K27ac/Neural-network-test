@@ -216,7 +216,7 @@ function Randomize() {
 //  }
   for (let i=0; i<layers; i++) {
     for (let j=0; j<structure[i+1]; j++) {
-      biases[structure2[i+1]+j+1] = (Math.random() * 2 - 1) * biasrange;
+      biases[structure2b[i]+j+1] = (Math.random() * 2 - 1) * biasrange;
       let index = structure3[i]+structure[i]*j+1;
       for (let k=0; k<structure[i]; k++) {
         weights[index+k] = (Math.random() * 2 - 1) * weightrange;

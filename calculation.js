@@ -255,7 +255,8 @@ function Backprop() {
 
     for (let j = 0; j < j2; j++) {
       const neuronIndex = structure2[i] + j;
-      const neuronIndex2 = structure2b[i] + j;
+      const neuronIndex2 = structure2b[i-1] + j;
+      
       
       costcache2 = NeuronCost(i, j);
       actcache2 = DerivativeActivation(neurons2[neuronIndex2], i, neurons[neuronIndex]);
