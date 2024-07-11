@@ -114,19 +114,11 @@ scaleslider.oninput = function() {
 let currentlayer = "none";
 
 function SelectCost(costfunc) {
-  let button, button2;
-  if (costfunc == "MSE") {
-    button = document.getElementById("selectmse");
-    button2 = document.getElementById("selectcrossentropy");
-  } else {
-    button = document.getElementById("selectcrossentropy");
-    button2 = document.getElementById("selectmse");
-  }
+  let button;
+  button = document.getElementById("selectcrossentropy");
   cost = costfunc;
   button.style.color = "Lime";
   button.style.borderColor = "Lime";
-  button2.style.color = "White";
-  button2.style.borderColor = "White";
 }
 
 function SetAct(act,func,dxfunc) {
