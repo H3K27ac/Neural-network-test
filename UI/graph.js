@@ -115,7 +115,7 @@ let currentlayer = "none";
 
 function SelectCost(costfunc) {
   let button;
-  button = document.getElementById("selectcrossentropy");
+  button = document.getElementById("selectmse");
   cost = costfunc;
   button.style.color = "Lime";
   button.style.borderColor = "Lime";
