@@ -31,7 +31,7 @@
         </div>
         <div id="createdbuttons">
           <button onclick="Toggle('manualinput','Tab','flex',false)" class="Button">Manual</button>
-          <button onclick="Randomize()" class="Button">Random</button>
+          <button onclick="Toggle('initialization','Tab','flex',false)" class="Button">Initialize</button>
           <button onclick="ToggleTraining()" class="Button" id="training">Start Train</button>
         </div>
         <button onclick="Create()" class="Button ConfirmButton" id="createbutton">Create</button>
@@ -135,6 +135,11 @@
           <div id="drawing-container"></div>
           <button onclick="ClearPixels()" class="Button" id="clearpixels">Clear</button>
           <button onclick="SubmitDrawing()" class="Button" id="submitdrawing">Input</button>
+        </div>
+      </section>
+      <section class="Tab" id="initalization">
+        <div class="SubTab" id="selectinitial">
+          <button onclick="Randomize()" class="Button">Random</button>
         </div>
       </section>
       <section class="Tab" id="settings">
