@@ -210,6 +210,14 @@ function RandomizeInput() {
 
 
 
+function Random(length,range) {
+  let temparray = new Array(length);
+  for (let i=0; i<length; i++) {
+    temparray[i] = (Math.random() * 2 - 1) * range;
+  }
+  return temparray;
+}
+
 function Randomize() {
 //  for (let j=0; j<structure[0]; j++) {
    //   neurons[0][j] = Math.random();

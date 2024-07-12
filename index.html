@@ -138,8 +138,20 @@
         </div>
       </section>
       <section class="Tab" id="initialization">
+        <span>Initialize network</span>
         <div class="SubTab" id="selectinitial">
-          <button onclick="Randomize()" class="Button">Random</button>
+          <button onclick="SubmitInitialization('Random')" class="Button">Random</button>
+        </div>
+        <div class="SubTab">
+          <span id="initializetext"></span>
+          <input type="text" class="Input" id="initializationinput">
+          <button onclick="SubmitInitializationParameter()" class="Button">Submit</button>
+        </div>
+        <div class="SubTab" id="selectinitial">
+          <span id="initialweights">Weights: </span>
+          <button onclick="SetInitialization('Weights')" class="Button">Set</button>
+          <span id="initialbiases">Biases: </span>
+          <button onclick="SetInitialization('Biases')" class="Button">Set</button>
         </div>
       </section>
       <section class="Tab" id="settings">

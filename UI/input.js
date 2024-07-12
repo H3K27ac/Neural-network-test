@@ -9,6 +9,8 @@ var parametererror = false;
 var parameterscomplete = 0;
 var previousstructure = [];
 var previousdataset;
+var initialization = "Random";
+var initializationparameter;
 var currenthelpdiv;
 var currenttab;
 
@@ -57,7 +59,7 @@ function Quickset() {
   document.getElementById("learnratedisplay").innerHTML = "Learning rate: 0.1";
   document.getElementById("weightrangedisplay").innerHTML = "Weight range: 1";
   document.getElementById("biasrangedisplay").innerHTML = "Bias range: 1";
-  dataset = "MNIST"
+  dataset = "Average"
   hiddenactivation = "Sigmoid";
   outputactivation = "Sigmoid";
   currentlayer = "hidden";
@@ -142,6 +144,8 @@ function ToggleEdit() {
   trainbutton.style.borderColor = "White";
   trainbutton.style.color = "White";
   drawcontainer.style.display = "none";
+  document.getElementById("initialbiases").innerHTML = "Biases: ";
+  document.getElementById("initialweights").innerHTML = "Weights: ";
   SetInputs();
   mode = "edit";
 }
@@ -426,6 +430,28 @@ function SubmitInputData() {
     }
   } else {
     Warn("submitinputdata","Input","TRAIN");
+  }
+}
+
+
+function SubmitInitialization(input) {
+  initialization = input;
+}
+
+function SubmitInitializationParameter() {
+  let input = document.getElementById("initializationinput").value;
+  initializationparameter = input;
+}
+
+function SetInitialization(parameter) {
+  let func = window[initialization]
+  if (parameter == "Biases") {
+    document.getElementById("initialbiases").innerHTML = "Biases: "+initialization;
+    biases = func(neuroncount-structure[0]+1,initializationparameter);
+  }
+  if (parameter == "Weights") {
+    document.getElementById("initialweights").innerHTML = "Weights: "+initialization;
+    weights = func(weightcount+1,initializationparameter);
   }
 }
 
