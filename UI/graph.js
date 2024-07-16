@@ -126,10 +126,12 @@ function SetAct(act,func,dxfunc) {
     hiddenactivation = act;
     hiddenfunc = func;
     dxhiddenfunc = dxfunc;
+    document.getElementById("hiddenactdisplay").innerHTML = "Hidden Activation: " + act;
   } else if (currentlayer == "output") {
     outputactivation = act;
     outputfunc = func;
     dxoutputfunc = dxfunc;
+    document.getElementById("outputactdisplay").innerHTML = "Output Activation: " + act;
   }
 }
 
@@ -166,17 +168,19 @@ function SelectAct(act,buttonid,func,dxfunc,draw=true) {
   }
   currentgraph = func;
   if (currentlayer == "hidden") {
-    let indicator = document.getElementById("hiddenindicator")
+    let indicator = document.getElementById("hiddenindicator");
     button.appendChild(indicator);
     hiddenactivation = act;
     hiddenfunc = func;
     dxhiddenfunc = dxfunc;
+    document.getElementById("hiddenactdisplay").innerHTML = "Hidden Activation: " + act;
   } else if (currentlayer == "output") {
-    let indicator = document.getElementById("outputindicator")
+    let indicator = document.getElementById("outputindicator");
     button.appendChild(indicator);
     outputactivation = act;
     outputfunc = func;
     dxoutputfunc = dxfunc;
+    document.getElementById("outputactdisplay").innerHTML = "Output Activation: " + act;
   }
 }
 

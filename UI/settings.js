@@ -38,7 +38,7 @@ function ToggleTargets() {
 }
 
 function SetSavePrecision() {
-  let input = document.getElementById("saveprecision").value
+  let input = document.getElementById("saveprecision").value;
   saveprecision = input;
 }
 
@@ -65,6 +65,7 @@ function CompressArray(floatArray,range) {
 function UpdateUserData() {
   userdata = {
     version: 0.2,
+    precision: saveprecision,
     dataset,
     traincount,
     structure,
@@ -82,6 +83,7 @@ function UpdateUserData() {
 
 function UpdateFromData() {
   const version = userdata.version;
+  saveprecision = userdata.precision;
   dataset = userdata.dataset;
   traincount = userdata.traincount;
   structure = userdata.structure;
