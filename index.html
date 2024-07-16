@@ -32,6 +32,7 @@
         <div id="createdbuttons">
           <button onclick="Toggle('manualinput','Tab','flex',false)" class="Button">Manual</button>
           <button onclick="Toggle('initialization','Tab','flex',false)" class="Button">Initialize</button>
+          <button onclick="Randomize()" class="Button">Randomize</button>
           <button onclick="ToggleTraining()" class="Button" id="training">Start Train</button>
         </div>
         <button onclick="Create()" class="Button ConfirmButton" id="createbutton">Create</button>
@@ -157,6 +158,12 @@
       <section class="Tab" id="settings">
         <div class="SubTab">
           <button onclick="SettingsToggle('showtargets','Targets',ToggleTargets)" class="Button SettingsToggle" id="showtargets">S Targets</button>
+        </div>
+        <span>Imports & Exports</span>
+        <div class="SubTab">
+          <span>Precision (Bits): </span>
+          <input type="text" class="Input" id="saveprecision">
+          <button onclick="SetSavePrecision()" class="Button">Confirm</button>
         </div>
         <div class="SubTab">
           <button onclick="Export()" class="Button" id="exportbutton">Export</button>

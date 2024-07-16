@@ -1,5 +1,6 @@
 var showtargets = false;
 var userdata;
+var saveprecision = 8;
 
 function SettingsToggle(id,text,func) {
   func();
@@ -36,29 +37,34 @@ function ToggleTargets() {
   }
 }
 
-function ConvertToFloat(uint8Array,range) {
-    var floatArray = new Float32Array(uint8Array.length);
-    var scaleFactor = 2 * range / 255; 
-    for (var i = 0; i < uint8Array.length; i++) {
-        var unscaledValue = uint8Array[i] * scaleFactor - range;
+function SetSavePrecision() {
+  let input = document.getElementById("saveprecision").value
+  saveprecision = input;
+}
+
+function ConvertToFloat(compressedArray,range) {
+    var floatArray = new Float32Array(compressedArray.length);
+    var scaleFactor = 2 * range / (2**saveprecision-1); 
+    for (var i = 0; i < compressedArray.length; i++) {
+        var unscaledValue = compressedArray[i] * scaleFactor - range;
         floatArray[i] = unscaledValue;
     }
     return floatArray;
 }
 
-function ConvertToUInt8(floatArray,range) {
-  var uint8Array = new Uint8Array(floatArray.length);
-  var scaleFactor = 255 / (2 * range); 
+function CompressArray(floatArray,range) {
+  var compressedArray = new Array(floatArray.length);
+  var scaleFactor = (2**saveprecision-1) / (2 * range); 
   for (var i = 0; i < floatArray.length; i++) {
     var scaledValue = (floatArray[i] + range) * scaleFactor;
-    uint8Array[i] = Math.round(scaledValue);
+    compressedArray[i] = Math.round(scaledValue);
   }
-  return uint8Array;
+  return compressedArray;
 }
 
 function UpdateUserData() {
   userdata = {
-    version: "0.2",
+    version: 0.2,
     dataset,
     traincount,
     structure,
@@ -69,8 +75,8 @@ function UpdateUserData() {
     cost,
     hiddenactivation,
     outputactivation,
-    weights: ConvertToUInt8(weights,weightrange),
-    biases: ConvertToUInt8(biases,biasrange)
+    weights: CompressArray(weights,weightrange),
+    biases: CompressArray(biases,biasrange)
   }
 }
 
