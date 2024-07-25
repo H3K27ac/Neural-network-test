@@ -19,6 +19,11 @@
     </script>
   </head>
   <body onload="Load()">
+    <svg style="display: none;">
+      <symbol id="tickmark" viewBox="0 0 24 24">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+      </symbol>
+    </svg>
     <header>
       <div class="header-bar">
         <button class="header-button active" id="edit-header">Edit</button>
@@ -33,6 +38,9 @@
           <button onclick="toggleHelp('structure-help')" class="help-button">?</button>
           <span>Structure</span>
           <input onchange="" type="text" class="main-input" id="structure-input">
+          <button class="set-button"><svg class="tickmark">
+            <use xlink:href="#tickmark"></use>
+          </svg></button>
           <article class="help-div-container"><div class="help-div" id="structure-help">
             <span class="help-title">Structure</span>
             <span class="help-text">Example: 6,5,3,4 is a neural network of 4 layers, the input layer has 6 neurons, the 1st hidden layer has 5 neurons... (At least 2 layers required)</span>
