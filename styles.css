@@ -9,23 +9,18 @@ body {
 
 button, input {
   font-family: 'Courier New', monospace;
-  color: white;
-  background-color: black;
 }
 
-section {
-  display: none;
+main {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin: 0px auto;
 }
 
-#edit-section {
-  display: flex;
-}
-
-.tab {
+.Tab {
   width: 600px;
   border: 1px solid white;
   display: flex;
@@ -38,49 +33,78 @@ section {
 }
 
 header {
-  padding: 10px 0;
-  text-align: center;
+  height: 50px;
+  width: 800px;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  margin: 0px auto;
 }
 
-.header-bar {
-  float: top;
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  font-size: 17px;
-}
-
-.input {
+.Input {
   height: 20px;
   width: 100px;
-  border: 1px solid white;
+  border: 1px solid black;
   border-radius: 1px;
   outline: none;
 }
 
-.main-input {
+.MainInput {
   height: 25px;
   width: 120px;
+  color: white;
+  background-color: black;
   border: 1px solid white;
   border-radius: 0px;
   padding: 2px;
+  margin: 0px auto;
 }
 
-.help-button {
+.TableInput {
+  width: 100px;
+  height: 20px;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 0px;
+  padding: 2px;
+  margin: 0px auto;
+}
+
+.InputHeading {
+  font-size: 15px;
+  border-bottom: 0px;
+}
+
+.InputTable {
+  border-collapse: collapse;
+  border-spacing: 2px;
+  background-color: lightblue;
+  border: 1px solid black;
+  padding: 10px auto;
+  align-items: center;
+}
+
+.HelpButton {
   width: 15px;
   height: 15px;
   font-size: 5px;
+  color: white;
+  background-color: black;
   border: 1px solid white;
   border-radius: 50%;
 }
 
-.help-div-container {
+.HelpDivContainer {
   display: inline;
   position: relative;
 }
 
-.help-div {
+.HelpDiv {
   display: none;
   position: absolute;
   flex-direction: column;
@@ -95,11 +119,11 @@ header {
   z-index: 1;
 }
 
-.help-title {
+.HelpTitle {
   font-size: 30px;
 }
 
-.help-text {
+.HelpText {
   font-size: 15px;
 }
 
@@ -141,36 +165,14 @@ th, td {
   color: lime;
 }
 
-.button {
+.Button {
   font-size: 15px;
+  color: white;
+  background-color: black;
   padding: 5px;
   border: 1px solid white;
   height: 40px;
   width: 120px;
-}
-
-.header-button {
-  font-size: 16px;
-  border: 0px;
-  padding: 5px;
-}
-
-.set-button {
-  height: 30px;
-  width: 30px;
-  padding: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  text-align: center;
-  outline: none;
-}
-
-.tickmark {
-  fill: white;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
 }
 
 .ActivationButton {
