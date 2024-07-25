@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <!--
     <script defer src="calculation.js"></script>
     <script defer src="UI/input.js"></script>
     <script defer src="UI/neuralnet.js"></script>
+    <!--
     <script defer src="UI/image.js"></script>
     <script defer src="UI/graph.js"></script>
-    <script defer src="UI/settings.js"></script>
     -->
+    <script defer src="UI/settings.js"></script>
     <script defer>
       function Load() {
       }
@@ -30,7 +30,7 @@
       <div class="tab">
         <!--Inputs-->
         <div class="subtab">
-          <button onclick="" class="help-button">?</button>
+          <button onclick="toggleHelp('structure-help')" class="help-button">?</button>
           <span>Structure</span>
           <input onchange="" type="text" class="main-input" id="structure-input">
           <article class="help-div-container"><div class="help-div" id="structure-help">
@@ -43,7 +43,7 @@
           <input onchange="" type="number" class="input" id="learning-rate-input">
         </div>
         <div class="subtab">
-          <button onclick="" class="help-button">?</button>
+          <button onclick="toggleHelp('neuron-range-help')" class="help-button">?</button>
           <span>Neuron range</span>
           <input onchange="" type="number" class="input" id="neuron-range-input">
           <article class="help-div-container"><div class="help-div" id="neuron-range-help">
@@ -52,7 +52,7 @@
           </div></article>
         </div>
         <div class="subtab">
-          <button onclick="" class="help-button">?</button>
+          <button onclick="toggleHelp('weight-range-help')" class="help-button">?</button>
           <span>Weight range</span>
           <input onchange="" type="number" class="input" id="weight-range-input">
           <article class="help-div-container"><div class="help-div" id="weight-range-help">
@@ -61,7 +61,7 @@
           </div></article>
         </div>
         <div class="subtab">
-          <button onclick="" class="help-button">?</button>
+          <button onclick="toggleHelp('bias-range-help')" class="help-button">?</button>
           <span>Bias range</span>
           <input onchange="" type="number" class="input" id="bias-range-input">
           <article class="help-div-container"><div class="help-div" id="bias-range-help">

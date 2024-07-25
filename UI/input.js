@@ -493,7 +493,7 @@ function toggleHelp(id) {
 
 function hideHelp(event) {
   let helpDiv = document.getElementById(currentHelpDiv);
-  if (!helpdiv.contains(event.target)) {
+  if (!helpDiv.contains(event.target)) {
     helpDiv.style.display = "none";
     document.removeEventListener("click", hideHelp);
     currentHelpDiv = undefined;
