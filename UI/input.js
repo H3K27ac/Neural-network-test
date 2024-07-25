@@ -11,7 +11,6 @@ var previousstructure = [];
 var previousdataset;
 var initialization = "Random";
 var initializationparameter;
-var currenthelpdiv;
 var currenttab;
 
 function Confirm(id,func,text,para,modes=true) {
@@ -477,21 +476,27 @@ function SelectDataset(data,buttonid) {
   previousdataset = buttonid;
 }
 
-function ToggleHelp(id) {
-  if (currenthelpdiv !== id && currenthelpdiv === undefined) {
-    let helpdiv = document.getElementById(id);
-    currenthelpdiv = id;
-    helpdiv.style.display = "flex";
-    setTimeout(() => document.addEventListener("click", HideHelp), 1)
+
+
+// Help functionality
+
+var currentHelpDiv;
+
+function toggleHelp(id) {
+  if (currentHelpDiv !== id && currentHelpDiv === undefined) {
+    let helpDiv = document.getElementById(id);
+    currentHelpDiv = id;
+    helpDiv.style.display = "flex";
+    setTimeout(() => document.addEventListener("click", hideHelp), 1)
   }
 }
 
-function HideHelp(event) {
-  let helpdiv = document.getElementById(currenthelpdiv);
+function hideHelp(event) {
+  let helpDiv = document.getElementById(currentHelpDiv);
   if (!helpdiv.contains(event.target)) {
-    helpdiv.style.display = "none";
-    document.removeEventListener("click", HideHelp);
-    currenthelpdiv = undefined;
+    helpDiv.style.display = "none";
+    document.removeEventListener("click", hideHelp);
+    currentHelpDiv = undefined;
   }
 }
 
