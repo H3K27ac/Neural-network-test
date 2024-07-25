@@ -9,6 +9,8 @@ body {
 
 button, input {
   font-family: 'Courier New', monospace;
+  color: white;
+  background-color: black;
 }
 
 section {
@@ -52,7 +54,7 @@ header {
 .input {
   height: 20px;
   width: 100px;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 1px;
   outline: none;
 }
@@ -60,8 +62,6 @@ header {
 .main-input {
   height: 25px;
   width: 120px;
-  color: white;
-  background-color: black;
   border: 1px solid white;
   border-radius: 0px;
   padding: 2px;
@@ -71,8 +71,6 @@ header {
   width: 15px;
   height: 15px;
   font-size: 5px;
-  color: white;
-  background-color: black;
   border: 1px solid white;
   border-radius: 50%;
 }
