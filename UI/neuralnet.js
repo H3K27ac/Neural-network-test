@@ -1,21 +1,3 @@
-var weights = [0];
-var neurons = [];
-var neurons2 = [];
-var biases = [0];
-var structure = [];
-var structure2 = [0];
-var structure2b = [0];
-var structure3 = [0];
-var targets = [];
-var layers = 0;
-
-var neuroncount = 0;
-var weightcount = 0;
-var neuronrange = 1;
-var weightrange = 1;
-var biasrange = 1;
-
-var learnrate = 0;
 
 // Visuals
 var showneurons = "all";
