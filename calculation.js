@@ -1,3 +1,20 @@
+var weights = [0];
+var neurons = [];
+var neurons2 = [];
+var biases = [0];
+var structure = [];
+var structure2 = [0];
+var structure2b = [0];
+var structure3 = [0];
+var targets = [];
+var layers = 0;
+
+var neuronCount = 0;
+var weightCount = 0;
+var neuronRange = 1;
+var weightRange = 1;
+var biasRange = 1;
+var learningRate = 0;
 
 var training 
 var istraining = false;
@@ -30,7 +47,7 @@ async function LoadData(name,slice,chunk) {
   if (dataCache[name]) {
     return dataCache[name];
   }
-  
+
   const response = await fetch(name);
   const arrayBuffer = await response.arrayBuffer();
   const data = new Uint8Array(arrayBuffer).slice(slice);
@@ -44,9 +61,9 @@ async function LoadMNIST() {
   const dataPromises = files.map(function(file) {
     return LoadData(file[0], file[1], file[2]);
   });
-  
+
   const dataArray = await Promise.all(dataPromises);
-  
+
   dataArray.forEach((data, index) => {
     switch (index) {
       case 0:
@@ -200,7 +217,7 @@ async function SetDataset() {
   switch (dataset) {
     case "MNIST":
       const randomNum = Math.random();
-      
+
       const imageIndex = Math.floor(randomNum * 60000)*784;
       const imageSubset = images.subarray(imageIndex, Math.min(imageIndex + 784, 47040000));
       const labelIndex = Math.floor(randomNum * labels.length);
@@ -222,7 +239,7 @@ async function SetDataset() {
 
 function Backprop() {
   const t0 = performance.now();
-  
+
   // Reset caches
   costcache.fill(0);
   activationcache.fill(0);
@@ -238,12 +255,12 @@ function Backprop() {
     for (let j = 0; j < j2; j++) {
       const neuronIndex = structure2[i] + j;
       const neuronIndex2 = structure2b[i-1] + j;
-      
-      
+
+
       costcache2 = NeuronCost(i, j);
       actcache2 = DerivativeActivation(neurons2[neuronIndex2], i, neurons[neuronIndex]);
       tempcache = actcache2 * costcache2;
-      
+
       costcache[neuronIndex2] = costcache2;
       activationcache[neuronIndex2] = actcache2;
 
